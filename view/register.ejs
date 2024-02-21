@@ -1,21 +1,47 @@
-<!DOCTYPE html>
+!<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Inscription | Academix</title>
+    <link rel="stylesheet" href="globalAuth.css">
+    <link rel="stylesheet" href="register.css">
 </head>
 <body>
-    <h1>Register</h1>
-    <form action="/user/register" method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br>
-        <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" required><br>
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br>
-        <button type="submit">Register</button>
-    </form>
+    <div id="logo">
+        <img src="./img/academixLogo.png" width=300px height=80px alt="Logo de Academix">
+    </div>
+    <main id="signupbox">
+        <h2 id="instruction">Inscription à Academix</h2>
+        <form action="/user/register" method="POST">
+            <input id="noms" type="text" placeholder="Prénom" name="prenom" id="prenom">
+            <input id="noms" type="text" placeholder="Nom" name="nom" id="nom">
+            <input type="text" id="emailId" placeholder="Addresse courriel" name="user" id="user">
+            <input type="password" id="mdpCreation" placeholder="Entrez un mot de passe" name="password" id="password">
+            <br>
+            <input type="password" id="mdpCreation" placeholder="Re-entrez le mot de passe" name="password" id="password">
+            <br>
+            <label for="tel">Numéro de téléphone :</label>
+            <input type="tel" id="telId" placeholder="123-456-7890" name="tel" id="tel">
+            <br>
+            <label for="dn">Date de naissance :</label>
+            <input type="date" id="dateNaissance" name="dn" id="dn">
+            <br>
+            <label for="genre" id="genre">Genre : </label>
+            <select name="genre" id="genre">
+                <option value="H">Homme</option>
+                <option value="F">Femme</option>
+                <option value="A">Autre</option>
+                <option value="Ind">Préfère ne pas dire</option>
+            </select>
+            <br>
+            <input type="submit" id="btnInscription" value="S'inscrire">
+        </form>
+
+        <div id="autreOption">
+            <span>Vous avez déjà un compte ?</span>
+            <a href="login.html">Connectez-vous</a>
+        </div>
+    </main>
 </body>
 </html>
