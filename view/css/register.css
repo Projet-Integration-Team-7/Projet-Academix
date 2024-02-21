@@ -1,0 +1,63 @@
+#signupbox {
+    height: 600px;
+    width: 450px;
+    margin-bottom: 60px;
+}
+
+#noms {
+    border-color: rgb(214, 213, 213);
+    padding: 5px;
+    border-radius: 5px;
+    margin-inline: 5px;
+    font-size: 15px;
+    margin: 10px;
+    width: 35%;
+    text-align: center;
+}
+
+#emailId {
+    width: 76%;
+    font-size: 15px;
+    padding: 5px;
+    border-radius: 5px;
+    border-color: rgb(214, 213, 213);
+    margin: 10px;
+    text-align: center;
+}
+
+#mdpCreation {
+    text-align: center;
+    margin: 10px;
+    padding: 5px;
+    font-size: 15px;
+    width: 76%;
+    border-radius: 5px;
+    border-color: rgb(214, 213, 213);
+}
+
+#telId {
+    text-align: center;
+    margin: 10px;
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+    border-color: rgb(214, 213, 213);
+}
+
+#dateNaissance {
+    margin: 10px;
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+    border-color: rgb(214, 213, 213);
+    text-align: center;
+}
+
+#genre {
+    margin: 10px;
+    padding: 5px;
+    font-size: 15px;
+    border-radius: 5px;
+    border-color: rgb(214, 213, 213);
+    text-align: center;
+}
