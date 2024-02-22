@@ -20,7 +20,7 @@ router.get("/login",(req,res) => {
             if(!user || password != user.password){
                 return res.status(400).send("Mot de passe ou email incorrecte")
             }
-           return res.redirect("/user/account");
+           return res.redirect("/home");
         }catch (err){
             return res.status(500);
         }
