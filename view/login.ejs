@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Connexion | Academix</title>
-    <link rel="stylesheet" href="css/globalAuth.css">
-    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="/stylesheets/globalAuth.css">
+    <link rel="stylesheet" href="/stylesheets/login.css">
 </head>
 <body>
     <div id="logo">
-        <img src="img/academixLogo.png" width=300px height=80px alt="Logo de Academix">
+        <img src="/img/academixLogo.png" width=300px height=80px alt="Logo de Academix">
     </div>
     <main id="loginbox">
         <h2 id="instruction">Connectez-vous à votre compte Academix</h2>
         <form action="" method="POST">
-            <input type="text" class="loginInput" placeholder="Email ou Numéro de téléphone" name="user" id="user">
-            <input type="password" class="loginInput" placeholder="Mot de passe" name="password" id="password">
+            <input type="text" class="loginInput" placeholder="Email ou Numéro de téléphone" name="user" id="user" required>
+            <input type="password" class="loginInput" placeholder="Mot de passe" name="password" id="password" required>
             <br>
             <input type="submit" value="Se connecter">
         </form>
@@ -25,7 +25,7 @@
 
         <div id="autreOption">
             <span>Pas de compte ?</span>
-            <a href="register.html">Inscrivez-vous</a>
+            <a href="/user/register">Inscrivez-vous</a>
         </div>
     </main>
 </body>
