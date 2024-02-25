@@ -17,13 +17,16 @@ app.set('views', __dirname + '/view');
 
 // Page d'accueil
 app.get('/', async (req, res) => {
-    console.log("Step1")
     res.render('index')
 });
 
 // Router de login-register
 const userRouter = require('./routes/user');
 app.use('/user', userRouter);
+
+//router de page d'accueil
+const homeRouter = require('./routes/home');
+app.use('/home', homeRouter)
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
