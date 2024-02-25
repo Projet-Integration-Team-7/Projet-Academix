@@ -1,6 +1,8 @@
 const express= require('express');
-const app = express.Router;
+const router = express.Router();
 
-router.get('/',(req,res)=>{
+router.get('/', async(req,res)=>{
     res.render('home')
 })
+
+module.exports = router;
