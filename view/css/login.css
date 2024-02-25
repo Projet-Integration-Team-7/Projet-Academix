@@ -1,0 +1,23 @@
+#loginbox {
+    height: 500px;
+    width: 450px;
+    
+}
+
+.loginInput {
+    width: 60%;
+    padding: 15px;
+    margin: 15px;
+    border-radius: 5px;
+    border-color: lightgray;
+}
+
+
+#oubli {
+    font-family: inherit;
+    margin: 20px;
+    padding: 10px;
+    border-color: rgb(195, 195, 195);
+    border-radius: 7px;
+    background-color: whitesmoke;
+}
