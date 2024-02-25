@@ -1,6 +1,11 @@
 <script>
-  import Router from './routes/index.svelte';
+  import Router from "./routes/index.svelte";
 </script>
+
+<main class="bg-gray-900 text-white font-sans h-screen">
+  <h1 class="text-4xl font-bold mb-8">Academix</h1>
+  <Router />
+</main>
 
 <style>
   main {
@@ -10,8 +15,3 @@
     margin: 0 auto;
   }
 </style>
-
-<main>
-  <h1>Academix</h1>
-  <Router />
-</main>
