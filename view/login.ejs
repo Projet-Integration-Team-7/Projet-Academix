@@ -1,19 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="/styles/login.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion | Academix</title>
+    <link rel="stylesheet" href="globalAuth.css">
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <div class="login-container">
-        <h1>Login</h1>
-        <form action="/user/login" method="post">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <button type="submit">Login</button>
-        </form>
+    <div id="logo">
+        <img src="academixLogo.png" width=300px height=80px alt="Logo de Academix">
     </div>
+    <main id="loginbox">
+        <h2 id="instruction">Connectez-vous à votre compte Academix</h2>
+        <form action="" method="POST">
+            <input type="text" class="loginInput" placeholder="Email ou Numéro de téléphone" name="user" id="user">
+            <input type="password" class="loginInput" placeholder="Mot de passe" name="password" id="password">
+            <br>
+            <input type="submit" value="Se connecter">
+        </form>
+        <form action="" method="GET">
+            <input id="oubli"type="button" value="Oubli de mot de passe?">
+        </form>
+
+        <div id="autreOption">
+            <span>Pas de compte ?</span>
+            <a href="register.html">Inscrivez-vous</a>
+        </div>
+    </main>
 </body>
 </html>
