@@ -15,6 +15,9 @@ mongoose.connect(DB_URI)
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/view');
 
+// Fonctionnement des élements statics dans le folder public
+app.use(express.static('public'))
+
 // Page d'accueil
 app.get('/', async (req, res) => {
     res.render('index')
