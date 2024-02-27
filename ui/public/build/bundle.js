@@ -3228,6 +3228,8 @@ var app = (function () {
     	let p4;
     	let t16;
     	let link1;
+    	let t17;
+    	let button;
     	let current;
 
     	link0 = new Link({
@@ -3283,6 +3285,9 @@ var app = (function () {
     			p4.textContent = "Password: ********";
     			t16 = space();
     			create_component(link1.$$.fragment);
+    			t17 = space();
+    			button = element("button");
+    			button.textContent = "Save Changes";
     			attr_dev(h3, "class", "text-2xl font-bold mb-4");
     			add_location(h3, file$4, 5, 2, 148);
     			attr_dev(h40, "class", "text-lg font-semibold mb-2");
@@ -3307,6 +3312,8 @@ var app = (function () {
     			add_location(div2, file$4, 6, 2, 201);
     			attr_dev(div3, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-yx8gaq");
     			add_location(div3, file$4, 4, 0, 65);
+    			attr_dev(button, "class", "transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-indigo-500 duration-300 ...");
+    			add_location(button, file$4, 33, 0, 1247);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3335,6 +3342,8 @@ var app = (function () {
     			append_dev(div1, p4);
     			append_dev(div1, t16);
     			mount_component(link1, div1, null);
+    			insert_dev(target, t17, anchor);
+    			insert_dev(target, button, anchor);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
@@ -3368,6 +3377,8 @@ var app = (function () {
     			if (detaching) detach_dev(div3);
     			destroy_component(link0);
     			destroy_component(link1);
+    			if (detaching) detach_dev(t17);
+    			if (detaching) detach_dev(button);
     		}
     	};
 
