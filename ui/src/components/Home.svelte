@@ -24,6 +24,7 @@
       Settings
     </Link>
   </div>
+  
 </div>
 
 <style scoped>
