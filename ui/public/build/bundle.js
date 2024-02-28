@@ -3488,6 +3488,7 @@ var app = (function () {
     const file$3 = "src\\components\\Login.svelte";
 
     function create_fragment$3(ctx) {
+    	let div2;
     	let form;
     	let div0;
     	let label0;
@@ -3509,6 +3510,7 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
+    			div2 = element("div");
     			form = element("form");
     			div0 = element("div");
     			label0 = element("label");
@@ -3531,40 +3533,43 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Login";
     			attr_dev(label0, "for", "email");
-    			attr_dev(label0, "class", "block text-gray-700 text-sm font-bold mb-2");
-    			add_location(label0, file$3, 26, 4, 590);
+    			attr_dev(label0, "class", "block text-gray-500 text-sm font-bold mb-2");
+    			add_location(label0, file$3, 27, 6, 787);
     			attr_dev(input0, "type", "email");
     			attr_dev(input0, "id", "email");
     			input0.required = true;
     			attr_dev(input0, "class", "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline");
-    			add_location(input0, file$3, 29, 4, 693);
+    			add_location(input0, file$3, 30, 6, 896);
     			attr_dev(p0, "class", "text-gray-600 text-xs italic");
-    			add_location(p0, file$3, 36, 4, 931);
+    			add_location(p0, file$3, 37, 6, 1148);
     			attr_dev(div0, "class", "mb-4");
-    			add_location(div0, file$3, 25, 2, 566);
+    			add_location(div0, file$3, 26, 4, 761);
     			attr_dev(label1, "for", "password");
     			attr_dev(label1, "class", "block text-gray-700 text-sm font-bold mb-2");
-    			add_location(label1, file$3, 39, 4, 1038);
+    			add_location(label1, file$3, 40, 6, 1261);
     			attr_dev(input1, "type", "password");
     			attr_dev(input1, "id", "password");
     			input1.required = true;
     			attr_dev(input1, "class", "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline");
-    			add_location(input1, file$3, 42, 4, 1147);
+    			add_location(input1, file$3, 43, 6, 1376);
     			attr_dev(p1, "class", "text-gray-600 text-xs italic");
-    			add_location(p1, file$3, 49, 4, 1399);
+    			add_location(p1, file$3, 50, 6, 1642);
     			attr_dev(div1, "class", "mb-6");
-    			add_location(div1, file$3, 38, 2, 1014);
+    			add_location(div1, file$3, 39, 4, 1235);
     			attr_dev(button, "type", "submit");
     			attr_dev(button, "class", "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline");
-    			add_location(button, file$3, 51, 2, 1477);
+    			add_location(button, file$3, 52, 4, 1724);
     			attr_dev(form, "class", "w-full max-w-sm mx-auto mt-20");
-    			add_location(form, file$3, 21, 0, 470);
+    			add_location(form, file$3, 22, 2, 657);
+    			attr_dev(div2, "class", "flex h-auto w-3/12 m-auto pb-20 bg-neutral-500 rounded-md shadow-2xl align-middle");
+    			add_location(div2, file$3, 21, 0, 558);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, form, anchor);
+    			insert_dev(target, div2, anchor);
+    			append_dev(div2, form);
     			append_dev(form, div0);
     			append_dev(div0, label0);
     			append_dev(div0, t1);
@@ -3605,7 +3610,7 @@ var app = (function () {
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(form);
+    			if (detaching) detach_dev(div2);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -4139,8 +4144,12 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let main;
+    	let div;
+    	let img;
+    	let img_src_value;
+    	let t0;
     	let h1;
-    	let t1;
+    	let t2;
     	let router;
     	let current;
     	router = new Routes({ $$inline: true });
@@ -4148,13 +4157,22 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			main = element("main");
+    			div = element("div");
+    			img = element("img");
+    			t0 = space();
     			h1 = element("h1");
     			h1.textContent = "Academix";
-    			t1 = space();
+    			t2 = space();
     			create_component(router.$$.fragment);
-    			attr_dev(h1, "class", "text-4xl font-bold mb-8");
-    			add_location(h1, file, 5, 2, 130);
-    			attr_dev(main, "class", "bg-gray-900 text-white font-sans h-screen svelte-1gmv5eg");
+    			if (!src_url_equal(img.src, img_src_value = "img/logo_blanc.png")) attr_dev(img, "src", img_src_value);
+    			attr_dev(img, "alt", "Academix Logo en blanc ");
+    			attr_dev(img, "class", "w-20 h-auto ");
+    			add_location(img, file, 6, 4, 199);
+    			attr_dev(h1, "class", "text-4xl font-bold");
+    			add_location(h1, file, 7, 4, 286);
+    			attr_dev(div, "class", "flex m-5 p-5 space-x-5 items-center align-middle");
+    			add_location(div, file, 5, 2, 131);
+    			attr_dev(main, "class", "bg-gray-900 text-white font-sans h-screen  svelte-1gmv5eg");
     			add_location(main, file, 4, 0, 70);
     		},
     		l: function claim(nodes) {
@@ -4162,8 +4180,11 @@ var app = (function () {
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
-    			append_dev(main, h1);
-    			append_dev(main, t1);
+    			append_dev(main, div);
+    			append_dev(div, img);
+    			append_dev(div, t0);
+    			append_dev(div, h1);
+    			append_dev(main, t2);
     			mount_component(router, main, null);
     			current = true;
     		},

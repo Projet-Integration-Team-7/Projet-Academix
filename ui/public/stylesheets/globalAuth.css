@@ -33,9 +33,9 @@ main {
     margin: auto;
     margin-top: 20px;
     display: flexbox;
-    background-color: rgb(243, 241, 241);
+    background-color: #f3f1f1;
     border-radius: 10px;
-    border-color: rgb(220, 220, 220);
+    border-color: #dcdcdc;
     border-style: groove;
     justify-content: center;
     align-items: center;
