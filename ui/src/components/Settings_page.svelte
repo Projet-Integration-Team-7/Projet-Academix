@@ -35,7 +35,7 @@
 </script>
 
 <body class="container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg ">
-  <h3 class="text-2xl font-bold mb-4 ">Parametres</h3>
+  <h3 class="text-2xl font-bold mb-4 ">Parametres/Settings</h3>
   
 
   <div class="container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg ">
