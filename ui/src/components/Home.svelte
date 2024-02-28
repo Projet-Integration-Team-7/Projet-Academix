@@ -17,12 +17,22 @@
     >
       Register
     </Link>
+    
     <Link
       to="/settings_page"
       class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300"
     >
       Settings
     </Link>
+
+
+    <Link
+    to="/page_principal"
+    class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300"
+   >
+   Page_principal
+   </Link>
+   
   </div>
   
 </div>
