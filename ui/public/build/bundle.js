@@ -268,6 +268,22 @@ var app = (function () {
             node.style.setProperty(key, value, important ? 'important' : '');
         }
     }
+    function select_option(select, value, mounting) {
+        for (let i = 0; i < select.options.length; i += 1) {
+            const option = select.options[i];
+            if (option.__value === value) {
+                option.selected = true;
+                return;
+            }
+        }
+        if (!mounting || value !== undefined) {
+            select.selectedIndex = -1; // no option should be selected
+        }
+    }
+    function select_value(select) {
+        const selected_option = select.querySelector(':checked');
+        return selected_option && selected_option.__value;
+    }
     function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
         const e = document.createEvent('CustomEvent');
         e.initCustomEvent(type, bubbles, cancelable, detail);
@@ -995,6 +1011,13 @@ var app = (function () {
         else
             dispatch_dev('SvelteDOMSetAttribute', { node, attribute, value });
     }
+    function set_data_dev(text, data) {
+        data = '' + data;
+        if (text.data === data)
+            return;
+        dispatch_dev('SvelteDOMSetData', { node: text, data });
+        text.data = data;
+    }
     function validate_slots(name, slot, keys) {
         for (const slot_key of Object.keys(slot)) {
             if (!~keys.indexOf(slot_key)) {
@@ -1615,12 +1638,12 @@ var app = (function () {
     const get_default_slot_context$1 = ctx => ({ params: /*routeParams*/ ctx[2] });
 
     // (42:0) {#if $activeRoute && $activeRoute.route === route}
-    function create_if_block$1(ctx) {
+    function create_if_block$2(ctx) {
     	let current_block_type_index;
     	let if_block;
     	let if_block_anchor;
     	let current;
-    	const if_block_creators = [create_if_block_1, create_else_block$1];
+    	const if_block_creators = [create_if_block_1, create_else_block$2];
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
@@ -1685,7 +1708,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block$1.name,
+    		id: create_if_block$2.name,
     		type: "if",
     		source: "(42:0) {#if $activeRoute && $activeRoute.route === route}",
     		ctx
@@ -1695,7 +1718,7 @@ var app = (function () {
     }
 
     // (51:4) {:else}
-    function create_else_block$1(ctx) {
+    function create_else_block$2(ctx) {
     	let current;
     	const default_slot_template = /*#slots*/ ctx[8].default;
     	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[7], get_default_slot_context$1);
@@ -1743,7 +1766,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_else_block$1.name,
+    		id: create_else_block$2.name,
     		type: "else",
     		source: "(51:4) {:else}",
     		ctx
@@ -1964,7 +1987,7 @@ var app = (function () {
     function create_fragment$7(ctx) {
     	let if_block_anchor;
     	let current;
-    	let if_block = /*$activeRoute*/ ctx[1] && /*$activeRoute*/ ctx[1].route === /*route*/ ctx[5] && create_if_block$1(ctx);
+    	let if_block = /*$activeRoute*/ ctx[1] && /*$activeRoute*/ ctx[1].route === /*route*/ ctx[5] && create_if_block$2(ctx);
 
     	const block = {
     		c: function create() {
@@ -1988,7 +2011,7 @@ var app = (function () {
     						transition_in(if_block, 1);
     					}
     				} else {
-    					if_block = create_if_block$1(ctx);
+    					if_block = create_if_block$2(ctx);
     					if_block.c();
     					transition_in(if_block, 1);
     					if_block.m(if_block_anchor.parentNode, if_block_anchor);
@@ -2375,7 +2398,7 @@ var app = (function () {
     });
 
     // (143:0) {:else}
-    function create_else_block(ctx) {
+    function create_else_block$1(ctx) {
     	let current;
     	const default_slot_template = /*#slots*/ ctx[15].default;
     	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[14], get_default_slot_context_1);
@@ -2423,7 +2446,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_else_block.name,
+    		id: create_else_block$1.name,
     		type: "else",
     		source: "(143:0) {:else}",
     		ctx
@@ -2433,7 +2456,7 @@ var app = (function () {
     }
 
     // (134:0) {#if viewtransition}
-    function create_if_block(ctx) {
+    function create_if_block$1(ctx) {
     	let previous_key = /*$location*/ ctx[1].pathname;
     	let key_block_anchor;
     	let current;
@@ -2479,7 +2502,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_if_block.name,
+    		id: create_if_block$1.name,
     		type: "if",
     		source: "(134:0) {#if viewtransition}",
     		ctx
@@ -2570,7 +2593,7 @@ var app = (function () {
     	let if_block;
     	let if_block_anchor;
     	let current;
-    	const if_block_creators = [create_if_block, create_else_block];
+    	const if_block_creators = [create_if_block$1, create_else_block$1];
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
@@ -2952,7 +2975,7 @@ var app = (function () {
     }
 
     // (14:4) <Link        to="/register"        class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300"      >
-    function create_default_slot_1$1(ctx) {
+    function create_default_slot_1(ctx) {
     	let t;
 
     	const block = {
@@ -2969,7 +2992,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_1$1.name,
+    		id: create_default_slot_1.name,
     		type: "slot",
     		source: "(14:4) <Link        to=\\\"/register\\\"        class=\\\"py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300\\\"      >",
     		ctx
@@ -3031,7 +3054,7 @@ var app = (function () {
     			props: {
     				to: "/register",
     				class: "py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300",
-    				$$slots: { default: [create_default_slot_1$1] },
+    				$$slots: { default: [create_default_slot_1] },
     				$$scope: { ctx }
     			},
     			$$inline: true
@@ -3164,42 +3187,311 @@ var app = (function () {
     }
 
     /* src\components\Settings_page.svelte generated by Svelte v3.59.2 */
+
+    const { console: console_1$1 } = globals;
     const file$4 = "src\\components\\Settings_page.svelte";
 
-    // (27:8) <Link            to="/settings/profile"            class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300"            >
-    function create_default_slot_1(ctx) {
-    	let t;
+    // (86:8) {:else}
+    function create_else_block(ctx) {
+    	let div1;
+    	let h4;
+    	let t1;
+    	let div0;
+    	let img;
+    	let img_src_value;
+    	let t2;
+    	let button;
+    	let t4;
+    	let p0;
+    	let t5;
+    	let t6_value = /*formData*/ ctx[1].nom + "";
+    	let t6;
+    	let t7;
+    	let p1;
+    	let t8;
+    	let t9_value = /*formData*/ ctx[1].motDePasse + "";
+    	let t9;
+    	let t10;
+    	let p2;
+    	let t11;
+    	let t12_value = /*formData*/ ctx[1].adresseCouriel + "";
+    	let t12;
+    	let t13;
+    	let p3;
+    	let t14;
+    	let t15_value = /*formData*/ ctx[1].genre + "";
+    	let t15;
+    	let mounted;
+    	let dispose;
 
     	const block = {
     		c: function create() {
-    			t = text("Edit Profile");
+    			div1 = element("div");
+    			h4 = element("h4");
+    			h4.textContent = "Compte";
+    			t1 = space();
+    			div0 = element("div");
+    			img = element("img");
+    			t2 = space();
+    			button = element("button");
+    			button.textContent = "Modifier";
+    			t4 = space();
+    			p0 = element("p");
+    			t5 = text("Nom: ");
+    			t6 = text(t6_value);
+    			t7 = space();
+    			p1 = element("p");
+    			t8 = text("Mot de Passe: ");
+    			t9 = text(t9_value);
+    			t10 = space();
+    			p2 = element("p");
+    			t11 = text("Adresse couriel: ");
+    			t12 = text(t12_value);
+    			t13 = space();
+    			p3 = element("p");
+    			t14 = text("Genre: ");
+    			t15 = text(t15_value);
+    			attr_dev(h4, "class", "text-lg font-semibold mb-2");
+    			add_location(h4, file$4, 87, 12, 3413);
+    			if (!src_url_equal(img.src, img_src_value = "img/avatar_benzo.png")) attr_dev(img, "src", img_src_value);
+    			attr_dev(img, "alt", "Avatar");
+    			attr_dev(img, "class", "w-20 h-20 rounded-full ");
+    			add_location(img, file$4, 90, 16, 3557);
+    			attr_dev(button, "class", "py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300");
+    			add_location(button, file$4, 92, 14, 3668);
+    			attr_dev(div0, "class", "flex items-center mb-2 space-x-4");
+    			add_location(div0, file$4, 88, 12, 3477);
+    			attr_dev(p0, "class", "mb-2");
+    			add_location(p0, file$4, 94, 12, 3870);
+    			attr_dev(p1, "class", "mb-2");
+    			add_location(p1, file$4, 95, 12, 3923);
+    			attr_dev(p2, "class", "mb-2");
+    			add_location(p2, file$4, 96, 12, 3992);
+    			attr_dev(p3, "class", "mb-2");
+    			add_location(p3, file$4, 97, 12, 4068);
+    			attr_dev(div1, "class", "text-container");
+    			set_style(div1, "margin-left", "20px");
+    			add_location(div1, file$4, 86, 10, 3344);
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, t, anchor);
+    			insert_dev(target, div1, anchor);
+    			append_dev(div1, h4);
+    			append_dev(div1, t1);
+    			append_dev(div1, div0);
+    			append_dev(div0, img);
+    			append_dev(div0, t2);
+    			append_dev(div0, button);
+    			append_dev(div1, t4);
+    			append_dev(div1, p0);
+    			append_dev(p0, t5);
+    			append_dev(p0, t6);
+    			append_dev(div1, t7);
+    			append_dev(div1, p1);
+    			append_dev(p1, t8);
+    			append_dev(p1, t9);
+    			append_dev(div1, t10);
+    			append_dev(div1, p2);
+    			append_dev(p2, t11);
+    			append_dev(p2, t12);
+    			append_dev(div1, t13);
+    			append_dev(div1, p3);
+    			append_dev(p3, t14);
+    			append_dev(p3, t15);
+
+    			if (!mounted) {
+    				dispose = listen_dev(button, "click", /*toggleEditing*/ ctx[2], false, false, false, false);
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*formData*/ 2 && t6_value !== (t6_value = /*formData*/ ctx[1].nom + "")) set_data_dev(t6, t6_value);
+    			if (dirty & /*formData*/ 2 && t9_value !== (t9_value = /*formData*/ ctx[1].motDePasse + "")) set_data_dev(t9, t9_value);
+    			if (dirty & /*formData*/ 2 && t12_value !== (t12_value = /*formData*/ ctx[1].adresseCouriel + "")) set_data_dev(t12, t12_value);
+    			if (dirty & /*formData*/ 2 && t15_value !== (t15_value = /*formData*/ ctx[1].genre + "")) set_data_dev(t15, t15_value);
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(t);
+    			if (detaching) detach_dev(div1);
+    			mounted = false;
+    			dispose();
     		}
     	};
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_default_slot_1.name,
-    		type: "slot",
-    		source: "(27:8) <Link            to=\\\"/settings/profile\\\"            class=\\\"py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300\\\"            >",
+    		id: create_else_block.name,
+    		type: "else",
+    		source: "(86:8) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (50:8) <Link            to="/settings/account"            class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300"            >
+    // (72:8) {#if isEditing}
+    function create_if_block(ctx) {
+    	let form;
+    	let h4;
+    	let t1;
+    	let input0;
+    	let t2;
+    	let input1;
+    	let t3;
+    	let input2;
+    	let t4;
+    	let select;
+    	let option0;
+    	let option1;
+    	let t7;
+    	let input3;
+    	let t8;
+    	let button0;
+    	let t10;
+    	let button1;
+    	let mounted;
+    	let dispose;
+
+    	const block = {
+    		c: function create() {
+    			form = element("form");
+    			h4 = element("h4");
+    			h4.textContent = "Modifier Compte";
+    			t1 = space();
+    			input0 = element("input");
+    			t2 = space();
+    			input1 = element("input");
+    			t3 = space();
+    			input2 = element("input");
+    			t4 = space();
+    			select = element("select");
+    			option0 = element("option");
+    			option0.textContent = "M";
+    			option1 = element("option");
+    			option1.textContent = "F";
+    			t7 = space();
+    			input3 = element("input");
+    			t8 = space();
+    			button0 = element("button");
+    			button0.textContent = "Sauvegarder";
+    			t10 = space();
+    			button1 = element("button");
+    			button1.textContent = "Annuler";
+    			attr_dev(h4, "class", "text-lg font-semibold mb-2");
+    			add_location(h4, file$4, 73, 12, 2095);
+    			attr_dev(input0, "type", "text");
+    			attr_dev(input0, "placeholder", "Nom");
+    			attr_dev(input0, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
+    			add_location(input0, file$4, 74, 12, 2168);
+    			attr_dev(input1, "type", "password");
+    			attr_dev(input1, "placeholder", "Mot de Passe");
+    			attr_dev(input1, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
+    			add_location(input1, file$4, 75, 12, 2298);
+    			attr_dev(input2, "type", "email");
+    			attr_dev(input2, "placeholder", "Adresse couriel");
+    			attr_dev(input2, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
+    			add_location(input2, file$4, 76, 12, 2448);
+    			option0.__value = "M";
+    			option0.value = option0.__value;
+    			add_location(option0, file$4, 78, 14, 2705);
+    			option1.__value = "F";
+    			option1.value = option1.__value;
+    			add_location(option1, file$4, 79, 14, 2749);
+    			attr_dev(select, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
+    			if (/*formData*/ ctx[1].genre === void 0) add_render_callback(() => /*select_change_handler*/ ctx[8].call(select));
+    			add_location(select, file$4, 77, 12, 2602);
+    			attr_dev(input3, "type", "file");
+    			attr_dev(input3, "accept", "image/*");
+    			attr_dev(input3, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
+    			add_location(input3, file$4, 81, 12, 2814);
+    			attr_dev(button0, "type", "submit");
+    			attr_dev(button0, "class", "py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300");
+    			add_location(button0, file$4, 82, 12, 2947);
+    			attr_dev(button1, "type", "button");
+    			attr_dev(button1, "class", "py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-md transition duration-300");
+    			add_location(button1, file$4, 83, 12, 3121);
+    			attr_dev(form, "class", "text-container");
+    			set_style(form, "margin-left", "20px");
+    			add_location(form, file$4, 72, 10, 2004);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, form, anchor);
+    			append_dev(form, h4);
+    			append_dev(form, t1);
+    			append_dev(form, input0);
+    			set_input_value(input0, /*formData*/ ctx[1].nom);
+    			append_dev(form, t2);
+    			append_dev(form, input1);
+    			set_input_value(input1, /*formData*/ ctx[1].motDePasse);
+    			append_dev(form, t3);
+    			append_dev(form, input2);
+    			set_input_value(input2, /*formData*/ ctx[1].adresseCouriel);
+    			append_dev(form, t4);
+    			append_dev(form, select);
+    			append_dev(select, option0);
+    			append_dev(select, option1);
+    			select_option(select, /*formData*/ ctx[1].genre, true);
+    			append_dev(form, t7);
+    			append_dev(form, input3);
+    			append_dev(form, t8);
+    			append_dev(form, button0);
+    			append_dev(form, t10);
+    			append_dev(form, button1);
+
+    			if (!mounted) {
+    				dispose = [
+    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[5]),
+    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[6]),
+    					listen_dev(input2, "input", /*input2_input_handler*/ ctx[7]),
+    					listen_dev(select, "change", /*select_change_handler*/ ctx[8]),
+    					listen_dev(input3, "change", /*handleImageUpload*/ ctx[4], false, false, false, false),
+    					listen_dev(button1, "click", /*toggleEditing*/ ctx[2], false, false, false, false),
+    					listen_dev(form, "submit", /*saveData*/ ctx[3], false, false, false, false)
+    				];
+
+    				mounted = true;
+    			}
+    		},
+    		p: function update(ctx, dirty) {
+    			if (dirty & /*formData*/ 2 && input0.value !== /*formData*/ ctx[1].nom) {
+    				set_input_value(input0, /*formData*/ ctx[1].nom);
+    			}
+
+    			if (dirty & /*formData*/ 2 && input1.value !== /*formData*/ ctx[1].motDePasse) {
+    				set_input_value(input1, /*formData*/ ctx[1].motDePasse);
+    			}
+
+    			if (dirty & /*formData*/ 2 && input2.value !== /*formData*/ ctx[1].adresseCouriel) {
+    				set_input_value(input2, /*formData*/ ctx[1].adresseCouriel);
+    			}
+
+    			if (dirty & /*formData*/ 2) {
+    				select_option(select, /*formData*/ ctx[1].genre);
+    			}
+    		},
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(form);
+    			mounted = false;
+    			run_all(dispose);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_if_block.name,
+    		type: "if",
+    		source: "(72:8) {#if isEditing}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (119:6) <Link          to="/settings/new"          class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300"          >
     function create_default_slot$1(ctx) {
     	let t;
 
     	const block = {
     		c: function create() {
-    			t = text("Change Password");
+    			t = text("Lien vers le nouveau bloc");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, t, anchor);
@@ -3213,7 +3505,7 @@ var app = (function () {
     		block,
     		id: create_default_slot$1.name,
     		type: "slot",
-    		source: "(50:8) <Link            to=\\\"/settings/account\\\"            class=\\\"py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300\\\"            >",
+    		source: "(119:6) <Link          to=\\\"/settings/new\\\"          class=\\\"py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300\\\"          >",
     		ctx
     	});
 
@@ -3221,14 +3513,14 @@ var app = (function () {
     }
 
     function create_fragment$4(ctx) {
-    	let div7;
-    	let h3;
+    	let body;
+    	let h30;
     	let t1;
-    	let div6;
+    	let div3;
     	let div2;
     	let div0;
-    	let img0;
-    	let img0_src_value;
+    	let img;
+    	let img_src_value;
     	let t2;
     	let div1;
     	let h40;
@@ -3237,38 +3529,35 @@ var app = (function () {
     	let t6;
     	let p1;
     	let t8;
-    	let p2;
+    	let div6;
+    	let h31;
     	let t10;
-    	let link0;
-    	let t11;
     	let div5;
-    	let div3;
-    	let img1;
-    	let img1_src_value;
-    	let t12;
     	let div4;
+    	let t11;
+    	let div9;
+    	let div8;
+    	let div7;
     	let h41;
-    	let t14;
+    	let t13;
+    	let p2;
+    	let t15;
     	let p3;
-    	let t16;
-    	let p4;
-    	let t18;
-    	let link1;
+    	let t17;
+    	let link;
     	let current;
 
-    	link0 = new Link({
-    			props: {
-    				to: "/settings/profile",
-    				class: "py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300",
-    				$$slots: { default: [create_default_slot_1] },
-    				$$scope: { ctx }
-    			},
-    			$$inline: true
-    		});
+    	function select_block_type(ctx, dirty) {
+    		if (/*isEditing*/ ctx[0]) return create_if_block;
+    		return create_else_block;
+    	}
 
-    	link1 = new Link({
+    	let current_block_type = select_block_type(ctx);
+    	let if_block = current_block_type(ctx);
+
+    	link = new Link({
     			props: {
-    				to: "/settings/account",
+    				to: "/settings/new",
     				class: "py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300",
     				$$slots: { default: [create_default_slot$1] },
     				$$scope: { ctx }
@@ -3278,99 +3567,102 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
-    			div7 = element("div");
-    			h3 = element("h3");
-    			h3.textContent = "Settings";
+    			body = element("body");
+    			h30 = element("h3");
+    			h30.textContent = "Parametres";
     			t1 = space();
-    			div6 = element("div");
+    			div3 = element("div");
     			div2 = element("div");
     			div0 = element("div");
-    			img0 = element("img");
+    			img = element("img");
     			t2 = space();
     			div1 = element("div");
     			h40 = element("h4");
     			h40.textContent = "Profile";
     			t4 = space();
     			p0 = element("p");
-    			p0.textContent = "Name: Benzo BG";
+    			p0.textContent = "Benzo BG";
     			t6 = space();
     			p1 = element("p");
-    			p1.textContent = "Email: jesuisgros@gmail.com";
+    			p1.textContent = "ssssss@gmail.com";
     			t8 = space();
-    			p2 = element("p");
-    			p2.textContent = "Bio: Membre et fondateur du regrouppement des celibataires endurcies.";
+    			div6 = element("div");
+    			h31 = element("h3");
+    			h31.textContent = "Informations";
     			t10 = space();
-    			create_component(link0.$$.fragment);
-    			t11 = space();
     			div5 = element("div");
-    			div3 = element("div");
-    			img1 = element("img");
-    			t12 = space();
     			div4 = element("div");
+    			if_block.c();
+    			t11 = space();
+    			div9 = element("div");
+    			div8 = element("div");
+    			div7 = element("div");
     			h41 = element("h4");
-    			h41.textContent = "Compte";
-    			t14 = space();
+    			h41.textContent = "Nouveau Bloc";
+    			t13 = space();
+    			p2 = element("p");
+    			p2.textContent = "Informations supplémentaires";
+    			t15 = space();
     			p3 = element("p");
-    			p3.textContent = "Username: Benzo";
-    			t16 = space();
-    			p4 = element("p");
-    			p4.textContent = "Password: ********";
-    			t18 = space();
-    			create_component(link1.$$.fragment);
-    			attr_dev(h3, "class", "text-2xl font-bold mb-4");
-    			add_location(h3, file$4, 5, 2, 148);
-    			if (!src_url_equal(img0.src, img0_src_value = "img/avatar_benzo.png")) attr_dev(img0, "src", img0_src_value);
-    			attr_dev(img0, "alt", "Avatar");
-    			attr_dev(img0, "class", "w-20 h-20 rounded-full");
-    			add_location(img0, file$4, 13, 8, 535);
+    			p3.textContent = "Autres détails";
+    			t17 = space();
+    			create_component(link.$$.fragment);
+    			attr_dev(h30, "class", "text-2xl font-bold mb-4 ");
+    			add_location(h30, file$4, 37, 2, 916);
+    			if (!src_url_equal(img.src, img_src_value = "img/avatar_benzo.png")) attr_dev(img, "src", img_src_value);
+    			attr_dev(img, "alt", "Avatar");
+    			attr_dev(img, "class", "w-20 h-20 rounded-full");
+    			add_location(img, file$4, 48, 8, 1289);
     			attr_dev(div0, "class", "w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mr-4 animate-bounce");
-    			add_location(div0, file$4, 10, 6, 407);
+    			add_location(div0, file$4, 45, 6, 1161);
     			attr_dev(h40, "class", "text-lg font-semibold mb-2");
-    			add_location(h40, file$4, 20, 8, 742);
+    			add_location(h40, file$4, 56, 8, 1498);
     			attr_dev(p0, "class", "mb-2");
-    			add_location(p0, file$4, 21, 8, 803);
+    			add_location(p0, file$4, 57, 8, 1559);
     			attr_dev(p1, "class", "mb-2");
-    			add_location(p1, file$4, 22, 8, 847);
-    			attr_dev(p2, "class", "mb-2");
-    			add_location(p2, file$4, 23, 8, 904);
+    			add_location(p1, file$4, 58, 8, 1598);
     			attr_dev(div1, "class", "text-container");
     			set_style(div1, "margin-left", "20px");
-    			add_location(div1, file$4, 19, 6, 677);
-    			attr_dev(div2, "class", "bg-gray-800 rounded-lg shadow-md p-4 transition-opacity duration-500 opacity-0 hover:opacity-100 flex items-center");
-    			add_location(div2, file$4, 7, 4, 258);
-    			if (!src_url_equal(img1.src, img1_src_value = "img/avatar_benzo.png")) attr_dev(img1, "src", img1_src_value);
-    			attr_dev(img1, "alt", "Avatar");
-    			attr_dev(img1, "class", "w-20 h-20 rounded-full");
-    			add_location(img1, file$4, 39, 8, 1544);
-    			attr_dev(div3, "class", "w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mr-4 animate-bounce");
-    			add_location(div3, file$4, 36, 6, 1416);
+    			add_location(div1, file$4, 55, 6, 1433);
+    			attr_dev(div2, "class", "bg-gray-800 rounded-lg shadow-md p-4 flex items-center space-y-4");
+    			add_location(div2, file$4, 41, 4, 1064);
+    			attr_dev(div3, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg  svelte-yx8gaq");
+    			add_location(div3, file$4, 40, 2, 978);
+    			attr_dev(h31, "class", "text-2xl font-bold mb-4 ");
+    			add_location(h31, file$4, 68, 4, 1779);
+    			attr_dev(div4, "class", "bg-gray-800 rounded-lg shadow-md p-16 flex items-center");
+    			add_location(div4, file$4, 70, 6, 1898);
+    			attr_dev(div5, "class", "grid grid-cols-1 sm:grid-cols-2 gap-4");
+    			add_location(div5, file$4, 69, 4, 1839);
+    			attr_dev(div6, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-yx8gaq");
+    			add_location(div6, file$4, 67, 2, 1694);
     			attr_dev(h41, "class", "text-lg font-semibold mb-2");
-    			add_location(h41, file$4, 46, 8, 1751);
+    			add_location(h41, file$4, 115, 6, 4437);
+    			attr_dev(p2, "class", "mb-2");
+    			add_location(p2, file$4, 116, 6, 4501);
     			attr_dev(p3, "class", "mb-2");
-    			add_location(p3, file$4, 47, 8, 1811);
-    			attr_dev(p4, "class", "mb-2");
-    			add_location(p4, file$4, 48, 8, 1856);
-    			attr_dev(div4, "class", "text-container");
-    			set_style(div4, "margin-left", "20px");
-    			add_location(div4, file$4, 45, 6, 1686);
-    			attr_dev(div5, "class", "bg-gray-800 rounded-lg shadow-md p-4 transition-opacity duration-500 opacity-0 hover:opacity-100 flex items-center");
-    			add_location(div5, file$4, 33, 4, 1267);
-    			attr_dev(div6, "class", "grid grid-cols-1 sm:grid-cols-2 gap-4");
-    			add_location(div6, file$4, 6, 2, 201);
-    			attr_dev(div7, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-yx8gaq");
-    			add_location(div7, file$4, 4, 0, 65);
+    			add_location(p3, file$4, 117, 6, 4557);
+    			attr_dev(div7, "class", "text-container");
+    			set_style(div7, "margin-left", "20px");
+    			add_location(div7, file$4, 114, 4, 4374);
+    			attr_dev(div8, "class", "bg-gray-800 rounded-lg shadow-md p-4 flex items-center");
+    			add_location(div8, file$4, 109, 2, 4279);
+    			attr_dev(div9, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-yx8gaq");
+    			add_location(div9, file$4, 107, 2, 4194);
+    			attr_dev(body, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg  svelte-yx8gaq");
+    			add_location(body, file$4, 36, 0, 831);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div7, anchor);
-    			append_dev(div7, h3);
-    			append_dev(div7, t1);
-    			append_dev(div7, div6);
-    			append_dev(div6, div2);
+    			insert_dev(target, body, anchor);
+    			append_dev(body, h30);
+    			append_dev(body, t1);
+    			append_dev(body, div3);
+    			append_dev(div3, div2);
     			append_dev(div2, div0);
-    			append_dev(div0, img0);
+    			append_dev(div0, img);
     			append_dev(div2, t2);
     			append_dev(div2, div1);
     			append_dev(div1, h40);
@@ -3378,56 +3670,60 @@ var app = (function () {
     			append_dev(div1, p0);
     			append_dev(div1, t6);
     			append_dev(div1, p1);
-    			append_dev(div1, t8);
-    			append_dev(div1, p2);
-    			append_dev(div1, t10);
-    			mount_component(link0, div1, null);
-    			append_dev(div6, t11);
+    			append_dev(body, t8);
+    			append_dev(body, div6);
+    			append_dev(div6, h31);
+    			append_dev(div6, t10);
     			append_dev(div6, div5);
-    			append_dev(div5, div3);
-    			append_dev(div3, img1);
-    			append_dev(div5, t12);
     			append_dev(div5, div4);
-    			append_dev(div4, h41);
-    			append_dev(div4, t14);
-    			append_dev(div4, p3);
-    			append_dev(div4, t16);
-    			append_dev(div4, p4);
-    			append_dev(div4, t18);
-    			mount_component(link1, div4, null);
+    			if_block.m(div4, null);
+    			append_dev(body, t11);
+    			append_dev(body, div9);
+    			append_dev(div9, div8);
+    			append_dev(div8, div7);
+    			append_dev(div7, h41);
+    			append_dev(div7, t13);
+    			append_dev(div7, p2);
+    			append_dev(div7, t15);
+    			append_dev(div7, p3);
+    			append_dev(div7, t17);
+    			mount_component(link, div7, null);
     			current = true;
     		},
     		p: function update(ctx, [dirty]) {
-    			const link0_changes = {};
+    			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block) {
+    				if_block.p(ctx, dirty);
+    			} else {
+    				if_block.d(1);
+    				if_block = current_block_type(ctx);
 
-    			if (dirty & /*$$scope*/ 1) {
-    				link0_changes.$$scope = { dirty, ctx };
+    				if (if_block) {
+    					if_block.c();
+    					if_block.m(div4, null);
+    				}
     			}
 
-    			link0.$set(link0_changes);
-    			const link1_changes = {};
+    			const link_changes = {};
 
-    			if (dirty & /*$$scope*/ 1) {
-    				link1_changes.$$scope = { dirty, ctx };
+    			if (dirty & /*$$scope*/ 512) {
+    				link_changes.$$scope = { dirty, ctx };
     			}
 
-    			link1.$set(link1_changes);
+    			link.$set(link_changes);
     		},
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(link0.$$.fragment, local);
-    			transition_in(link1.$$.fragment, local);
+    			transition_in(link.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
-    			transition_out(link0.$$.fragment, local);
-    			transition_out(link1.$$.fragment, local);
+    			transition_out(link.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div7);
-    			destroy_component(link0);
-    			destroy_component(link1);
+    			if (detaching) detach_dev(body);
+    			if_block.d();
+    			destroy_component(link);
     		}
     	};
 
@@ -3445,14 +3741,96 @@ var app = (function () {
     function instance$4($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('Settings_page', slots, []);
+    	let isEditing = false;
+
+    	let formData = {
+    		nom: 'Benzo',
+    		motDePasse: '********',
+    		adresseCouriel: 'xxxxx.gmail',
+    		genre: 'M'
+    	};
+
+    	function toggleEditing() {
+    		$$invalidate(0, isEditing = !isEditing);
+    	}
+
+    	async function saveData(event) {
+    		event.preventDefault();
+    		console.log(formData);
+
+    		try {
+    			const response = await fetch('URL_DU_SERVEUR', {
+    				method: 'POST',
+    				headers: { 'Content-Type': 'application/json' },
+    				body: JSON.stringify(formData)
+    			});
+
+    			const data = await response.json();
+    			console.log(data);
+    		} catch(error) {
+    			console.error('Error:', error);
+    		}
+    	}
+
+    	function handleImageUpload(event) {
+    		$$invalidate(1, formData.image = event.target.files[0], formData);
+    	}
+
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
-    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Settings_page> was created with unknown prop '${key}'`);
+    		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console_1$1.warn(`<Settings_page> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ Link });
-    	return [];
+    	function input0_input_handler() {
+    		formData.nom = this.value;
+    		$$invalidate(1, formData);
+    	}
+
+    	function input1_input_handler() {
+    		formData.motDePasse = this.value;
+    		$$invalidate(1, formData);
+    	}
+
+    	function input2_input_handler() {
+    		formData.adresseCouriel = this.value;
+    		$$invalidate(1, formData);
+    	}
+
+    	function select_change_handler() {
+    		formData.genre = select_value(this);
+    		$$invalidate(1, formData);
+    	}
+
+    	$$self.$capture_state = () => ({
+    		Link,
+    		isEditing,
+    		formData,
+    		toggleEditing,
+    		saveData,
+    		handleImageUpload
+    	});
+
+    	$$self.$inject_state = $$props => {
+    		if ('isEditing' in $$props) $$invalidate(0, isEditing = $$props.isEditing);
+    		if ('formData' in $$props) $$invalidate(1, formData = $$props.formData);
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
+    	return [
+    		isEditing,
+    		formData,
+    		toggleEditing,
+    		saveData,
+    		handleImageUpload,
+    		input0_input_handler,
+    		input1_input_handler,
+    		input2_input_handler,
+    		select_change_handler
+    	];
     }
 
     class Settings_page extends SvelteComponentDev {
@@ -4139,8 +4517,12 @@ var app = (function () {
 
     function create_fragment(ctx) {
     	let main;
+    	let div;
+    	let img;
+    	let img_src_value;
+    	let t0;
     	let h1;
-    	let t1;
+    	let t2;
     	let router;
     	let current;
     	router = new Routes({ $$inline: true });
@@ -4148,22 +4530,33 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			main = element("main");
+    			div = element("div");
+    			img = element("img");
+    			t0 = space();
     			h1 = element("h1");
     			h1.textContent = "Academix";
-    			t1 = space();
+    			t2 = space();
     			create_component(router.$$.fragment);
+    			if (!src_url_equal(img.src, img_src_value = "img/academixLogo.png")) attr_dev(img, "src", img_src_value);
+    			attr_dev(img, "alt", "Academix Logo");
+    			attr_dev(img, "class", "w-20 h-20 mr-4");
+    			add_location(img, file, 7, 1, 142);
     			attr_dev(h1, "class", "text-4xl font-bold mb-8");
-    			add_location(h1, file, 5, 2, 130);
-    			attr_dev(main, "class", "bg-gray-900 text-white font-sans h-screen svelte-1gmv5eg");
-    			add_location(main, file, 4, 0, 70);
+    			add_location(h1, file, 8, 2, 224);
+    			add_location(div, file, 6, 2, 134);
+    			attr_dev(main, "class", "bg-gray-900 text-white font-sans  svelte-1gmv5eg");
+    			add_location(main, file, 5, 0, 82);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, main, anchor);
-    			append_dev(main, h1);
-    			append_dev(main, t1);
+    			append_dev(main, div);
+    			append_dev(div, img);
+    			append_dev(div, t0);
+    			append_dev(div, h1);
+    			append_dev(main, t2);
     			mount_component(router, main, null);
     			current = true;
     		},
@@ -4197,13 +4590,23 @@ var app = (function () {
     function instance($$self, $$props, $$invalidate) {
     	let { $$slots: slots = {}, $$scope } = $$props;
     	validate_slots('App', slots, []);
+    	let dark;
     	const writable_props = [];
 
     	Object.keys($$props).forEach(key => {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<App> was created with unknown prop '${key}'`);
     	});
 
-    	$$self.$capture_state = () => ({ Router: Routes });
+    	$$self.$capture_state = () => ({ Router: Routes, dark });
+
+    	$$self.$inject_state = $$props => {
+    		if ('dark' in $$props) dark = $$props.dark;
+    	};
+
+    	if ($$props && "$$inject" in $$props) {
+    		$$self.$inject_state($$props.$$inject);
+    	}
+
     	return [];
     }
 
