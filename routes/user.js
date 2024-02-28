@@ -27,27 +27,37 @@ router.get("/login",(req,res) => {
     })
 
 router.get("/register", (req,res) =>{
-    res.render('register')
+    res.render('register', {messages: req.flash()});
     }).post("/register", async(req,res) =>{
-        const {username, email, password} = req.body;
+        
+        const {prenom, nom, email, password, password2, tel, dn, genre} = req.body;
         //validate that all fields are filled
-        if(!username || !email ||!password){
-            return res.status(400).send("Veuillez remplir tous les champs")
+        if(!prenom || !nom || !email || !password|| !password2 || !tel || !dn || !genre){
+            console.log("Champs vides");
+            req.flash('error', "Veuillez remplir tous les champs")
+            return res.redirect('/user/register')
+        }else if( password != password2){
+            req.flash('error', "Les 2 mots de passes doivent être pareils");
+            return res.redirect('/user/register');
         }
-
+        
         try{
             //check if already exists or no
             let previousUser = await User.findOne({email});
             if (previousUser){
-                return res.status(400).send("Vous avez déjà un compte associé à cette adresse mail")
+                req.flash('error', 'Vous avez déjà un compte associé à cette adresse mail');
+                return res.redirect('/user/register');
             }
 
             //Create new user
-            const newUser = new User({username, email, password})
-            await newUser.save();
-            return res.status(201).redirect("/user/login")
-        }catch(err){
-            return res.status(500)
+        const newUser = new User({prenom, nom, email, password, genre, dn, tel})
+        await newUser.save();
+        console.log("user created");
+        return res.status(201).redirect('/user/login')
+    }catch(err){
+        console.error(err);
+        req.flash('error', err);
+        return res.redirect('/user/register');
         }
     })
 
