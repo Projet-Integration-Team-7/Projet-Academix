@@ -3918,7 +3918,9 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$4 = "src\\components\\Login.svelte";
 
+
     function create_fragment$4(ctx) {
+
     	let form;
     	let div0;
     	let label0;
@@ -3940,6 +3942,7 @@ var app = (function () {
 
     	const block = {
     		c: function create() {
+    			div2 = element("div");
     			form = element("form");
     			div0 = element("div");
     			label0 = element("label");
@@ -3962,12 +3965,15 @@ var app = (function () {
     			button = element("button");
     			button.textContent = "Login";
     			attr_dev(label0, "for", "email");
+
     			attr_dev(label0, "class", "block text-gray-700 text-sm font-bold mb-2");
     			add_location(label0, file$4, 26, 4, 590);
+
     			attr_dev(input0, "type", "email");
     			attr_dev(input0, "id", "email");
     			input0.required = true;
     			attr_dev(input0, "class", "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline");
+
     			add_location(input0, file$4, 29, 4, 693);
     			attr_dev(p0, "class", "text-gray-600 text-xs italic");
     			add_location(p0, file$4, 36, 4, 931);
@@ -3976,10 +3982,12 @@ var app = (function () {
     			attr_dev(label1, "for", "password");
     			attr_dev(label1, "class", "block text-gray-700 text-sm font-bold mb-2");
     			add_location(label1, file$4, 39, 4, 1038);
+
     			attr_dev(input1, "type", "password");
     			attr_dev(input1, "id", "password");
     			input1.required = true;
     			attr_dev(input1, "class", "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline");
+
     			add_location(input1, file$4, 42, 4, 1147);
     			attr_dev(p1, "class", "text-gray-600 text-xs italic");
     			add_location(p1, file$4, 49, 4, 1399);
@@ -3990,12 +3998,14 @@ var app = (function () {
     			add_location(button, file$4, 51, 2, 1477);
     			attr_dev(form, "class", "w-full max-w-sm mx-auto mt-20");
     			add_location(form, file$4, 21, 0, 470);
+
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, form, anchor);
+    			insert_dev(target, div2, anchor);
+    			append_dev(div2, form);
     			append_dev(form, div0);
     			append_dev(div0, label0);
     			append_dev(div0, t1);
@@ -4036,7 +4046,7 @@ var app = (function () {
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(form);
+    			if (detaching) detach_dev(div2);
     			mounted = false;
     			run_all(dispose);
     		}
@@ -4686,6 +4696,7 @@ var app = (function () {
     			h1.textContent = "Academix";
     			t2 = space();
     			create_component(router.$$.fragment);
+
     			if (!src_url_equal(img.src, img_src_value = "img/academixLogo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Academix Logo");
     			attr_dev(img, "class", "w-20 h-20 mr-4");
@@ -4695,6 +4706,7 @@ var app = (function () {
     			add_location(div, file, 6, 2, 134);
     			attr_dev(main, "class", "bg-gray-900 text-white font-sans  svelte-1gmv5eg");
     			add_location(main, file, 5, 0, 82);
+
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

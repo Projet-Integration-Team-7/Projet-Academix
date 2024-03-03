@@ -3,11 +3,13 @@
   let dark
 </script>
 
-<main class="bg-gray-900 text-white font-sans ">
-  <div>
- <img src="img/academixLogo.png" alt="Academix Logo" class="w-20 h-20  mr-4" />
-  <h1 class="text-4xl font-bold mb-8">Academix</h1>
-</div>
+
+<main class="bg-gray-900 text-white font-sans h-screen ">
+  <div class="flex m-5 p-5 space-x-5 items-center align-middle">
+    <img src="img/logo_blanc.png" alt="Academix Logo en blanc " class="w-20 h-auto ">
+    <h1 class="text-4xl font-bold">Academix</h1>
+  </div>
+
   <Router />
 </main>
 
