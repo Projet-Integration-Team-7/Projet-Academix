@@ -1,6 +1,7 @@
 <script>
   import Router from "./routes/index.svelte";
   let dark
+  
 </script>
 
 <main class="bg-gray-900 text-white font-sans ">

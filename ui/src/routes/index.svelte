@@ -5,6 +5,7 @@
   import Settings_page from "../components/Settings_page.svelte";
   import Login from "../components/Login.svelte";
   import Register from "../components/Register.svelte";
+  import Messagerie from "../components/Messagerie.svelte";
   import Page_principal from "../components/Page_principal.svelte";
 </script>
 
@@ -15,5 +16,6 @@
     <Route path="/page_principal" component={Page_principal} />
     <Route path="/register" component={Register} />
     <Route path="/settings_page" component={Settings_page} />
+    <Route path="/messagerie" component={Messagerie} />
   </div>
 </Router>
