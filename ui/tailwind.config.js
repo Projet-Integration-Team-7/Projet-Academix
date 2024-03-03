@@ -1,8 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+const colors = require('tailwindcss/colors')
+
+module.exports = {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        ...colors
+      }
+    },
   },
   plugins: [],
 }
