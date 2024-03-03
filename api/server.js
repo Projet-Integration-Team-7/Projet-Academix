@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
+const flash = require('connect-flash');
 const ejs = require('ejs');
+const session = require('express-session');
 
 // Setup connection to database (MongoDB)
 const mongoose = require('mongoose'); 
@@ -17,7 +19,17 @@ app.set('views', __dirname + '/view');
 
 // Fonctionnement des élements statics dans le folder public
 app.use(express.static('public'))
+//middleware pour les erreurs
+app.use(flash())
 
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
+
+app.use(flash());
 // Page d'accueil
 app.get('/', async (req, res) => {
     res.render('index')
@@ -33,4 +45,5 @@ app.use('/home', homeRouter)
 
 app.listen(3000, () => {
     console.log("Server running on port 3000");
+    
 });
