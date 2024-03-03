@@ -196,9 +196,6 @@ var app = (function () {
     function element(name) {
         return document.createElement(name);
     }
-    function svg_element(name) {
-        return document.createElementNS('http://www.w3.org/2000/svg', name);
-    }
     function text(data) {
         return document.createTextNode(data);
     }
@@ -3124,10 +3121,10 @@ var app = (function () {
     			t4 = space();
     			create_component(link3.$$.fragment);
     			attr_dev(h3, "class", "text-2xl font-bold mb-4");
-    			add_location(h3, file$6, 5, 2, 148);
+    			add_location(h3, file$6, 5, 2, 157);
     			attr_dev(div0, "class", "grid grid-cols-1 sm:grid-cols-2 gap-4");
-    			add_location(div0, file$6, 6, 2, 212);
-    			attr_dev(div1, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-yx8gaq");
+    			add_location(div0, file$6, 6, 2, 221);
+    			attr_dev(div1, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg h-screen svelte-yx8gaq");
     			add_location(div1, file$6, 4, 0, 65);
     		},
     		l: function claim(nodes) {
@@ -3244,7 +3241,7 @@ var app = (function () {
     const { console: console_1$1 } = globals;
     const file$5 = "src\\components\\Settings_page.svelte";
 
-    // (86:8) {:else}
+    // (119:8) {:else}
     function create_else_block(ctx) {
     	let div1;
     	let h4;
@@ -3305,26 +3302,26 @@ var app = (function () {
     			t14 = text("Genre: ");
     			t15 = text(t15_value);
     			attr_dev(h4, "class", "text-lg font-semibold mb-2");
-    			add_location(h4, file$5, 87, 12, 3422);
+    			add_location(h4, file$5, 120, 12, 3902);
     			if (!src_url_equal(img.src, img_src_value = "img/avatar_benzo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Avatar");
-    			attr_dev(img, "class", "w-20 h-20 rounded-full ");
-    			add_location(img, file$5, 90, 16, 3566);
+    			attr_dev(img, "class", "w-20 h-20 rounded-full");
+    			add_location(img, file$5, 122, 14, 4028);
     			attr_dev(button, "class", "py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300");
-    			add_location(button, file$5, 92, 14, 3677);
+    			add_location(button, file$5, 128, 14, 4190);
     			attr_dev(div0, "class", "flex items-center mb-2 space-x-4");
-    			add_location(div0, file$5, 88, 12, 3486);
+    			add_location(div0, file$5, 121, 12, 3966);
     			attr_dev(p0, "class", "mb-2");
-    			add_location(p0, file$5, 94, 12, 3879);
+    			add_location(p0, file$5, 133, 12, 4442);
     			attr_dev(p1, "class", "mb-2");
-    			add_location(p1, file$5, 95, 12, 3932);
+    			add_location(p1, file$5, 134, 12, 4495);
     			attr_dev(p2, "class", "mb-2");
-    			add_location(p2, file$5, 96, 12, 4001);
+    			add_location(p2, file$5, 135, 12, 4564);
     			attr_dev(p3, "class", "mb-2");
-    			add_location(p3, file$5, 97, 12, 4077);
+    			add_location(p3, file$5, 136, 12, 4640);
     			attr_dev(div1, "class", "text-container");
     			set_style(div1, "margin-left", "20px");
-    			add_location(div1, file$5, 86, 10, 3353);
+    			add_location(div1, file$5, 119, 10, 3833);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
@@ -3373,14 +3370,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(86:8) {:else}",
+    		source: "(119:8) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (72:8) {#if isEditing}
+    // (70:8) {#if isEditing}
     function create_if_block(ctx) {
     	let form;
     	let h4;
@@ -3429,41 +3426,41 @@ var app = (function () {
     			button1 = element("button");
     			button1.textContent = "Annuler";
     			attr_dev(h4, "class", "text-lg font-semibold mb-2");
-    			add_location(h4, file$5, 73, 12, 2104);
+    			add_location(h4, file$5, 75, 12, 2129);
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "placeholder", "Nom");
     			attr_dev(input0, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
-    			add_location(input0, file$5, 74, 12, 2177);
+    			add_location(input0, file$5, 76, 12, 2202);
     			attr_dev(input1, "type", "password");
     			attr_dev(input1, "placeholder", "Mot de Passe");
     			attr_dev(input1, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
-    			add_location(input1, file$5, 75, 12, 2307);
+    			add_location(input1, file$5, 82, 12, 2405);
     			attr_dev(input2, "type", "email");
     			attr_dev(input2, "placeholder", "Adresse couriel");
     			attr_dev(input2, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
-    			add_location(input2, file$5, 76, 12, 2457);
+    			add_location(input2, file$5, 88, 12, 2628);
     			option0.__value = "M";
     			option0.value = option0.__value;
-    			add_location(option0, file$5, 78, 14, 2714);
+    			add_location(option0, file$5, 98, 14, 3002);
     			option1.__value = "F";
     			option1.value = option1.__value;
-    			add_location(option1, file$5, 79, 14, 2758);
+    			add_location(option1, file$5, 99, 14, 3046);
     			attr_dev(select, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
     			if (/*formData*/ ctx[1].genre === void 0) add_render_callback(() => /*select_change_handler*/ ctx[8].call(select));
-    			add_location(select, file$5, 77, 12, 2611);
+    			add_location(select, file$5, 94, 12, 2855);
     			attr_dev(input3, "type", "file");
     			attr_dev(input3, "accept", "image/*");
     			attr_dev(input3, "class", "mb-2 bg-gray-700 text-white rounded-lg p-2");
-    			add_location(input3, file$5, 81, 12, 2823);
+    			add_location(input3, file$5, 101, 12, 3111);
     			attr_dev(button0, "type", "submit");
     			attr_dev(button0, "class", "py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300");
-    			add_location(button0, file$5, 82, 12, 2956);
+    			add_location(button0, file$5, 107, 12, 3317);
     			attr_dev(button1, "type", "button");
     			attr_dev(button1, "class", "py-2 px-4 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg shadow-md transition duration-300");
-    			add_location(button1, file$5, 83, 12, 3130);
+    			add_location(button1, file$5, 112, 12, 3551);
     			attr_dev(form, "class", "text-container");
     			set_style(form, "margin-left", "20px");
-    			add_location(form, file$5, 72, 10, 2013);
+    			add_location(form, file$5, 70, 10, 1987);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, form, anchor);
@@ -3531,14 +3528,14 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(72:8) {#if isEditing}",
+    		source: "(70:8) {#if isEditing}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (119:6) <Link          to="/settings/new"          class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300"          >
+    // (152:8) <Link            to="/settings/new"            class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300"            >
     function create_default_slot$1(ctx) {
     	let t;
 
@@ -3558,7 +3555,7 @@ var app = (function () {
     		block,
     		id: create_default_slot$1.name,
     		type: "slot",
-    		source: "(119:6) <Link          to=\\\"/settings/new\\\"          class=\\\"py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300\\\"          >",
+    		source: "(152:8) <Link            to=\\\"/settings/new\\\"            class=\\\"py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-lg shadow-md transition duration-300\\\"            >",
     		ctx
     	});
 
@@ -3660,50 +3657,50 @@ var app = (function () {
     			p3.textContent = "Autres détails";
     			t17 = space();
     			create_component(link.$$.fragment);
-    			attr_dev(h30, "class", "text-2xl font-bold mb-4 ");
-    			add_location(h30, file$5, 37, 2, 916);
+    			attr_dev(h30, "class", "text-2xl font-bold mb-4");
+    			add_location(h30, file$5, 37, 2, 896);
     			if (!src_url_equal(img.src, img_src_value = "img/avatar_benzo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Avatar");
     			attr_dev(img, "class", "w-20 h-20 rounded-full");
-    			add_location(img, file$5, 48, 8, 1298);
+    			add_location(img, file$5, 48, 8, 1283);
     			attr_dev(div0, "class", "w-20 h-20 bg-gray-700 rounded-full flex items-center justify-center mr-4 animate-bounce");
-    			add_location(div0, file$5, 45, 6, 1170);
+    			add_location(div0, file$5, 45, 6, 1155);
     			attr_dev(h40, "class", "text-lg font-semibold mb-2");
-    			add_location(h40, file$5, 56, 8, 1507);
+    			add_location(h40, file$5, 56, 8, 1492);
     			attr_dev(p0, "class", "mb-2");
-    			add_location(p0, file$5, 57, 8, 1568);
+    			add_location(p0, file$5, 57, 8, 1553);
     			attr_dev(p1, "class", "mb-2");
-    			add_location(p1, file$5, 58, 8, 1607);
+    			add_location(p1, file$5, 58, 8, 1591);
     			attr_dev(div1, "class", "text-container");
     			set_style(div1, "margin-left", "20px");
-    			add_location(div1, file$5, 55, 6, 1442);
+    			add_location(div1, file$5, 55, 6, 1427);
     			attr_dev(div2, "class", "bg-gray-800 rounded-lg shadow-md p-4 flex items-center space-y-4");
-    			add_location(div2, file$5, 41, 4, 1073);
-    			attr_dev(div3, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg  svelte-yx8gaq");
-    			add_location(div3, file$5, 40, 2, 987);
-    			attr_dev(h31, "class", "text-2xl font-bold mb-4 ");
-    			add_location(h31, file$5, 68, 4, 1788);
+    			add_location(div2, file$5, 42, 4, 1056);
+    			attr_dev(div3, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-yx8gaq");
+    			add_location(div3, file$5, 39, 2, 962);
+    			attr_dev(h31, "class", "text-2xl font-bold mb-4");
+    			add_location(h31, file$5, 66, 4, 1763);
     			attr_dev(div4, "class", "bg-gray-800 rounded-lg shadow-md p-16 flex items-center");
-    			add_location(div4, file$5, 70, 6, 1907);
+    			add_location(div4, file$5, 68, 6, 1881);
     			attr_dev(div5, "class", "grid grid-cols-1 sm:grid-cols-2 gap-4");
-    			add_location(div5, file$5, 69, 4, 1848);
+    			add_location(div5, file$5, 67, 4, 1822);
     			attr_dev(div6, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-yx8gaq");
-    			add_location(div6, file$5, 67, 2, 1703);
+    			add_location(div6, file$5, 63, 2, 1669);
     			attr_dev(h41, "class", "text-lg font-semibold mb-2");
-    			add_location(h41, file$5, 115, 6, 4446);
+    			add_location(h41, file$5, 148, 8, 4993);
     			attr_dev(p2, "class", "mb-2");
-    			add_location(p2, file$5, 116, 6, 4510);
+    			add_location(p2, file$5, 149, 8, 5059);
     			attr_dev(p3, "class", "mb-2");
-    			add_location(p3, file$5, 117, 6, 4566);
+    			add_location(p3, file$5, 150, 8, 5117);
     			attr_dev(div7, "class", "text-container");
     			set_style(div7, "margin-left", "20px");
-    			add_location(div7, file$5, 114, 4, 4383);
+    			add_location(div7, file$5, 147, 6, 4928);
     			attr_dev(div8, "class", "bg-gray-800 rounded-lg shadow-md p-4 flex items-center");
-    			add_location(div8, file$5, 109, 2, 4288);
+    			add_location(div8, file$5, 146, 4, 4852);
     			attr_dev(div9, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-yx8gaq");
-    			add_location(div9, file$5, 107, 2, 4203);
-    			attr_dev(body, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg  svelte-yx8gaq");
-    			add_location(body, file$5, 36, 0, 831);
+    			add_location(div9, file$5, 143, 2, 4758);
+    			attr_dev(body, "class", "bg-gray-900 text-white w-screen h-screen");
+    			add_location(body, file$5, 36, 0, 834);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -3797,10 +3794,10 @@ var app = (function () {
     	let isEditing = false;
 
     	let formData = {
-    		nom: 'Benzo',
-    		motDePasse: '********',
-    		adresseCouriel: 'xxxxx.gmail',
-    		genre: 'M'
+    		nom: "Benzo",
+    		motDePasse: "********",
+    		adresseCouriel: "xxxxx.gmail",
+    		genre: "M"
     	};
 
     	function toggleEditing() {
@@ -3812,16 +3809,16 @@ var app = (function () {
     		console.log(formData);
 
     		try {
-    			const response = await fetch('URL_DU_SERVEUR', {
-    				method: 'POST',
-    				headers: { 'Content-Type': 'application/json' },
+    			const response = await fetch("URL_DU_SERVEUR", {
+    				method: "POST",
+    				headers: { "Content-Type": "application/json" },
     				body: JSON.stringify(formData)
     			});
 
     			const data = await response.json();
     			console.log(data);
     		} catch(error) {
-    			console.error('Error:', error);
+    			console.error("Error:", error);
     		}
     	}
 
@@ -4124,174 +4121,130 @@ var app = (function () {
     const file$3 = "src\\components\\Register.svelte";
 
     function create_fragment$3(ctx) {
-    	let div7;
-    	let div6;
-    	let div0;
+    	let div4;
     	let h2;
     	let t1;
     	let form;
-    	let div4;
-    	let div1;
+    	let div0;
     	let label0;
     	let t3;
     	let input0;
     	let t4;
-    	let div2;
+    	let div1;
     	let label1;
     	let t6;
     	let input1;
     	let t7;
-    	let div3;
+    	let div2;
     	let label2;
     	let t9;
     	let input2;
     	let t10;
-    	let div5;
+    	let div3;
     	let button;
-    	let span;
-    	let svg;
-    	let path0;
-    	let path1;
-    	let t11;
     	let mounted;
     	let dispose;
 
     	const block = {
     		c: function create() {
-    			div7 = element("div");
-    			div6 = element("div");
-    			div0 = element("div");
+    			div4 = element("div");
     			h2 = element("h2");
     			h2.textContent = "Create an account";
     			t1 = space();
     			form = element("form");
-    			div4 = element("div");
-    			div1 = element("div");
+    			div0 = element("div");
     			label0 = element("label");
     			label0.textContent = "Username";
     			t3 = space();
     			input0 = element("input");
     			t4 = space();
-    			div2 = element("div");
+    			div1 = element("div");
     			label1 = element("label");
     			label1.textContent = "Email address";
     			t6 = space();
     			input1 = element("input");
     			t7 = space();
-    			div3 = element("div");
+    			div2 = element("div");
     			label2 = element("label");
     			label2.textContent = "Password";
     			t9 = space();
     			input2 = element("input");
     			t10 = space();
-    			div5 = element("div");
+    			div3 = element("div");
     			button = element("button");
-    			span = element("span");
-    			svg = svg_element("svg");
-    			path0 = svg_element("path");
-    			path1 = svg_element("path");
-    			t11 = text("\r\n          Create an account");
-    			attr_dev(h2, "class", "mt-6 text-center text-3xl font-extrabold text-gray-900");
-    			add_location(h2, file$3, 28, 6, 590);
-    			add_location(div0, file$3, 27, 4, 577);
+    			button.textContent = "Create an account";
+    			attr_dev(h2, "class", "text-2xl font-bold text-center mb-4");
+    			add_location(h2, file$3, 24, 2, 492);
     			attr_dev(label0, "for", "username");
-    			attr_dev(label0, "class", "sr-only");
-    			add_location(label0, file$3, 35, 10, 865);
+    			attr_dev(label0, "class", "block font-semibold");
+    			add_location(label0, file$3, 27, 6, 649);
     			attr_dev(input0, "id", "username");
     			attr_dev(input0, "name", "username");
     			attr_dev(input0, "type", "text");
     			attr_dev(input0, "autocomplete", "username");
     			input0.required = true;
-    			attr_dev(input0, "class", "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm");
     			attr_dev(input0, "placeholder", "Username");
-    			add_location(input0, file$3, 36, 10, 931);
-    			add_location(div1, file$3, 34, 8, 848);
+    			attr_dev(input0, "class", "input-field");
+    			add_location(input0, file$3, 28, 6, 723);
+    			add_location(div0, file$3, 26, 4, 636);
     			attr_dev(label1, "for", "email");
-    			attr_dev(label1, "class", "sr-only");
-    			add_location(label1, file$3, 47, 10, 1410);
+    			attr_dev(label1, "class", "block font-semibold");
+    			add_location(label1, file$3, 39, 6, 951);
     			attr_dev(input1, "id", "email");
     			attr_dev(input1, "name", "email");
     			attr_dev(input1, "type", "email");
     			attr_dev(input1, "autocomplete", "email");
     			input1.required = true;
-    			attr_dev(input1, "class", "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm");
     			attr_dev(input1, "placeholder", "Email address");
-    			add_location(input1, file$3, 48, 10, 1478);
-    			add_location(div2, file$3, 46, 8, 1393);
+    			attr_dev(input1, "class", "input-field");
+    			add_location(input1, file$3, 40, 6, 1027);
+    			add_location(div1, file$3, 38, 4, 938);
     			attr_dev(label2, "for", "password");
-    			attr_dev(label2, "class", "sr-only");
-    			add_location(label2, file$3, 59, 10, 1954);
+    			attr_dev(label2, "class", "block font-semibold");
+    			add_location(label2, file$3, 51, 6, 1252);
     			attr_dev(input2, "id", "password");
     			attr_dev(input2, "name", "password");
     			attr_dev(input2, "type", "password");
     			attr_dev(input2, "autocomplete", "current-password");
     			input2.required = true;
-    			attr_dev(input2, "class", "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm");
     			attr_dev(input2, "placeholder", "Password");
-    			add_location(input2, file$3, 60, 10, 2020);
-    			add_location(div3, file$3, 58, 8, 1937);
-    			attr_dev(div4, "class", "rounded-md shadow-sm -space-y-px");
-    			add_location(div4, file$3, 33, 6, 792);
-    			attr_dev(path0, "fill-rule", "evenodd");
-    			attr_dev(path0, "d", "M10 12a2 2 0 100-4 2 2 0 000 4z");
-    			attr_dev(path0, "clip-rule", "evenodd");
-    			add_location(path0, file$3, 86, 14, 3221);
-    			attr_dev(path1, "fill-rule", "evenodd");
-    			attr_dev(path1, "d", "M4 8V6a4 4 0 118 0v2h2a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2v-6a2 2 0 012-2h2zm4-2v2h2V6a2 2 0 00-2-2z");
-    			attr_dev(path1, "clip-rule", "evenodd");
-    			add_location(path1, file$3, 91, 14, 3387);
-    			attr_dev(svg, "class", "h-5 w-5 text-indigo-500 group-hover:text-indigo-400");
-    			attr_dev(svg, "xmlns", "http://www.w3.org/2000/svg");
-    			attr_dev(svg, "viewBox", "0 0 20 20");
-    			attr_dev(svg, "fill", "currentColor");
-    			attr_dev(svg, "aria-hidden", "true");
-    			add_location(svg, file$3, 79, 12, 2957);
-    			attr_dev(span, "class", "absolute left-0 inset-y-0 flex items-center pl-3");
-    			add_location(span, file$3, 77, 10, 2825);
+    			attr_dev(input2, "class", "input-field");
+    			add_location(input2, file$3, 52, 6, 1326);
+    			add_location(div2, file$3, 50, 4, 1239);
     			attr_dev(button, "type", "submit");
-    			attr_dev(button, "class", "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500");
-    			add_location(button, file$3, 73, 8, 2523);
-    			add_location(div5, file$3, 72, 6, 2508);
-    			attr_dev(form, "class", "mt-8 space-y-6");
-    			add_location(form, file$3, 32, 4, 715);
-    			attr_dev(div6, "class", "max-w-md w-full space-y-8");
-    			add_location(div6, file$3, 26, 2, 532);
-    			attr_dev(div7, "class", "min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8");
-    			add_location(div7, file$3, 23, 0, 426);
+    			attr_dev(button, "class", "submit-button");
+    			add_location(button, file$3, 63, 6, 1566);
+    			add_location(div3, file$3, 62, 4, 1553);
+    			attr_dev(form, "class", "space-y-4");
+    			add_location(form, file$3, 25, 2, 566);
+    			attr_dev(div4, "class", "container mx-auto p-4 bg-white rounded shadow-lg");
+    			add_location(div4, file$3, 23, 0, 426);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
     		},
     		m: function mount(target, anchor) {
-    			insert_dev(target, div7, anchor);
-    			append_dev(div7, div6);
-    			append_dev(div6, div0);
-    			append_dev(div0, h2);
-    			append_dev(div6, t1);
-    			append_dev(div6, form);
-    			append_dev(form, div4);
-    			append_dev(div4, div1);
-    			append_dev(div1, label0);
-    			append_dev(div1, t3);
-    			append_dev(div1, input0);
-    			append_dev(div4, t4);
-    			append_dev(div4, div2);
-    			append_dev(div2, label1);
-    			append_dev(div2, t6);
-    			append_dev(div2, input1);
-    			append_dev(div4, t7);
-    			append_dev(div4, div3);
-    			append_dev(div3, label2);
-    			append_dev(div3, t9);
-    			append_dev(div3, input2);
+    			insert_dev(target, div4, anchor);
+    			append_dev(div4, h2);
+    			append_dev(div4, t1);
+    			append_dev(div4, form);
+    			append_dev(form, div0);
+    			append_dev(div0, label0);
+    			append_dev(div0, t3);
+    			append_dev(div0, input0);
+    			append_dev(form, t4);
+    			append_dev(form, div1);
+    			append_dev(div1, label1);
+    			append_dev(div1, t6);
+    			append_dev(div1, input1);
+    			append_dev(form, t7);
+    			append_dev(form, div2);
+    			append_dev(div2, label2);
+    			append_dev(div2, t9);
+    			append_dev(div2, input2);
     			append_dev(form, t10);
-    			append_dev(form, div5);
-    			append_dev(div5, button);
-    			append_dev(button, span);
-    			append_dev(span, svg);
-    			append_dev(svg, path0);
-    			append_dev(svg, path1);
-    			append_dev(button, t11);
+    			append_dev(form, div3);
+    			append_dev(div3, button);
 
     			if (!mounted) {
     				dispose = listen_dev(form, "submit", prevent_default(/*handleSubmit*/ ctx[0]), false, true, false, false);
@@ -4302,7 +4255,7 @@ var app = (function () {
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
-    			if (detaching) detach_dev(div7);
+    			if (detaching) detach_dev(div4);
     			mounted = false;
     			dispose();
     		}
@@ -4392,12 +4345,11 @@ var app = (function () {
     			h3.textContent = "Home Page";
     			t1 = space();
     			div0 = element("div");
-    			attr_dev(h3, "class", "text-2xl font-bold mb-4");
-    			add_location(h3, file$2, 5, 4, 158);
-    			attr_dev(div0, "class", "grid grid-cols-1 sm:grid-cols-2 gap-4");
-    			add_location(div0, file$2, 6, 4, 214);
-    			attr_dev(div1, "class", "container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg svelte-10qtssi");
-    			add_location(div1, file$2, 4, 2, 73);
+    			attr_dev(h3, "class", "my-class svelte-1bltt7r");
+    			add_location(h3, file$2, 5, 2, 91);
+    			add_location(div0, file$2, 6, 2, 130);
+    			attr_dev(div1, "class", "my-class svelte-1bltt7r");
+    			add_location(div1, file$2, 4, 0, 65);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4688,13 +4640,13 @@ var app = (function () {
     			create_component(router.$$.fragment);
     			if (!src_url_equal(img.src, img_src_value = "img/academixLogo.png")) attr_dev(img, "src", img_src_value);
     			attr_dev(img, "alt", "Academix Logo");
-    			attr_dev(img, "class", "w-20 h-20 mr-4");
-    			add_location(img, file, 7, 1, 142);
+    			attr_dev(img, "class", "w-500 h-1000 mr-4");
+    			add_location(img, file, 7, 4, 141);
     			attr_dev(h1, "class", "text-4xl font-bold mb-8");
-    			add_location(h1, file, 8, 2, 224);
-    			add_location(div, file, 6, 2, 134);
-    			attr_dev(main, "class", "bg-gray-900 text-white font-sans  svelte-1gmv5eg");
-    			add_location(main, file, 5, 0, 82);
+    			add_location(h1, file, 12, 4, 253);
+    			add_location(div, file, 6, 2, 130);
+    			attr_dev(main, "class", "bg-gray-900 text-white mb-50 svelte-evlyx1");
+    			add_location(main, file, 5, 0, 83);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");

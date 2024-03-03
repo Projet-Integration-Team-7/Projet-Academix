@@ -2,7 +2,7 @@
   import { Link } from "svelte-routing";
 </script>
 
-<div class="container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg">
+<div class="container mx-auto p-4 bg-gray-900 text-white rounded-lg shadow-lg h-screen">
   <h3 class="text-2xl font-bold mb-4">Welcome to Academix</h3>
   <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
     <Link
