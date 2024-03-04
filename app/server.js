@@ -5,7 +5,7 @@ const cors=require('cors')
 const bodyParser=require('body-parser')
 const morgan=require('morgan')
 const{port,mongoURI}=require('./config')
-const transactionsRoutes=require('./routes/transaction')
+const transactionsRoutes=require('./routes/transactions')
 
 
 app.use(cors())
@@ -17,14 +17,15 @@ app.use(morgan('tiny'))
 
 mongoose
   .connect(mongoURI,{
-    useNewUrlParser: true,
+   // useNewUrlParser: true,
    // createIndexes: true, // Corrected option name
     useUnifiedTopology: true
   })
   .then(() => console.log("MongoDb database is connected"))
   .catch((err) => console.log(err));
 
-  app.use('/api/transactions',transactionsRoutes)
+
+app.use('/api/transactions',transactionsRoutes)
 
 app.get('/',(req,res)=>res.send('hello world'))
 
