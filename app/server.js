@@ -19,7 +19,7 @@ mongoose
   .connect(mongoURI,{
    // useNewUrlParser: true,
    // createIndexes: true, // Corrected option name
-    useUnifiedTopology: true
+    //useUnifiedTopology: true
   })
   .then(() => console.log("MongoDb database is connected"))
   .catch((err) => console.log(err));
