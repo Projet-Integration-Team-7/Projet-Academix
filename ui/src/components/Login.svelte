@@ -1,4 +1,3 @@
-<!-- Login.svelte -->
 <script>
   import { post } from "../lib/api";
   import { navigate } from "svelte-routing";

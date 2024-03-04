@@ -7,24 +7,30 @@ router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({extended:true}));
 
 //page pour se connecter
-router.get("/login",(req,res) => {
-    res.render('login')
-    }).post('/login', async (req,res) =>{
-        const{email, password} = req.body;
-        if(!email || !password){
-            return res.status(400).send("Veuillez remplir tous les champs")
-        }
-        try{
-            //Trouver username ou email 
-            let user = await User.findOne({email});
-            if(!user || password != user.password){
-                return res.status(400).send("Mot de passe ou email incorrecte")
-            }
-           return res.redirect("/home");
-        }catch (err){
-            return res.status(500);
-        }
-    })
+router.get("/login", (req, res) => {
+    res.render('login');
+});
+
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+      return res.status(400).send("Veuillez remplir tous les champs");
+    }
+    
+    try {
+      let user = await User.findOne({ email });
+      
+      if (!user || password != user.password) {
+        return res.status(400).send("Mot de passe ou email incorrect");
+      }
+      
+      return res.redirect("/home");
+    } catch (err) {
+      console.error(err);
+      return res.status(500).send("Erreur interne du serveur");
+    }
+});
 
 router.get("/register", (req,res) =>{
     res.render('register', {messages: req.flash()});

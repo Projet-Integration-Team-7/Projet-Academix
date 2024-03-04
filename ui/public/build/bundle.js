@@ -3960,33 +3960,33 @@ var app = (function () {
     			button.textContent = "Login";
     			attr_dev(label0, "for", "email");
     			attr_dev(label0, "class", "block text-gray-700 text-sm font-bold mb-2");
-    			add_location(label0, file$4, 26, 4, 590);
+    			add_location(label0, file$4, 25, 4, 567);
     			attr_dev(input0, "type", "email");
     			attr_dev(input0, "id", "email");
     			input0.required = true;
     			attr_dev(input0, "class", "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline");
-    			add_location(input0, file$4, 29, 4, 693);
+    			add_location(input0, file$4, 28, 4, 670);
     			attr_dev(p0, "class", "text-gray-600 text-xs italic");
-    			add_location(p0, file$4, 36, 4, 931);
+    			add_location(p0, file$4, 35, 4, 908);
     			attr_dev(div0, "class", "mb-4");
-    			add_location(div0, file$4, 25, 2, 566);
+    			add_location(div0, file$4, 24, 2, 543);
     			attr_dev(label1, "for", "password");
     			attr_dev(label1, "class", "block text-gray-700 text-sm font-bold mb-2");
-    			add_location(label1, file$4, 39, 4, 1038);
+    			add_location(label1, file$4, 38, 4, 1015);
     			attr_dev(input1, "type", "password");
     			attr_dev(input1, "id", "password");
     			input1.required = true;
     			attr_dev(input1, "class", "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline");
-    			add_location(input1, file$4, 42, 4, 1147);
+    			add_location(input1, file$4, 41, 4, 1124);
     			attr_dev(p1, "class", "text-gray-600 text-xs italic");
-    			add_location(p1, file$4, 49, 4, 1399);
+    			add_location(p1, file$4, 48, 4, 1376);
     			attr_dev(div1, "class", "mb-6");
-    			add_location(div1, file$4, 38, 2, 1014);
+    			add_location(div1, file$4, 37, 2, 991);
     			attr_dev(button, "type", "submit");
     			attr_dev(button, "class", "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline");
-    			add_location(button, file$4, 51, 2, 1477);
+    			add_location(button, file$4, 50, 2, 1454);
     			attr_dev(form, "class", "w-full max-w-sm mx-auto mt-20");
-    			add_location(form, file$4, 21, 0, 470);
+    			add_location(form, file$4, 20, 0, 447);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -4176,7 +4176,7 @@ var app = (function () {
     			attr_dev(h2, "class", "text-2xl font-bold text-center mb-4");
     			add_location(h2, file$3, 24, 2, 492);
     			attr_dev(label0, "for", "username");
-    			attr_dev(label0, "class", "block font-semibold");
+    			attr_dev(label0, "class", "block font-semibold text-gray-700");
     			add_location(label0, file$3, 27, 6, 649);
     			attr_dev(input0, "id", "username");
     			attr_dev(input0, "name", "username");
@@ -4185,11 +4185,11 @@ var app = (function () {
     			input0.required = true;
     			attr_dev(input0, "placeholder", "Username");
     			attr_dev(input0, "class", "input-field");
-    			add_location(input0, file$3, 28, 6, 723);
+    			add_location(input0, file$3, 30, 6, 755);
     			add_location(div0, file$3, 26, 4, 636);
     			attr_dev(label1, "for", "email");
-    			attr_dev(label1, "class", "block font-semibold");
-    			add_location(label1, file$3, 39, 6, 951);
+    			attr_dev(label1, "class", "block font-semibold text-gray-700");
+    			add_location(label1, file$3, 42, 6, 1014);
     			attr_dev(input1, "id", "email");
     			attr_dev(input1, "name", "email");
     			attr_dev(input1, "type", "email");
@@ -4197,11 +4197,11 @@ var app = (function () {
     			input1.required = true;
     			attr_dev(input1, "placeholder", "Email address");
     			attr_dev(input1, "class", "input-field");
-    			add_location(input1, file$3, 40, 6, 1027);
-    			add_location(div1, file$3, 38, 4, 938);
+    			add_location(input1, file$3, 45, 6, 1122);
+    			add_location(div1, file$3, 41, 4, 1001);
     			attr_dev(label2, "for", "password");
-    			attr_dev(label2, "class", "block font-semibold");
-    			add_location(label2, file$3, 51, 6, 1252);
+    			attr_dev(label2, "class", "block font-semibold text-gray-700");
+    			add_location(label2, file$3, 57, 6, 1375);
     			attr_dev(input2, "id", "password");
     			attr_dev(input2, "name", "password");
     			attr_dev(input2, "type", "password");
@@ -4209,12 +4209,12 @@ var app = (function () {
     			input2.required = true;
     			attr_dev(input2, "placeholder", "Password");
     			attr_dev(input2, "class", "input-field");
-    			add_location(input2, file$3, 52, 6, 1326);
-    			add_location(div2, file$3, 50, 4, 1239);
+    			add_location(input2, file$3, 60, 6, 1481);
+    			add_location(div2, file$3, 56, 4, 1362);
     			attr_dev(button, "type", "submit");
-    			attr_dev(button, "class", "submit-button");
-    			add_location(button, file$3, 63, 6, 1566);
-    			add_location(div3, file$3, 62, 4, 1553);
+    			attr_dev(button, "class", "submit-button text-gray-700");
+    			add_location(button, file$3, 72, 6, 1752);
+    			add_location(div3, file$3, 71, 4, 1739);
     			attr_dev(form, "class", "space-y-4");
     			add_location(form, file$3, 25, 2, 566);
     			attr_dev(div4, "class", "container mx-auto p-4 bg-white rounded shadow-lg");
@@ -4232,32 +4232,53 @@ var app = (function () {
     			append_dev(div0, label0);
     			append_dev(div0, t3);
     			append_dev(div0, input0);
+    			set_input_value(input0, /*username*/ ctx[0]);
     			append_dev(form, t4);
     			append_dev(form, div1);
     			append_dev(div1, label1);
     			append_dev(div1, t6);
     			append_dev(div1, input1);
+    			set_input_value(input1, /*email*/ ctx[1]);
     			append_dev(form, t7);
     			append_dev(form, div2);
     			append_dev(div2, label2);
     			append_dev(div2, t9);
     			append_dev(div2, input2);
+    			set_input_value(input2, /*password*/ ctx[2]);
     			append_dev(form, t10);
     			append_dev(form, div3);
     			append_dev(div3, button);
 
     			if (!mounted) {
-    				dispose = listen_dev(form, "submit", prevent_default(/*handleSubmit*/ ctx[0]), false, true, false, false);
+    				dispose = [
+    					listen_dev(input0, "input", /*input0_input_handler*/ ctx[4]),
+    					listen_dev(input1, "input", /*input1_input_handler*/ ctx[5]),
+    					listen_dev(input2, "input", /*input2_input_handler*/ ctx[6]),
+    					listen_dev(form, "submit", prevent_default(/*handleSubmit*/ ctx[3]), false, true, false, false)
+    				];
+
     				mounted = true;
     			}
     		},
-    		p: noop,
+    		p: function update(ctx, [dirty]) {
+    			if (dirty & /*username*/ 1 && input0.value !== /*username*/ ctx[0]) {
+    				set_input_value(input0, /*username*/ ctx[0]);
+    			}
+
+    			if (dirty & /*email*/ 2 && input1.value !== /*email*/ ctx[1]) {
+    				set_input_value(input1, /*email*/ ctx[1]);
+    			}
+
+    			if (dirty & /*password*/ 4 && input2.value !== /*password*/ ctx[2]) {
+    				set_input_value(input2, /*password*/ ctx[2]);
+    			}
+    		},
     		i: noop,
     		o: noop,
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div4);
     			mounted = false;
-    			dispose();
+    			run_all(dispose);
     		}
     	};
 
@@ -4293,6 +4314,21 @@ var app = (function () {
     		if (!~writable_props.indexOf(key) && key.slice(0, 2) !== '$$' && key !== 'slot') console.warn(`<Register> was created with unknown prop '${key}'`);
     	});
 
+    	function input0_input_handler() {
+    		username = this.value;
+    		$$invalidate(0, username);
+    	}
+
+    	function input1_input_handler() {
+    		email = this.value;
+    		$$invalidate(1, email);
+    	}
+
+    	function input2_input_handler() {
+    		password = this.value;
+    		$$invalidate(2, password);
+    	}
+
     	$$self.$capture_state = () => ({
     		post,
     		navigate,
@@ -4303,16 +4339,24 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('username' in $$props) username = $$props.username;
-    		if ('email' in $$props) email = $$props.email;
-    		if ('password' in $$props) password = $$props.password;
+    		if ('username' in $$props) $$invalidate(0, username = $$props.username);
+    		if ('email' in $$props) $$invalidate(1, email = $$props.email);
+    		if ('password' in $$props) $$invalidate(2, password = $$props.password);
     	};
 
     	if ($$props && "$$inject" in $$props) {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [handleSubmit];
+    	return [
+    		username,
+    		email,
+    		password,
+    		handleSubmit,
+    		input0_input_handler,
+    		input1_input_handler,
+    		input2_input_handler
+    	];
     }
 
     class Register extends SvelteComponentDev {

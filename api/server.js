@@ -6,7 +6,7 @@ const session = require('express-session');
 
 // Setup connection to database (MongoDB)
 const mongoose = require('mongoose'); 
-const DB_URI = "mongodb://localhost/projet7"
+const DB_URI = "mongodb+srv://bzyounes05:S57NVR3KXdZXrB2M@academix-data-base.zuzp88h.mongodb.net/?retryWrites=true&w=majority&appName=Academix-Data-Base"
 mongoose.connect(DB_URI)
 .then(() => console.log("Successfully connected to MongoDB"))
 .catch((err) => {
