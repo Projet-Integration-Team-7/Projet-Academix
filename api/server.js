@@ -43,6 +43,10 @@ app.use('/user', userRouter);
 const homeRouter = require('./routes/home');
 app.use('/home', homeRouter)
 
+//router profil
+const profileRouter = require('./routes/profile');
+app.use('/profile', profileRouter)
+
 app.listen(3000, () => {
     console.log("Server running on port 3000");
     

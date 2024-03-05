@@ -1,0 +1,21 @@
+<h1>Create Your Profile</h1>
+<form action="/profile/creation" method="post" enctype="multipart/form-data">
+  <div>
+    <label for="profilePicture">Profile Picture:</label>
+    <input type="file" name="profilePicture" id="profilePicture">
+  </div>
+  <div>
+    <label for="username">Username:</label>
+    <input type="text" name="username" id="username" value="<%= user.username %>">
+  </div>
+  <div>
+    <label for="bio">Bio:</label>
+    <textarea name="bio" id="bio"><%= user.bio %></textarea>
+  </div>
+  <input type="submit" value="Submit">
+</form>
+<% if (user.picture) { %>
+  <img src="data:<%= user.picture.contentType %>;base64,<%= user.picture.data.toString('base64') %>" alt="Profile Picture">
+<% } else { %>
+  <img src="/default-picture.jpg" alt="Default Profile Picture">
+<% } %>

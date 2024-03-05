@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1, h2 {
+            margin-bottom: 10px;
+        }
+        .profile-picture {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, <%= prenom %> <%= nom %></h1>
+    <img class="profile-picture" src="data:<%= user.picture.contentType %>;base64,<%= user.picture.data.toString('base64') %>" alt="Profile Picture">
+    <h2>Username: <%= username %></h2>
+    <h2>Bio: <%= bio %></h2>
+</body>
+</html>
