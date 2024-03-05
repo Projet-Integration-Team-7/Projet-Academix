@@ -1,6 +1,7 @@
 <script>
+  import axios from "axios"
   import Transaction from "./components/Transaction.svelte";
-  import axios from "axios";
+  
   import { onMount } from "svelte";
 
   let input = 0;
@@ -66,6 +67,7 @@
       </button>
     </div>
   {/each}
+  {JSON.stringify(transactions)}
 </div>
 
 <style>
