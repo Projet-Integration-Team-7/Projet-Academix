@@ -3,7 +3,7 @@ import { Inter } from "next/font/google"
 import '../globals.css'
 
 export const metadata={
-    tittle:'Academix',
+    title:'Academix',
     description:'A Next.js 13 Meta Academix app'
 
 }
