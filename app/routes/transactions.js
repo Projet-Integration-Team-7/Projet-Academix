@@ -4,15 +4,15 @@ const Transaction = require('../models/Transaction')
 const router = Router()
 
 function ensureLogin(req, res, next) {
-    if(!res.isAuthenticated()) {
+    if(!req.isAuthenticated()) {
         return res.status(401).send({message: 'Not authenticated'})
     }
     next()
 }
 
-router.get('/', async (req, res) => {
+router.get('/', ensureLogin, async (req, res) => {
     try {
-        const transactions = await Transaction.find()
+        const transactions = await Transaction.find({user_id: req.user._od}).exec()
         if (!transactions) {
             throw new Error('No transactions')
         }
@@ -22,9 +22,9 @@ router.get('/', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', ensureLogin, async (req, res) => {
     const { value, date } = req.body
-    const newTransaction = new Transaction({ value, date })
+    const newTransaction = new Transaction({ value, date, user_id: req.user_id })
 
     try {
         const transaction = await newTransaction.save()
@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', ensureLogin, async (req, res) => {
   const { id } = req.params;
   console.log('Deleting transaction with ID:', id);
 
@@ -46,6 +46,11 @@ router.delete('/:id', async (req, res) => {
       if (!transaction) {
           throw new Error('No transaction was found');
       }
+
+      if(transaction,user_id !== String(req.user._id)) {
+        return res.status(403).json({message: 'Unauthorized' })
+      }
+
       const removed = await Transaction.deleteOne({ _id: id });
 
       if (!removed) {
