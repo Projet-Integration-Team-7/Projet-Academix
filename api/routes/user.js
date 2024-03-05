@@ -20,7 +20,11 @@ router.get("/login",(req,res) => {
             if(!user || password != user.password){
                 return res.status(400).send("Mot de passe ou email incorrecte")
             }
-           return res.redirect("/home");
+            //sauvegarde user dans la session
+            req.session.user = user;
+            //si n'a pas de profile redirige vers creation de profil
+            if(user.hasProfile){
+           return res.redirect("/home");}else{ return res.redirect("/profile/creation")}
         }catch (err){
             return res.status(500);
         }
