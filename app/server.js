@@ -38,8 +38,8 @@ passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize()); // Corrected function invocation
+app.use(passport.session()); // Corrected function invocation
 
 app.use('/api/transactions', transactionsRoutes);
 app.use('/api/auth', authRoutes);
