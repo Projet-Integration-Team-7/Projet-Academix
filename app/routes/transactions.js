@@ -3,6 +3,13 @@ const Transaction = require('../models/Transaction')
 
 const router = Router()
 
+function ensureLogin(req, res, next) {
+    if(!res.isAuthenticated()) {
+        return res.status(401).send({message: 'Not authenticated'})
+    }
+    next()
+}
+
 router.get('/', async (req, res) => {
     try {
         const transactions = await Transaction.find()
