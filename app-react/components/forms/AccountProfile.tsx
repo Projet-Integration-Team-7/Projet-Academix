@@ -21,6 +21,9 @@ import { ChangeEvent, useState } from 'react';
 import { Arapey } from 'next/font/google';
 import { isBase64Image } from '@/lib/utils';
 import {useUploadThing} from'@/lib/uploadthing'
+import { updateUser } from '@/lib/actions/user.actions';
+
+import { usePathname,useRouter } from 'next/navigation';
 
 interface Props{
     user:{
@@ -36,11 +39,12 @@ interface Props{
 
 
 }
-
+//cest les liasons les ancorages ici quon prend des ifchier ts
 const AccountProfile=({user,btnTitle}:Props)=>{
 const[files,setFiles]=useState<File []>([])
 const{ startUpload}=useUploadThing("media");
-
+const router=useRouter();
+const pathname=usePathname();
 
     const form=useForm({
         resolver:zodResolver(UserValidation),
@@ -89,12 +93,26 @@ const{ startUpload}=useUploadThing("media");
       values.profile_photo=imgRes[0].fileUrl;
     }
    }
-   //TODO mise a joure de user profile back end
+   await updateUser({
+    name:values.name,
+    path:pathname,
+    username:values.username,
+    userId:user.id,
+    bio:values.bio,
+    image:values.profile_photo,
+    
+  });
+
+  if(pathname==='/profile/edit'){
+    router.back();
+  }else{
+    router.push('/');
+  }
   }
 
     return(
         <Form {...form}>
-        <form 
+        <form    
         onSubmit={form.handleSubmit(onSubmit)}
          className="flex flex-col justify-start gap-10">
           <FormField
