@@ -34,4 +34,4 @@ const ProfileHeader =({
         </div>
     )
 }
-export default ProfileHeader
+export default ProfileHeader;

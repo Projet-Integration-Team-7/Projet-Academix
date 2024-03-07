@@ -17,14 +17,17 @@ async function Page({ params } :{ params : { id : string}}){
     if(!userInfo?.onboarded)redirect("/onboarding");
     return(
     <section>
-        <ProfileHeader>
-             accountId={userInfo.id}
-             authUserId={user.id}
-             name={userInfo.name}
-             username={userInfo.username}
-             imageUrl={userInfo.image}
-             bio={userInfo.bio}
-        </ProfileHeader>
+
+        <ProfileHeader 
+               accountId={userInfo.id}
+               authUserId={user.id}
+               name={userInfo.name}
+               username={userInfo.username}
+               imgUrl={userInfo.image}
+               bio={userInfo.bio}
+        
+        />
+
     </section>
     )
 }
