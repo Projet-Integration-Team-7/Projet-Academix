@@ -12,7 +12,7 @@ function Topbar() {
             </Link>
 
             <div className="flex items-center gap-4">
-                <div className="bloc md:hidden">
+                <div className="block md:hidden">
                     <SignedIn>
                         <SignOutButton>
                             <div className="flex cursor-pointer">

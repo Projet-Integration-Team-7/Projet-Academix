@@ -72,13 +72,13 @@ function PostThread({userId}:{userId:string}){
          className="mt-10 flex flex-col justify-start gap-10">
 
 
-<FormField
+          <FormField  
             control={form.control}
             name="thread"
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3 w-full">
                 <FormLabel className="atext-base-semibold text-light-2">
-                Contennu 
+                Content
 
                 </FormLabel>
                 <FormControl className="no-focus border 
