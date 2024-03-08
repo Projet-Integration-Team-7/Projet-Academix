@@ -1,7 +1,7 @@
 import { fetchUserPosts } from "@/lib/actions/user.actions";
-import { redirect } from "next/dist/server/api-utils";
 import { permanentRedirect } from "next/navigation";
 import ThreadCard from "../cards/ThreadCard";
+import { redirect } from "next/navigation";
 
 /*Permet de poouvoir fetch les postes appartenant à cet exact utilisateur */
 interface Props{
@@ -11,7 +11,7 @@ interface Props{
 }
 
 const ThreadsTab=async ({currentUserId,accountId,accountType} :
-     Props ) => {
+    Props ) => {
 let result=await fetchUserPosts(accountId);
 if(!result) redirect('/')
 
