@@ -135,4 +135,29 @@ const query: FilterQuery<typeof User> = {
 throw new Error (`Failed to fetch users : ${error.message}` )
     }
 }
+// systeme de <<notifications >>
+export async function getActivity (userId : string ){
+    try{
+        connectToDB();
+
+        // trouver tous les postes du user
+        const userThreads = await Thread.find ({author: userId})
+        // collecte tous les messages envoye et les place dans ensemble dans un tableau
+        const childThreadIds=userThreads.reduce( (acc,userThread)=> {
+        return acc.concat(userThread.children)
+        },[])
+        const replies =await Thread.find({
+            _id:{$in: childThreadIds},
+            author: {$ne: userId}
+        }) .populate(
+            {
+                path: 'author',
+                model : User,
+                select: 'name image _id'
+            })
+            return replies;
+    } catch (error : any){
+        throw new Error (`Failed to fetch activity : ${error.message }`)
+    }
+    }
 
