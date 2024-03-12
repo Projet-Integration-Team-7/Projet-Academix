@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.3.1",
     "@clerk/nextjs": "^4.29.9",
     "@clerk/themes": "^1.7.9",
     "@hookform/resolvers": "^3.3.4",
@@ -17,6 +18,8 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@uploadthing/react": "^6.3.2",
+    "axios": "^1.6.7",
+    "chat-engine": "^0.9.21",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "lucide-react": "^0.344.0",
@@ -24,6 +27,7 @@
     "mongoose": "^8.2.1",
     "next": "14.1.2",
     "react": "^18",
+    "react-chat-engine": "^1.11.28",
     "react-dom": "^18",
     "react-hook-form": "^7.51.0",
     "shadcn-ui": "^0.8.0",
