@@ -7,16 +7,17 @@ import { revalidatePath } from "next/cache";
 import path from "path";
 import { threadId } from "worker_threads";
 
-interface Params{
-    text:string,
-    author:string,
-    communityId:string|null,
-    path:string,
+interface Params {
+    text: string;
+    author: string;
+    communityId: string | null;
+    image: string | null; // Modifier le type pour accepter null
+    path: string;
 }
 //on a bseoind e quoi pr thread
 //65e8b0a1d1c5a76fc26547e7
 //methode quon appele back end
-export async function createThread({text,author,communityId,path}:Params) {
+export async function createThread({text,author,communityId,image,path}:Params) {
     try {
         
     connectToDB();
@@ -24,6 +25,7 @@ export async function createThread({text,author,communityId,path}:Params) {
     const createdThread=await Thread.create({
         text,
         author,
+        image,
         community:null,
     });
     //mise a jour user model

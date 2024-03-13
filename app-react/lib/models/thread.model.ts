@@ -15,6 +15,10 @@ const threadSchema=new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "Community",
       },
+      image: {
+        type: String,
+        required: true,
+      },
       //groupes 
       createdAt: {
         type: Date,
