@@ -51,7 +51,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                         content={childItem.text}
                         author={childItem.author}
                         community={childItem.community}
-                        createdAt={childItem.ceatedAt}
+                        createdAt={childItem.createdAt}
                         comments={childItem.children}
                         isComment
                     />
