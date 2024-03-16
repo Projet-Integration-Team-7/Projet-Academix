@@ -113,6 +113,7 @@ export async function addCommentToThread(
     threadId: string,
     commentText: string,
     userId: string,
+    image:string,
     path: string,
 ) {
     connectToDB();
@@ -129,6 +130,7 @@ export async function addCommentToThread(
         const commentThread = new Thread({
             text: commentText,
             author: userId,
+            image:image,
             parentId: threadId,
         })
 
