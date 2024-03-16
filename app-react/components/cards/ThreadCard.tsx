@@ -56,7 +56,8 @@ const ThreadCard = ({
                             <h4 className="cursor-pointer text-base-semibold text-light-1">{author.name}</h4>
                         </Link>
                         
-                     <Image src={imgUrl} alt="image-thread" width={100} height={100} />
+                        {imgUrl !== "" && (<Image src={imgUrl} alt="image-thread" width={100} height={100} />)}
+
 
                         <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
