@@ -177,3 +177,22 @@ export async function updateLikeToThread(
         throw new Error(`Error adding comment to thread: ${error.message}`)
     }
 }
+
+export async function getThreadLikesCount(
+    threadId: string
+    ): Promise<number> {
+    try {
+        // Find the thread by threadId
+        const thread = await Thread.findById(threadId);
+        if (!thread) {
+            throw new Error("Thread not found");
+        }
+
+        // Get the number of keys in the likes Map
+        const likesCount = thread.likes.size;
+        
+        return likesCount;
+    } catch (error: any) {
+        throw new Error(`Failed to get thread likes count: ${error.message}`);
+    }
+}

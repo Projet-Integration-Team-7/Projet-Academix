@@ -2,24 +2,21 @@
 import Image from "next/image";
 import { useState } from "react";
 import { updatePostToLikes } from "@/lib/actions/user.actions";
-import { updateLikeToThread } from "@/lib/actions/thread.action";
+import { getThreadLikesCount, updateLikeToThread } from "@/lib/actions/thread.action";
 
 interface LikeBtnProps {
     threadId: string;
-    likes: number;
+    userId: string;
 }
 
-const LikeBtn = ({ threadId, likes }: LikeBtnProps) => {
+const LikeBtn = ({ threadId, userId}: LikeBtnProps) => {
     const [isLiked, setIsLiked] = useState(false);
     
 
     const handleClick = () => {
         setIsLiked(!isLiked);
-        if (isLiked){
-            likes+1;
-        }else {
-            likes -1
-        }
+        updateLikeToThread(threadId,userId,isLiked)
+        updatePostToLikes(userId,threadId,isLiked)
 
     };
 
@@ -33,7 +30,7 @@ const LikeBtn = ({ threadId, likes }: LikeBtnProps) => {
                 className="cursor-pointer object-contain transition ease-in-out hover:scale-110 hover:-translate-y-1"
                 onClick={handleClick}
             />
-            <span className="text-gray-200 m-0">{likes||0}</span>
+            <span className="text-gray-200 m-0">{getThreadLikesCount(threadId)}</span>
         </div>
     );
 };
