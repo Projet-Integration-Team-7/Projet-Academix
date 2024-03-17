@@ -11,12 +11,13 @@ interface Params{
     text:string,
     author:string,
     communityId:string|null,
+    likes: Map<string,Date>,
     path:string,
 }
 //on a bseoind e quoi pr thread
 //65e8b0a1d1c5a76fc26547e7
 //methode quon appele back end
-export async function createThread({text,author,communityId,path}:Params) {
+export async function createThread({text,author,communityId,likes,path}:Params) {
     try {
         
     connectToDB();
@@ -25,6 +26,7 @@ export async function createThread({text,author,communityId,path}:Params) {
         text,
         author,
         community:null,
+        likes,
     });
     //mise a jour user model
     await User.findByIdAndUpdate(author,{
@@ -59,6 +61,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
                 select: "_id name parentId imgage"
             }
         })
+       
 
         const totalPostsCount = await Thread.countDocuments({ parentId: { $in: [null, undefined]} })
 
@@ -141,6 +144,35 @@ export async function addCommentToThread(
         await originalThread.save();
         
         revalidatePath(path);
+    } catch (error: any) {
+        throw new Error(`Error adding comment to thread: ${error.message}`)
+    }
+}
+
+export async function updateLikeToThread(
+    threadId: string,
+    userId: string,
+    isLiked: boolean,
+){
+    connectToDB();
+
+    try {
+        // Trouver la publication originale par son ID
+        const originalThread = await Thread.findById(threadId);
+
+        if  (!originalThread) {
+            throw new Error("Thread not found")
+        }
+
+        if (isLiked){
+            originalThread.likes.set(userId);
+        } else {
+            originalThread.likes.delete(userId);
+        }
+
+        
+        await originalThread.save();
+        
     } catch (error: any) {
         throw new Error(`Error adding comment to thread: ${error.message}`)
     }
