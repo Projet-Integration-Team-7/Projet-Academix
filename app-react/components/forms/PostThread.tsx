@@ -60,6 +60,7 @@ function PostThread({userId}:{userId:string}){
             text:values.thread,
             author:userId,
             communityId:null,
+            likes: new Map(),
             path:pathname
         })
         router.push("/")

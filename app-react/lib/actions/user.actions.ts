@@ -61,9 +61,7 @@ export async function updateUser({
             throw new Error(`Failed to fetch user:${error.message}`)
         }
      }   
-    export async function fetchUserPosts(userId: string )
-
-{
+    export async function fetchUserPosts(userId: string ) {
     try{
         connectToDB
         // trouver les posts du user selon son id
@@ -71,24 +69,25 @@ export async function updateUser({
         // TODO : populate community
         const threads=await User.findOne({id : userId})
         .populate({
-path: 'threads', 
-model : Thread,
-populate : {
-    path  : 'children',
-    model : Thread,
-    populate : {
-        path:'author',
-        model: User,
-        select : 'name image id'
-    }
-}
+            path: 'threads', 
+            model : Thread,
+            populate : {
+                path  : 'children',
+                model : Thread,
+                populate : {
+                    path:'author',
+                    model: User,
+                    select : 'name image id'
+            }
+        }   
 
         })
         return threads 
-    }catch(error : any){
+    } catch(error : any){
        throw new Error('Failed to fetch user posts : ${error.message}')  
     }
 }
+
 export async function fetchUsers({
     userId,
     searchString="",
@@ -159,5 +158,32 @@ export async function getActivity (userId : string ){
     } catch (error : any){
         throw new Error (`Failed to fetch activity : ${error.message }`)
     }
+}
+
+export async function updatePostToLikes(
+    userId: string,
+    postId: string,
+    isLiked: boolean,
+    ): Promise<void> {
+    try {
+        // Find the user by userId
+        const user = await User.findOne({ id: userId });
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        // Update the likes Map to add the postId as a key
+        if (isLiked){
+            user.likes.set(postId);
+        } else {
+            // If like is true, add postId to likes Map
+            user.likes.delete(postId);
+        }
+        
+        // Save the updated user
+        await user.save();
+    } catch (error: any) {
+        throw new Error(`Failed to add post like: ${error.message}`);
     }
+}
 

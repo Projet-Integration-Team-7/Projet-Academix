@@ -33,6 +33,13 @@ const userSchema=new mongoose.Schema({
       ref: "Community",
     },
   ],
+  likes: {
+    type: Map,
+    of: {
+        type: Date,
+        default: Date.now,
+    },
+  }
 });
 
 const User=mongoose.models.User ||mongoose.model('User',userSchema);
