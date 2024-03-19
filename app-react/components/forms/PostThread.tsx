@@ -57,7 +57,7 @@ function PostThread({userId}:{userId:string}){
              defaultValues:{
                 thread:'',
                 accountId:userId,
-                image_thread:"",
+                image_thread:"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAQ4AQMAAADSHVMAAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAGUExURQAAAAAAAKVnuc8AAAABdFJOU/4a4wd9AAAED0lEQVR42u3PQQ0AAAgEIDf7V1ZfpjhoQG2WKWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYeHccIj+8AGdU9s1O0HsQgAAAABJRU5ErkJggg==",
              }
         })
 const handleImage = (
@@ -93,31 +93,33 @@ const handleImage = (
 
 
         //pour envoyer  le formulaire on utilise la fonction handleSubmit
-    const onSubmit= async (values:z.infer<typeof ThreadValidation>)=>{
-      const blob=values.image_thread;
-
-   const hasImageChanged=isBase64Image(blob);
-
-   if(hasImageChanged){
-    const imgRes=await startUpload(files)
-
-    if(imgRes && imgRes[0].fileUrl){
-      values.image_thread=imgRes[0].fileUrl;
-    }
-   }
-        await createThread({
-            text:values.thread,
-            author:userId,
-            communityId:null,
-            path:pathname,
-            image:values.image_thread,
-        })
-  if(pathname==='/profile/edit'){
-  router.back();
-  }else{
-    router.push('/');
-  }
-    }
+        const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+          const blob = values.image_thread;
+        
+          const hasImageChanged = isBase64Image(blob);
+        
+          if (hasImageChanged) {
+            const imgRes = await startUpload(files);
+        
+            if (imgRes && imgRes.length > 0 && imgRes[0].fileUrl) {
+              values.image_thread = imgRes[0].fileUrl;
+            }
+          }
+        
+          await createThread({
+            text: values.thread,
+            author: userId,
+            communityId: null,
+            path: pathname,
+            image: values.image_thread,
+          });
+        
+          if (pathname === '/thread/edit') {
+            router.back();
+          } else {
+            router.push('/');
+          }
+        };
 
     return (
      <Form {...form}>
@@ -167,7 +169,7 @@ const handleImage = (
                     
                    ):(
                     <img
-                     src="/assets/thread.svg" 
+                     src="" 
                     alt="image_thread" 
                     width={100} 
                     height={100} 
