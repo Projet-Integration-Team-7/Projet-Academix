@@ -36,7 +36,8 @@ const threadSchema=new mongoose.Schema({
             type: Date,
             default: Date.now,
         },
-      }
+        // default: new Map(),
+    }
 });
 
 const Thread=mongoose.models.Thread ||mongoose.model('Thread',threadSchema);
