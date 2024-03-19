@@ -161,10 +161,10 @@ export async function getActivity (userId : string ){
 }
 
 export async function updatePostToLikes(
+    threadId: string,
     userId: string,
-    postId: string,
-    isLiked: boolean,
-    ): Promise<void> {
+    isLiked: boolean
+    ) {
     try {
         // Find the user by userId
         const user = await User.findOne({ id: userId });
@@ -172,18 +172,20 @@ export async function updatePostToLikes(
             throw new Error("User not found");
         }
 
-        // Update the likes Map to add the postId as a key
+        // Update the likes Map to add the threadId as a key
         if (isLiked){
-            user.likes.set(postId);
+            user.likes.set(threadId, Date.now);
         } else {
-            // If like is true, add postId to likes Map
-            user.likes.delete(postId);
+            // If like is true, add threadId to likes Map
+            user.likes.delete(threadId);
         }
+
+        console.log(user);
         
         // Save the updated user
         await user.save();
     } catch (error: any) {
-        throw new Error(`Failed to add post like: ${error.message}`);
+        throw new Error(`Failed to update post in the likes of the user: ${error.message}`);
     }
 }
 
