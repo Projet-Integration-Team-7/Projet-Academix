@@ -26,7 +26,7 @@ interface Props {
             image: string;
         }
     }[]
-    likes : number,
+    likes : Map<string,Date>,
     isComment?: boolean;
 }
 
@@ -39,6 +39,7 @@ const ThreadCard = ({
     community,
     createdAt,
     comments,
+    likes,
     isComment,
 }: Props) => {
 
@@ -63,7 +64,7 @@ const ThreadCard = ({
 
                         <div className="mb-10 mt-5 flex-col gap-3">
                             <div className="flex gap-3.5">
-                                <LikeBtn threadId={id} userId={author.id} />
+                                <LikeBtn threadId={id} userId={author.id} likes={likes}/>
                                 <Link href={`/thread/${id}`}>
                                     <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain" />
                                 </Link>
