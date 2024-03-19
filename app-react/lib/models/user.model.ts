@@ -1,45 +1,44 @@
 import mongoose   from "mongoose";
 
-const userSchema=new mongoose.Schema({
-   
-  id: {
-    type: String,
-    required: true,
-  },
-  username: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  image: String,
-  bio: String,
-  threads: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Thread",
+const userSchema=new mongoose.Schema({ 
+    id: {
+      type: String,
+      required: true,
     },
-  ],
-  onboarded: {
-    type: Boolean,
-    default: false,
-  },
-  communities: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Community",
+    username: {
+      type: String,
+      unique: true,
+      required: true,
     },
-  ],
-  likes: {
-    type: Map,
-    of: {
-        type: Date,
-        default: Date.now,
+    name: {
+      type: String,
+      required: true,
     },
-    default: new Map(),
+    image: String,
+    bio: String,
+    threads: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Thread",
+      },
+    ],
+    onboarded: {
+      type: Boolean,
+      default: false,
+    },
+    communities: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Community",
+      },
+    ],
+    likes: {
+      type: Map,
+      of: {
+          type: Date,
+          default: Date.now,
+      },
+      default: new Map(),
   }
 });
 
