@@ -1,5 +1,6 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts } from "@/lib/actions/thread.action";
+import Thread from "@/lib/models/thread.model";
 import { currentUser } from "@clerk/nextjs";
 
 export default async function Home() {
@@ -26,9 +27,8 @@ export default async function Home() {
                 content={post.text}
                 author={post.author}
                 community={post.community}
-                createdAt={post.ceatedAt}
+                createdAt={post.createdAt}
                 comments={post.children}
-                likes={0}
               />
             ))}
           </>

@@ -11,13 +11,19 @@ interface LikeBtnProps {
 
 const LikeBtn = ({ threadId, userId}: LikeBtnProps) => {
     const [isLiked, setIsLiked] = useState(false);
+    const [nbLikes, setNbLikes] = useState(0);
     
 
-    const handleClick = () => {
-        setIsLiked(!isLiked);
-        updateLikeToThread(threadId,userId,isLiked)
-        updatePostToLikes(userId,threadId,isLiked)
+    const handleClick = async () => {
+        const liked = !isLiked;
 
+        setIsLiked(liked);
+
+        await updateLikeToThread(threadId,userId,liked)
+        await updatePostToLikes(threadId,userId,liked)
+
+        const comptage = await getThreadLikesCount(threadId);
+        setNbLikes(comptage);
     };
 
     return (
@@ -30,7 +36,7 @@ const LikeBtn = ({ threadId, userId}: LikeBtnProps) => {
                 className="cursor-pointer object-contain transition ease-in-out hover:scale-110 hover:-translate-y-1"
                 onClick={handleClick}
             />
-            <span className="text-gray-200 m-0">{getThreadLikesCount(threadId)}</span>
+            <span className="text-gray-200 m-0">{nbLikes}</span>
         </div>
     );
 };

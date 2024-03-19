@@ -11,13 +11,12 @@ interface Params{
     text:string,
     author:string,
     communityId:string|null,
-    likes: Map<string,Date>,
     path:string,
 }
 //on a bseoind e quoi pr thread
 //65e8b0a1d1c5a76fc26547e7
 //methode quon appele back end
-export async function createThread({text,author,communityId,likes,path}:Params) {
+export async function createThread({text,author,communityId,path}:Params) {
     try {
         
     connectToDB();
@@ -26,7 +25,6 @@ export async function createThread({text,author,communityId,likes,path}:Params) 
         text,
         author,
         community:null,
-        likes,
     });
     //mise a jour user model
     await User.findByIdAndUpdate(author,{
@@ -49,7 +47,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 
     // On veut chercher les publications qui n'ont pas de parents (= qui ne sont pas des commentaires)
     const postsQuery = Thread.find({ parentId: { $in: [null, undefined]}})
-        .sort({ createAt: 'desc'})
+        .sort({ createdAt: 'desc'})
         .skip(skipAmount)
         .limit(pageSize)
         .populate({ path: 'author', model: User})
@@ -58,9 +56,10 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
             populate: {
                 path: 'author',
                 model: User,
-                select: "_id name parentId imgage"
+                select: "_id name parentId image"
             }
         })
+        
        
 
         const totalPostsCount = await Thread.countDocuments({ parentId: { $in: [null, undefined]} })
@@ -158,23 +157,24 @@ export async function updateLikeToThread(
 
     try {
         // Trouver la publication originale par son ID
-        const originalThread = await Thread.findById(threadId);
+        const currentThread = await Thread.findById(threadId);
 
-        if  (!originalThread) {
+        if  (!currentThread) {
             throw new Error("Thread not found")
         }
 
         if (isLiked){
-            originalThread.likes.set(userId);
+            currentThread.likes.set(userId,new Date());
         } else {
-            originalThread.likes.delete(userId);
+            currentThread.likes.delete(userId);
         }
 
+        console.log(currentThread)
         
-        await originalThread.save();
+        await currentThread.save();
         
     } catch (error: any) {
-        throw new Error(`Error adding comment to thread: ${error.message}`)
+        throw new Error(`Error updating the like on the thread: ${error.message}`)
     }
 }
 
