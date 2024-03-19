@@ -6,13 +6,13 @@ import { getThreadLikes, getThreadLikesCount, updateLikeToThread } from "@/lib/a
 
 interface LikeBtnProps {
     threadId: string;
-    userId: string;
+    currentUserId: string;
     mapLikes: Map<string,Date>;
     likesCount: number
 }
 
-const LikeBtn = ({ threadId, userId, mapLikes, likesCount}: LikeBtnProps) => {
-    const alreadyLiked = mapLikes.hasOwnProperty(userId);
+const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps) => {
+    const alreadyLiked = mapLikes.hasOwnProperty(currentUserId);
  
     const [isLiked, setIsLiked] = useState(alreadyLiked);
     const [nbLikes, setNbLikes] = useState(likesCount);
@@ -22,8 +22,8 @@ const LikeBtn = ({ threadId, userId, mapLikes, likesCount}: LikeBtnProps) => {
 
         setIsLiked(liked);
 
-        await updateLikeToThread(threadId,userId,liked)
-        await updatePostToLikes(threadId,userId,liked)
+        await updateLikeToThread(threadId,currentUserId,liked)
+        await updatePostToLikes(threadId,currentUserId,liked)
 
         const comptage = await getThreadLikesCount(threadId);
         setNbLikes(comptage);
