@@ -28,7 +28,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                 content={thread.text}
                 author={thread.author}
                 community={thread.community}
-                imgUrl={thread.image}
+                imgUrl={thread.image||""}
                 createdAt={thread.ceatedAt}
                 comments={thread.children}
                 />
