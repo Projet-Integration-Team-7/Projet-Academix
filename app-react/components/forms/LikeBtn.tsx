@@ -7,17 +7,18 @@ import { getThreadLikes, getThreadLikesCount, updateLikeToThread } from "@/lib/a
 interface LikeBtnProps {
     threadId: string;
     userId: string;
-    likes: Map<string,Date>
+    mapLikes: Map<string,Date>;
+    likesCount: number
 }
 
-const LikeBtn = ({ threadId, userId, likes}: LikeBtnProps) => {
-    const alreadyLiked = likes.hasOwnProperty(userId);
+const LikeBtn = ({ threadId, userId, mapLikes, likesCount}: LikeBtnProps) => {
+    const alreadyLiked = mapLikes.hasOwnProperty(userId);
  
     const [isLiked, setIsLiked] = useState(alreadyLiked);
-    const [nbLikes, setNbLikes] = useState(likes.size);
+    const [nbLikes, setNbLikes] = useState(likesCount);
 
     const handleClick = async () => {
-        const liked = !isLiked;
+        const liked = !isLiked; 
 
         setIsLiked(liked);
 
@@ -38,7 +39,7 @@ const LikeBtn = ({ threadId, userId, likes}: LikeBtnProps) => {
                 className="cursor-pointer object-contain transition ease-in-out hover:scale-110 hover:-translate-y-1"
                 onClick={handleClick}
             />
-            <span className="text-gray-200 m-0">{nbLikes || 0}</span>
+            <span className="text-gray-200 m-0">{nbLikes}</span>
         </div>
     );
 };
