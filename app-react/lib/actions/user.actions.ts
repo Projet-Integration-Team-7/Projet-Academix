@@ -172,15 +172,16 @@ export async function updatePostToLikes(
             throw new Error("User not found");
         }
 
+        console.log(user);
         // Update the likes Map to add the threadId as a key
         if (isLiked){
-            user.likes.set(threadId, Date.now);
+            user.likes.set(threadId, new Date());
         } else {
             // If like is true, add threadId to likes Map
             user.likes.delete(threadId);
         }
 
-        console.log(user);
+        
         
         // Save the updated user
         await user.save();
