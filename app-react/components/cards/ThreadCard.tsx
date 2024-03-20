@@ -67,7 +67,7 @@ const ThreadCard = ({
 
                         <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
-                        <div className=" inline-block mb-10 mt-5 flex-col gap-3">
+                        <div className=" flex mb-10 mt-5 flex-col gap-3 align-middle">
                             <div className=" flex gap-3.5">
                                 <LikeBtn threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} mapLikes={likes} likesCount={likes.size} />
                                 <Link href={`/thread/${id}`}>
