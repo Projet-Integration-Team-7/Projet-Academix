@@ -18,6 +18,7 @@ import { isBase64Image } from '@/lib/utils';
 import {useUploadThing} from'@/lib/uploadthing'
 import {zodResolver} from '@hookform/resolvers/zod';
 import {createThread} from '@/lib/actions/thread.action'
+import {useOrganization} from'@clerk/nextjs';
 //zod est un verifieur de typescript
 
 import { Arapey } from 'next/font/google';
@@ -51,6 +52,7 @@ function PostThread({userId}:{userId:string}){
     const{ startUpload}=useUploadThing("media");
     const router=useRouter();
     const pathname=usePathname();
+    const {organization}=useOrganization();
     
         const form=useForm({
             resolver:zodResolver(ThreadValidation),
@@ -94,6 +96,8 @@ const handleImage = (
 
         //pour envoyer  le formulaire on utilise la fonction handleSubmit
         const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
+         
+         
           const blob = values.image_thread;
         
           const hasImageChanged = isBase64Image(blob);
@@ -105,11 +109,12 @@ const handleImage = (
               values.image_thread = imgRes[0].fileUrl;
             }
           }
-        
+      
+          console.log('ORG ID:',organization)
           await createThread({
             text: values.thread,
             author: userId,
-            communityId: null,
+            communityId: organization? organization.id:null,
             path: pathname,
             image: values.image_thread,
           });
