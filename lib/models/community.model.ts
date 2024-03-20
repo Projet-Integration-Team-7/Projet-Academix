@@ -33,7 +33,7 @@ members : [
         type: mongoose.Schema.Types.ObjectId,
         ref: 
 
-    }
+    },
 ]
 });
 
