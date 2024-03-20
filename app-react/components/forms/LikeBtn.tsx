@@ -12,7 +12,7 @@ interface LikeBtnProps {
 }
 
 const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps) => {
-    const alreadyLiked = mapLikes.hasOwnProperty(currentUserId);
+    const alreadyLiked = mapLikes.has(currentUserId);
  
     const [isLiked, setIsLiked] = useState(alreadyLiked);
     const [nbLikes, setNbLikes] = useState(likesCount);
