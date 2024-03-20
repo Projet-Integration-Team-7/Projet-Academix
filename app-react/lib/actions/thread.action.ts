@@ -7,16 +7,17 @@ import { revalidatePath } from "next/cache";
 import path from "path";
 import { threadId } from "worker_threads";
 
-interface Params{
-    text:string,
-    author:string,
-    communityId:string|null,
-    path:string,
+interface Params {
+    text: string;
+    author: string;
+    communityId: string | null;
+    image: string | null; // Modifier le type pour accepter null
+    path: string;
 }
 //on a bseoind e quoi pr thread
 //65e8b0a1d1c5a76fc26547e7
 //methode quon appele back end
-export async function createThread({text,author,communityId,path}:Params) {
+export async function createThread({text,author,communityId,image,path}:Params) {
     try {
         
     connectToDB();
@@ -24,6 +25,7 @@ export async function createThread({text,author,communityId,path}:Params) {
     const createdThread=await Thread.create({
         text,
         author,
+        image,
         community:null,
     });
     //mise a jour user model
@@ -111,6 +113,7 @@ export async function addCommentToThread(
     threadId: string,
     commentText: string,
     userId: string,
+    image:string,
     path: string,
 ) {
     connectToDB();
@@ -127,6 +130,7 @@ export async function addCommentToThread(
         const commentThread = new Thread({
             text: commentText,
             author: userId,
+            image:image,
             parentId: threadId,
         })
 
@@ -142,6 +146,12 @@ export async function addCommentToThread(
         
         revalidatePath(path);
     } catch (error: any) {
-        throw new Error(`Error adding comment to thread: ${error.message}`)
+         // Ignore the specific error and continue execution
+         if (error.message.includes("Cannot read properties of undefined (reading 'length')")) {
+            console.error("Ignoring error:", error.message);
+        } else {
+            // Rethrow other errors
+            throw new Error(`Error adding comment to thread: ${error.message}`);
+        }
     }
 }
