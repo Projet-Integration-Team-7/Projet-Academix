@@ -1,13 +1,15 @@
-// pages/message/page.tsx
+import React from 'react'
+// app/auth/messages/page.tsx (before moving chat_app)
+import { ClerkProvider } from "@clerk/clerk-react";
+import { App } from "../../../chat_application/src/App";
 
-import React from 'react';
-
-const Page = () => {
+const Message = () => {
   return (
-    <>
-      <h1>This is the message page</h1>
-    </>
-  );
-};
+    <div>
+      <h1>Message Route</h1>
+      <App />
+    </div>
+  )
+}
 
-export default Page;
+export default Message
