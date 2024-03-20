@@ -6,6 +6,8 @@ import User from "../models/user.model";
 import { revalidatePath } from "next/cache";
 import Thread from "../models/thread.model";
 import { FilterQuery, SortOrder } from "mongoose";
+import Community from "../models/community.model";
+
 
 interface Params{
     userId:string;

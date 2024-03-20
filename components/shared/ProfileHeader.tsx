@@ -7,13 +7,14 @@ interface Props{
     username: string;
     imgUrl : string;
     bio : string ;
+    type? :'User' | 'Community';  //type of user (art
 }
 
 const ProfileHeader =({
     accountId,
     authUserId,
     name,
-    username,imgUrl,bio
+    username,imgUrl,bio,type
 }: Props) => {
 
    //structure de l'affiche du profil 
