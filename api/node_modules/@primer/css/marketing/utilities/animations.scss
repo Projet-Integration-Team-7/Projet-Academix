@@ -1,9 +1,0 @@
-// Animation utilities for marketing
-
-.hover-grow-mktg {
-  transition: transform 0.4s $ease-mktg;
-
-  &:hover {
-    transform: scale3d(1.025, 1.025, 1.025);
-  }
-}
