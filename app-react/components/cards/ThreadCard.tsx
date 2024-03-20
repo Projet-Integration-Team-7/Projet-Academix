@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { boolean } from "zod";
+import LikeBtn from "../forms/LikeBtn";
 
 interface Props {
     id: string,
@@ -12,6 +14,7 @@ interface Props {
         image: string;
         id: string;
     }
+    
     community: {
         id: string;
         name: string;
@@ -23,6 +26,7 @@ interface Props {
             image: string;
         }
     }[]
+    likes : Map<string,Date>,
     isComment?: boolean;
 }
 
@@ -35,8 +39,10 @@ const ThreadCard = ({
     community,
     createdAt,
     comments,
+    likes,
     isComment,
 }: Props) => {
+
     return (
         <article className={`flex w-full flex-col rounded-xl ${isComment ? 'px-0 xs:px-7' : ' bg-dark-2 p-7'}`}>
             <div className="flex items-start justify-between">
@@ -58,7 +64,7 @@ const ThreadCard = ({
 
                         <div className="mb-10 mt-5 flex-col gap-3">
                             <div className="flex gap-3.5">
-                                <Image src="/assets/heart-gray.svg" alt="heart" width={24} height={24} className="cursor-pointer object-contain" />
+                                <LikeBtn threadId={id} currentUserId={currentUserId} mapLikes={likes} likesCount={likes.size}/>
                                 <Link href={`/thread/${id}`}>
                                     <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain" />
                                 </Link>
