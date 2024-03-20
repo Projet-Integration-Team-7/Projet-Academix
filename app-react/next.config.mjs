@@ -32,8 +32,8 @@ const nextConfig = {
                 hostname: "placehold.co",
             },
         ],
-    },
-    webpack5: false
+    }
+    
 };
 
 export default nextConfig;
