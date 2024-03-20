@@ -30,7 +30,7 @@ export default async function Home() {
                 imgUrl={post.image}
                 createdAt={post.createdAt}
                 comments={post.children}
-                likes={post.likes}
+                likes={post.likes.toObject()}
               />
             ))}
           </>

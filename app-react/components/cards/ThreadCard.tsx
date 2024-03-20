@@ -70,7 +70,7 @@ const ThreadCard = ({
 
                         <div className="mb-10 mt-5 flex-col gap-3">
                             <div className="flex gap-3.5">
-                                <LikeBtn threadId={id} currentUserId={currentUserId} mapLikes={likes} likesCount={likes.size}/>
+                                <LikeBtn threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} mapLikes={likes} likesCount={likes.size}/>
                                 <Link href={`/thread/${id}`}>
                                     <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain" />
                                 </Link>

@@ -56,7 +56,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                         imgUrl={""}
                         createdAt={childItem.createdAt}
                         comments={childItem.children}
-                        likes={thread.likes}
+                        likes={childItem.likes}
                         isComment
                     />
                 ))}
