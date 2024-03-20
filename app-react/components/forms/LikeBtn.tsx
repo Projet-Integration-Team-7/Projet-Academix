@@ -30,7 +30,7 @@ const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps)
     };
 
     return (
-        <div className= " flex gap-2">
+        <div className= " flex gap-2 align-middle text-center items-center">
             <Image
                 src={isLiked ? "/assets/heart-filled.svg" : "/assets/heart-gray.svg"}
                 alt={isLiked ? "filled heart" : "heart"}
