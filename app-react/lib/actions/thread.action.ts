@@ -49,7 +49,7 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 
     // On veut chercher les publications qui n'ont pas de parents (= qui ne sont pas des commentaires)
     const postsQuery = Thread.find({ parentId: { $in: [null, undefined]}})
-        .sort({ createAt: 'desc'})
+        .sort({ createdAt: 'desc'})
         .skip(skipAmount)
         .limit(pageSize)
         .populate({ path: 'author', model: User})
@@ -58,9 +58,11 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
             populate: {
                 path: 'author',
                 model: User,
-                select: "_id name parentId imgage"
+                select: "_id name parentId image"
             }
         })
+        
+       
 
         const totalPostsCount = await Thread.countDocuments({ parentId: { $in: [null, undefined]} })
 
@@ -153,5 +155,72 @@ export async function addCommentToThread(
             // Rethrow other errors
             throw new Error(`Error adding comment to thread: ${error.message}`);
         }
+    }
+}
+
+export async function updateLikeToThread(
+    threadId: string,
+    userId: string,
+    isLiked: boolean,
+){
+    connectToDB();
+
+    try {
+        // Trouver la publication originale par son ID
+        const currentThread = await Thread.findById(threadId);
+
+        if  (!currentThread) {
+            throw new Error("Thread not found")
+        }
+
+        if (isLiked){
+            currentThread.likes.set(userId,new Date());
+        } else {
+            currentThread.likes.delete(userId);
+        }
+
+        console.log(currentThread)
+        
+        await currentThread.save();
+        
+    } catch (error: any) {
+        throw new Error(`Error updating the like on the thread: ${error.message}`)
+    }
+}
+
+export async function getThreadLikesCount( 
+    threadId: string
+    ): Promise<number> {
+    try {
+        // Find the thread by threadId
+        const thread = await Thread.findById(threadId);
+        if (!thread) {
+            throw new Error("Thread not found");
+        }
+
+        // Get the number of keys in the likes Map
+        const likesCount = thread.likes.size;
+        
+        return likesCount;
+    } catch (error: any) {
+        throw new Error(`Failed to get thread likes count: ${error.message}`);
+    }
+}
+
+export async function getThreadLikes(threadId: string): Promise<Map<string, Date>> {
+    connectToDB();
+
+    try {
+        // Find the thread by its ID
+        const thread = await Thread.findById(threadId);
+
+        if (!thread) {
+            throw new Error("Thread not found");
+        }
+
+        // Return the likes map
+        return thread.likes;
+    } catch (error: any) {
+        throw new Error(`Error getting thread likes: ${error.message}`);
     }
 }

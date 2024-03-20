@@ -33,8 +33,9 @@ if(!result) redirect('/')
           id: thread.author.id }
         }
          community={thread.community}// todo
-         createdAt={thread.ceatedAt}
+         createdAt={thread.createdAt}
          comments={thread.children}
+         likes={thread.likes}
          />
         )
         )}

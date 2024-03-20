@@ -35,6 +35,14 @@ const threadSchema=new mongoose.Schema({
         },
         //un thread peut avoir plusieur thread
       ],
+      likes: {
+        type: Map,
+        of: {
+            type: Date,
+            default: Date.now,
+        },
+        default: new Map(),
+    }
 });
 
 const Thread=mongoose.models.Thread ||mongoose.model('Thread',threadSchema);
