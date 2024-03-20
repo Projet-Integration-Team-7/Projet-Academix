@@ -206,21 +206,3 @@ export async function getThreadLikesCount(
         throw new Error(`Failed to get thread likes count: ${error.message}`);
     }
 }
-
-export async function getThreadLikes(threadId: string): Promise<Map<string, Date>> {
-    connectToDB();
-
-    try {
-        // Find the thread by its ID
-        const thread = await Thread.findById(threadId);
-
-        if (!thread) {
-            throw new Error("Thread not found");
-        }
-
-        // Return the likes map
-        return thread.likes;
-    } catch (error: any) {
-        throw new Error(`Error getting thread likes: ${error.message}`);
-    }
-}

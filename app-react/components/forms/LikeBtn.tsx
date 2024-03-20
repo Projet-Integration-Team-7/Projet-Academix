@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { updatePostToLikes } from "@/lib/actions/user.actions";
-import { getThreadLikes, getThreadLikesCount, updateLikeToThread } from "@/lib/actions/thread.action";
+import { getThreadLikesCount, updateLikeToThread } from "@/lib/actions/thread.action";
 
 interface LikeBtnProps {
     threadId: string;
