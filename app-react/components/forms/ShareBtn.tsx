@@ -10,7 +10,6 @@ interface ShareBtnProps {
 
 const ShareBtn = ({threadId}: ShareBtnProps) => {
     const threadURL = `${window.location.href}/thread/${threadId}`;
-    console.log("Share Url bon")
 
     const handleCopy = () => {
         navigator.clipboard.writeText(threadURL);
