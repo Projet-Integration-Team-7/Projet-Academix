@@ -26,11 +26,11 @@ const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps)
         await updatePostToLikes(threadId,currentUserId,liked)
 
         const comptage = await getThreadLikesCount(threadId);
-        setNbLikes(comptage);
+        setNbLikes(comptage); 
     };
 
     return (
-        <div className="flex gap-2">
+        <div className= " flex gap-2">
             <Image
                 src={isLiked ? "/assets/heart-filled.svg" : "/assets/heart-gray.svg"}
                 alt={isLiked ? "filled heart" : "heart"}
