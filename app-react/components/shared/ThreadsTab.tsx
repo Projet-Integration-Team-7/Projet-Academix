@@ -35,7 +35,7 @@ if(!result) redirect('/')
          community={thread.community}// todo
          createdAt={thread.createdAt}
          comments={thread.children}
-         likes={thread.likes}
+         likes={thread.likes.toObject()}
          />
         )
         )}
