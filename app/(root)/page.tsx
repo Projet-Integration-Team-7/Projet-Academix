@@ -1,6 +1,5 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts } from "@/lib/actions/thread.action";
-import Thread from "@/lib/models/thread.model";
 import { currentUser } from "@clerk/nextjs";
 
 export default async function Home() {
