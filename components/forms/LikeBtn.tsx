@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { updatePostToLikes } from "@/lib/actions/user.actions";
-import { getThreadLikes, getThreadLikesCount, updateLikeToThread } from "@/lib/actions/thread.action";
+import { getThreadLikesCount, updateLikeToThread } from "@/lib/actions/thread.action";
 
 interface LikeBtnProps {
     threadId: string;
@@ -12,7 +12,7 @@ interface LikeBtnProps {
 }
 
 const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps) => {
-    const alreadyLiked = mapLikes.hasOwnProperty(currentUserId);
+    const alreadyLiked = mapLikes.has(currentUserId);
  
     const [isLiked, setIsLiked] = useState(alreadyLiked);
     const [nbLikes, setNbLikes] = useState(likesCount);
@@ -26,11 +26,11 @@ const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps)
         await updatePostToLikes(threadId,currentUserId,liked)
 
         const comptage = await getThreadLikesCount(threadId);
-        setNbLikes(comptage);
+        setNbLikes(comptage); 
     };
 
     return (
-        <div className="flex gap-2">
+        <div className= " flex gap-2 align-middle text-center items-center">
             <Image
                 src={isLiked ? "/assets/heart-filled.svg" : "/assets/heart-gray.svg"}
                 alt={isLiked ? "filled heart" : "heart"}
