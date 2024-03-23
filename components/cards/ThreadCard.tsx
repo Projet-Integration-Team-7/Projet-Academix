@@ -4,6 +4,7 @@ const imgPlacebot="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAB4AAAAQ4AQMAAAD
 import LikeBtn from "../forms/LikeBtn";
 import ShareBtn from "../forms/ShareBtn";
 import ThreadMenu from "../forms/ThreadMenu";
+import { formatDateString } from "@/lib/utils";
 
 interface Props {
     id: string,
@@ -66,7 +67,7 @@ const ThreadCard = ({
                             <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
                         </div>
                         
-                        {imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
+                        {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
 
 
                         <p className="mt-2 text-small-regular text-light-2">{content}</p>
@@ -93,7 +94,6 @@ const ThreadCard = ({
                         </div>
                     </div>
                 </div>
-                {console.log('COMMUNITY',community)}
                 {!isComment&& community&&(
                     <Link href={`/communities/${community.id}`} className="mt-5 flex
                     items-center">
