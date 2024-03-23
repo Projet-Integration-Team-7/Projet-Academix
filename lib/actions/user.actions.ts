@@ -191,4 +191,11 @@ export async function updatePostToLikes(
         throw new Error(`Failed to update post in the likes of the user: ${error.message}`);
     }
 }
-
+export async function removeThreadFromUser(userId: string, threadId: string): Promise<void> {
+    try {
+        connectToDB();
+        await User.updateOne({ id: userId }, { $pull: { threads: threadId } });
+    } catch (error: any) {
+        throw new Error(`Failed to remove thread from user: ${error.message}`);
+    }
+}
