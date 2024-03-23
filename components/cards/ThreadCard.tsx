@@ -74,13 +74,13 @@ const ThreadCard = ({
                         
 
                         <div className=" flex mb-10 mt-5 flex-col gap-3 align-middle">
-                            <div className=" flex gap-3.5">
+                            <div className=" flex gap-3.5 align-middle">
                                 <LikeBtn threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} mapLikes={likes} likesCount={likes.size} />
                                 <Link href={`/thread/${id}`}>
                                     <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain" />
                                 </Link>
                                 {/* <Image src="/assets/repost.svg" alt="repost" width={24} height={24} className="cursor-pointer object-contain" /> FONCTION REPOST FACULTATIF +- */}
-                                <ShareBtn threadId={JSON.parse(JSON.stringify(id))} />
+                                <ShareBtn />
                             </div>
 
                             {isComment && comments.length > 0 && (
