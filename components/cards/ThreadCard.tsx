@@ -88,11 +88,11 @@ return (
                         />
                     </div>
 
-                    {imgUrl !== "" && imgUrl !== imgPlacebot && (
-                        <Image src={imgUrl} alt="image-thread" width={100} height={100} />
-                    )}
-
                     <p className="mt-2 text-small-regular text-light-2">{content}</p>
+
+                    {imgUrl !== "" && imgUrl !== imgPlacebot && (
+                        <Image src={imgUrl} alt="image-thread" width={100} height={100} className=" mt-3"/>
+                    )}
 
                     <div className=" flex mb-10 mt-5 flex-col gap-3 align-middle">
                         <div className=" flex gap-3.5 align-middle">
