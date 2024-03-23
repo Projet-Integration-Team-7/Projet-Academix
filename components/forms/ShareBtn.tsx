@@ -26,8 +26,8 @@ const ShareBtn = ({threadId}: ShareBtnProps) => {
                 />
             </Popover.Button>
 
-            <Popover.Panel>
-                <div className=' inline-flex absolute bg-white rounded-xl px-2 justify-around ring-2'>
+            <Popover.Panel >
+                <div className=' inline-flex absolute bg-white rounded-xl px-2 justify-around ring-2 ring-gray-400'>
                     <EmailShareButton url={threadURL}>
                         <EmailIcon className=' rounded-md self-center align-middle m-1' size={24} round={true} borderRadius={4} />
                     </EmailShareButton>
