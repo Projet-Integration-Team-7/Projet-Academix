@@ -40,7 +40,7 @@ const ShareBtn = ({threadId}: ShareBtnProps) => {
                     <WhatsappShareButton url={threadURL}>
                         <WhatsappIcon className=' rounded-md self-center align-middle m-1' size={24} round={true} borderRadius={4}  />
                     </WhatsappShareButton>  
-                    <Image src="/assets/copy-icon.svg" alt="copy" width={18} height={18} className='cursor-pointer object-contain self-center align-middle m-1' onClick={handleCopy} />
+                    <Image src="/assets/link.svg" alt="copy link icon" width={18} height={18} className='cursor-pointer object-contain self-center align-middle m-1' onClick={handleCopy} />
                 </div>
             </Popover.Panel>
 

@@ -124,6 +124,7 @@ const handleImage = (
           } else {
             router.push('/');
           }
+          location.reload();
         };
 
     return (
