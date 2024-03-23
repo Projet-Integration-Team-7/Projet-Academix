@@ -217,3 +217,45 @@ export async function getThreadLikesCount(
         throw new Error(`Failed to get thread likes count: ${error.message}`);
     }
 }
+
+export async function deleteThread(threadId: string,path: string) {
+    connectToDB();
+
+    try {
+        // Find the thread by its ID
+        const thread = await Thread.findById(threadId);
+
+        if (!thread) {
+            throw new Error("Thread not found");
+        }
+
+        // Delete the thread
+        await thread.deleteOne();
+
+        // Revalidate the path
+        revalidatePath(path);
+    } catch (error: any) {
+        throw new Error(`Error deleting thread: ${error.message}`);
+    }
+}
+
+export async function removeAllDeletedThreadsFromUsers() {
+    // Fetch all thread IDs from Thread collection
+    const allThreads = await Thread.find({});
+    const allThreadIds = allThreads.map(thread => thread._id.toString());
+  
+    // Fetch all users
+    const users = await User.find({});
+  
+    // For each user
+    for (let user of users) {
+      // Filter user's threads array to only include IDs present in allThreadIds
+      const validThreads = user.threads.filter(threadId => allThreadIds.includes(threadId.toString()));
+  
+      // If there are any invalid threads, update the user's threads array
+      if (validThreads.length !== user.threads.length) {
+        user.threads = validThreads;
+        user.save();
+      }
+    }
+}
