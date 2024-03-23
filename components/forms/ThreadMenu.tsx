@@ -1,6 +1,6 @@
 "use client"
 import { deleteThread } from "@/lib/actions/thread.action";
-import { removeDeletedThreads, removeThreadFromUser } from "@/lib/actions/user.actions";
+import { removeThreadFromUser } from "@/lib/actions/user.actions";
 import Thread from "@/lib/models/thread.model";
 import { Popover } from "@headlessui/react";
 import Image from "next/image";
