@@ -48,12 +48,21 @@ const ThreadCard = ({
   isComment,
 }: Props) => {
   return (
-    <article className={`flex w-full flex-col rounded-xl ${ isComment ? "px-0 xs:px-7" : " bg-dark-2 p-7" }`} >
+    <article
+      className={`flex w-full flex-col rounded-xl ${
+        isComment ? "px-0 xs:px-7" : " bg-dark-2 p-7"
+      }`}
+    >
       <div className="static flex items-start justify-between">
         <div className="flex w-full flex-1 flex-row gap-4">
           <div className="flex flex-col items-center">
             <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
-              <Image src={author.image} alt="Profile image" fill className="cursor-pointer rounded-full" />
+              <Image
+                src={author.image}
+                alt="Profile image"
+                fill
+                className="cursor-pointer rounded-full"
+              />
             </Link>
 
             <div className="thread-card_bar" />
@@ -68,22 +77,51 @@ const ThreadCard = ({
                   </h4>
                 </Link>
                 <span className=" text-gray-500 text-[14px] pt-0.5">
-                  • {typeof createdAt === "object"? calculateTimePassed(createdAt): createdAt.replace("GMT-0400 (Eastern Daylight Time)", " ")}
+                  •{" "}
+                  {typeof createdAt === "object"
+                    ? calculateTimePassed(createdAt)
+                    : createdAt.replace(
+                        "GMT-0400 (Eastern Daylight Time)",
+                        " "
+                      )}
                 </span>
               </div>
 
-              <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id} />
+              <ThreadMenu
+                threadId={JSON.parse(JSON.stringify(id))}
+                currentUserId={currentUserId}
+                authorId={author.id}
+              />
             </div>
 
             <p className="mt-2 text-small-regular text-light-2">{content}</p>
 
-            {imgUrl !== "" && imgUrl !== imgPlacebot && (<Image src={imgUrl} alt="image-thread" width={100} height={100} className=" mt-3"/>)}
+            {imgUrl !== "" && imgUrl !== imgPlacebot && (
+              <Image
+                src={imgUrl}
+                alt="image-thread"
+                width={100}
+                height={100}
+                className=" mt-3"
+              />
+            )}
 
             <div className=" flex mb-10 mt-5 flex-col gap-3 align-middle">
               <div className=" flex gap-3.5 align-middle">
-                <LikeBtn threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} mapLikes={likes} likesCount={likes.size}/>
+                <LikeBtn
+                  threadId={JSON.parse(JSON.stringify(id))}
+                  currentUserId={currentUserId}
+                  mapLikes={likes}
+                  likesCount={likes.size}
+                />
                 <Link href={`/thread/${id}`}>
-                  <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain" />
+                  <Image
+                    src="/assets/reply.svg"
+                    alt="reply"
+                    width={24}
+                    height={24}
+                    className="cursor-pointer object-contain"
+                  />
                 </Link>
                 {/* <Image src="/assets/repost.svg" alt="repost" width={24} height={24} className="cursor-pointer object-contain" /> FONCTION REPOST FACULTATIF +- */}
                 <ShareBtn threadId={JSON.parse(JSON.stringify(id))} />
@@ -92,20 +130,29 @@ const ThreadCard = ({
               {isComment && comments.length > 0 && (
                 <Link href={`/thread/${id}`}>
                   <p className="mt-1 text-subtle-medium text-gray-1">
-                    {comments.length} 
+                    {comments.length}
                   </p>
                 </Link>
               )}
             </div>
           </div>
         </div>
-        {console.log("COMMUNITY", community)} 
+        {console.log("COMMUNITY", community)}
         {!isComment && community && (
-          <Link href={`/communities/${community.id}`} className="mt-5 flex items-center" >
+          <Link
+            href={`/communities/${community.id}`}
+            className="mt-5 flex items-center"
+          >
             <p className="text-subtle-medium text-gray-1">
               {formatDateString(createdAt)}-{community.name} Community
             </p>
-            <Image src={community.image} alt={community.name} width={14} height={14} className="ml-1 rounded-full object-cover" />
+            <Image
+              src={community.image}
+              alt={community.name}
+              width={14}
+              height={14}
+              className="ml-1 rounded-full object-cover"
+            />
           </Link>
         )}
       </div>
