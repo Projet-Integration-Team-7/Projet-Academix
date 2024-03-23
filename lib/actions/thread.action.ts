@@ -9,12 +9,14 @@ import Thread from "../models/thread.model";
 import User from "../models/user.model";
 
 
+
+
 interface Params {
-    text: string;
-    author: string;
-    communityId: string | null;
-    image: string | null; // Modifier le type pour accepter null
-    path: string;
+  text: string;
+  author: string;
+  communityId: string | null; // Fix the typo here
+  image: string | null;
+  path: string;
 }
 //on a bseoind e quoi pr thread
 //65e8b0a1d1c5a76fc26547e7
@@ -23,6 +25,7 @@ export async function createThread({text,author,communityId,image,path}:Params) 
     try {
         
     connectToDB();
+    
     const communityIdObject=await Community.findOne(
         { _id : communityId }, 
         {_id:1}
@@ -31,7 +34,7 @@ export async function createThread({text,author,communityId,image,path}:Params) 
         text,
         author,
         image,
-        community:communityId,
+        community:communityIdObject,
     });
     //mise a jour user model
     await User.findByIdAndUpdate(author,{
@@ -60,18 +63,25 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
 
     // On veut chercher les publications qui n'ont pas de parents (= qui ne sont pas des commentaires)
     const postsQuery = Thread.find({ parentId: { $in: [null, undefined]}})
-        .sort({ createdAt: 'desc'})
-        .skip(skipAmount)
-        .limit(pageSize)
-        .populate({ path: 'author', model: User})
-        .populate({
-            path: 'children',
-            populate: {
-                path: 'author',
-                model: User,
-                select: "_id name parentId image"
-            }
-        })
+    .sort({ createdAt: "desc" })
+    .skip(skipAmount)
+    .limit(pageSize)
+    .populate({
+      path: "author",
+      model: User,
+    })
+    .populate({
+      path: "community",
+      model: Community,
+    })
+    .populate({
+      path: "children", // Populate the children field
+      populate: {
+        path: "author", // Populate the author field within children
+        model: User,
+        select: "_id name parentId image", // Select only _id and username fields of the author
+      },
+    });
         
        
 
@@ -84,90 +94,98 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
         return { posts, isNext}
 }
 
-export async function fetchThreadById(id: string) {
+export async function fetchThreadById(threadId: string) {
     connectToDB();
-
+  
     try {
-
-        // TODO POPULATE COMMUNITY
-        const thread = await Thread.findById(id)
+      const thread = await Thread.findById(threadId)
         .populate({
-            path: 'author',
-            model: User,
-            select: "_id id name image"
+          path: "author",
+          model: User,
+          select: "_id id name image",
+        }) // Populate the author field with _id and username
+        .populate({
+          path: "community",
+          model: Community,
+          select: "_id id name image",
+        }) // Populate the community field with _id and name
+        .populate({
+          path: "children", // Populate the children field
+          populate: [
+            {
+              path: "author", // Populate the author field within children
+              model: User,
+              select: "_id id name parentId image", // Select only _id and username fields of the author
+            },
+            {
+              path: "children", // Populate the children field within children
+              model: Thread, // The model of the nested children (assuming it's the same "Thread" model)
+              populate: {
+                path: "author", // Populate the author field within nested children
+                model: User,
+                select: "_id id name parentId image", // Select only _id and username fields of the author
+              },
+            },
+          ],
         })
-        .populate({
-            path: 'children',
-            populate: [
-                {
-                    path: 'author',
-                    model: User,
-                    select: "_id id name parentId image"
-                },
-                {
-                    path: 'children',
-                    model: Thread,
-                    populate: {
-                        path: 'author',
-                        model: User,
-                        select: "_id id name parentId image"
-                    }
-                }
-            ]
-        }).exec();
-
-        return thread;
-    } catch (error: any) {
-        throw new Error(`Error fetching threadL ${error.message}`)
+        .exec();
+  
+      return thread;
+    } catch (err) {
+      console.error("Error while fetching thread:", err);
+      throw new Error("Unable to fetch thread");
     }
-}
+  }
+async function fetchAllChildThreads(threadId: string): Promise<any[]> {
+    const childThreads = await Thread.find({ parentId: threadId });
+  
+    const descendantThreads = [];
+    for (const childThread of childThreads) {
+      const descendants = await fetchAllChildThreads(childThread._id);
+      descendantThreads.push(childThread, ...descendants);
+    }
+  
+    return descendantThreads;
+  }
 
-export async function addCommentToThread(
+  export async function addCommentToThread(
     threadId: string,
     commentText: string,
     userId: string,
-    image:string,
-    path: string,
-) {
+    path: string
+  ) {
     connectToDB();
-
+  
     try {
-        // Trouver la publication originale par son ID
-        const originalThread = await Thread.findById(threadId);
-
-        if  (!originalThread) {
-            throw new Error("Thread not found")
-        }
-
-        // Creer une nouvelle publication avec le texte du commentaire
-        const commentThread = new Thread({
-            text: commentText,
-            author: userId,
-            image:image,
-            parentId: threadId,
-        })
-
-
-        // Sauvegarder la nouvelle publication
-        const savedCommentThread = await commentThread.save();
-
-        // Mettre a jour la publication originale pour inclure le commentaire
-        originalThread.children.push(savedCommentThread._id)
-
-        // Sauvegarder la publication originale
-        await originalThread.save();
-        
-        revalidatePath(path);
-    } catch (error: any) {
-         // Ignore the specific error and continue execution
-         if (error.message.includes("Cannot read properties of undefined (reading 'length')")) {
-            console.error("Ignoring error:", error.message);
-        } else {
-            // Rethrow other errors
-            throw new Error(`Error adding comment to thread: ${error.message}`);
-        }
+      // Find the original thread by its ID
+      const originalThread = await Thread.findById(threadId);
+  
+      if (!originalThread) {
+        throw new Error("Thread not found");
+      }
+  
+      // Create the new comment thread
+      const commentThread = new Thread({
+        text: commentText,
+        author: userId,
+        parentId: threadId, // Set the parentId to the original thread's ID
+      });
+  
+      // Save the comment thread to the database
+      const savedCommentThread = await commentThread.save();
+  
+      // Add the comment thread's ID to the original thread's children array
+      originalThread.children.push(savedCommentThread._id);
+  
+      // Save the updated original thread to the database
+      await originalThread.save();
+  
+      revalidatePath(path);
+    } catch (err) {
+      console.error("Error while adding comment:", err);
+      throw new Error("Unable to add comment");
     }
-}
+  }
 
 export async function updateLikeToThread(
     threadId: string,
@@ -218,26 +236,61 @@ export async function getThreadLikesCount(
     }
 }
 
-export async function deleteThread(threadId: string,path: string) {
-    connectToDB();
-
+export async function deleteThread(id: string, path: string): Promise<void> {
     try {
-        // Find the thread by its ID
-        const thread = await Thread.findById(threadId);
-
-        if (!thread) {
-            throw new Error("Thread not found");
-        }
-
-        // Delete the thread
-        await thread.deleteOne();
-
-        // Revalidate the path
-        revalidatePath(path);
+      connectToDB();
+  
+      // Find the thread to be deleted (the main thread)
+      const mainThread = await Thread.findById(id).populate("author community");
+  
+      if (!mainThread) {
+        throw new Error("Thread not found");
+      }
+  
+      // Fetch all child threads and their descendants recursively
+      const descendantThreads = await fetchAllChildThreads(id);
+  
+      // Get all descendant thread IDs including the main thread ID and child thread IDs
+      const descendantThreadIds = [
+        id,
+        ...descendantThreads.map((thread) => thread._id),
+      ];
+  
+      // Extract the authorIds and communityIds to update User and Community models respectively
+      const uniqueAuthorIds = new Set(
+        [
+          ...descendantThreads.map((thread) => thread.author?._id?.toString()), // Use optional chaining to handle possible undefined values
+          mainThread.author?._id?.toString(),
+        ].filter((id) => id !== undefined)
+      );
+  
+      const uniqueCommunityIds = new Set(
+        [
+          ...descendantThreads.map((thread) => thread.community?._id?.toString()), // Use optional chaining to handle possible undefined values
+          mainThread.community?._id?.toString(),
+        ].filter((id) => id !== undefined)
+      );
+  
+      // Recursively delete child threads and their descendants
+      await Thread.deleteMany({ _id: { $in: descendantThreadIds } });
+  
+      // Update User model
+      await User.updateMany(
+        { _id: { $in: Array.from(uniqueAuthorIds) } },
+        { $pull: { threads: { $in: descendantThreadIds } } }
+      );
+  
+      // Update Community model
+      await Community.updateMany(
+        { _id: { $in: Array.from(uniqueCommunityIds) } },
+        { $pull: { threads: { $in: descendantThreadIds } } }
+      );
+  
+      revalidatePath(path);
     } catch (error: any) {
-        throw new Error(`Error deleting thread: ${error.message}`);
+      throw new Error(`Failed to delete thread: ${error.message}`);
     }
-}
+  }
 
 export async function removeAllDeletedThreadsFromUsers() {
     // Fetch all thread IDs from Thread collection
@@ -250,35 +303,12 @@ export async function removeAllDeletedThreadsFromUsers() {
     // For each user
     for (let user of users) {
       // Filter user's threads array to only include IDs present in allThreadIds
-    const validThreads = user.threads.filter((threadId: string) => allThreadIds.includes(threadId.toString()));
+      const validThreads = user.threads.filter((threadId: string) => allThreadIds.includes(threadId.toString()));
   
       // If there are any invalid threads, update the user's threads array
       if (validThreads.length !== user.threads.length) {
         user.threads = validThreads;
         user.save();
       }
-    }
-}
-
-export async function calculateTimePassed(date: Date) {
-    const now = Date.now();
-    const diff = now - date.getTime();
-
-    // Calculate the time in different units
-    const minutes = Math.floor(diff / (1000 * 60));
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
-
-    // Return the simplified time string
-    if (months > 1) {
-        const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' });
-        return formattedDate;
-    } else if (days > 0) {
-        return `${days}d`;
-    } else if (hours > 0) {
-        return `${hours}h`;
-    } else {
-        return `${minutes}m`;
     }
 }
