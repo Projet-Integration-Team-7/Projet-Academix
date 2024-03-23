@@ -21,15 +21,18 @@ interface Params {
 //on a bseoind e quoi pr thread
 //65e8b0a1d1c5a76fc26547e7
 //methode quon appele back end
-export async function createThread({text,author,communityId,image,path}:Params) {
+export async function createThread({text,author,communityId,path,image}:Params) {
     try {
         
     connectToDB();
+    console.log("id",communityId)
     
     const communityIdObject=await Community.findOne(
+     
         { _id : communityId }, 
         {_id:1}
     );
+    console.log("marche",1)
     const createdThread=await Thread.create({
         text,
         author,
