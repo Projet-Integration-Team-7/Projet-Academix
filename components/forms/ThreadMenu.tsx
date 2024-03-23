@@ -39,7 +39,7 @@ const ThreadMenu = ({ threadId, currentUserId, authorId }: ThreadMenuProps) => {
             alt="thread menu icon"
             height={24}
             width={24}
-            className="flex cursor-pointer object-cover rounded-full p-0.5 transition ease-in-out bg-gray-300 border-2 border-gray-300 hover:border-gray-500"
+            className="flex cursor-pointer object-cover rounded-full p-0.5 transition ease-in-out bg-gray-300 border-[1px] border-gray-300 hover:border-gray-500"
           />
         </div>
       </Popover.Button>
