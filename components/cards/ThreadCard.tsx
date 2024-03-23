@@ -80,7 +80,7 @@ const ThreadCard = ({
                                     <Image src="/assets/reply.svg" alt="reply" width={24} height={24} className="cursor-pointer object-contain" />
                                 </Link>
                                 {/* <Image src="/assets/repost.svg" alt="repost" width={24} height={24} className="cursor-pointer object-contain" /> FONCTION REPOST FACULTATIF +- */}
-                                <ShareBtn />
+                                <ShareBtn threadId={JSON.parse(JSON.stringify(id))} />
                             </div>
 
                             {isComment && comments.length > 0 && (
