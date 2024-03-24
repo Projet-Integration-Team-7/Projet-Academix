@@ -1,6 +1,7 @@
 "use client"
 //import { z } from "zod"
 import * as z  from 'zod'
+import React, { useReducer } from 'react';
 
 import {useForm} from 'react-hook-form';
 import { Button } from "@/components/ui/button"
@@ -18,7 +19,7 @@ import { isBase64Image } from '@/lib/utils';
 import {useUploadThing} from'@/lib/uploadthing'
 import {zodResolver} from '@hookform/resolvers/zod';
 import {createThread} from '@/lib/actions/thread.action'
-import {useOrganization} from"@clerk/nextjs";
+import {useOrganization} from'@clerk/nextjs';
 //zod est un verifieur de typescript
 
 import { Arapey } from 'next/font/google';
@@ -98,18 +99,18 @@ const handleImage = (
         const onSubmit = async (values: z.infer<typeof ThreadValidation>) => {
          
          
-          const blob = values.image_thread;
-        
+          const blob = values.image_thread ?? '';
+                  
           const hasImageChanged = isBase64Image(blob);
-        
+                  
           if (hasImageChanged) {
             const imgRes = await startUpload(files);
-        
+                  
             if (imgRes && imgRes.length > 0 && imgRes[0].fileUrl) {
               values.image_thread = imgRes[0].fileUrl;
             }
           }
-      
+                
           console.log('ORG ID:',organization)
           await createThread({
             text: values.thread,

@@ -29,7 +29,7 @@ export async function createThread({text,author,communityId,path,image}:Params) 
     
     const communityIdObject=await Community.findOne(
      
-        { _id : communityId }, 
+        { id : communityId }, 
         {_id:1}
     );
     console.log("marche",1)
