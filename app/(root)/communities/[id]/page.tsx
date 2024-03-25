@@ -56,7 +56,7 @@ async function Page({ params }: { params: { id: string } }) {
             <ThreadsTab
               currentUserId={user.id}
               accountId={communityDetails._id}
-              accountType='Community'
+              accountType="Community"
             />
           </TabsContent>
 
@@ -69,7 +69,7 @@ async function Page({ params }: { params: { id: string } }) {
                   name={member.name}
                   username={member.username}
                   imgUrl={member.image}
-                  personType='User'
+                  personType="User"
                 />
               ))}
             </section>
@@ -80,7 +80,7 @@ async function Page({ params }: { params: { id: string } }) {
             <ThreadsTab
               currentUserId={user.id}
               accountId={communityDetails._id}
-              accountType='Community'
+              accountType="Community"
             />
           </TabsContent>
         </Tabs>
