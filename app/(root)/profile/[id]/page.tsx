@@ -20,7 +20,12 @@ async function Page({ params } :{ params : { id : string}}){
 
     if(!userInfo?.onboarded)redirect('/onboarding');
     return(
-    <section>
+    <section >
+     <div className="flex items-center">
+
+
+
+
 
         <ProfileHeader 
                accountId={userInfo.id}
@@ -29,8 +34,11 @@ async function Page({ params } :{ params : { id : string}}){
                username={userInfo.username}
                imgUrl={userInfo.image}
                bio={userInfo.bio}
-        
         />
+         <button className="py-2 px-4 rounded text-white font-bold bg-black hover:bg-purple-300 focus:bg-purple-300 focus:outline-none">
+Modifier Profile 
+   </button>
+   </div>     
 <div className='mt-9'>
 <Tabs defaultValue='threads' className="w-full">
     <TabsList className="tab">
@@ -48,8 +56,8 @@ async function Page({ params } :{ params : { id : string}}){
             {tab.label}
         </p>
         {tab.label==='Threads' &&
-        
-        
+    
+
         (
 <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
     {userInfo?.threads?.length}
@@ -79,5 +87,7 @@ async function Page({ params } :{ params : { id : string}}){
 
 </div> </section>
     )
+    
 }
+
 export default Page;
