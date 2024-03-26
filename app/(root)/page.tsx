@@ -1,13 +1,16 @@
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts, removeAllDeletedThreadsFromUsers } from "@/lib/actions/thread.action";
+import { fetchCommunityDetails} from "@/lib/actions/community.actions";
 import { currentUser } from "@clerk/nextjs";
-
+import { useUser, useOrganization } from '@clerk/nextjs';
+import { Organization } from "@clerk/nextjs/server";
 export default async function Home() {
   const result = await fetchPosts(1, 30);
   const user = await currentUser();
-
-  console.log(result);
+  const organization = useOrganization;
   
+  //console.log(result);
+  console.log("org",organization)
 
 
   return (
@@ -32,6 +35,8 @@ export default async function Home() {
                 createdAt={post.createdAt}
                 comments={post.children}
                 likes={post.likes.toObject()}
+                Userorganization={Organization.toObject()._id}
+                
               />
             ))}
           </>
