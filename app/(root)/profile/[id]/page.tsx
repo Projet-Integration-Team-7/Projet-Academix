@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import {fetchUser} from '@/lib/actions/user.actions'
 import { string } from 'zod';
 import ProfileHeader from '@/components/shared/ProfileHeader';
-
+import { Link, NavLink } from 'react-router-dom';
 import {Tabs, TabsContent, TabsList ,TabsTrigger } from '@/components/ui/tabs'
 import { profileTabs } from '@/constants';
 import Image from 'next/image';
@@ -35,9 +35,12 @@ async function Page({ params } :{ params : { id : string}}){
                imgUrl={userInfo.image}
                bio={userInfo.bio}
         />
+        <NavLink to="/"> 
          <button className="py-2 px-4 rounded text-white font-bold bg-black hover:bg-purple-300 focus:bg-purple-300 focus:outline-none">
 Modifier Profile 
+                
    </button>
+   </NavLink>
    </div>     
 <div className='mt-9'>
 <Tabs defaultValue='threads' className="w-full">
