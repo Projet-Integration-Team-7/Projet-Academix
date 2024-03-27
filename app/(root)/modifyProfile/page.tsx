@@ -1,7 +1,7 @@
 const Page =async () =>{
     return(
         <section>
-            Modify Profile
+        <h1 className="head-text mb-10">Modify Profile  </h1>¸
         </section>
     )
 }
