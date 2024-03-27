@@ -1,5 +1,7 @@
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
+import Router from 'next/router'
+
 import {fetchUser} from '@/lib/actions/user.actions'
 import { string } from 'zod';
 import ProfileHeader from '@/components/shared/ProfileHeader';
@@ -8,6 +10,7 @@ import {Tabs, TabsContent, TabsList ,TabsTrigger } from '@/components/ui/tabs'
 import { profileTabs } from '@/constants';
 import Image from 'next/image';
 import ThreadsTab from '@/components/shared/ThreadsTab';
+import ModifyCard from '@/components/cards/ModifyCard';
 async function Page({ params } :{ params : { id : string}}){
     const user=await currentUser();
 
@@ -35,12 +38,11 @@ async function Page({ params } :{ params : { id : string}}){
                imgUrl={userInfo.image}
                bio={userInfo.bio}
         />
-        <NavLink to="/"> 
-         <button className="py-2 px-4 rounded text-white font-bold bg-black hover:bg-purple-300 focus:bg-purple-300 focus:outline-none">
-Modifier Profile 
-                
-   </button>
-   </NavLink>
+        
+        
+       <ModifyCard 
+       />
+  
    </div>     
 <div className='mt-9'>
 <Tabs defaultValue='threads' className="w-full">
