@@ -37,6 +37,7 @@ interface Props {
             image: string;
         }
     }[]
+    threadType:string,
     likes : Map<string,Date>,
     isComment?: boolean;
     
@@ -54,6 +55,7 @@ const ThreadCard = ({
     imgUrl,
     createdAt,
     comments,
+    threadType,
     likes,
     isComment,
     
@@ -75,7 +77,6 @@ const ThreadCard = ({
                         <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
                             <Image src={author.image} alt="Profile image" fill className="cursor-pointer rounded-full" />
                         </Link>
-
                         <div className="thread-card_bar"/>
                     </div>
 
@@ -88,6 +89,7 @@ const ThreadCard = ({
                         </div>
                         
                         {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
+                        <p className="mt-2 text-small-regular text-light-2">{threadType}</p>
 
 
                         <p className="mt-2 text-small-regular text-light-2">{content}</p>
@@ -124,6 +126,7 @@ const ThreadCard = ({
                     href={`/communities/${community.id}`}
                     className='mt-5 flex items-center'
                   >
+                    
                     <p className='text-subtle-medium text-gray-1'>
                       {formatDateString(createdAt)}
                       {" "}{community && ` - ${community.name} Communite`}

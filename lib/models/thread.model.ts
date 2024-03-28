@@ -42,7 +42,11 @@ const threadSchema=new mongoose.Schema({
             default: Date.now,
         },
         default: new Map(),
-    }
+    },
+    threadType: {
+      type: String,
+      required: true,
+    },
 });
 
 const Thread=mongoose.models.Thread ||mongoose.model('Thread',threadSchema);
