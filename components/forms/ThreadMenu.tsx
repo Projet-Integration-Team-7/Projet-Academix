@@ -6,6 +6,7 @@ import { Popover } from "@headlessui/react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
+
 interface ThreadMenuProps {
   threadId: string;
   currentUserId: string;

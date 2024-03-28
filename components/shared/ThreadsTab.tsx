@@ -2,6 +2,7 @@ import { fetchUserPosts } from "@/lib/actions/user.actions";
 import { permanentRedirect } from "next/navigation";
 import ThreadCard from "../cards/ThreadCard";
 import { redirect } from "next/navigation";
+import { fetchCommunityPosts } from "@/lib/actions/community.actions";
 
 /*Permet de poouvoir fetch les postes appartenant à cet exact utilisateur */
 interface Props{
@@ -12,7 +13,17 @@ interface Props{
 
 const ThreadsTab=async ({currentUserId,accountId,accountType} :
     Props ) => {
-let result=await fetchUserPosts(accountId);
+        let result:any;
+
+        if(accountType==='Community'){
+            result=await fetchCommunityPosts(accountId);
+
+        }
+        else
+        {
+            result=await fetchUserPosts(accountId);
+
+        }
 if(!result) redirect('/')
 
 
@@ -21,22 +32,21 @@ if(!result) redirect('/')
         ThreadsTab
         {result.threads.map((thread : any) => (
          <ThreadCard 
-         key={thread._id}
-         id={thread._id}
-         currentUserId={currentUserId}
-         parentId={thread.parentId}
-         content={thread.text}
-         author={
-            accountType==='User'
-        ? { name : result.name, image : result.image, id: result.id}
-        : {name : thread.author.name,image : thread.author.image,
-          id: thread.author.id }
-        }
-         community={thread.community}// todo
-         createdAt={thread.createdAt}
-         comments={thread.children}
-         likes={thread.likes.toObject()}
-         />
+                key={thread._id}
+                id={thread._id}
+                currentUserId={currentUserId}
+                parentId={thread.parentId}
+                content={thread.text}
+                author={accountType === 'User'
+                    ? { name: result.name, image: result.image, id: result.id }
+                    : {
+                        name: thread.author.name, image: thread.author.image,
+                        id: thread.author.id
+                    }}
+                community={thread.community} // todo
+                createdAt={thread.createdAt}
+                comments={thread.children}
+                likes={thread.likes.toObject()} currentUser={null}         />
         )
         )}
     </section>
