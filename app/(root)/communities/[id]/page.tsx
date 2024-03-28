@@ -19,12 +19,12 @@ async function Page({ params }: { params: { id: string } }) {
   return (
     <section>
       <ProfileHeader
-        accountId={communityDetails.createdBy.id}
+        accountId={communityDetails?.createdBy?.id}
         authUserId={user.id}
-        name={communityDetails.name}
-        username={communityDetails.username}
-        imgUrl={communityDetails.image}
-        bio={communityDetails.bio}
+        name={communityDetails?.name}
+        username={communityDetails?.username}
+        imgUrl={communityDetails?.image}
+        bio={communityDetails?.bio}
         type='Community'
       />
 
@@ -44,7 +44,7 @@ async function Page({ params }: { params: { id: string } }) {
 
                 {tab.label === "Threads" && (
                   <p className='ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2'>
-                    {communityDetails.threads.length}
+                    {communityDetails?.threads?.length}
                   </p>
                 )}
               </TabsTrigger>
@@ -55,14 +55,14 @@ async function Page({ params }: { params: { id: string } }) {
             {/* @ts-ignore */}
             <ThreadsTab
               currentUserId={user.id}
-              accountId={communityDetails._id}
+              accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
 
           <TabsContent value='members' className='mt-9 w-full text-light-1'>
             <section className='mt-9 flex flex-col gap-10'>
-              {communityDetails.members.map((member: any) => (
+              {communityDetails?.members.map((member: any) => (
                 <UserCard
                   key={member.id}
                   id={member.id}
@@ -79,7 +79,7 @@ async function Page({ params }: { params: { id: string } }) {
             {/* @ts-ignore */}
             <ThreadsTab
               currentUserId={user.id}
-              accountId={communityDetails._id}
+              accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>

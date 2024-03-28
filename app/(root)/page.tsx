@@ -7,11 +7,10 @@ import { Organization } from "@clerk/nextjs/server";
 export default async function Home() {
   const result = await fetchPosts(1, 30);
   const user = await currentUser();
-  const organization = useOrganization;
+  const communityDetails = await fetchCommunityDetails(user?.id || "");
   
   //console.log(result);
-  console.log("org",organization)
-
+ 
 
   return (
     <> 
@@ -27,6 +26,7 @@ export default async function Home() {
                 key={post._id}
                 id={post._id}
                 currentUserId={user?.id || ""}
+                currentUser={{ id: user?.id || "", name: user?.username || "" }}
                 parentId={post.parentId}
                 content={post.text}
                 author={post.author}
@@ -35,8 +35,6 @@ export default async function Home() {
                 createdAt={post.createdAt}
                 comments={post.children}
                 likes={post.likes.toObject()}
-                Userorganization={Organization.toObject()._id}
-                
               />
             ))}
           </>
