@@ -37,10 +37,10 @@ interface Props {
             image: string;
         }
     }[]
-    threadType:string,
+    
     likes : Map<string,Date>,
     isComment?: boolean;
-    
+    threadType:string,
     
 }
 
@@ -55,10 +55,10 @@ const ThreadCard = ({
     imgUrl,
     createdAt,
     comments,
-    threadType,
+    
     likes,
     isComment,
-    
+    threadType,
     // Access the list of members of the community
     
     
@@ -67,7 +67,7 @@ const ThreadCard = ({
 
     
         // Your component logic here
-    
+        console.log(threadType)
         return (
         
         <article className={`flex w-full flex-col rounded-xl ${isComment ? 'px-0 xs:px-7' : ' bg-dark-2 p-7'}`}>
@@ -75,6 +75,8 @@ const ThreadCard = ({
                 <div className="flex w-full flex-1 flex-row gap-4">
                     <div className="flex flex-col items-center">
                         <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
+                        <p className="mt-2 text-small-regular text-light-2">{threadType}</p> {/* Render thread type here */}
+                        
                             <Image src={author.image} alt="Profile image" fill className="cursor-pointer rounded-full" />
                         </Link>
                         <div className="thread-card_bar"/>
@@ -87,8 +89,7 @@ const ThreadCard = ({
                             </Link>
                             <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
                         </div>
-                        
-                        {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
+                        <p className="mt-2 text-small-regular text-light-2">{threadType}</p>                        {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
                         <p className="mt-2 text-small-regular text-light-2">{threadType}</p>
 
 
