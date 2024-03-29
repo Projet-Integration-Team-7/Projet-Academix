@@ -29,7 +29,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                 author={thread.author}
                 community={thread.community}
                 imgUrl={thread.image||""}
-                createdAt={thread.createdAt}
+                createdAt={thread.createdAt.toString()}
                 comments={thread.children}
                 likes={thread.likes.toObject()}
                 />
