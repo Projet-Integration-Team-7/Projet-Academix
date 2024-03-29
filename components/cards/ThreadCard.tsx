@@ -5,6 +5,8 @@ import LikeBtn from "../forms/LikeBtn";
 import ShareBtn from "../forms/ShareBtn";
 import ThreadMenu from "../forms/ThreadMenu";
 import { formatDateString } from "@/lib/utils";
+import { calculateTimePassed } from "@/lib/actions/thread.action";
+
 
 interface Props {
     id: string,
@@ -81,9 +83,16 @@ const ThreadCard = ({
 
                     <div className="flex w-full flex-col">
                         <div className=" inline-flex justify-between">
-                            <Link href={`/profile/${author.id}`} className="w-fit">
-                                <h4 className="cursor-pointer text-base-semibold text-light-1">{author.name}</h4>
-                            </Link>
+                            <div className="flex gap-2 align-middle">
+                              <Link href={`/profile/${author.id}`} className="w-fit">
+                                  <h4 className="cursor-pointer text-base-semibold text-light-1">{author.name}</h4>
+                              </Link>
+                              <span className=" text-gray-500 text-[14px] pt-0.5">
+                                • {typeof createdAt === "object"? calculateTimePassed(createdAt): createdAt.replace("GMT-0400 (Eastern Daylight Time)", " ")}
+                              </span>
+                            </div>
+
+
                             <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
                         </div>
                         
