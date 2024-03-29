@@ -35,7 +35,7 @@ export default async function Home() {
                 createdAt={post.createdAt}
                 comments={post.children}
                 likes={post.likes.toObject()}
-                threadType={post.type}
+                threadType={post.threadType}
               />
             ))}
           

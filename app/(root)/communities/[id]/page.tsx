@@ -5,6 +5,10 @@ import { communityTabs } from "@/constants";
 
 import UserCard from "@/components/cards/UserCard";
 import ThreadsTab from "@/components/shared/ThreadsTab";
+import ExerciseTab from "@/components/shared/ExerciseTab";
+import EvaluationTab from "@/components/shared/EvaluationTab";
+import CourseNoteTab from "@/components/shared/CourseNoteTab";
+
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -83,6 +87,34 @@ async function Page({ params }: { params: { id: string } }) {
               accountType="Community"
             />
           </TabsContent>
+
+
+          <TabsContent value='exercise' className='w-full text-light-1'>
+            {/* @ts-ignore */}
+            <ExerciseTab
+              currentUserId={user.id}
+              accountId={communityDetails?._id}
+              accountType="Community"
+            />
+          </TabsContent>
+          <TabsContent value='course_note' className='w-full text-light-1'>
+            {/* @ts-ignore */}
+            <CourseNoteTab
+              currentUserId={user.id}
+              accountId={communityDetails?._id}
+              accountType="Community"
+            />
+          </TabsContent>
+          <TabsContent value='evaluation' className='w-full text-light-1'>
+            {/* @ts-ignore */}
+            <EvaluationTab
+              currentUserId={user.id}
+              accountId={communityDetails?._id}
+              accountType="Community"
+            />
+          </TabsContent>
+
+
         </Tabs>
       </div>
     </section>
