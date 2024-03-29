@@ -17,11 +17,13 @@ interface Params {
   communityId: string | null; // Fix the typo here
   image: string | null;
   path: string;
+ threadType: string; // Ajoutez cette ligne
+
 }
 //on a bseoind e quoi pr thread
 //65e8b0a1d1c5a76fc26547e7
 //methode quon appele back end
-export async function createThread({text,author,communityId,path,image}:Params) {
+export async function createThread({text,author,communityId,path,image,threadType}:Params) {
     try {
         
     connectToDB();
@@ -38,6 +40,7 @@ export async function createThread({text,author,communityId,path,image}:Params) 
         author,
         image,
         community:communityIdObject,
+        threadType,
     });
     //mise a jour user model
     await User.findByIdAndUpdate(author,{
@@ -155,7 +158,8 @@ async function fetchAllChildThreads(threadId: string): Promise<any[]> {
     threadId: string,
     commentText: string,
     userId: string,
-    path: string
+    path: string,
+    text:string
   ) {
     connectToDB();
   
@@ -172,6 +176,7 @@ async function fetchAllChildThreads(threadId: string): Promise<any[]> {
         text: commentText,
         author: userId,
         parentId: threadId, // Set the parentId to the original thread's ID
+        threadType: "someValue" // Provide a valid value for the threadType property
       });
   
       // Save the comment thread to the database
