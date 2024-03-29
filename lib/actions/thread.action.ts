@@ -176,7 +176,7 @@ async function fetchAllChildThreads(threadId: string): Promise<any[]> {
         text: commentText,
         author: userId,
         parentId: threadId, // Set the parentId to the original thread's ID
-        text:"".
+        threadType: "someValue" // Provide a valid value for the threadType property
       });
   
       // Save the comment thread to the database
