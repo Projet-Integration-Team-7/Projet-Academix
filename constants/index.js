@@ -39,6 +39,9 @@ export const sidebarLinks = [
   
   export const communityTabs = [
     { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
-    { value: "members", label: "Members", icon: "/assets/members.svg" },
-    { value: "requests", label: "Requests", icon: "/assets/request.svg" },
+    { value: "members", label: "Membres", icon: "/assets/members.svg" },
+   // { value: "requests", label: "Requetes", icon: "/assets/request.svg" },
+    { value: "exercise", label: "Exercices", icon: "/assets/Eval.png" },
+    { value: "course_note", label: "Notes de Cours", icon: "/assets/request.svg" },
+    { value: "evaluation", label: "Evaluation", icon: "/assets/request.svg" },
   ];

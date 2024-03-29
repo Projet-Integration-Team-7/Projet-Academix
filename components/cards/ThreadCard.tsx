@@ -75,7 +75,6 @@ const ThreadCard = ({
                 <div className="flex w-full flex-1 flex-row gap-4">
                     <div className="flex flex-col items-center">
                         <Link href={`/profile/${author.id}`} className="relative h-11 w-11">
-                        <p className="mt-2 text-small-regular text-light-2">{threadType}</p> {/* Render thread type here */}
                         
                             <Image src={author.image} alt="Profile image" fill className="cursor-pointer rounded-full" />
                         </Link>
@@ -89,8 +88,7 @@ const ThreadCard = ({
                             </Link>
                             <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
                         </div>
-                        <p className="mt-2 text-small-regular text-light-2">{threadType}</p>                        {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
-                        <p className="mt-2 text-small-regular text-light-2">{threadType}</p>
+                                              {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
 
 
                         <p className="mt-2 text-small-regular text-light-2">{content}</p>
@@ -115,13 +113,21 @@ const ThreadCard = ({
                                 </Link>
                             )}
                         </div>
+                        
                     </div>
                 </div>
                 
-
+               
 
 
             </div>
+            
+            <p className='text-subtle-medium text-gray-1'>
+                {threadType === "exercise" && "Exercise"}
+                {threadType === "course_note" && "Note de cours"}
+                {threadType === "evaluation" && "Evaluations"}
+                    </p>
+
             {!isComment&& community&&(
                     <Link
                     href={`/communities/${community.id}`}
@@ -132,7 +138,7 @@ const ThreadCard = ({
                       {formatDateString(createdAt)}
                       {" "}{community && ` - ${community.name} Communite`}
                     </p>
-          
+                    
                     <Image
                       src={community.image}
                       alt={community.name}
@@ -141,6 +147,7 @@ const ThreadCard = ({
                       className='ml-1 rounded-full object-cover'
                     />
                   </Link>
+                  
                 )}
         </article>
             
