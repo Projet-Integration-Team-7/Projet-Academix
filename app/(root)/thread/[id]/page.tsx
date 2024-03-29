@@ -32,6 +32,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                 createdAt={thread.createdAt.toString()}
                 comments={thread.children}
                 likes={thread.likes.toObject()}
+                threadType={thread.threadType}
                 />
             </div>
 
@@ -58,6 +59,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                         comments={childItem.children}
                         likes={childItem.likes.toObject()}
                         isComment
+                        threadType={thread.threadType}
                     />
                 ))}
             </div>
