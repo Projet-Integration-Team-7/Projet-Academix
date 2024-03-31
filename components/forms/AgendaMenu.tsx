@@ -1,41 +1,50 @@
-// This component renders the FullCalendar
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { fetchEvents } from '@/lib/actions/events.action';
 
-// Define props interface for CalendarComponent
 interface CalendarProps {
-  events: any[]; // Array of events
-  handleDateClick: (arg: { date: Date; allDay: boolean }) => void; // Function to handle date clicks
-  addEvent: (data: any) => void; // Function to add an event
-  handleDeleteModal: (data: { event: { id: string } }) => void; // Function to handle delete modal
+  handleDateClick: (arg: { date: Date; allDay: boolean }) => void;
+  handleDeleteModal: (data: { event: { id: string } }) => void;
 }
 
-// Define the CalendarComponent
 const CalendarComponent: React.FC<CalendarProps> = ({
-  events,
   handleDateClick,
-  addEvent,
   handleDeleteModal,
 }) => {
-  // Run useEffect to set up FullCalendar logic
-  useEffect(() => {
-    let draggableEl = document.getElementById('draggable-el')
-    if (draggableEl) {
-      new Draggable(draggableEl, {
-        itemSelector: ".fc-event",
-        eventData: function (eventEl) {
-          let title = eventEl.getAttribute("title")
-          let id = eventEl.getAttribute("data")
-          let start = eventEl.getAttribute("start")
-          return { title, id, start }
-        }
-      })
-    }
-  }, [])
+  const [events, setEvents] = useState<any[]>([]);
 
+  const handleDeleteEvent = async (arg: { event: { id: string } }) => {
+    const eventId = arg.event.id;
+    try {
+      // Call the deleteEvent function to delete the event
+      await deleteEvent(eventId);
+      // Update the UI by removing the deleted event
+      // You need to implement this part based on your UI logic
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      // Handle errors, such as displaying an error message to the user
+    }
+  };
+
+
+
+  
+  useEffect(() => {
+    // Fetch events from the backend when the component mounts
+    async function fetchEventsFromBackend() {
+      try {
+        const eventsData = await fetchEvents();
+        setEvents(eventsData);
+      } catch (error) {
+        console.error('Error fetching events:', error);
+        // Handle error fetching events from the backend
+      }
+    }
+    fetchEventsFromBackend();
+  }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
     <FullCalendar
@@ -45,15 +54,14 @@ const CalendarComponent: React.FC<CalendarProps> = ({
         center: 'title',
         right: 'resourceTimelineWook, dayGridMonth,timeGridWeek',
       }}
-      events={events}
+      events={events} // Pass the fetched events array to the FullCalendar component
       nowIndicator={true}
       editable={true}
       droppable={true}
       selectable={true}
       selectMirror={true}
       dateClick={handleDateClick}
-      drop={(data) => addEvent(data)}
-      eventClick={(data) => handleDeleteModal(data)}
+      eventClick={handleDeleteEvent}
     />
   );
 };
