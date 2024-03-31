@@ -21,15 +21,7 @@ const eventSchema = new mongoose.Schema({
     type: String,
     default: '#3788d8',
   },
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  
 });
 
 const Event = mongoose.models.Event || mongoose.model('Event', eventSchema);
