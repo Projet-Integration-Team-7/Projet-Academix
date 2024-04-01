@@ -18,7 +18,7 @@ async function Page(){
     if(!userInfo?.onboarded)redirect("/onboarding");
     return(
         <section>
-        <h1 className="head-text mb-10">Modify Profile  </h1>
+        <h1 className="head-text mb-10">Modify Profile   </h1>
         <EditCard
               key={user.id + "-profile"}
               id={user.id}
