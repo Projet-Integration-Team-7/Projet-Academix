@@ -10,7 +10,7 @@ const ModifyCard=({} :Props) =>{
 
     return(
   <Button className="user-card_btn" onClick={() => router.push(`/modifyProfile`) }>
-                Modify Profile
+           <img src="image.ico" alt="aallo" />     <h1>   Modify Profile   </h1> 
             </Button>
     )
 };
