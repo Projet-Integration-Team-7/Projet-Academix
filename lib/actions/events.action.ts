@@ -68,18 +68,18 @@ export async function updateEvent(eventId: string, eventData: any) {
 }
 
 export async function deleteEvent(eventId: string) {
+      console.error('Error deleting event with ID:', eventId);
+
   try {
     connectToDB(); // Connect to the database
-
+  
     // Find and delete the event in the database using the Event model
-    const deletedEvent = await Event.findOne(eventId);
+    await Event.deleteOne({ _id: eventId });
 
-    if (!deletedEvent) {
-      throw new Error('Event not found');
-    }
+    console.error('Error deleting event with ID:', eventId);
 
-    return deletedEvent;
+    return true;
   } catch (error: any) {
-    throw new Error(`Error deleting event: ${error.message}`);
+    throw new Error(`Error deleting event: ${eventId}. Error: ${error.message}`,eventId);
   }
 }
