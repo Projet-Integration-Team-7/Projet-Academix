@@ -231,7 +231,7 @@ export const updateBio = async (userId: string, newBio: string): Promise<void> =
           { upsert: true }
       );
 
-      console.log('La bio a été mise à jour avec succès.');
+      console.log('La bio a été mise à jour avec succès superrrr letsghoo.');
   } catch (error) {
       console.error('Erreur lors de la mise à jour de la bio :', error);
       
