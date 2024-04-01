@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { createEvent,deleteEvent,fetchEvents,updateEvent } from '@/lib/actions/events.action';
+import { ObjectId } from 'mongoose';
 
 // Dynamically import the CalendarComponent to ensure it's only rendered on the client-side
 const CalendarComponent = dynamic(() => import('@/components/forms/AgendaMenu'), { ssr: false });
@@ -12,16 +13,8 @@ const Home: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]); // State to manage events
   const [eventName, setEventName] = useState(''); // State to manage event name
   const [eventColor, setEventColor] = useState('#3788d8'); // State to manage event color
-  const fetchAllEvents = async () => {
-    try {
-      const eventsFromServer = await fetchEvents();
-      setEvents(eventsFromServer);
-    } catch (error) {
-      console.error('Error fetching events:', error);
-      // Handle errors, such as displaying an error message to the user
-    }
-  };
-
+  
+  
   useEffect(() => {
     // Fetch events from the backend when the component mounts
     async function fetchEventsFromBackend() {
@@ -46,48 +39,32 @@ const Home: React.FC = () => {
       color: eventColor,
     };
     const response = await createEvent(newEvent);
-  
+    setEvents(prevEvents => [...prevEvents, response]);
+    
+    
   };
 
   // Function to add an event
-  const addEvent = async (data: any): Promise<void> => {
-    try {
-      // Send the event data to your backend API
-      const eventParams: EventParams = {
-        title: 'My Event',
-        start: new Date(), // or any start date
-        end: new Date(), // or any end date
-        allDay: true, // optional, default is false
-        color: '#ff0000' // optional, default is '#3788d8'
-      };
-      const response = await createEvent(eventParams)
   
-      setEvents(prevEvents => {
-        const updatedEvents = [...prevEvents, response];
-        
-        //localStorage.setItem('events', JSON.stringify(updatedEvents)); // Store the events in local storage
-        return updatedEvents;
-      });
-  
-      setEventName(''); // Clear the event name input after adding the event
-      setEventColor('#3788d8'); // Reset the event color input after adding the event
-    } catch (error) {
-      console.error('Error adding event:', error);
-      // Handle errors, such as displaying an error message to the user
-    }
-  };
 
   // Function to handle modal for deleting an event
-  const handleDeleteModal = (data: { event: { id: string } }): void => {
-    handleDeleteEvent
-    const eventId = data.event.id;
-    setEvents(prevEvents => {
-      const updatedEvents = prevEvents.filter(event => event.id !== eventId);
-      localStorage.setItem('events', JSON.stringify(updatedEvents)); // Update the events in local storage
-      return updatedEvents;
-    });
-  };
-
+  const handleDeleteModal = (event: any): void => {
+    events.map(event => (
+    <div onClick={() => handleEventClick(event)}>
+      {event.title}
+    </div>
+  ))};
+const handleEventClick = async ( data: any ) => {
+  try {
+    // Appel de la fonction deleteEvent avec l'ID de l'événement
+    await deleteEvent(data.event._id);
+    // Mise à jour de l'UI en supprimant l'événement de la liste des événements
+    setEvents(prevEvents => prevEvents.filter(e => e._id !== event._id));
+  } catch (error) {
+    console.error('Error deleting event:', error);
+    // Gérer les erreurs, telles que l'affichage d'un message d'erreur à l'utilisateur
+  }
+};
   return (
     <>
       {/* Navigation */}
@@ -116,10 +93,9 @@ const Home: React.FC = () => {
 
             {/* Render the CalendarComponent */}
             <CalendarComponent
-              events={events}
               handleDateClick={handleDateClick}
-              addEvent={addEvent}
               handleDeleteModal={handleDeleteModal}
+              // Inside CalendarComponent
             />
           </div>
           {/* Other components or content */}

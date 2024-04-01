@@ -3,11 +3,11 @@ import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { fetchEvents } from '@/lib/actions/events.action';
-
+import { createEvent,deleteEvent,fetchEvents,updateEvent } from '@/lib/actions/events.action';
+import dynamic from 'next/dynamic';
 interface CalendarProps {
   handleDateClick: (arg: { date: Date; allDay: boolean }) => void;
-  handleDeleteModal: (data: { event: { id: string } }) => void;
+  handleDeleteModal: (data: { event: { _id: String } }) => void; // Function to handle delete modal
 }
 
 const CalendarComponent: React.FC<CalendarProps> = ({
@@ -16,19 +16,11 @@ const CalendarComponent: React.FC<CalendarProps> = ({
 }) => {
   const [events, setEvents] = useState<any[]>([]);
 
-  const handleDeleteEvent = async (arg: { event: { id: string } }) => {
-    const eventId = arg.event.id;
-    try {
-      // Call the deleteEvent function to delete the event
-      await deleteEvent(eventId);
-      // Update the UI by removing the deleted event
-      // You need to implement this part based on your UI logic
-    } catch (error) {
-      console.error('Error deleting event:', error);
-      // Handle errors, such as displaying an error message to the user
-    }
-  };
-
+  const handleEventClick = (clickInfo) => {
+    let id = clickInfo.event.id;
+    console.log(id);
+  }
+ 
 
 
   
@@ -48,6 +40,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({
 
   return (
     <FullCalendar
+  eventClick={handleEventClick}
       plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
       headerToolbar={{
         left: 'prev,next today',
@@ -61,7 +54,8 @@ const CalendarComponent: React.FC<CalendarProps> = ({
       selectable={true}
       selectMirror={true}
       dateClick={handleDateClick}
-      eventClick={handleDeleteEvent}
+      eventClick={handleEventClick}
+ 
     />
   );
 };
