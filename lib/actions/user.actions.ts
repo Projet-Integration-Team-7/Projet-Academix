@@ -217,4 +217,24 @@ export async function removeThreadFromUser(userId: string, threadId: string): Pr
     } catch (error: any) {
         throw new Error(`Failed to remove thread from user: ${error.message}`);
     }
+    
 }
+
+export const updateBio = async (userId: string, newBio: string): Promise<void> => {
+  connectToDB();
+
+  try {
+      // Mettre à jour le document utilisateur dans la base de données MongoDB
+      await User.findOneAndUpdate(
+          { id: userId },
+          { bio: newBio },
+          { upsert: true }
+      );
+
+      console.log('La bio a été mise à jour avec succès.');
+  } catch (error) {
+      console.error('Erreur lors de la mise à jour de la bio :', error);
+      
+      
+  }
+};
