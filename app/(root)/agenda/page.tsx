@@ -4,10 +4,14 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { createEvent,deleteEvent,fetchEvents,updateEvent } from '@/lib/actions/events.action';
 import { ObjectId } from 'mongoose';
+import { Draggable } from '@fullcalendar/interaction/index.js';
 
 // Dynamically import the CalendarComponent to ensure it's only rendered on the client-side
 const CalendarComponent = dynamic(() => import('@/components/forms/AgendaMenu'), { ssr: false });
-
+interface CalendarProps {
+  handleDateClick: (arg: { date: Date; allDay: boolean }) => void;
+  handleEventClick: (data: any) => void; // Function to handle event click
+}
 // Define the Home component
 const Home: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]); // State to manage events
@@ -16,20 +20,23 @@ const Home: React.FC = () => {
   
   
   useEffect(() => {
-    // Fetch events from the backend when the component mounts
-    async function fetchEventsFromBackend() {
-      try {
-        const eventsData = await fetchEvents();
-        setEvents(eventsData);
-      } catch (error) {
-        console.error('Error fetching events:', error);
-        // Handle error fetching events from the backend
-      }
+    let draggableEl = document.getElementById('draggable-el');
+    if (draggableEl) {
+      new Draggable(draggableEl, {
+        itemSelector: '.fc-event',
+        eventData: function (eventEl: { getAttribute: (arg0: string) => any; }) {
+          let title = eventEl.getAttribute('title');
+          let id = eventEl.getAttribute('data');
+          let start = eventEl.getAttribute('start');
+          return { title, id, start };
+        },
+      });
     }
-    fetchEventsFromBackend();
   }, []);
   // Event handler for clicking on a date
   const handleDateClick = async (arg: { date: Date; allDay: boolean }): Promise<void> => {
+    console.log('Clicked event:', event);
+
     // Logic to add a new event when a date is clicked
     const newEvent = {
       title: eventName,
@@ -48,23 +55,28 @@ const Home: React.FC = () => {
   
 
   // Function to handle modal for deleting an event
-  const handleDeleteModal = (event: any): void => {
-    events.map(event => (
-    <div onClick={() => handleEventClick(event)}>
-      {event.title}
-    </div>
-  ))};
-const handleEventClick = async ( data: any ) => {
-  try {
-    // Appel de la fonction deleteEvent avec l'ID de l'événement
-    await deleteEvent(data.event._id);
-    // Mise à jour de l'UI en supprimant l'événement de la liste des événements
-    setEvents(prevEvents => prevEvents.filter(e => e._id !== event._id));
-  } catch (error) {
-    console.error('Error deleting event:', error);
-    // Gérer les erreurs, telles que l'affichage d'un message d'erreur à l'utilisateur
-  }
-};
+  const handleDeleteModal = async (data: { event: { _id: string } }): void => {
+    fetchEvents(data.event._id);
+    const eventId = data.event._id;
+    await deleteEvent(eventId);
+  };
+  const handleEventClick = async (clickInfo) => {
+    try {
+      // Call the deleteEvent function with the event's ID
+      await deleteEvent(clickInfo.event._id);
+      // Update the UI by removing the event from the list of events
+      setEvents(prevEvents => prevEvents.filter(e => e._id!== clickInfo.event._id));
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      // Handle errors, such as displaying an error message to the user
+    }
+  };
+
+
+
+
+
+
   return (
     <>
       {/* Navigation */}
@@ -94,8 +106,10 @@ const handleEventClick = async ( data: any ) => {
             {/* Render the CalendarComponent */}
             <CalendarComponent
               handleDateClick={handleDateClick}
-              handleDeleteModal={handleDeleteModal}
+              handleEventClick={handleEventClick}
               // Inside CalendarComponent
+              
+          
             />
           </div>
           {/* Other components or content */}
