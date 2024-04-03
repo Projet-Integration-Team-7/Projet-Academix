@@ -246,3 +246,17 @@ export async function removeFriend(userId: string, friendId: string) {
         throw new Error(`Failed to remove friend: ${error.message}`);
     }
 }
+
+export async function verifyFriendship(userId: string, friendId: string): Promise<boolean> {
+    try {
+        connectToDB();
+        const user = await User.findOne({ id: userId });
+        if (!user) {
+            throw new Error("User not found");
+        }
+        
+        return user.friends.includes(friendId);
+    } catch (error: any) {
+        throw new Error(`Failed to verify friendship: ${error.message}`);
+    }
+}
