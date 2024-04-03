@@ -238,3 +238,39 @@ export const updateBio = async (userId: string, newBio: string): Promise<void> =
       
   }
 };
+export const updateName = async (userId: string, newName: string): Promise<void> => {
+  connectToDB();
+
+  try {
+      // Mettre à jour le document utilisateur dans la base de données MongoDB
+      await User.findOneAndUpdate(
+          { id: userId },
+          { name: newName },
+          { upsert: true }
+      );
+
+      console.log('Le nom a été mise à jour avec succès superrrr letsghoo.');
+  } catch (error) {
+      console.error('Erreur lors de la mise à jour du nom :', error);
+      
+      
+  }
+};
+export const updateImage= async (userId: string, newImage: string): Promise<void> => {
+  connectToDB();
+
+  try {
+      // Mettre à jour le document utilisateur dans la base de données MongoDB
+      await User.findOneAndUpdate(
+          { id: userId },
+          { image: newImage },
+          { upsert: true }
+      );
+
+      console.log('Le nom a été mise à jour avec succès superrrr letsghoo.');
+  } catch (error) {
+      console.error('Erreur lors de la mise à jour du nom :', error);
+      
+      
+  }
+};
