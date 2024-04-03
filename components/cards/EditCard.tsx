@@ -70,7 +70,8 @@ const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
       console.error('erreur la transmission ne marche pas :', error);
   }
     };
-    
+  
+
 
     return(
     <div>
@@ -90,15 +91,17 @@ const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
               height={48}
               className="rounded-full"
                 />
+                              <p className="text-small-medium text-gray-1">@{username}</p>
 
-                <input type="file" onChange={handleImage} 
-/>
+  <label className="block mb-2 text-sm font-medium text-white" for="file_input">Upload photo</label>
+<input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-black text-white dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"
+onChange={handleImage} ></input>
+
 </div>
              <div className="flex-1 text-ellipsis">
               <h4 className="text-base-semibold text-light-1">
                 {name}
               </h4>
-              <p className="text-small-medium text-gray-1">@{username}</p>
             </div>
             </div>
             </article>
