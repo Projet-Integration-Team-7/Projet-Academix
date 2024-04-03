@@ -37,12 +37,10 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     fileReader.onload = async () => {
       const imageDataUrl = fileReader.result as string;
       setImageUrl(imageDataUrl);
-      setImageUrlKey(Math.random());
-
+      
 
 
       try {
-        // Supposons que "id" est l'identifiant de l'image dans la base de données
         await updateImage(id, imageDataUrl); // Mettre à jour l'image dans la base de données avec l'URL de l'image
         console.log("L'image a été mise à jour dans la base de données.");
       } catch (error) {
@@ -91,7 +89,7 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     return(
     <div>
          <h3 className="head-text mb-5 text-base my-20">
-            Profile picture
+          NEW  Profile picture
            </h3>
         <div className="flex items-center ">
             <div>
@@ -100,16 +98,15 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
             <div className="user-card_avatar">
               <div >
                 <Image 
-                src={imgUrl}
+                src={imageUrl}
                 alt="Uploaded"
                 key={imageUrlKey}
               width={48}
               height={48}
               className="rounded-full"
                 />
-                              <p className="text-small-medium text-gray-1">@{username}</p>
 
-  <label className="block mb-2 text-sm font-medium text-white" for="file_input">Upload photo</label>
+  <label className="block mb-2 text-sm font-medium text-white" for="file_input">Upload new profile picture</label>
 <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-black text-white dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"
 onChange={handleImage} ></input>
 
