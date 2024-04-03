@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image";
-import React,	 { useState } from "react";
+import React,	 { useState,ChangeEvent } from "react";  
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import { updateBio, updateName } from '@/lib/actions/user.actions';
@@ -19,6 +19,32 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     const router=useRouter();
     const [newbio, setTextareaValue] = useState('');
     const [newName,setNewName]=useState('');
+    const [imageUrl, setImageUrl] = useState("");
+
+
+
+const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
+  e.preventDefault();
+
+  const fileReader = new FileReader();
+
+  if (e.target.files && e.target.files.length > 0) {
+    const file = e.target.files[0];
+
+    if (!file.type.includes("image")) return;
+
+    fileReader.onload = () => {
+      const imageDataUrl = fileReader.result as string;
+      setImageUrl(imageDataUrl);
+
+      console.log("URL de l'image:", imageDataUrl); // Afficher l'URL dans la console
+    };
+
+    fileReader.readAsDataURL(file);
+  }
+};
+
+
 
     const handleTextareaChange = (event : any) => {
       setTextareaValue(event.target.value);
@@ -36,7 +62,7 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     } catch (error) {
         console.error('erreur la transmission ne marche pas :', error);
     }
-    
+
     try {
         
       await updateName(id, newName); 
@@ -56,13 +82,18 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
          
         <article className="user-card">
             <div className="user-card_avatar">
-                <Image
+              <div >
+                <Image 
                 src={imgUrl}
-                alt="logo"
+                alt="Uploaded"
               width={48}
               height={48}
               className="rounded-full"
                 />
+
+                <input type="file" onChange={handleImage} 
+/>
+</div>
              <div className="flex-1 text-ellipsis">
               <h4 className="text-base-semibold text-light-1">
                 {name}
@@ -72,12 +103,9 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
             </div>
             </article>
             </div>
-            <div className="mx-80"></div>
-            <div>
-            <Button className=" user-card_btn" >
-              <h1>   Modify photo   </h1> 
-            </Button>
-            </div>
+            <div className="mx-40"></div>
+    
+
            </div>
            <div>
            <h3 className="head-text mb-5 text-base my-20">
@@ -86,6 +114,9 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
            
            <div className="w-72">
            <div className="relative w-full min-w-[200px] h-10">
+ 
+ 
+ 
   <input
     className="peer w-full h-full bg-transparent text-white font-sans font-normal outline outline-0 focus:outline-0 disabled:bg-blue-gray-50 disabled:border-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 border focus:border-2 border-t-transparent focus:border-t-transparent text-sm px-3 py-2.5 rounded-[7px] border-blue-gray-200 focus:border-gray-900"
     value={newName}
