@@ -199,3 +199,50 @@ export async function removeThreadFromUser(userId: string, threadId: string): Pr
         throw new Error(`Failed to remove thread from user: ${error.message}`);
     }
 }
+
+export async function addFriend(userId: string, friendId: string) {
+    try {
+        connectToDB();
+        const user = await User.findOne({ id: userId });
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        const friend = await User.findOne({ id: friendId });
+        if (!friend) {
+            throw new Error("Friend User not found");
+        }
+
+        user.friends.push(friendId);
+        friend.friends.push(userId);
+
+        user.save();
+        friend.save();
+    }catch (error: any) {
+        throw new Error(`Failed to add friend: ${error.message}`);
+    }
+}
+
+export async function removeFriend(userId: string, friendId: string) { 
+    try {
+        connectToDB();
+        const user = await User.findOne({ id: userId });
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        const friend = await User.findOne({ id: friendId });
+        if (!friend) {
+            throw new Error("Friend User not found");
+        }
+        
+        user.friends = user.friends.filter((id) => id !== friendId);
+        friend.friends = friend.friends.filter((id) => id !== userId);
+
+        user.save();
+        friend.save();
+
+    } catch (error:any) {
+        throw new Error(`Failed to remove friend: ${error.message}`);
+    }
+}

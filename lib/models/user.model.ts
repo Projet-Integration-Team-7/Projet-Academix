@@ -32,6 +32,10 @@ const userSchema=new mongoose.Schema({
         ref: "Community",
       },
     ],
+    friends: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    }],
     likes: {
       type: Map,
       of: {
