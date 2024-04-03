@@ -1,10 +1,13 @@
-import {  SignOutButton, SignedIn,OrganizationSwitcher} from "@clerk/nextjs";
+import {  SignOutButton, SignedIn,OrganizationSwitcher, currentUser} from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
 import Notification from "../forms/Notification";
 
-function Topbar() {
+async function Topbar() {
+    const user=await currentUser();
+
+    if(!user) return null;
     return (
         <nav className="topbar">
             <Link href="/" className="flex items-center gap-4">
@@ -13,7 +16,7 @@ function Topbar() {
             </Link>
 
             <div className=" flex align-middle place-items-center gap-4">
-                <Notification />
+                <Notification currentUserId= {user.id} />
 
                 <div className="flex items-center gap-4">
                     <div className="block md:hidden">

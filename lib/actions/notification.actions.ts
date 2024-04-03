@@ -1,0 +1,89 @@
+"use server"
+import Notification from "../models/notification.model";
+import User from "../models/user.model";
+import { connectToDB } from "../mongoose";
+
+interface Params {
+    userId: string;
+    message: string;
+    notifType: string | null; // Fix the typo here
+  }
+
+export async function createNotification({ userId, message, notifType }: Params) {
+  try {
+    connectToDB();
+
+    // Find the user with the provided unique id
+    const user = await User.findOne({ id: userId });
+
+    if (!user) {
+      throw new Error("User not found"); // Handle the case if the user with the id is not found
+    }
+
+    const newNotification = new Notification({
+      userId,
+      message,
+      notifType,
+    });
+
+    const createdNotification = await newNotification.save();
+    user.notifications.push(createdNotification._id);
+
+
+  } catch (error: any) {
+    throw new Error(`Error creating notification: ${error.message}`);
+  }
+}
+
+export async function fetchNotifications(userId: string) {  
+  try {
+    connectToDB();
+    return await Notification.find({ userId });
+  } catch (error: any) {
+    throw new Error(`Error fetching notifications: ${error.message}`);
+  }
+}
+
+export async function deleteNotification(notificationId: string) {
+  try {
+    connectToDB();
+    await Notification.findByIdAndDelete(notificationId);
+    console.log("Notification deleted successfully");
+  } catch (error: any) {
+    throw new Error(`Error deleting notification: ${error.message}`);
+  }
+}
+
+export async function markNotificationAsRead(notificationId: string) {
+    try {
+        connectToDB();
+        await Notification.findByIdAndUpdate(notificationId, { read: true });
+    }catch (error: any) {
+        throw new Error(`Error marking notification as read: ${error.message}`);
+    } 
+}
+
+export async function markAllNotificationsAsRead(userId: string) {
+    try {
+        connectToDB();
+        await Notification.updateMany({ userId }, { read: true });
+    } catch (error: any) {
+        throw new Error(`Error marking all notifications as read: ${error.message}`);
+    }
+}
+
+export const getUserNotificationMessages = async (userId: string): Promise<string[]> => {
+    try {
+      // Find notifications for the specified user
+      const notifications = await Notification.find({ userId });
+  
+      // Extract messages from notifications
+      const messages = notifications.map(notification => notification.message);
+  
+      return messages;
+    } catch (error :any) {
+      console.error('Error fetching user notifications:', error);
+      throw new Error('Failed to fetch user notifications messages as an array');
+    }
+}
+
