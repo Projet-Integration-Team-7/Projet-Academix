@@ -16,7 +16,8 @@ async function Topbar() {
             </Link>
 
             <div className=" flex align-middle place-items-center gap-4">
-                <Notification currentUserId= {user.id} />
+
+                {user && <Notification currentUserId= {user.id} />}
 
                 <div className="flex items-center gap-4">
                     <div className="block md:hidden">
