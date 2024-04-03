@@ -1,11 +1,28 @@
 "use client"
 import {useState} from 'react';
-import { Button } from '../ui/button';
 import Image from 'next/image';
+import { getUserNotificationMessages } from '@/lib/actions/notification.actions';
 
-function Notification() {
+interface NotifProps {
+    currentUserId: string;
+}
+
+function Notification({currentUserId}: NotifProps) {
     const [isOpen, setIsOpen] = useState(false);
-    const notifications = ['Notification 1', 'Notification 2', 'Notification 3']; // Replace this with actual data
+    const [notifications, setNotifications] = useState<string[]>([]);
+
+    const fetchNotifications = async () => {
+        try {
+            const notifs = await getUserNotificationMessages(currentUserId);
+            setNotifications(notifs);
+        } catch (error:any) {
+            throw new Error('Error fetching notifications', error);
+        }
+    };
+
+    if (isOpen && notifications.length === 0) {
+        fetchNotifications();
+    }
 
     return (
         <div className='relative align-middle text-center bg-center self-center items-center place-items-center'>
@@ -18,9 +35,9 @@ function Notification() {
                 />
             </button>
             {isOpen && (
-                <div className='absolute -translate-x-32 h-52 w-36 scroll-auto p-4 bg-white rounded-md shadow-lg'>
-                    {notifications.map((notification, index) => (
-                        <p key={index} className=' flex-wrap'>{notification}</p>
+                <div className='absolute -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg'>
+                    {notifications.map((message,index) => (
+                        <span key={index}>{message}</span>
                     ))}
                 </div>
             )}
