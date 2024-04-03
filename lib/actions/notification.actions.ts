@@ -87,3 +87,19 @@ export const getUserNotificationMessages = async (userId: string): Promise<strin
     }
 }
 
+export function checkIfFriendRequestExists(currentUserId: string, userId: string) {
+  try {
+      connectToDB();
+      const currentUser =  User.findOne({ id: currentUserId });
+      if (!currentUser) {
+          throw new Error("Current User not found");
+      }
+      const friendRequestList = currentUser.notifications.filter((notif) => notif.notifType === "friendRequest");
+      const friendRequest = friendRequestList.find((notif) => notif.senderId === userId);
+
+      return friendRequest>0;
+  } catch (error: any) { 
+      throw new Error(`Error checking if a friend request exists: ${error.message}`);
+  }
+}
+
