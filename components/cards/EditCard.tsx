@@ -3,7 +3,7 @@ import Image from "next/image";
 import React,	 { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import { updateBio } from '@/lib/actions/user.actions';
+import { updateBio, updateName } from '@/lib/actions/user.actions';
 interface Props {
     id : string ;
     name: string;
@@ -36,7 +36,15 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     } catch (error) {
         console.error('erreur la transmission ne marche pas :', error);
     }
+    
+    try {
+        
+      await updateName(id, newName); 
+  } catch (error) {
+      console.error('erreur la transmission ne marche pas :', error);
+  }
     };
+    
 
     return(
     <div>
