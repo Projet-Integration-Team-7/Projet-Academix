@@ -3,7 +3,7 @@ import Image from "next/image";
 import React,	 { useState,ChangeEvent } from "react";  
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
-import { updateBio, updateName } from '@/lib/actions/user.actions';
+import { updateBio, updateImage, updateName } from '@/lib/actions/user.actions';
 interface Props {
     id : string ;
     name: string;
@@ -20,11 +20,12 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     const [newbio, setTextareaValue] = useState('');
     const [newName,setNewName]=useState('');
     const [imageUrl, setImageUrl] = useState("");
+    const [imageUrlKey, setImageUrlKey] = useState(Math.random());
 
 
 
-const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
-  e.preventDefault();
+    const handleImage =  (e: ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
 
   const fileReader = new FileReader();
 
@@ -33,11 +34,23 @@ const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
 
     if (!file.type.includes("image")) return;
 
-    fileReader.onload = () => {
+    fileReader.onload = async () => {
       const imageDataUrl = fileReader.result as string;
       setImageUrl(imageDataUrl);
+      setImageUrlKey(Math.random());
 
+
+
+      try {
+        // Supposons que "id" est l'identifiant de l'image dans la base de données
+        await updateImage(id, imageDataUrl); // Mettre à jour l'image dans la base de données avec l'URL de l'image
+        console.log("L'image a été mise à jour dans la base de données.");
+      } catch (error) {
+        console.error('Erreur lors de la mise à jour de l\'image dans la base de données :', error);
+      }
+    
       console.log("URL de l'image:", imageDataUrl); // Afficher l'URL dans la console
+      
     };
 
     fileReader.readAsDataURL(file);
@@ -56,6 +69,7 @@ const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
     const handleSubmit = async() => {
       console.log('Contenu du textarea :', newbio);
       console.log('Contenu du textarea :', newName);
+      console.log("contenue du url : " , imageUrl)
       try {
         
         await updateBio(id, newbio); 
@@ -69,6 +83,7 @@ const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
   } catch (error) {
       console.error('erreur la transmission ne marche pas :', error);
   }
+
     };
   
 
@@ -87,6 +102,7 @@ const handleImage = (e: ChangeEvent<HTMLInputElement>) => {
                 <Image 
                 src={imgUrl}
                 alt="Uploaded"
+                key={imageUrlKey}
               width={48}
               height={48}
               className="rounded-full"
