@@ -50,6 +50,7 @@ export async function fetchEvents() {
   }
 }
 
+
 export async function updateEvent(eventId: string, eventData: any) {
   try {
     connectToDB(); // Connect to the database
@@ -58,12 +59,13 @@ export async function updateEvent(eventId: string, eventData: any) {
     const updatedEvent = await Event.findByIdAndUpdate(eventId, eventData, { new: true });
 
     if (!updatedEvent) {
-      throw new Error('Event not found');
+      throw new EventNotFound(`Event with ID ${eventId} not found in the database.`);
     }
 
     return updatedEvent;
   } catch (error: any) {
-    throw new Error(`Error updating event: ${error.message}`);
+    console.error(`Error updating event: ${error.message}`);
+    throw error;
   }
 }
 
@@ -74,8 +76,13 @@ export async function deleteEvent(eventId: string) {
         connectToDB(); // Connect to the database
 
         // Find and delete the event in the database using the Event model
-        await Event.deleteOne({ _id: eventId });
+        const deletedEvent = await Event.findOneAndDelete({ eventId });
 
+        if (!deletedEvent) {
+          console.error('Event not found with ID:', eventId);
+          return false; // Event not found
+        }
+        return deletedEvent;
         console.error('Error deleting event with ID:', eventId);
 
         return true;
@@ -84,12 +91,12 @@ export async function deleteEvent(eventId: string) {
       }
 }
 
-export async function findEvent(eventData: { title: string, start: Date, end: Date, allDay: boolean, color: string }) {
+export async function findEvent(eventId:string) {
   try {
     connectToDB(); // Connect to the database
 
     // Find the event in the database using the Event model
-    const event = await Event.findOne(eventData);
+    const event = await Event.findOne({eventId});
 
     if (!event) {
       throw new Error('Event not found');
@@ -100,3 +107,4 @@ export async function findEvent(eventData: { title: string, start: Date, end: Da
     throw new Error(`Error finding event: ${error.message}`);
   }
 }
+

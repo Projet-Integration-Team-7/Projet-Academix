@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { createEvent,deleteEvent,fetchEvents,updateEvent } from '@/lib/actions/events.action';
+import { createEvent,deleteEvent,fetchEvents,findEvent,updateEvent } from '@/lib/actions/events.action';
 import { ObjectId } from 'mongoose';
 import { Draggable } from '@fullcalendar/interaction/index.js';
+import { start } from 'repl';
 
 // Dynamically import the CalendarComponent to ensure it's only rendered on the client-side
 const CalendarComponent = dynamic(() => import('@/components/forms/AgendaMenu'), { ssr: false });
@@ -28,7 +29,8 @@ const Home: React.FC = () => {
           let title = eventEl.getAttribute('title');
           let id = eventEl.getAttribute('data');
           let start = eventEl.getAttribute('start');
-          return { title, id, start };
+          let end = eventEl.getAttribute('end');
+          return { title, id, start,end };
         },
       });
     }
@@ -55,12 +57,9 @@ const Home: React.FC = () => {
   
 
   // Function to handle modal for deleting an event
-  const handleDeleteModal = async (data: { event: { _id: string } }): void => {
-    fetchEvents(data.event._id);
-    const eventId = data.event._id;
-    await deleteEvent(eventId);
-  };
+  
   const handleEventClick = async (clickInfo) => {
+    console.log('Clicked event:', clickInfo.event);
     try {
       // Call the deleteEvent function with the event's ID
       await deleteEvent(clickInfo.event._id);
@@ -71,8 +70,31 @@ const Home: React.FC = () => {
       // Handle errors, such as displaying an error message to the user
     }
   };
+  
+  
+  const handleEventDrop = async (info) => {
+    const updatedEventData = {
+        title: info.event.title,
+        start: info.event.start,
+        end: info.event.start,
+        allDay: info.event.allDay,
+        color: info.event.color,
+    };
+    const answer=findEvent(info.event.id);
+    setEvents(prevEvents => prevEvents.map(e => e._id === info.event._id? updatedEventData : e));
 
-
+    // Appelez la fonction updateEvent avec l'ID de l'événement à mettre à jour et les données mises à jour
+   // const eventIdToUpdate = 'ID_de_votre_evenement';
+    try {
+      //await updateEvent(info.event._id, updatedEventData);
+      await createEvent(updatedEventData);
+      await deleteEvent(answer._id);
+      
+      console.log('L\'événement a été mis à jour avec succès.');
+    } catch (error) {
+      console.error('Erreur lors de la mise à jour de l\'événement :', error.message);
+    }
+  };
 
 
 
@@ -107,6 +129,7 @@ const Home: React.FC = () => {
             <CalendarComponent
               handleDateClick={handleDateClick}
               handleEventClick={handleEventClick}
+              handleEventDrop={handleEventDrop}	
               // Inside CalendarComponent
               
           

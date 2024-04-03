@@ -10,38 +10,40 @@ import dynamic from 'next/dynamic';
 interface CalendarProps {
   handleDateClick: (arg: { date: Date; allDay: boolean }) => void;
   handleEventClick: (event: any) => void; // Function to handle event click
+  handleEventDrop: (data: any) => void; // Function to add an event
+
 }
 
 const CalendarComponent: React.FC<CalendarProps> = ({
   handleDateClick,
   handleEventClick,
+  handleEventDrop,
+  
 }) => {
   const [events, setEvents] = useState<any[]>([]);
-
+  
   
  
   
-  const handleEventDrop = async (dropInfo) => {
-    try {
-      const eventId = dropInfo.event.id; // Assuming the event ID is stored in the 'id' property
-      if (!eventId) {
-        throw new Error('Event ID is missing or invalid');
-      }
-      const newStart = dropInfo.event.start;
   
-      await updateEvent(eventId, { start: newStart.toISOString() });
-  
-      setEvents((prevEvents) =>
-        prevEvents.map((e) =>
-          e.id === eventId ? { ...e, start: newStart } : e
-        )
-      );
-    } catch (error) {
-      console.error('Error updating event after drop:', error);
-      dropInfo.revert();
+  useEffect(() => {
+    let draggableEl = document.getElementById('draggable-el')
+    if (draggableEl) {
+      console.log('draggableEl', draggableEl)
+      
+      new Draggable(draggableEl, {
+        itemSelector: ".fc-event",
+        eventData: function (eventEl) {
+          let title = eventEl.getAttribute("title")
+          let id = eventEl.getAttribute("data")
+          let start = eventEl.getAttribute("start")
+          let end = eventEl.getAttribute("end")
+
+          return { title, id, start,end }
+        }
+      })
     }
-  };
-  
+  }, [])
   
   useEffect(() => {
     // Fetch events from the backend when the component mounts
@@ -56,19 +58,9 @@ const CalendarComponent: React.FC<CalendarProps> = ({
     }
     
     
+    
     fetchEventsFromBackend();
-    let draggableEl = document.getElementById('draggable-el');
-    if (draggableEl) {
-      new Draggable(draggableEl, {
-        itemSelector: '.fc-event',
-        eventData: function (eventEl: { getAttribute: (arg0: string) => any; }) {
-          let title = eventEl.getAttribute('title');
-          let id = eventEl.getAttribute('data');
-          let start = eventEl.getAttribute('start');
-          return { title, id, start };
-        },
-      });
-    }
+    
   }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
@@ -84,13 +76,12 @@ const CalendarComponent: React.FC<CalendarProps> = ({
   nowIndicator={true}
   editable={true} // Enable dragging and resizing
   droppable={true}
-  eventDrop={handleEventDrop}
   selectable={true}
   selectMirror={true}
   dateClick={handleDateClick}
   eventClick={handleEventClick}
-  eventDrop={handleEventDrop} // Replace the handleDeleteModal function with the handleEventClick function
-      />
+  eventDrop={(data) => handleEventDrop(data)}
+  />
   );
 };
 
