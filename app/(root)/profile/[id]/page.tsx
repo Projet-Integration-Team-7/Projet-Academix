@@ -1,13 +1,16 @@
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
+import Router from 'next/router'
+
 import {fetchUser} from '@/lib/actions/user.actions'
 import { string } from 'zod';
 import ProfileHeader from '@/components/shared/ProfileHeader';
-
+import { Link, NavLink } from 'react-router-dom';
 import {Tabs, TabsContent, TabsList ,TabsTrigger } from '@/components/ui/tabs'
 import { profileTabs } from '@/constants';
 import Image from 'next/image';
 import ThreadsTab from '@/components/shared/ThreadsTab';
+import ModifyCard from '@/components/cards/ModifyCard';
 async function Page({ params } :{ params : { id : string}}){
     const user=await currentUser();
 
@@ -20,7 +23,12 @@ async function Page({ params } :{ params : { id : string}}){
 
     if(!userInfo?.onboarded)redirect('/onboarding');
     return(
-    <section>
+    <section >
+     <div className="flex items-center">
+
+
+
+
 
         <ProfileHeader 
                accountId={userInfo.id}
@@ -29,8 +37,13 @@ async function Page({ params } :{ params : { id : string}}){
                username={userInfo.username}
                imgUrl={userInfo.image}
                bio={userInfo.bio}
-        
         />
+        
+        
+       <ModifyCard 
+       />
+  
+   </div>     
 <div className='mt-9'>
 <Tabs defaultValue='threads' className="w-full">
     <TabsList className="tab">
@@ -48,8 +61,8 @@ async function Page({ params } :{ params : { id : string}}){
             {tab.label}
         </p>
         {tab.label==='Threads' &&
-        
-        
+    
+
         (
 <p className="ml-1 rounded-sm bg-light-4 px-2 py-1 !text-tiny-medium text-light-2">
     {userInfo?.threads?.length}
@@ -79,5 +92,7 @@ async function Page({ params } :{ params : { id : string}}){
 
 </div> </section>
     )
+    
 }
+
 export default Page;
