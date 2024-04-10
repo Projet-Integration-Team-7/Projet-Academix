@@ -247,15 +247,15 @@ export async function removeFriend(userId: string, friendId: string) {
     }
 }
 
-export function verifyFriendship(userId: string, friendId: string) {
+export async function verifyFriendship(userId: string, friendId: string): Promise<boolean>{
     try {
         connectToDB();
-        const user = User.findOne({ id: userId });
+        const user = await User.findOne({ id: userId }).exec();
         if (!user) {
             throw new Error("User not found");
         }
         
-        user.friends.includes(friendId);
+        return user.friends.includes(friendId);
     } catch (error: any) {
         throw new Error(`Failed to verify friendship: ${error.message}`);
     }
