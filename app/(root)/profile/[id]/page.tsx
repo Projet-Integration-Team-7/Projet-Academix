@@ -22,7 +22,7 @@ async function Page({ params }: { params: { id: string } }) {
 
   return (
     <section>
-      <div>
+      <div className="flex">
         <ProfileHeader
           accountId={userInfo.id}
           authUserId={user.id}
@@ -31,7 +31,7 @@ async function Page({ params }: { params: { id: string } }) {
           imgUrl={userInfo.image}
           bio={userInfo.bio}
         />
-        <FriendRequest currentUserId={user.id} userId={userInfo.id}/>
+        {user.id !== userInfo.id && <FriendRequest currentUserId={user.id} userId={userInfo.id}/>}
       </div>
       <div className="mt-9">
         <Tabs defaultValue="threads" className="w-full">
