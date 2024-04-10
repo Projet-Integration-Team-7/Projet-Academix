@@ -17,10 +17,12 @@ import {
   removeUserFromCommunity,
   updateCommunityInfo,
 } from "@/lib/actions/community.actions";
+import { createChatUser } from "@/lib/actions/chat.actions";
 
 // Resource: https://clerk.com/docs/integration/webhooks#supported-events
 // Above document lists the supported events
 type EventType =
+  | "user.created"
   | "organization.created"
   | "organizationInvitation.created"
   | "organizationMembership.created"
@@ -35,6 +37,14 @@ type Event = {
 };
 
 export const POST = async (request: Request) => {
+  console.log("Webhook received")
+  const WEBHOOK_SECRET = process.env.NEXT_CLERK_WEBHOOK_SECRET;
+
+  if (!WEBHOOK_SECRET) {
+    console.error("Missing webhook secret");
+    return NextResponse.json({ message: "Missing webhook secret" }, { status: 500 });
+  }
+
   const payload = await request.json();
   const header = headers();
 
@@ -46,7 +56,7 @@ export const POST = async (request: Request) => {
 
   // Activitate Webhook in the Clerk Dashboard.
   // After adding the endpoint, you'll see the secret on the right side.
-  const wh = new Webhook(process.env.NEXT_CLERK_WEBHOOK_SECRET || "");
+  const wh = new Webhook(WEBHOOK_SECRET);
 
   let evnt: Event | null = null;
 
@@ -56,10 +66,47 @@ export const POST = async (request: Request) => {
       heads as IncomingHttpHeaders & WebhookRequiredHeaders
     ) as Event;
   } catch (err) {
+    console.error("Error verifying webhook:", err);
     return NextResponse.json({ message: err }, { status: 400 });
   }
 
   const eventType: EventType = evnt?.type!;
+
+  console.log("Event type", eventType);
+
+  // Listen to user creation event
+  if (eventType === "user.created") {
+    // Resource: https://clerk.com/docs/reference/backend-api/tag/Users#operation/CreateUser
+    // Show what evnt?.data sends from above resource
+    const { id, username, email_addresses, first_name, last_name } = evnt?.data;
+
+    try {
+      // @ts-ignore
+      await createChatUser({
+        // @ts-ignore
+        username: username,
+        // @ts-ignore
+        id,
+        // @ts-ignore
+        email_address: email_addresses[0].email_address,
+        // @ts-ignore
+        first_name,
+        // @ts-ignore
+        last_name,
+      });
+
+      return NextResponse.json(
+        { message: "Chat user created" },
+        { status: 201 }
+      );
+    } catch (err) {
+      console.log(err);
+      return NextResponse.json(
+        { message: "Internal Server Error" },
+        { status: 500 }
+      );
+    }
+  }
 
   // Listen organization creation event
   if (eventType === "organization.created") {
@@ -205,4 +252,9 @@ export const POST = async (request: Request) => {
       );
     }
   }
+
+  return NextResponse.json(
+    { message: "Unsupported event" },
+    { status: 404 }
+  );
 };

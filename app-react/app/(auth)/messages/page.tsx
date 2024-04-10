@@ -1,14 +1,23 @@
 import React from 'react'
 // app/auth/messages/page.tsx (before moving chat_app)
 import { ClerkProvider } from "@clerk/clerk-react";
-import { App } from "../../../chat_application/src/App";
+import Chat from '@/components/chat/chat';
+import { currentUser } from '@clerk/nextjs';
+import { createChatUserSecret } from '@/lib/utils';
 
-const Message = () => {
+
+const Message = async () => {
+
+  const user = await currentUser();
+  if (!user) return null;
+
+  console.log("current user", user.id);
+
   return (
-    <div>
-      <h1>Message Route</h1>
-      <App />
-    </div>
+    <Chat
+      userName={user?.username}
+      userSecret={createChatUserSecret(user?.id)}
+    />
   )
 }
 

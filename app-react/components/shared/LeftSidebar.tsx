@@ -23,7 +23,7 @@ function LeftSidebar() {
                 {userId}`
             
                 return (
-                    <div>
+                    <div key={`link-${link.label}`}>
                         <Link 
                         href={link.route}
                         key={link.label}

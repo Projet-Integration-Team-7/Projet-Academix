@@ -12,11 +12,11 @@ function Bottombar() {
     return (
         <section className="bottombar">
             <div className="bottombar_container">
-            {sidebarLinks.map((link) => {
+            {sidebarLinks.map((link, idx) => {
                 const isActive = (pathname.includes(link.route) && link.route.length > 1) || pathname === link.route;
             
                 return (
-                    <div>
+                    <div key={`link-${link.label}`}>
                         <Link 
                         href={link.route}
                         key={link.label}
