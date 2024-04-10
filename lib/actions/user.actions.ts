@@ -210,11 +210,11 @@ export async function addFriend(userId: string, friendId: string) {
 
         const friend = await User.findOne({ id: friendId });
         if (!friend) {
-            throw new Error("Friend User not found");
+            throw new Error(`Friend User ${friendId} not found`);
         }
 
-        user.friends.push(friendId);
-        friend.friends.push(userId);
+        user.friends.push(friend);
+        friend.friends.push(user);
 
         user.save();
         friend.save();
