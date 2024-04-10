@@ -6,6 +6,7 @@ import {
   getUserNotificationMessages,
 } from "@/lib/actions/notification.actions";
 import { addFriend } from "@/lib/actions/user.actions";
+import { fetchUserNotifications } from "@/lib/actions/notification.actions";
 
 interface NotifProps {
   currentUserId: string;
@@ -13,45 +14,43 @@ interface NotifProps {
 
 function Notification({ currentUserId }: NotifProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [notifications, setNotifications] = useState<string[]>([]);
+  const [notifications, setNotifications] = useState<any[]>(
+    []
+  );
 
-  const fetchNotifications = async () => {
+  const fetchNotifs = async () => {
     try {
-      const notifs = await getUserNotificationMessages(currentUserId);
+      const notifs = await fetchUserNotifications(currentUserId);
       setNotifications(notifs);
     } catch (error: any) {
       throw new Error("Error fetching notifications", error);
     }
   };
 
-  if (isOpen) {
-    fetchNotifications();
+  if (isOpen ) {
+    fetchNotifs();
   }
 
-  const handleGreenButton = async (index: number) => {
-    const friendRequest = notifications[index];
+  const handleGreenButton = async (index: number,senderId: string) => {
     // Delete the friend request notification
     const updatedNotifications = [...notifications];
     updatedNotifications.splice(index, 1);
-    const friendRequestSender = friendRequest.split(" ")[0];
     // Delete the friend request notification from the database
-    await deleteFriendRequestNotification(currentUserId, friendRequestSender);
+    await deleteFriendRequestNotification(currentUserId, senderId);
     setNotifications(updatedNotifications);
 
     // Add the sender as a friend
-    addFriend(currentUserId, friendRequest.split(" ")[0]);
+    addFriend(currentUserId, senderId);
 
     // Usage:
     // <button onClick={() => acceptFriendRequest(index)}>Accept</button>
   };
-  const handleRedButton = async (index: number) => {
-    const friendRequest = notifications[index];
+  const handleRedButton = async (index: number,senderId: string) => {
     // Delete the friend request notification
     const updatedNotifications = [...notifications];
     updatedNotifications.splice(index, 1);
-    const friendRequestSender = friendRequest.split(" ")[0];
     // Delete the friend request notification from the database
-    await deleteFriendRequestNotification(currentUserId, friendRequestSender);
+    await deleteFriendRequestNotification(currentUserId, senderId);
     setNotifications(updatedNotifications);
 
     // Usage:
@@ -71,18 +70,18 @@ function Notification({ currentUserId }: NotifProps) {
       </button>
       {isOpen && (
         <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg">
-          {notifications.map((message, index) => (
-            <div key={index} className=" flex bg-[#F5F5F5] rounded-md">
-              {message}
-              {message.includes("friend request") && (
+          {notifications.map((notification, index) => (
+            <div key={index} className=" flex bg-[#dedede] rounded-md">
+              {notification.message}
+              {notification.notifType === "friendRequest" && (
                 <div className="flex self-center gap-1 align-middle">
                   <button
                     className="bg-green-500 rounded-full h-4 w-4"
-                    onClick={handleGreenButton(index)}
+                    onClick={() => handleGreenButton(index,notification.senderId)}
                   ></button>
                   <button
                     className="bg-red-500 rounded-full h-4 w-4"
-                    onClick={handleRedButton(index)}
+                    onClick={() => handleRedButton(index,notification.senderId)}
                   ></button>
                 </div>
               )}
