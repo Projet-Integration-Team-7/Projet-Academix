@@ -18,8 +18,9 @@ interface EventParams {
 export async function createEvent({title,start,end,allDay,color}:EventParams) {
   try {
     connectToDB(); // Connect to the database
-    
-    
+    const existingEvent = await Event.findOne({ title: title });
+
+    if (!existingEvent) {
     // Create an event in the database using the Event model
     const newEvent = await Event.create({
       title,
@@ -29,9 +30,12 @@ export async function createEvent({title,start,end,allDay,color}:EventParams) {
       color,
     });
     const createdEvent = await newEvent.save();
-
+    
+      return createdEvent;
+      throw new Error('An event with this name already exists.');
+    }
    
-    return createdEvent;
+   
   } catch (error: any) {
     throw new Error(`Error creating event: ${error.message}`);
   }
@@ -51,43 +55,47 @@ export async function fetchEvents() {
 }
 
 
-export async function updateEvent(eventId: string, eventData: any) {
+export async function updateEvent(title: string, eventData: any) {
   try {
-    connectToDB(); // Connect to the database
+    // Validate input parameters
+    if (!title || !eventData || (eventData.constructor === Object && Object.keys(eventData).length === 0)) {
+      throw new Error('Inv2222alid input: title and eventData are required.');
+    }
+    console.error(`Hihi updating event by title: ${title}`);
 
-    // Find and update the event in the database using the Event model
-    const updatedEvent = await Event.findByIdAndUpdate(eventId, eventData, { new: true });
+    // Find and update the event in the# database using the Event model
+    const updatedEvent = await Event.findOneAndUpdate({ title: title }, eventData, { new: true });
 
     if (!updatedEvent) {
-      throw new EventNotFound(`Event with ID ${eventId} not found in the database.`);
+      throw new Error('Event not found with the provided title');
     }
-
+    
     return updatedEvent;
-  } catch (error: any) {
-    console.error(`Error updating event: ${error.message}`);
-    throw error;
+  } catch (error) {
+    console.error(`Error updating event by title: ${error.message}`);
+    throw new Error(`Error updating event by title: ${error.message}`);
   }
 }
 
-export async function deleteEvent(eventId: string) {
-      console.error('Error deleting event with ID:', eventId);
+export async function deleteEvent(title: string) {
 
       try {
         connectToDB(); // Connect to the database
 
         // Find and delete the event in the database using the Event model
-        const deletedEvent = await Event.findOneAndDelete({ eventId });
+        const deletedEvent = await Event.findOneAndDelete({ title: title });
+        
 
         if (!deletedEvent) {
-          console.error('Event not found with ID:', eventId);
+          console.error('Event not found with ID:', title);
           return false; // Event not found
         }
         return deletedEvent;
-        console.error('Error deleting event with ID:', eventId);
+        console.error('Error deleting event with ID:', title);
 
         return true;
       } catch (error: any) {
-        throw new Error(`Error deleting event: ${eventId}. Error: ${error.message}`);
+        throw new Error(`Error deleting event: ${title}. Error: ${error.message}`);
       }
 }
 
