@@ -23,8 +23,54 @@ async function Page( ){
       return (
 
         <section>
-            <h1  className="head-text mb-10"> Ressources    </h1>
-            <section className="mt-10 flex flex-col gap-5"></section>
+            <h1  className="head-text t mb-10"> Ressources    </h1>
+            <section className="mt-20 flex flex-col gap-"></section>
+
+          <div>
+            <h2 className="head-text  " >
+              Educative websites links
+            </h2>
+                        <h2 className="head-text text-base  " >
+                          Mathetamics
+                                       </h2>
+                                       <h2 className="head-text text-base  " >
+                          Physics
+                                       </h2>
+                                       <h2 className="head-text text-base  " >
+                          Chemistry
+                                       </h2>
+            </div>
+
+<div>
+            <h2 className="head-text  mb-5" >
+              Educative Youtube channel
+            </h2>
+            <h2 className="head-text text-base  " >
+                          Mathetamics
+                                       </h2>
+                                       <h2 className="head-text text-base  " >
+                          Physics
+                                       </h2>
+                                       <h2 className="head-text text-base  " >
+                          Chemistry
+                                       </h2>
+            
+            </div>
+
+            <div>
+            <h2 className="head-text mb-5" >
+              tutoring websites links
+              <h2 className="head-text text-base  " >
+                          Mathetamics
+                                       </h2>
+                                       <h2 className="head-text text-base  " >
+                          Physics
+                                       </h2>
+                                       <h2 className="head-text text-base  " >
+                          Chemistry
+                                       </h2>
+             </h2>
+             </div>
             </section>
             )}
             export default Page
