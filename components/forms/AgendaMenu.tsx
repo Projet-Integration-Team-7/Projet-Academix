@@ -66,6 +66,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({
   }, []); // Le tableau de dépendances vide assure que l'effet s'exécute une seule fois au montage
 
   return (
+    <div className="fullcalendar-container">
     <FullCalendar
     
       plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}// Plugins pour le calendrier
@@ -85,7 +86,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({
   eventDrop={(data) => handleEventDrop(data)}// Permet la sélection de plages de dates
   eventResize={(data) => handleEventDrop(data)} // Utilise la même fonction pour le déplacement et la redimension
 
-  />
+  /></div>
   );
 };
 

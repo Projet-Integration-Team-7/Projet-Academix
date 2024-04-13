@@ -158,3 +158,23 @@
   .comment-form_btn {
     @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
   }
+  .fullcalendar-container {
+    width: 100%; /* Use 100% of the available width */
+    height: 80vh; /* Use 80% of the viewport height */
+    min-width: 500px; /* Minimum width of the calendar */
+    min-height: 500px; /* Minimum height of the calendar */
+    padding: 20px;
+    overflow: hidden; /* Hide overflow */
+  }
+  
+  @media (max-width: 768px) {
+    .fullcalendar-container {
+      height: 100vh;
+    }
+  }
+  
+  @media (orientation: landscape) {
+    .fullcalendar-container {
+      height: 100vh;
+    }
+  }

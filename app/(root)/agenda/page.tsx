@@ -100,6 +100,8 @@ const Home: React.FC = () => {
 
   return (
     <>
+        <div className="fullcalendar-container">
+
       {/* Navigation */}
       <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
         <h1 className="font-bold text-2xl text-gray-200">Calendar</h1>
@@ -137,8 +139,10 @@ const Home: React.FC = () => {
           {/* autre components */}
         </div>
       </main>
+      </div>
     </>
-  );
+  );    
+
 };
 
 export default Home;
