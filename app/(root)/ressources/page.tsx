@@ -1,8 +1,9 @@
+import React from 'react'
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
 import {fetchUser, getActivity} from '@/lib/actions/user.actions'
 import Link from 'next/link';
-import Image from 'next/image';
+import Image from 'next/image'
 
 
 async function Page( ){
@@ -39,6 +40,14 @@ async function Page( ){
                                        <h2 className="head-text text-base  " >
                           Chemistry
                                        </h2>
+                                       <h2 className="head-text text-base  " >
+                          all of them
+                                       </h2>
+                                       <div>
+                                       <a href="https://www.khanacademy.org/" className="text-purple-500 text-sm">Khan Academy</a>
+    </div>
+  
+
             </div>
 
 <div>
