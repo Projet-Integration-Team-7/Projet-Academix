@@ -32,20 +32,12 @@ async function Page( ){
               Educative websites links
             </h2>
                         <h2 className="head-text text-base  " >
-                          Mathetamics
-                                       </h2>
-                                       <h2 className="head-text text-base  " >
-                          Physics
-                                       </h2>
-                                       <h2 className="head-text text-base  " >
-                          Chemistry
-                                       </h2>
-                                       <h2 className="head-text text-base  " >
-                          all of them
+                          Scientific subjects
                                        </h2>
                                        <div>
-                                       <a href="https://www.khanacademy.org/" className="text-purple-500 text-sm">Khan Academy</a>
+                                       <a href="https://www.khanacademy.org/" className="text-purple-500 text-sm">Khan Academy Website</a>
     </div>
+                         
   
 
             </div>
@@ -55,29 +47,22 @@ async function Page( ){
               Educative Youtube channel
             </h2>
             <h2 className="head-text text-base  " >
-                          Mathetamics
+                          Scientific subjects
                                        </h2>
-                                       <h2 className="head-text text-base  " >
-                          Physics
-                                       </h2>
-                                       <h2 className="head-text text-base  " >
-                          Chemistry
-                                       </h2>
-            
+                                       <div>
+                                       <a href="https://www.khanacademy.org/" className="text-purple-500 text-sm">Khan Academy Website</a>
+    </div>
             </div>
 
             <div>
             <h2 className="head-text mb-5" >
               tutoring websites links
               <h2 className="head-text text-base  " >
-                          Mathetamics
+                          Scientific subjects
                                        </h2>
-                                       <h2 className="head-text text-base  " >
-                          Physics
-                                       </h2>
-                                       <h2 className="head-text text-base  " >
-                          Chemistry
-                                       </h2>
+                                       <div>
+                                       <a href="https://www.khanacademy.org/" className="text-purple-500 text-sm">Khan Academy Website</a>
+    </div>
              </h2>
              </div>
             </section>
