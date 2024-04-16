@@ -6,9 +6,8 @@ const ChatEngine = dynamic(() =>
     import("react-chat-engine").then((module) => module.ChatEngine),
     { ssr: false }
 );
-const projectID = '7111d8d8-1953-43e4-b0f0-4ca99d3cb1e4';
 
-const Chat = ({ userName, userSecret }) => {
+const Chat = ({projectID, userName, userSecret }) => {
     return (
         <ChatEngine
             height="80vh"

@@ -15,6 +15,7 @@ const Message = async () => {
 
   return (
     <Chat
+      projectID={`${process.env.NEXT_CHAT_ENGINE_PROJECT_ID}`}
       userName={user?.username}
       userSecret={createChatUserSecret(user?.id)}
     />

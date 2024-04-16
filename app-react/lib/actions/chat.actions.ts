@@ -34,7 +34,10 @@ export async function createChatUser({
     };
 
 
-    return await axios(config);
+    return await axios(config).then(res => {
+      console.log(res);
+      return res;
+    });
   } catch (error: any) {
     throw new Error(`Impossible de creer chat user:${error.message}`);
   }
