@@ -20,6 +20,11 @@ export const sidebarLinks = [
       label: "Create Thread",
     },
     {
+      imgURL: "/assets/timer.svg",
+      route: "/timer",
+      label: "Timer",
+    },
+    {
       imgURL: "/assets/community.svg",
       route: "/communities",
       label: "Communities",
@@ -55,4 +60,5 @@ export const sidebarLinks = [
     { value: "exercise", label: "Exercices", icon: "/assets/Eval.png" },
     { value: "course_note", label: "Notes de Cours", icon: "/assets/request.svg" },
     { value: "evaluation", label: "Evaluation", icon: "/assets/request.svg" },
+
   ];
