@@ -30,10 +30,16 @@ export const sidebarLinks = [
       label: "Profile",
     },
     {
+      imgURL: "/assets/timer.svg",
+      route: "/timer",
+      label: "Timer",
+    },
+    {
       imgURL: "/assets/agenda.svg",
       route: "/agenda",
       label: "Agenda",
     },
+    
   ];
   
   export const profileTabs = [
