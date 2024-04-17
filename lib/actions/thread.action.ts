@@ -7,6 +7,7 @@ import { threadId } from "worker_threads";
 import Community from "../models/community.model";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
+import { clerkClient } from "@clerk/nextjs";
 
 
 
@@ -315,3 +316,30 @@ export async function removeAllDeletedThreadsFromUsers() {
       }
     }
 }
+
+export async function removeDeletedUsers() {
+    // Fetch all users
+    const usersClerk = await clerkClient.users.getUserList();
+    const usersMap = usersClerk.map(user => user.id.toString());
+
+    const usersMongo = await User.find();
+    const usersMongoMap = usersMongo.map(user => user.id.toString());
+
+    for (let user of usersMongoMap) {
+      if  (!usersMap.includes(user)) {
+        await User.findByIdAndDelete(user);
+      }
+    }
+  
+    // Fetch all threads IDs from Thread collection
+    const allThreads = await Thread.find({});
+  
+    // For each thread
+    for (let thread of allThreads) {
+      if ((thread.author && !usersMap.includes(thread.author.toString())) || !usersMap.includes(thread.author.toString())) {
+        // If the author is a deleted user, remove the thread
+        await Thread.findByIdAndDelete(thread._id);
+      }
+    }
+    
+  }
