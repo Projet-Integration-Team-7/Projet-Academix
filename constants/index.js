@@ -31,7 +31,7 @@ export const sidebarLinks = [
     },
 
     {
-      imgURL: "/assets/ressources.svg",
+      imgURL: "/assets/ressources.jpg",
       route: "/ressources",
       label: "Ressources",
     },
