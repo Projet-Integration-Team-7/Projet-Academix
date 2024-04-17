@@ -94,6 +94,8 @@ async function Page( ){
             <div>
             <h2 className="head-text mb-5" >
               tutoring websites links
+              </h2>
+
               <h2 className="head-text text-base  " >
                           Scientific subjects
                                        </h2>
@@ -110,7 +112,7 @@ async function Page( ){
 <p><a href="https://www.kumon.com/" className="text-purple-500 text-sm">Kumon</a></p>
 <p><a href="https://www.huntingtonhelps.com/" className="text-purple-500 text-sm">Huntington Learning Center</a></p>
     </div>
-             </h2>
+            
              </div>
             </section>
             )}
