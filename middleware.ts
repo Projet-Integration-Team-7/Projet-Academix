@@ -2,8 +2,8 @@ import { authMiddleware } from "@clerk/nextjs";
 import "@uploadthing/react/styles.css";
 export default authMiddleware({
   // Routes that can be accessed while signed out
-  publicRoutes: ['/', '/api/webhook/clerk', '/api/uploadthing'],
-  ignoredRoutes: ['/api/webhook/clerk']
+  publicRoutes: ['/', '/api/clerk/webhook', '/api/uploadthing'],
+  // ignoredRoutes: ['/api/clerk/webhook']
 });
  
 export const config = {
