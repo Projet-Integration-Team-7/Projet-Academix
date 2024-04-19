@@ -149,8 +149,6 @@
   .account-form_input {
     @apply border border-dark-4 bg-dark-3 text-light-1 !important;
   }
-   
-
   
   /* Comment Form */
   .comment-form {
@@ -179,4 +177,110 @@
     .fullcalendar-container {
       height: 100vh;
     }
+    .card-hover-effect {
+  transition: transform 0.3s ease-in-out;
+}
+
+.card-hover-effect:hover {
+  transform: scale(1.05);
+}
+
+@keyframes bubble {
+  0% {
+      transform: translateY(100vh) translateX(0); /* Start just below the screen */
+      opacity: 0.1; /* Start slightly visible for a smooth entry */
+  }
+  50% {
+      opacity: 0.6; /* More visible in the middle of the screen */
+  }
+  100% {
+      transform: translateY(-100vh) translateX(0); /* Move to just above the top of the screen */
+      opacity: 0.1; /* Fade out before exiting */
+  }
+}
+/* Fallout-inspired styles */
+.topbar {
+    background-color: #0f0f20; /* Dark blue reminiscent of Fallout's color scheme */
+    color: #ffffff; /* White text for readability */
+    font-family: 'VT323', monospace;
+    border-bottom: 4px solid #d9f99d; /* Rusty orange accent for the bottom border */
+}
+
+.topbar a, .topbar a:hover {
+    color: #d9f99d; /* Rusty orange link color */
+}
+
+/* Style modifications for retro feel */
+button, .organizationSwitcherTrigger {
+    background-color: #336699; /* Muted blue for buttons */
+    border: none; /* Remove border for a flat design */
+    font-family: 'Courier New', Courier, monospace; /* Consistent monospace font */
+    text-transform: uppercase;
+    letter-spacing: 1px; /* Increase letter spacing for a typewriter effect */
+    box-shadow: 2px 2px 0px #d9f99d; /* Add shadow for a 3D effect */
+}
+
+/* Remove the default clerk themes to better suit the Fallout style */
+button.clerk, .organizationSwitcherTrigger {
+    background-color: transparent; /* Remove background */
+    color: #ffffff; /* Set text color to white */
+    padding: 10px 20px;
+}
+
+
+.bubble {
+  position: absolute;
+  bottom: 0;
+  width: 4px;  /* Smaller size for more bubbles */
+  height: 4px;
+  background-color: white; /* Color of the bubbles */
+  border-radius: 50%;
+  opacity: 0;
+  animation: bubble 15s linear infinite; /* Adjust timing as needed for speed */
+}
+
+
+
+/*left side bare
+*/
+/* Fallout-inspired sidebar styles */
+.custom-scrollbar {
+  scrollbar-color: ##d9f99d #0f0f20; /* Custom scrollbar colors */
+}
+
+.leftsidebar {
+  background-color: #0f0f20; /* Dark background color */
+  color: #ffffff; /* White text for readability */
+}
+
+.leftsidebar_link {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 10px;
+  border-radius: 4px;
+  font-family: 'VT323', monospace; /* Retro monospace font */
+  transition: background-color 0.3s; /* Smooth transition for hover states */
+}
+
+.leftsidebar_link:hover, .leftsidebar_link.bg-primary-500 {
+  background-color: #e69900; /* Rusty orange for active or hovered links */
+}
+
+.leftsidebar_link p {
+  color: inherit; /* Ensures text color matches the parent */
+}
+
+/* Add custom styles for logout button */
+.sign-out-button div {
+  transition: background-color 0.3s; /* Smooth transition for hover states */
+}
+
+.sign-out-button div:hover {
+  background-color: #336699; /* A muted blue for the hover state */
+  box-shadow: 0 0 10px #e69900; /* Glow effect on hover */
+}
+
+
+
   }

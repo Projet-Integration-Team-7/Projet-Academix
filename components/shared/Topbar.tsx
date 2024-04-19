@@ -5,8 +5,21 @@ import Link from "next/link";
 import Notification from "../forms/Notification";
 
 function Topbar() {
+    const numberOfBubbles = 100; // Total number of bubbles
+
     return (
         <nav className="topbar">
+            {/*Array.from({ length: numberOfBubbles }).map((_, index) => (
+                <div 
+                    key={index} 
+                    className="bubble" 
+                    style={{ 
+                        left: `${Math.random() * 100}%`,  // Random horizontal start position
+                        animationDelay: `${-Math.random() * 15}s`,  // Random delay for each bubble
+                        animationDuration: `${10 + Math.random() * 10}s`  // Random duration between 10 and 20 seconds
+                    }}
+                ></div>
+            ))*/}
             <Link href="/" className="flex items-center gap-4">
                 <Image src="/assets/logo_blanc.png" alt="logo" width={28} height={28}/>
                 <p className="text-heading3-bold text-light-1 max-xs:hidden">Academix</p>
