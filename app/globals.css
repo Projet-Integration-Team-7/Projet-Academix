@@ -3,10 +3,36 @@
 @tailwind utilities;
 @layer components {
     /* main */
-    .main-container {
-      @apply flex min-h-screen flex-1 flex-col items-center bg-dark-1 px-6 pb-10 pt-28 max-md:pb-32 sm:px-10;
+    @keyframes move {
+      0% {
+        transform: translateX(0) translateY(0);
+      }
+      100% {
+        transform: translateX(100vw) translateY(100vh);
+      }
     }
-  
+    
+    .main-container {
+      @apply flex min-h-screen flex-1 flex-col items-center bg-[#0f0f20] px-6 pb-10 pt-28 max-md:pb-32 sm:px-10 relative overflow-hidden;
+    }
+    
+    .main-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%; /* Large size to cover the entire container */
+      height: 200%;
+      background: repeating-linear-gradient(
+          -45deg,
+          rgba(255, 255, 255, 0.1),
+          rgba(255, 255, 255, 0.1) 1px,
+          transparent 1px,
+          transparent 50px
+      ); /* Creates a grid of lines */
+      animation: move 25s linear infinite; /* Adjust time as needed */
+      filter: blur(10px); /* Apply a blur to the entire pseudo-element */
+    }
     /* Head Text */
     .head-text {
       @apply text-heading2-bold text-light-1;
@@ -245,12 +271,16 @@ button.clerk, .organizationSwitcherTrigger {
 */
 /* Fallout-inspired sidebar styles */
 .custom-scrollbar {
-  scrollbar-color: ##d9f99d #0f0f20; /* Custom scrollbar colors */
+  scrollbar-color: ##d9f99d #d9f99d; /* Custom scrollbar colors */
 }
 
 .leftsidebar {
   background-color: #0f0f20; /* Dark background color */
   color: #ffffff; /* White text for readability */
+}
+
+.leftsidebar a, .leftsidebar a:after {
+  color: #d9f99d; /* Light green text color */
 }
 
 .leftsidebar_link {
@@ -261,10 +291,30 @@ button.clerk, .organizationSwitcherTrigger {
   border-radius: 4px;
   font-family: 'VT323', monospace; /* Retro monospace font */
   transition: background-color 0.3s; /* Smooth transition for hover states */
+  position: relative; /* Enable absolute positioning for pseudo-elements */
 }
 
 .leftsidebar_link:hover, .leftsidebar_link.bg-primary-500 {
-  background-color: #e69900; /* Rusty orange for active or hovered links */
+  background-color: #3352da; /* Blue color for active or hovered links */
+}
+
+/* This will add a yellow line after each .leftsidebar_link */
+.leftsidebar_link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 4px; /* Width of the yellow line */
+  height: 100%; /* Full height of the parent element */
+  background-color: #ffcb69; /* Yellow color for the line */
+}
+
+.leftsidebar_link:not(:last-child)::after {
+  height: calc(100% + 16px); /* Extend line height beyond each item for continuous lines */
+}
+
+.leftsidebar_link:last-child::after {
+  height: 100%; /* Last item should not extend line beyond itself */
 }
 
 .leftsidebar_link p {
