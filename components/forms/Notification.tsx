@@ -7,7 +7,7 @@ function Notification() {
     const [isOpen, setIsOpen] = useState(false);
     const notifications = ['Notification 1', 'Notification 2', 'Notification 3']; // Replace this with actual data
 
-    return (
+    return 
         <div className='relative align-middle text-center bg-center self-center items-center place-items-center'>
             <button onClick={() => setIsOpen(!isOpen)} className='bg-transparent'>
                 <Image 
