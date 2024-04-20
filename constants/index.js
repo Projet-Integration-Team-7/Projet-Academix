@@ -19,11 +19,7 @@ export const sidebarLinks = [
       route: "/create-thread",
       label: "Create Thread",
     },
-    {
-      imgURL: "/assets/timer.svg",
-      route: "/timer",
-      label: "Timer",
-    },
+  
     {
       imgURL: "/assets/community.svg",
       route: "/communities",

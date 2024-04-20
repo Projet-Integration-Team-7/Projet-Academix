@@ -25,7 +25,7 @@ function Notification() {
                 </div>
             )}
         </div>
-    );
+    
 }
 
 export default Notification;
