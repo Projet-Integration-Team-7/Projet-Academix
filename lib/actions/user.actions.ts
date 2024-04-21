@@ -249,15 +249,19 @@ export async function removeFriend(userId: string, friendId: string) {
     }
 }
 
-export async function verifyFriendship(userId: string, friendId: string): Promise<boolean>{
+export async function verifyFriendship(currentUserId: string, userId: string): Promise<boolean>{
     try {
         connectToDB();
+        const currentUser = await User.findOne({ id: currentUserId }).exec();
+        if (!currentUser) {
+            throw new Error("Current User not found");
+        }
         const user = await User.findOne({ id: userId }).exec();
         if (!user) {
-            throw new Error("User not found");
+            throw new Error("Profiled User not found");
         }
         
-        return user.friends.includes(friendId);
+        return currentUser.friends.includes(user._id);
     } catch (error: any) {
         throw new Error(`Failed to verify friendship: ${error.message}`);
     }

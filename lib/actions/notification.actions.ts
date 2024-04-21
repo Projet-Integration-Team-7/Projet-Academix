@@ -147,24 +147,32 @@ export const getUserNotificationMessages = async (
     throw new Error("Failed to fetch user notifications messages as an array");
   }
 };
+
 export async function checkIfFriendRequestExists(
   currentUserId: string,
   userId: string
 ): Promise<boolean> {
   try {
     connectToDB();
-    const currentUser = await User.findOne({ id: currentUserId }); // Await the User.findOne() method call
-    if (!currentUser) {
+    const user = await User.findOne({ id: userId }); // Await the User.findOne() method call
+    if (!user) {
       throw new Error("Current User not found");
     }
-    const friendRequestList = currentUser.notifications.filter(
-      (notif) => notif.notifType === "friendRequest"
-    );
-    const friendRequest = friendRequestList.find(
-      (notif) => notif.senderId === userId
+
+    const friendRequestList = await Notification.find({
+      userId,
+      notifType: "friendRequest",
+    });
+
+    console.log("friend request list:", friendRequestList);
+
+    const friendRequest = friendRequestList.some(
+      (notif) => notif.senderId === currentUserId
     );
 
-    return friendRequest > 0;
+    console.log("friend request; exists or no", friendRequest);
+
+    return friendRequest;
   } catch (error: any) {
     throw new Error(
       `Error checking if a friend request exists: ${error.message}`

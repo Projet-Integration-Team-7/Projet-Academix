@@ -17,7 +17,7 @@ async function Topbar() {
 
             <div className=" flex align-middle place-items-center gap-4">
 
-                {user && <Notification currentUserId= {user.id} />}
+                {user && <Notification currentUserId= {JSON.parse(JSON.stringify(user.id))} />}
 
                 <div className="flex items-center gap-4">
                     <div className="block md:hidden">
