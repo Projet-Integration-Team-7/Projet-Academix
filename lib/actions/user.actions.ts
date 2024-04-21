@@ -294,8 +294,8 @@ export async function removeFriend(userId: string, friendId: string) {
             throw new Error("Friend User not found");
         }
         
-        user.friends = user.friends.filter((id) => id !== friendId);
-        friend.friends = friend.friends.filter((id) => id !== userId);
+        user.friends = user.friends.filter((id:any) => id !== friend._id);
+        friend.friends = friend.friends.filter((id) => id !== user._id);
 
         user.save();
         friend.save();
