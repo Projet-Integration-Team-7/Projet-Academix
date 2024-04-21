@@ -297,49 +297,28 @@ export async function deleteThread(id: string, path: string): Promise<void> {
   }
 
 export async function removeAllDeletedThreadsFromUsers() {
-    // Fetch all thread IDs from Thread collection
-    const allThreads = await Thread.find({});
-    const allThreadIds = allThreads.map(thread => thread._id.toString());
-  
-    // Fetch all users
-    const users = await User.find({});
-  
-    // For each user
-    for (let user of users) {
-      // Filter user's threads array to only include IDs present in allThreadIds
-      const validThreads = user.threads.filter((threadId: string) => allThreadIds.includes(threadId.toString()));
-  
-      // If there are any invalid threads, update the user's threads array
-      if (validThreads.length !== user.threads.length) {
-        user.threads = validThreads;
-        user.save();
+    try {
+      // Fetch all thread IDs from Thread collection
+      const allThreads = await Thread.find({});
+      const allThreadIds = allThreads.map(thread => thread._id.toString());
+    
+      // Fetch all users
+      const users = await User.find({});
+    
+      // For each user
+      for (let user of users) {
+        // Filter user's threads array to only include IDs present in allThreadIds
+        const validThreads = user.threads.filter((threadId: string) => allThreadIds.includes(threadId.toString()));
+    
+        // If there are any invalid threads, update the user's threads array
+        if (validThreads.length !== user.threads.length) {
+          user.threads = validThreads;
+          user.save();
+        }
       }
-    }
+    }catch (error: any) {
+      throw new Error(`Failed to delete threads from deleted users: ${error.message}`);
+  }
 }
 
-export async function removeDeletedUsers() {
-    // Fetch all users
-    const usersClerk = await clerkClient.users.getUserList();
-    const usersMap = usersClerk.map(user => user.id.toString());
 
-    const usersMongo = await User.find();
-    const usersMongoMap = usersMongo.map(user => user.id.toString());
-
-    for (let user of usersMongoMap) {
-      if  (!usersMap.includes(user)) {
-        await User.findByIdAndDelete(user);
-      }
-    }
-  
-    // Fetch all threads IDs from Thread collection
-    const allThreads = await Thread.find({});
-  
-    // For each thread
-    for (let thread of allThreads) {
-      if ((thread.author && !usersMap.includes(thread.author.toString())) || !usersMap.includes(thread.author.toString())) {
-        // If the author is a deleted user, remove the thread
-        await Thread.findByIdAndDelete(thread._id);
-      }
-    }
-    
-  }

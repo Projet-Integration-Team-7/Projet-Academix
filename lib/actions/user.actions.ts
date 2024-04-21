@@ -260,3 +260,28 @@ export async function verifyFriendship(userId: string, friendId: string): Promis
         throw new Error(`Failed to verify friendship: ${error.message}`);
     }
 }
+
+export async function removeDeletedUsers() {
+    try {
+      // Fetch all users
+      const usersClerk = await clerkClient.users.getUserList();
+      // console.log('usersClerk', usersClerk); // Debug line
+  
+      const usersMap = usersClerk.map(user => user.id.toString());
+      // console.log('usersMap', usersMap); // Debug line
+  
+      const usersMongo = await User.find();
+      const usersMongoMap = usersMongo.map(user => user.id.toString()); // Use _id instead of id
+      // console.log('usersMongoMap', usersMongoMap); // Debug line
+  
+      for (let user of usersMongoMap) {
+        if (!usersMap.includes(user)) {
+          await User.deleteOne({ _id: user });
+        }
+      }
+  
+      // Rest of the code...
+    } catch (error: any) {
+      throw new Error(`Failed to remove deleted users from Mongo database: ${error.message}`);
+    }
+  }
