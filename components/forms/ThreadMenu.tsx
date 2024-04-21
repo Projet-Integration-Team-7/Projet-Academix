@@ -49,7 +49,7 @@ const ThreadMenu = ({ threadId, currentUserId, authorId }: ThreadMenuProps) => {
         <div className={`absolute rounded-md bg-white ${authorId === currentUserId ? 'ring-2 ring-gray-200' : ''} `} >
           {authorId === currentUserId && (
             <div
-              className=" group p-1 m-1 flex align-middle cursor-pointer object-contain rounded-lg bg-gray-300 border-2 transition ease-in-out hover:border-red-500 "
+              className=" group p-1 m-1 flex align-middle cursor-pointer object-contain rounded-lg bg-gray-300 border-2 transition ease-in-out hover:border-red-500 content-center "
               onClick={handleDelete}
             >
               <div className=" align-middle content-center ">
@@ -72,7 +72,7 @@ const ThreadMenu = ({ threadId, currentUserId, authorId }: ThreadMenuProps) => {
                 </svg>
               </div>
 
-              <span className= " align-middle text-black group-hover:text-red-500">
+              <span className= " whitespace-nowrap align-middle text-black group-hover:text-red-500">
                  Delete thread
               </span>
             </div>
