@@ -56,6 +56,7 @@ export function createChatUserSecret(userId: string) {
 
   return hash;
 //Calculer le temps ecoule
+}
 export async function calculateTimePassed(date: Date) {
   const now = Date.now();
   const diff = now - date.getTime();
