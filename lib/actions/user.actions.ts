@@ -7,6 +7,8 @@ import { revalidatePath } from "next/cache";
 import Thread from "../models/thread.model";
 import { FilterQuery, SortOrder } from "mongoose";
 import Community from "../models/community.model";
+import { clerkClient } from "@clerk/nextjs";
+
 
 
 interface Params{
