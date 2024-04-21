@@ -5,7 +5,7 @@ interface Props{
     authUserId: string;
     name: string;
     username: string;
-    imgUrl : string;
+    imgUrl: string;
     bio : string ;
     type? :'User' | 'Community';  //type of user (art
 }
@@ -16,20 +16,20 @@ const ProfileHeader =({
     name,
     username,imgUrl,bio,type
 }: Props) => {
-
+    const animatedAvatarJSX = (
+        <div className="avatar-animation-container">
+          <img src={imgUrl} alt="Animated Avatar" className="avatar-image" />
+        </div>
+      );
    //structure de l'affiche du profil 
     return (
+    
         <div className="flex w-full flex-col justify-start">
+            {/* Animated Avatar JSX */}
            <div className="flex items-center justify-betwen">
             <div className="flex items-center gap-3">
-                 <div className="relative h-20 w-20 object-cover">
-                <Image 
-                src={imgUrl}
-                alt="Profile Image"
-                fill
-                className="rounded-full object-cover shadow-2xl"
-                />
-                 </div>
+                
+                 {animatedAvatarJSX}
                  <div className="flex-1">
                     <h2 className="text-left text-heading3-bold text-light-1 ">{name}</h2>
                     <p className="text-base-medium text-gray-1">@{username}</p>

@@ -129,6 +129,7 @@ const ThreadCard = ({
                 {threadType === "course_note" && "Note de cours"}
                 {threadType === "evaluation" && "Evaluations"}
                     </p>
+                    {formatDateString(createdAt)}
 
             {!isComment&& community&&(
                     <Link
@@ -137,7 +138,7 @@ const ThreadCard = ({
                   >
                     
                     <p className='text-subtle-medium text-gray-1'>
-                      {formatDateString(createdAt)}
+                      
                       {" "}{community && ` - ${community.name} Communite`}
                     </p>
                     
