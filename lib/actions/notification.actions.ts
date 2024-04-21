@@ -61,7 +61,10 @@ export async function createFriendRequest(userId: string, senderId: string) {
     });
 
     const createdNotification = await newNotification.save();
-    user.notifications.push(createdNotification._id);
+    // user.notifications.push(createdNotification._id);
+      await User.findByIdAndUpdate(user,{
+        $push:{notifications:createdNotification._id}
+    })
   } catch (error: any) {
     throw new Error(`Error creating notification: ${error.message}`);
   }

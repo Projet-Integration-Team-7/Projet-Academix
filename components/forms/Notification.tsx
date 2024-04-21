@@ -7,6 +7,7 @@ import {
 } from "@/lib/actions/notification.actions";
 import { addFriend } from "@/lib/actions/user.actions";
 import { fetchUserNotifications } from "@/lib/actions/notification.actions";
+import { Popover } from "@headlessui/react";
 
 interface NotifProps {
   currentUserId: string;
@@ -22,6 +23,7 @@ function Notification({ currentUserId }: NotifProps) {
     try {
       const notifs = await fetchUserNotifications(currentUserId);
       setNotifications(notifs);
+      console.log(notifs);
     } catch (error: any) {
       throw new Error("Error fetching notifications", error);
     }
@@ -58,38 +60,42 @@ function Notification({ currentUserId }: NotifProps) {
   };
 
   return (
-    <div className="relative align-middle text-center bg-center self-center items-center place-items-center">
-      <button onClick={() => setIsOpen(!isOpen)} className="bg-transparent">
-        <Image
-          src="/assets/notif.svg"
-          alt="notification icon"
-          width={24}
-          height={24}
-          className="cursor-pointer object-contain align-middle pt-1 rounded-xl scale-110 bg-transparent transition ease-in-out hover:scale-125"
-        />
-      </button>
-      {isOpen && (
-        <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg">
-          {notifications.map((notification, index) => (
-            <div key={index} className=" flex bg-[#dedede] rounded-md">
-              {notification.message}
-              {notification.notifType === "friendRequest" && (
-                <div className="flex self-center gap-1 align-middle">
-                  <button
-                    className="bg-green-500 rounded-full h-4 w-4"
-                    onClick={() => handleGreenButton(index,notification.senderId)}
-                  ></button>
-                  <button
-                    className="bg-red-500 rounded-full h-4 w-4"
-                    onClick={() => handleRedButton(index,notification.senderId)}
-                  ></button>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
+    <Popover>
+      <Popover.Button v-slot="{ open }">
+          <div v-if="open">
+            <script>fetchNotifs</script>
+            <Image
+              src="/assets/notif.svg"
+              alt="notification icon"
+              width={24}
+              height={24}
+              className="cursor-pointer object-contain align-middle pt-1 rounded-xl scale-110 bg-transparent transition ease-in-out hover:scale-125"
+            />
+          </div>
+      </Popover.Button>
+      
+      <Popover.Panel> 
+          <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg text-black">
+            {notifications.map((notification, index) => (
+              <div key={index} className=" flex bg-[#ed4444] rounded-md text-black">
+                {notification.message}
+                {notification.notifType === "friendRequest" && (
+                  <div className="flex self-center gap-1 align-middle text-black">
+                    <button
+                      className="bg-green-500 rounded-full h-4 w-4"
+                      onClick={() => handleGreenButton(index,notification.senderId)}
+                    ></button>
+                    <button
+                      className="bg-red-500 rounded-full h-4 w-4"
+                      onClick={() => handleRedButton(index,notification.senderId)}
+                    ></button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+      </Popover.Panel>
+    </Popover>
   );
 }
 
