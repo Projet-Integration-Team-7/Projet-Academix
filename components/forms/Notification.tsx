@@ -1,31 +1,92 @@
-"use client"
-import {useState} from 'react';
-import { Button } from '../ui/button';
-import Image from 'next/image';
+"use client";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { deleteFriendRequestNotification, getUserNotificationMessages } from "@/lib/actions/notification.actions";
+import { addFriend } from "@/lib/actions/user.actions";
+import { fetchUserNotifications } from "@/lib/actions/notification.actions";
+import { Popover } from "@headlessui/react";
 
-function Notification() {
-    const [isOpen, setIsOpen] = useState(false);
-    const notifications = ['Notification 1', 'Notification 2', 'Notification 3']; // Replace this with actual data
-
-    return (
-        <div className='relative align-middle text-center bg-center self-center items-center place-items-center'>
-            <button onClick={() => setIsOpen(!isOpen)} className='bg-transparent'>
-                <Image 
-                    src="/assets/notif.svg"
-                    alt='notification icon'
-                    width={24} height={24}
-                    className='cursor-pointer object-contain align-middle pt-1 rounded-xl scale-110 bg-transparent transition ease-in-out hover:scale-125'
-                />
-            </button>
-            {isOpen && (
-                <div className='absolute -translate-x-32 h-52 w-36 scroll-auto p-4 bg-white rounded-md shadow-lg'>
-                    {notifications.map((notification, index) => (
-                        <p key={index} className=' flex-wrap'>{notification}</p>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
+interface NotifProps {
+  currentUserId: string;
 }
+
+function Notification({ currentUserId }: NotifProps) {
+  const [notifications, setNotifications] = useState<any[]>(
+    []
+  );
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const userNotifications = await fetchUserNotifications(currentUserId);
+      setNotifications(userNotifications);
+    };
+
+    fetchNotifications();
+  }, [currentUserId]);
+
+  const handleGreenButton = async (index: number,senderId: string) => {
+    // Delete the friend request notification
+    const updatedNotifications = [...notifications];
+    updatedNotifications.splice(index, 1);
+    // Delete the friend request notification from the database
+    await deleteFriendRequestNotification(currentUserId, senderId);
+    setNotifications(updatedNotifications);
+
+    // Add the sender as a friend
+    addFriend(currentUserId, senderId);
+
+    // Usage:
+    // <button onClick={() => acceptFriendRequest(index)}>Accept</button>
+  };
+  const handleRedButton = async (index: number,senderId: string) => {
+    // Delete the friend request notification
+    const updatedNotifications = [...notifications];
+    updatedNotifications.splice(index, 1);
+    // Delete the friend request notification from the database
+    await deleteFriendRequestNotification(currentUserId, senderId);
+    setNotifications(updatedNotifications);
+
+    // Usage:
+    // <button onClick={() => declineFriendRequest(index)}>Decline</button>
+  };
+
+  return (
+    <Popover>
+      <Popover.Button>
+          <div>
+            <Image
+              src="/assets/notif.svg"
+              alt="notification icon"
+              width={24}
+              height={24}
+              className="cursor-pointer object-contain align-middle pt-1 rounded-xl scale-110 bg-transparent transition ease-in-out hover:scale-125"
+            />
+          </div>
+      </Popover.Button>
+      
+      <Popover.Panel> 
+          <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg ">
+            {notifications.map((notification, index) => (
+              <div key={index} className=" flex bg-[#dedede] rounded-md text-black">
+                {notification.message}
+                {notification.notifType === "friendRequest" && (
+                  <div className=" flex gap-1 align-middle self-center items-center place-items-center">
+                    <button
+                      className="bg-green-500 rounded-full h-4 w-4"
+                      onClick={() => handleGreenButton(index,notification.senderId)}
+                    ></button>
+                    <button
+                      className="bg-red-500 rounded-full h-4 w-4"
+                      onClick={() => handleRedButton(index,notification.senderId)}
+                    ></button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+      </Popover.Panel>
+    </Popover>
+  );
+};
 
 export default Notification;

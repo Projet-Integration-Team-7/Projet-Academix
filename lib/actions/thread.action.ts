@@ -301,44 +301,28 @@ export async function deleteThread(id: string, path: string): Promise<void> {
   }
 
 export async function removeAllDeletedThreadsFromUsers() {
-    // Fetch all thread IDs from Thread collection
-    const allThreads = await Thread.find({});
-    const allThreadIds = allThreads.map(thread => thread._id.toString());
-  
-    // Fetch all users
-    const users = await User.find({});
-  
-    // For each user
-    for (let user of users) {
-      // Filter user's threads array to only include IDs present in allThreadIds
-      const validThreads = user.threads.filter((threadId: string) => allThreadIds.includes(threadId.toString()));
-  
-      // If there are any invalid threads, update the user's threads array
-      if (validThreads.length !== user.threads.length) {
-        user.threads = validThreads;
-        user.save();
+    try {
+      // Fetch all thread IDs from Thread collection
+      const allThreads = await Thread.find({});
+      const allThreadIds = allThreads.map(thread => thread._id.toString());
+    
+      // Fetch all users
+      const users = await User.find({});
+    
+      // For each user
+      for (let user of users) {
+        // Filter user's threads array to only include IDs present in allThreadIds
+        const validThreads = user.threads.filter((threadId: string) => allThreadIds.includes(threadId.toString()));
+    
+        // If there are any invalid threads, update the user's threads array
+        if (validThreads.length !== user.threads.length) {
+          user.threads = validThreads;
+          user.save();
+        }
       }
-    }
-}
-export async function calculateTimePassed(date: Date) {
-  const now = Date.now();
-  const diff = now - date.getTime();
-
-  // Calculate the time in different units
-  const minutes = Math.floor(diff / (1000 * 60));
-  const hours = Math.floor(diff / (1000 * 60 * 60));
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const months = Math.floor(diff / (1000 * 60 * 60 * 24 * 30));
-
-  // Return the simplified time string
-  if (months > 1) {
-      const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' });
-      return formattedDate;
-  } else if (days > 0) {
-      return `${days}d`;
-  } else if (hours > 0) {
-      return `${hours}h`;
-  } else {
-      return `${minutes}m`;
+    }catch (error: any) {
+      throw new Error(`Failed to delete threads from deleted users: ${error.message}`);
   }
 }
+
+

@@ -38,8 +38,11 @@ interface ShareBtnProps {
 }
 
 const ShareBtn = ({ threadId }: ShareBtnProps) => {
-  const threadURL = `${window.location.href}/thread/${threadId}`;
-
+  let threadURL = '';
+  if (typeof window !== 'undefined') {
+    threadURL = `${window.location.href}/thread/${threadId}`;
+  }
+  
   const handleCopy = () => {
     navigator.clipboard.writeText(threadURL);
   };

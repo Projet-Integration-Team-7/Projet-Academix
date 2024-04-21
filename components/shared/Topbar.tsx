@@ -1,12 +1,15 @@
-import {  SignOutButton, SignedIn,OrganizationSwitcher} from "@clerk/nextjs";
+import {  SignOutButton, SignedIn,OrganizationSwitcher, currentUser} from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
 import Image from "next/image";
 import Link from "next/link";
 import Notification from "../forms/Notification";
 
-function Topbar() {
+async function Topbar() {
     const numberOfBubbles = 100; // Total number of bubbles
 
+    const user = await currentUser();
+
+    if(!user) return null;
     return (
         <nav className="topbar">
             {/*Array.from({ length: numberOfBubbles }).map((_, index) => (
@@ -26,7 +29,8 @@ function Topbar() {
             </Link>
 
             <div className=" flex align-middle place-items-center gap-4">
-                <Notification />
+
+                {user && <Notification currentUserId= {JSON.parse(JSON.stringify(user.id))} />}
 
                 <div className="flex items-center gap-4">
                     <div className="block md:hidden">
