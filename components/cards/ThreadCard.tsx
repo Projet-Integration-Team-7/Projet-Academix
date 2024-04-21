@@ -88,7 +88,6 @@ const ThreadCard = ({
                             <Link href={`/profile/${author.id}`} className="w-fit">
                                 <h4 className="cursor-pointer text-base-semibold text-light-1">{author.name}</h4>
                             </Link>
-                            <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
                         </div>
                                               {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
 
