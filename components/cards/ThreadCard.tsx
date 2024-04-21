@@ -5,7 +5,7 @@ import LikeBtn from "../forms/LikeBtn";
 import ShareBtn from "../forms/ShareBtn";
 import ThreadMenu from "../forms/ThreadMenu";
 import { formatDateString } from "@/lib/utils";
-import { calculateTimePassed } from "@/lib/actions/thread.action";
+import { calculateTimePassed } from "@/lib/utils";
 
 
 interface Props {
@@ -122,6 +122,7 @@ const ThreadCard = ({
                
 
 
+                <ThreadMenu threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} authorId={author.id}/>     
             </div>
             
             <p className='text-subtle-medium text-gray-1'>
