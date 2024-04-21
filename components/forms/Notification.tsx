@@ -1,10 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import {
-  deleteFriendRequestNotification,
-  getUserNotificationMessages,
-} from "@/lib/actions/notification.actions";
+import { deleteFriendRequestNotification, getUserNotificationMessages } from "@/lib/actions/notification.actions";
 import { addFriend } from "@/lib/actions/user.actions";
 import { fetchUserNotifications } from "@/lib/actions/notification.actions";
 import { Popover } from "@headlessui/react";
@@ -14,24 +11,18 @@ interface NotifProps {
 }
 
 function Notification({ currentUserId }: NotifProps) {
-  const [isOpen, setIsOpen] = useState(false);
   const [notifications, setNotifications] = useState<any[]>(
     []
   );
 
-  const fetchNotifs = async () => {
-    try {
-      const notifs = await fetchUserNotifications(currentUserId);
-      setNotifications(notifs);
-      console.log(notifs);
-    } catch (error: any) {
-      throw new Error("Error fetching notifications", error);
-    }
-  };
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      const userNotifications = await fetchUserNotifications(currentUserId);
+      setNotifications(userNotifications);
+    };
 
-  if (isOpen ) {
-    fetchNotifs();
-  }
+    fetchNotifications();
+  }, [currentUserId]);
 
   const handleGreenButton = async (index: number,senderId: string) => {
     // Delete the friend request notification
@@ -61,9 +52,8 @@ function Notification({ currentUserId }: NotifProps) {
 
   return (
     <Popover>
-      <Popover.Button v-slot="{ open }">
-          <div v-if="open">
-            <script>fetchNotifs</script>
+      <Popover.Button>
+          <div>
             <Image
               src="/assets/notif.svg"
               alt="notification icon"
@@ -75,12 +65,12 @@ function Notification({ currentUserId }: NotifProps) {
       </Popover.Button>
       
       <Popover.Panel> 
-          <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg text-black">
+          <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg ">
             {notifications.map((notification, index) => (
-              <div key={index} className=" flex bg-[#ed4444] rounded-md text-black">
+              <div key={index} className=" flex bg-[#dedede] rounded-md text-black">
                 {notification.message}
                 {notification.notifType === "friendRequest" && (
-                  <div className="flex self-center gap-1 align-middle text-black">
+                  <div className=" flex gap-1 align-middle self-center items-center place-items-center">
                     <button
                       className="bg-green-500 rounded-full h-4 w-4"
                       onClick={() => handleGreenButton(index,notification.senderId)}
@@ -97,6 +87,6 @@ function Notification({ currentUserId }: NotifProps) {
       </Popover.Panel>
     </Popover>
   );
-}
+};
 
 export default Notification;

@@ -15,10 +15,11 @@ const FriendRequest = ({currentUserId,userId}: FriendRequestProps) => {
 
     useEffect(() => {
         const checkFriendshipStatus = async () => {
-            const friendStatus = await verifyFriendship(currentUserId, userId);
+            const friendStatus = await verifyFriendship( JSON.parse(JSON.stringify(currentUserId)), JSON.parse(JSON.stringify(userId)) );
             setIsFriend(friendStatus);
 
-            const requestStatus = await checkIfFriendRequestExists(currentUserId, userId);
+            const requestStatus = await checkIfFriendRequestExists( JSON.parse(JSON.stringify(currentUserId)), JSON.parse(JSON.stringify(userId)) );
+            console.log(requestStatus);
             setIsRequested(requestStatus);
         };
 
@@ -27,13 +28,13 @@ const FriendRequest = ({currentUserId,userId}: FriendRequestProps) => {
 
     const handleClick = async () => {
         if (isFriend) {
-            await removeFriend(currentUserId, userId);
+            await removeFriend(JSON.parse(JSON.stringify(currentUserId)), JSON.parse(JSON.stringify(userId)));
         }
         else if(!isRequested){
-            await createFriendRequest(userId, currentUserId);
+            await createFriendRequest(JSON.parse(JSON.stringify(userId)), JSON.parse(JSON.stringify(currentUserId)));
         }
         else {
-            await deleteFriendRequestNotification(userId, currentUserId);
+            await deleteFriendRequestNotification(JSON.parse(JSON.stringify(userId)), JSON.parse(JSON.stringify(currentUserId)));
         } 
         window.location.reload();   
     }

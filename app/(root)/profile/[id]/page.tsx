@@ -31,7 +31,7 @@ async function Page({ params }: { params: { id: string } }) {
           imgUrl={userInfo.image}
           bio={userInfo.bio}
         />
-        {user.id !== userInfo.id && <FriendRequest currentUserId={user.id} userId={userInfo.id}/>}
+        {user.id !== userInfo.id && <FriendRequest currentUserId={JSON.parse(JSON.stringify(user.id))} userId={JSON.parse(JSON.stringify(userInfo.id))}/>}
       </div>
       <div className="mt-9">
         <Tabs defaultValue="threads" className="w-full">

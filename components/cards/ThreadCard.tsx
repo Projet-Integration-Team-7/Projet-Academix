@@ -93,7 +93,7 @@ const ThreadCard = ({
                 </div>
 
 
-                <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
+                <ThreadMenu threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} authorId={author.id}/>     
             </div>
             
             {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
