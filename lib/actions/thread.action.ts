@@ -7,7 +7,6 @@ import { threadId } from "worker_threads";
 import Community from "../models/community.model";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
-import { clerkClient } from "@clerk/nextjs";
 
 
 
