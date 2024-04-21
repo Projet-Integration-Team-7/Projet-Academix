@@ -1,8 +1,7 @@
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
 import {fetchUser, getActivity} from '@/lib/actions/user.actions'
-
-import Timer from '@/components/forms/Timer';
+import Navigation from '@/components/forms/navigation';
 
 
 async function Page( ){
@@ -15,7 +14,6 @@ async function Page( ){
     const userInfo=await fetchUser(user.id);
 
     if(!userInfo?.onboarded)redirect('/onboarding');
-    // getActivity  
     const activity=await getActivity(userInfo._id);
 
 
@@ -23,9 +21,12 @@ async function Page( ){
       return (
 
         <section>
-            <h1  className="head-text mb-10"> Timer    </h1>
+            <h1  className="head-text mb-10"> Timer   </h1>
             <section className="mt-10 flex flex-col gap-5">
-              <Timer/>
+              <div className='max-w-2xl min-h-screen mx-auto'>
+              <Navigation/>
+
+              </div>
             </section>
             </section>
             )}
