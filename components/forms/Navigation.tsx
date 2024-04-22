@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { MdOutlineKeyboardCommandKey } from "react-icons/md";
 import { CiSettings } from "react-icons/ci";

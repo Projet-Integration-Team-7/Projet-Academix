@@ -1,7 +1,8 @@
+"use client"
 import { CircularProgressbar,buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-function Timer() {
+export default function Timer({ stage, switchStage }: { stage: number; switchStage: (index: number) => void }){
 const options =["Pomodoro","Short Break","Long Break"]
     return (
 
@@ -12,11 +13,11 @@ const options =["Pomodoro","Short Break","Long Break"]
                     <h1
                     key={index}
                     className={` ${
-                        index===0 ?"bg-gray-500 bg-opacity-30" : ""
-                    } p-1 cursor pointer transition-all rounded`
-                
+                        index===stage ?"bg-gray-500 bg-opacity-30" : ""
+                    } p-1 cursor-pointer transition-all rounded`
+               
                 }
-                    
+                onClick={()=> switchStage(index)} 
                     
                     >
                         
@@ -41,4 +42,4 @@ const options =["Pomodoro","Short Break","Long Break"]
     );
 }
 
-export default Timer;
+

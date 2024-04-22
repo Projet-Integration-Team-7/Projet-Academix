@@ -1,13 +1,11 @@
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
 import {fetchUser, getActivity} from '@/lib/actions/user.actions'
-import Navigation from '@/components/forms/Navigation';
-import Timer from '@/components/forms/Timer';
-
+import Pomodoro from '@/components/forms/Pomodoro';
 
 async function Page( ){
     const user=await currentUser();
-
+   
 
     if(!user) return null;
 
@@ -25,8 +23,7 @@ async function Page( ){
             <h1  className="head-text mb-10"> Timer   </h1>
             <section className="mt-10 flex flex-col gap-5">
               <div className='max-w-2xl min-h-screen mx-auto'>
-              <Navigation/>
-              <Timer/>
+             <Pomodoro/>
               </div>
             </section>
             </section>
