@@ -1,7 +1,8 @@
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
 import {fetchUser, getActivity} from '@/lib/actions/user.actions'
-import Navigation from '@/components/forms/navigation';
+import Navigation from '@/components/forms/Navigation';
+import Timer from '@/components/forms/Timer';
 
 
 async function Page( ){
@@ -25,7 +26,7 @@ async function Page( ){
             <section className="mt-10 flex flex-col gap-5">
               <div className='max-w-2xl min-h-screen mx-auto'>
               <Navigation/>
-
+              <Timer/>
               </div>
             </section>
             </section>
