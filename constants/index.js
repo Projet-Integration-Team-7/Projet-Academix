@@ -39,6 +39,10 @@ export const sidebarLinks = [
       route: "/messages",
       label :"Messages",
     },
+
+    {imgURL: "/assets/bot.svg",
+    route:"/chatbot",
+    label: "Chatbot"}
   ];
   
   export const profileTabs = [
