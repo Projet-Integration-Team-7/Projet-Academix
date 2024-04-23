@@ -699,6 +699,47 @@ button.clerk, .organizationSwitcherTrigger {
 	}
 }
 
+.card-hover-effect {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.image-hover-container {
+  position: relative;
+  width: 100%; /* Adjusts to full width of the parent container */
+  height: 700px; /* Height to match the image */
+}
+
+.hover-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  cursor: pointer;
+  opacity: 1; /* Fully visible initially */
+  transition: opacity 0.5s ease; /* Smooth transition for opacity change */
+  z-index: 2; /* Ensures button is above the image */
+}
+
+.hover-button:hover {
+  opacity: 0; /* Button becomes transparent on hover */
+}
+
+.image-hover {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 700px;
+  height: 700px;
+  z-index: 1; /* Lower than button to keep it clickable */
+  overflow: hidden;
+}
+.hover-button:hover + .image-hover {
+  display: block;
+}
 
 
   }

@@ -90,7 +90,16 @@ const ThreadCard = ({
                             </Link>
                             <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
                         </div>
-                                              {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
+                        {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && (
+                        <div className="image-hover-container">
+               <button className="hover-button">Hover Over Me</button>
+                   <div className="image-hover">
+                   
+                   <Image src={imgUrl} alt="Thread Image" width={600} height={600} />           
+                  </div>
+                  </div>
+                  
+ )}
 
 
                         <p className="mt-2 text-small-mono text-black">{content}</p>
