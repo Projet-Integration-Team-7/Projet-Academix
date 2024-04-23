@@ -1,6 +1,6 @@
 "use client"
 import {useEffect, useState} from 'react';
-import { verifyFriendship, removeFriend } from '@/lib/actions/user.actions';
+import { verifyFriendship, removeFriend, addFriend } from '@/lib/actions/user.actions';
 import { checkIfFriendRequestExists, createFriendRequest, deleteFriendRequestNotification } from '@/lib/actions/notification.actions';
 
 interface FriendRequestProps {
@@ -31,7 +31,14 @@ const FriendRequest = ({currentUserId,userId}: FriendRequestProps) => {
             await removeFriend(JSON.parse(JSON.stringify(currentUserId)), JSON.parse(JSON.stringify(userId)));
         }
         else if(!isRequested){
-            await createFriendRequest(JSON.parse(JSON.stringify(userId)), JSON.parse(JSON.stringify(currentUserId)));
+            const userAlreadySentFR = await checkIfFriendRequestExists( JSON.parse(JSON.stringify(userId)), JSON.parse(JSON.stringify(currentUserId)) )
+            if(userAlreadySentFR) {
+                await deleteFriendRequestNotification(JSON.parse(JSON.stringify(userId)), JSON.parse(JSON.stringify(currentUserId)));
+                addFriend(JSON.parse(JSON.stringify(currentUserId)), JSON.parse(JSON.stringify(userId)));
+            }
+            else {
+                await createFriendRequest(JSON.parse(JSON.stringify(userId)), JSON.parse(JSON.stringify(currentUserId)));
+            }
         }
         else {
             await deleteFriendRequestNotification(JSON.parse(JSON.stringify(userId)), JSON.parse(JSON.stringify(currentUserId)));
