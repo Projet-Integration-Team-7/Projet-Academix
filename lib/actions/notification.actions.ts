@@ -148,10 +148,10 @@ export async function markNotificationAsRead(notificationId: string) {
   }
 }
 
-export async function markAllNotificationsAsRead(userId: string) {
+export async function markAllNotificationsAsRead(currentUserId: string) {
   try {
     connectToDB();
-    await Notification.updateMany({ userId }, { read: true });
+    await Notification.updateMany({ currentUserId }, { read: true });
   } catch (error: any) {
     throw new Error(
       `Error marking all notifications as read: ${error.message}`

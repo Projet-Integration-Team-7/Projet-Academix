@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { deleteFriendRequestNotification, getUserNotificationMessages } from "@/lib/actions/notification.actions";
+import { deleteFriendRequestNotification, markAllNotificationsAsRead } from "@/lib/actions/notification.actions";
 import { addFriend } from "@/lib/actions/user.actions";
 import { fetchUserNotifications } from "@/lib/actions/notification.actions";
 import { Popover } from "@headlessui/react";
@@ -52,7 +52,7 @@ function Notification({ currentUserId }: NotifProps) {
 
   return (
     <Popover>
-      <Popover.Button>
+      <Popover.Button onClick={() => markAllNotificationsAsRead(currentUserId)}>
           <div>
             <Image
               src="/assets/notif.svg"
