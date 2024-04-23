@@ -21,19 +21,18 @@ const Page = async ({ params}: {params: { id: string}}) => {
         <section className="relative">
             <div>
             <ThreadCard 
-                key={thread._id}
-                id={thread._id}
-                currentUserId={user?.id || " "}
-                parentId={thread.parentId}
-                content={thread.text}
-                author={thread.author}
-                community={thread.community}
-                imgUrl={thread.image||""}
-                createdAt={thread.createdAt.toString()}
-                comments={thread.children}
-                likes={thread.likes.toObject()}
-                threadType={thread.threadType}
-                />
+                   key={thread._id}
+                   id={thread._id}
+                   currentUserId={user?.id || " "}
+                   parentId={thread.parentId}
+                   content={thread.text}
+                   author={thread.author}
+                   community={thread.community}
+                   imgUrl={thread.image || ""}
+                   createdAt={thread.createdAt.toString()}
+                   comments={thread.children}
+                   likes={thread.likes.toObject()}
+                   threadType={thread.threadType} currentUser={null}                />
             </div>
 
             <div className="mt-7">
@@ -59,8 +58,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                         comments={childItem.children}
                         likes={childItem.likes.toObject()}
                         isComment
-                        threadType={thread.threadType}
-                    />
+                        threadType={thread.threadType} currentUser={null}                    />
                 ))}
             </div>
         </section>
