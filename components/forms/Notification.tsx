@@ -67,7 +67,7 @@ function Notification({ currentUserId }: NotifProps) {
       <Popover.Panel> 
           <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg ">
             {notifications.map((notification, index) => (
-              <div key={index} className=" flex bg-[#dedede] rounded-md text-black">
+              <div key={index} className=" flex bg-[#dedede] rounded-md text-black text-sm">
                 {notification.message}
                 {notification.notifType === "friendRequest" && (
                   <div className=" flex gap-1 align-middle self-center items-center place-items-center">
