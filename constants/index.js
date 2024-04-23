@@ -30,6 +30,12 @@
       route: "/profile",
       label: "Profile",
     },
+
+    {
+      imgURL: "/assets/ressources.jpg",
+      route: "/ressources",
+      label: "Ressources",
+    },
     {
       imgURL: "/assets/agenda.svg",
       route: "/agenda",
