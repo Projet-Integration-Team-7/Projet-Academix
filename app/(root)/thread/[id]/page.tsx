@@ -3,50 +3,38 @@ import Comment from "@/components/forms/Comment";
 import { fetchThreadById } from "@/lib/actions/thread.action";
 import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import React, { useState, useEffect } from 'react';
 
 const Page = async ({ params}: {params: { id: string}}) => {
-    if(!params.id) return null;
+    const [thread, setThread] = useState(null);
+    const [user, setUser] = useState(null);
+    const [userInfo, setUserInfo] = useState(null);
+    useEffect(() => {
+        const init = async () => {
+            if (!params.id) return;
+    
+            const userResponse = await currentUser();
+            if (!userResponse) return;
+            setUser(userResponse);
+    
+            const userInfoResponse = await fetchUser(userResponse.id);
+            if (!userInfoResponse?.onboarded) {
+                redirect('/onboarding');
+                return;
+            }
+            setUserInfo(userInfoResponse);
+    
+            const threadResponse = await fetchThreadById(params.id);
+            setThread(threadResponse);
+        };
+        init();
+    
+        const interval = setInterval(init, 5000);  // Refresh every 5 seconds
+        return () => clearInterval(interval);  // Clean up interval on component unmount
+    }, []);  // Empty dependency array
 
-    const user = await currentUser();
-    const [setUser] = useState(null);
-    if(!user) return null;
-
-    const userInfo = await fetchUser(user.id);
-    const [setUserInfo] = useState(null);
-    if(!userInfo?.onboarded) redirect('/onboarding')
-
-    const thread = await fetchThreadById(params.id)
-    const [setThread] = useState(null);
- // Function pour load la data
- async function loadData() {
-    const user = await currentUser();
-    if (!user) return null;
-
-    const userInfo = await fetchUser(user.id);
-    if (!userInfo?.onboarded) {
-        redirect('/onboarding');
-        return;
-    }
-
-    const thread = await fetchThreadById(params.id);
-    setUser(user);
-    setUserInfo(userInfo);
-    setThread(thread);
-}
-// Effect pour les live mise a jours
-useEffect(() => {
-    loadData();  // Load initial data
-
-    const interval = setInterval(() => {
-        loadData();  // Refresh data
-    }, 1000); // Refresh every 5 seconds
-
-    return () => clearInterval(interval); // Clean up the interval on component unmount
-}, []);
-
+    if (!thread || !user || !userInfo) return null;
    return (
         <section className="relative">
             <div>
@@ -100,7 +88,3 @@ useEffect(() => {
 
 
 export default Page;
-
-function setUser(user: User) {
-    throw new Error("Function not implemented.");
-}
