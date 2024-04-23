@@ -98,11 +98,39 @@ export async function deleteFriendRequestNotification(
 ) {
   try {
     connectToDB();
-    await Notification.deleteOne({
+    
+    // Check if userId sent a friend request to senderId
+    const userSentRequest = await Notification.findOne({
       userId,
       notifType: "friendRequest",
       senderId,
     });
+
+    if (userSentRequest) {
+      // Delete the friend request notification from userId to senderId
+      await Notification.deleteOne({
+        userId,
+        notifType: "friendRequest",
+        senderId,
+      });
+    }
+
+    // Check if senderId sent a friend request to userId
+    const senderSentRequest = await Notification.findOne({
+      userId: senderId,
+      notifType: "friendRequest",
+      senderId: userId,
+    });
+
+    if (senderSentRequest) {
+      // Delete the friend request notification from senderId to userId
+      await Notification.deleteOne({
+        userId: senderId,
+        notifType: "friendRequest",
+        senderId: userId,
+      });
+    }
+
     console.log("Friend request notification deleted successfully");
   } catch (error: any) {
     throw new Error(
