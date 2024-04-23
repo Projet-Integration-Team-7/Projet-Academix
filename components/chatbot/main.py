@@ -1,17 +1,22 @@
+from flask import Flask, request, jsonify
+import httpx
 from openai import OpenAI, OpenAIError
 import threading
 import queue
 import datetime
-from langdetect import detect
-from googletrans import Translator
+import os
+from flask_cors import CORS
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Initialiser le client OpenAI
-client = OpenAI(api_key="")
+client = OpenAI(api_key='')
 
-# Dictionnaire global pour stocker le contexte de chaque utilisateur
+# Global dictionary to store the context of each user
 contexte_utilisateur = {}
 
-# Fonction pour interagir avec l'API OpenAI
+# Function to interact with the OpenAI API
 def ai_interaction(id_utilisateur, texte_entree):
     try:
         contexte = contexte_utilisateur.get(id_utilisateur)
@@ -36,33 +41,44 @@ def ai_interaction(id_utilisateur, texte_entree):
     except Exception as e:
         return "Désolé, nous avons rencontré une erreur. Veuillez essayer de rafraîchir la page."
 
-# Fonction pour que le thread vérifie continuellement les nouveaux messages
+# Function for the thread to continuously check for new messages
 def message_handler(q):
     while True:
         id_utilisateur, message = q.get()
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"[{timestamp}] Utilisateur {id_utilisateur}: {message}")
 
-        # Vérifier si le message indique que l'étudiant a terminé
-        if message.lower() == "end chat":
+        # Check if the message is not None and indicates that the user has finished
+        if message and isinstance(message, str) and message.lower() == "end chat":
             print(f"[{timestamp}] Fermeture du chat pour l'utilisateur {id_utilisateur}...")
             contexte_utilisateur.pop(id_utilisateur, None)
-            break  # Sortir de la boucle et terminer le programme
+            break # Exit the loop and end the program
 
-        reponse = ai_interaction(id_utilisateur, message, "asst_NZnrQifCumhsxO5QBvIZAoEM")
+        reponse = ai_interaction(id_utilisateur, message)
         print(f"[{timestamp}] IA: {reponse}")
         q.task_done()
 
-# Créer une file d'attente pour stocker les messages entrants
+# Create a queue to store incoming messages
 message_queue = queue.Queue()
 
-# Créer un thread pour le gestionnaire de messages
+# Create a thread for the message handler
 thread = threading.Thread(target=message_handler, args=(message_queue,))
 thread.daemon = True
 thread.start()
 
-# Boucle principale pour simuler les messages entrants
-while True:
-    id_utilisateur = input("Identifiant de l'utilisateur: ")
-    saisie_utilisateur = input("Vous: ")
+# Create a Flask application
+app = Flask(__name__)
+CORS(app)  # Enable CORS
+
+# Endpoint to receive messages from users
+@app.route('/message', methods=['POST'])
+def handle_message():
+    data = request.json
+    id_utilisateur = data.get('id_utilisateur')
+    saisie_utilisateur = data.get('saisie_utilisateur')
     message_queue.put((id_utilisateur, saisie_utilisateur))
+    reponse = ai_interaction(id_utilisateur, saisie_utilisateur)
+    return jsonify({'message': reponse})
+
+if __name__ == '__main__':
+    app.run(debug=True)
