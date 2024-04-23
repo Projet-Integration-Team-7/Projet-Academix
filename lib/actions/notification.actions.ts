@@ -56,7 +56,7 @@ export async function createFriendRequest(userId: string, senderId: string) {
     const newNotification = new Notification({
       userId,
       senderId,
-      message: `${sender.name} sent you a friend request`,
+      message: `${user.name}, ${sender.name} sent you a friend request!`,
       notifType: "friendRequest",
     });
 
