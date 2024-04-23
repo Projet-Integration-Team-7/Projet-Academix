@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { deleteFriendRequestNotification, getUserNotificationMessages } from "@/lib/actions/notification.actions";
+import { deleteFriendRequestNotification, markAllNotificationsAsRead } from "@/lib/actions/notification.actions";
 import { addFriend } from "@/lib/actions/user.actions";
 import { fetchUserNotifications } from "@/lib/actions/notification.actions";
 import { Popover } from "@headlessui/react";
@@ -52,7 +52,7 @@ function Notification({ currentUserId }: NotifProps) {
 
   return (
     <Popover>
-      <Popover.Button>
+      <Popover.Button onClick={() => markAllNotificationsAsRead(currentUserId)}>
           <div>
             <Image
               src="/assets/notif.svg"
@@ -67,7 +67,7 @@ function Notification({ currentUserId }: NotifProps) {
       <Popover.Panel> 
           <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg ">
             {notifications.map((notification, index) => (
-              <div key={index} className=" flex bg-[#dedede] rounded-md text-black">
+              <div key={index} className=" flex bg-[#dedede] rounded-md text-black text-sm">
                 {notification.message}
                 {notification.notifType === "friendRequest" && (
                   <div className=" flex gap-1 align-middle self-center items-center place-items-center">

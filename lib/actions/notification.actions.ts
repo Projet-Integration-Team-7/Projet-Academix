@@ -56,7 +56,7 @@ export async function createFriendRequest(userId: string, senderId: string) {
     const newNotification = new Notification({
       userId,
       senderId,
-      message: `${sender.name} sent you a friend request`,
+      message: `${user.name}, ${sender.name} sent you a friend request!`,
       notifType: "friendRequest",
     });
 
@@ -98,11 +98,39 @@ export async function deleteFriendRequestNotification(
 ) {
   try {
     connectToDB();
-    await Notification.deleteOne({
+    
+    // Check if userId sent a friend request to senderId
+    const userSentRequest = await Notification.findOne({
       userId,
       notifType: "friendRequest",
       senderId,
     });
+
+    if (userSentRequest) {
+      // Delete the friend request notification from userId to senderId
+      await Notification.deleteOne({
+        userId,
+        notifType: "friendRequest",
+        senderId,
+      });
+    }
+
+    // Check if senderId sent a friend request to userId
+    const senderSentRequest = await Notification.findOne({
+      userId: senderId,
+      notifType: "friendRequest",
+      senderId: userId,
+    });
+
+    if (senderSentRequest) {
+      // Delete the friend request notification from senderId to userId
+      await Notification.deleteOne({
+        userId: senderId,
+        notifType: "friendRequest",
+        senderId: userId,
+      });
+    }
+
     console.log("Friend request notification deleted successfully");
   } catch (error: any) {
     throw new Error(
@@ -120,10 +148,10 @@ export async function markNotificationAsRead(notificationId: string) {
   }
 }
 
-export async function markAllNotificationsAsRead(userId: string) {
+export async function markAllNotificationsAsRead(currentUserId: string) {
   try {
     connectToDB();
-    await Notification.updateMany({ userId }, { read: true });
+    await Notification.updateMany({ currentUserId }, { read: true });
   } catch (error: any) {
     throw new Error(
       `Error marking all notifications as read: ${error.message}`
