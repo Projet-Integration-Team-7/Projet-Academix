@@ -2,7 +2,6 @@
 import Navigation from '@/components/forms/Navigation';
 import Timer from '@/components/forms/Timer';
 import React, {useEffect, useState} from "react";
-
 export default function Pomodoro (){
     const [pomodoro,setPomodoro]=useState(25)
     const [shortBreak,setShortBreak]=useState(5)
@@ -17,7 +16,6 @@ export default function Pomodoro (){
         if(isYes){
             reset();
             setStage(index)
-
         }else if(!consumedSecond){
             setStage(index);
         }
@@ -67,22 +65,20 @@ const reset =()=>{
     useEffect(() =>{
       
       
-      
+      window.onbeforeunload = () =>{
+        return consumedSecond ?"show waring " : null
+      }
+
         const timer=setInterval(() =>{
             if(ticking){
                 setConsumedSecond(value => value+1)
             clockTicking();
             }
-        },1000);
-    
-    
+        },1000);    
         return() =>  {
-
-
     clearInterval(timer);
        };
 },[seconds,pomodoro,shortBreak,longBreak,ticking]);
-
       return (
 
         <section>
