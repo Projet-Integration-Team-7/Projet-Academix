@@ -12,22 +12,27 @@ async function Page({
 }: {
   searchParams: { [key: string]: string | undefined };
 }) {
+  // Récupérer l'utilisateur actuel
   const user = await currentUser();
   if (!user) return null;
 
+  // Récupérer les informations de l'utilisateur
   const userInfo = await fetchUser(user.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
-  const { userId, q: searchString, page = '1' } = searchParams;
+  // Récupérer les paramètres de recherche
+  const { q: searchString, page = '1' } = searchParams;
   const pageNumber = Number(page);
   const pageSize = 25;
 
+  // Récupérer les utilisateurs correspondant à la recherche
   const result = await fetchUsers({
     userId: user.id,
     searchString,
     pageNumber,
     pageSize,
   });
+  // Rendre la section de recherche
 
   return (
     <section>
@@ -37,6 +42,8 @@ async function Page({
         {result.users.length === 0 ? (
           <p className='no-result'>No Result</p>
         ) : (
+          // Utiliser le map pour rendre une liste de composants UserCard
+
           result.users.map((person) => (
             <UserCard
               key={person.id}
@@ -50,9 +57,10 @@ async function Page({
         )}
       </div>
       <Pagination
-        path='search'
-        pageNumber={pageNumber}
-        isNext={result.isNext}
+
+        currentPage={pageNumber}
+        hasNextPage={result.isNext}
+        route='search'
       />
     </section>
   );

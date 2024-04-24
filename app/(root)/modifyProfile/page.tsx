@@ -1,34 +1,28 @@
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
-import {fetchUser} from '@/lib/actions/user.actions'
+import { fetchUser } from '@/lib/actions/user.actions';
 import PostThread from '@/components/forms/PostThread';
 import ProfileHeader from '@/components/shared/ProfileHeader';
 import EditCard from '@/components/cards/EditCard';
 
-async function Page(){
-    const user=await currentUser();
+async function Page() {
+    // Récupère l'utilisateur actuel
+    const user = await currentUser();
 
+    // Si aucun utilisateur n'est connecté, retourne null
+    if (!user) return null;
 
-    if(!user) return null;
+    // Récupère les informations de l'utilisateur
+    const userInfo = await fetchUser(user.id);
 
-
-    const userInfo=await fetchUser(user.id);
-
-
-    if(!userInfo?.onboarded)redirect("/onboarding");
-    return(
-        <section>
-        <h1 className="head-text mb-10">Modify Profile   </h1>
-        <EditCard
-              key={user.id + "-profile"}
-              id={user.id}
-              name={""}
-              username={user.username}
-              imgUrl={user.imageUrl}
-              personType='User'
-            />
-        </section>
-    )
+    // Si l'utilisateur n'a pas terminé l'onboarding, redirige vers la page "/onboarding"
+    interface Props {
+        id: string;
+        name: string;
+        username: string | null;
+        imgUrl: string;
+        personType: string;
+    }
 }
 
 export default Page;

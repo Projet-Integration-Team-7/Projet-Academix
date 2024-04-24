@@ -1,38 +1,45 @@
+
 import Image from "next/image";
 import { currentUser } from "@clerk/nextjs";
-
 import { communityTabs } from "@/constants";
-
 import UserCard from "@/components/cards/UserCard";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import ExerciseTab from "@/components/shared/ExerciseTab";
 import EvaluationTab from "@/components/shared/EvaluationTab";
 import CourseNoteTab from "@/components/shared/CourseNoteTab";
-
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { fetchCommunityDetails } from "@/lib/actions/community.actions";
 
+// Page est une fonction asynchrone qui affiche les détails d'une communauté.
+// Elle récupère l'utilisateur actuel et les détails de la communauté en fonction de l'id fourni.
+// Elle rend ensuite une section contenant un ProfileHeader et un ensemble d'onglets.
+// Chaque onglet correspond à un aspect différent de la communauté (fils de discussion, membres, demandes, etc.).
 async function Page({ params }: { params: { id: string } }) {
+  // Récupère l'utilisateur actuel
+
   const user = await currentUser();
+  // Si aucun utilisateur n'est trouvé, retourne null
+
   if (!user) return null;
+  // Récupère les détails de la communauté
 
   const communityDetails = await fetchCommunityDetails(params.id);
-
+  // Affiche les détails de la communauté
   return (
     <section>
+      {/* Affiche l'en-tête du profil de la communauté */}
       <ProfileHeader
         accountId={communityDetails?.createdBy?.id}
-        authUserId={user.id}
         name={communityDetails?.name}
         username={communityDetails?.username}
         imgUrl={communityDetails?.image}
         bio={communityDetails?.bio}
-        type='Community'
-      />
-
+        type='Community' authUserId={""} />
       <div className='mt-9'>
+        {/* Affiche les onglets de la communauté */}
+
         <Tabs defaultValue='threads' className='w-full'>
           <TabsList className='tab'>
             {communityTabs.map((tab) => (
@@ -54,15 +61,16 @@ async function Page({ params }: { params: { id: string } }) {
               </TabsTrigger>
             ))}
           </TabsList>
+          {/* Affiche le contenu de l'onglet fils de discussion */}
 
           <TabsContent value='threads' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <ThreadsTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
+          {/* Affiche le contenu de l'onglet membres */}
 
           <TabsContent value='members' className='mt-9 w-full text-light-1'>
             <section className='mt-9 flex flex-col gap-10'>
@@ -78,43 +86,42 @@ async function Page({ params }: { params: { id: string } }) {
               ))}
             </section>
           </TabsContent>
+          {/* Affiche le contenu de l'onglet demandes */}
 
           <TabsContent value='requests' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <ThreadsTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
-
+          {/* Affiche le contenu de l'onglet exercices */}
 
           <TabsContent value='exercise' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <ExerciseTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
+          {/* Affiche le contenu de l'onglet notes de cours */}
+
           <TabsContent value='course_note' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <CourseNoteTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
+          {/* Affiche le contenu de l'onglet évaluations */}
+
           <TabsContent value='evaluation' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <EvaluationTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
-
-
         </Tabs>
       </div>
     </section>

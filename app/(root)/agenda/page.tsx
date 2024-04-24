@@ -4,47 +4,47 @@
 
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { createEvent,deleteEvent,fetchEvents,findEvent,updateEvent } from '@/lib/actions/events.action';
+import { createEvent,deleteEvent,updateEvent } from '@/lib/actions/events.action';
 import { ObjectId } from 'mongoose';
 import { Draggable } from '@fullcalendar/interaction/index.js';
 import { start } from 'repl';
 
 // Importation dynamique du CalendarComponent pour s'assurer qu'il est rendu uniquement côté client
 const CalendarComponent = dynamic(() => import('@/components/forms/AgendaMenu'), { ssr: false });
-// Définition de l'interface pour les props du calendrier
-
-interface CalendarProps {
-  handleDateClick: (arg: { date: Date; allDay: boolean }) => void;
-  handleEventClick: (data: any) => void; // Function to handle event click
-}
 // Définition du composant Home comme un composant fonctionnel
+/**
+ * Composant principal de la page d'agenda.
+ */
 const Home: React.FC = () => {
-    // Variables d'état pour gérer les événements et les détails des événements
+  // Variables d'état pour gérer les événements et les détails des événements
 
-  const [events, setEvents] = useState<any[]>([]); // State to manage events
-  const [eventName, setEventName] = useState(''); // State to manage event name
-  const [eventColor, setEventColor] = useState('#3788d8'); // State to manage event color
-  
-    // Hook d'effet pour rendre les éléments déplaçables
+  const [events, setEvents] = useState<any[]>([]); // État pour gérer les événements
+  const [eventName, setEventName] = useState(''); // État pour gérer le nom de l'événement
+  const [eventColor, setEventColor] = useState('#3788d8'); // État pour gérer la couleur de l'événement
 
+  // Hook d'effet pour rendre les éléments déplaçables
   useEffect(() => {
     let draggableEl = document.getElementById('draggable-el');
     if (draggableEl) {
       new Draggable(draggableEl, {
         itemSelector: '.fc-event',
-        eventData: function (eventEl: { getAttribute: (arg0: string) => any; }) {
+        eventData: function (eventEl: { getAttribute: (arg0: string) => any }) {
           let title = eventEl.getAttribute('title');
           let id = eventEl.getAttribute('data');
           let start = eventEl.getAttribute('start');
           let end = eventEl.getAttribute('end');
-          return { title, id, start,end };
+          return { title, id, start, end };
         },
       });
     }
   }, []);
-  // Fonction pour gérer les clics sur les dates dans le calendrier
+
+  /**
+   * Fonction pour gérer les clics sur les dates dans le calendrier.
+   * @param arg - La date et les propriétés allDay.
+   */
   const handleDateClick = async (arg: { date: Date; allDay: boolean }): Promise<void> => {
-    console.log('Clicked event:', event);
+    console.log('Événement cliqué :', event);
 
     const newEvent = {
       title: eventName,
@@ -54,32 +54,33 @@ const Home: React.FC = () => {
       color: eventColor,
     };
     const response = await createEvent(newEvent);
-    setEvents(prevEvents => [...prevEvents, response]);
-    
-    
+    setEvents((prevEvents) => [...prevEvents, response]);
   };
-  
 
-  // Fonction pour gérer les clics sur les événements pour les supprimer
-  
-  const handleEventClick = async (clickInfo) => {
-    console.log('Clicked event:', clickInfo.event);
+  /**
+   * Fonction pour gérer les clics sur les événements pour les supprimer.
+   * @param clickInfo - Les informations sur l'événement cliqué.
+   */
+  const handleEventClick = async (clickInfo: any) => {
+    console.log('Événement cliqué :', clickInfo.event);
     try {
-      // Call the deleteEvent function with the event's ID
+      // Appeler la fonction deleteEvent avec l'ID de l'événement
       await deleteEvent(clickInfo.event.title);
-      // Update the UI by removing the event from the list of events
+      // Mettre à jour l'interface utilisateur en supprimant l'événement de la liste des événements
     } catch (error) {
-      console.error('Error deleting event:', error);
-      // Handle errors, such as displaying an error message to the user
+      console.error('Erreur lors de la suppression de l\'événement :', error);
+      // Gérer les erreurs, comme afficher un message d'erreur à l'utilisateur
     }
   };
-  
-    // Fonction pour gérer le déplacement des événements
 
-  const handleEventDrop = async (info) => {
+  /**
+   * Fonction pour gérer les déplacements d'événements.
+   * @param info - Les informations sur le déplacement de l'événement.
+   */
+  const handleEventDrop = async (info: any) => {
     const { event } = info;
-  
-    // Preparing the updated event data
+
+    // Préparation des données de l'événement mis à jour
     const updatedEventData = {
       title: event.title,
       start: event.start,
@@ -89,60 +90,53 @@ const Home: React.FC = () => {
     };
     await updateEvent(info.event.title, updatedEventData);
     try {
-      console.log('L\'événement a été mis à jour avec succès.');
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour de l\'événement :', error.message);
+      console.log("L'événement a été mis à jour avec succès.");
+    } catch (error: any) {
+      console.error("Erreur lors de la mise à jour de l'événement :", error.message);
     }
   };
 
-
-
-
   return (
     <>
-        <div className="fullcalendar-container">
+      <div className="fullcalendar-container">
+        {/* Navigation */}
+        <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
+          <h1 className="font-bold text-2xl text-gray-200">Calendrier</h1>
+        </nav>
 
-      {/* Navigation */}
-      <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
-        <h1 className="font-bold text-2xl text-gray-200">Calendar</h1>
-      </nav>
-      
-      {/* Main contenu */}
-      <main className="flex min-h-screen flex-col items-center justify-between p-24">
-        <div className="grid grid-cols-10 font-bold text-2xl text-gray-200">
-          <div className="col-span-8">
-            {/* Input pour nom des events */}
-            <input
-              type="text"
-              value={eventName}
-              onChange={(e) => setEventName(e.target.value)}
-              placeholder="Enter event name"
-            />
+        {/* Contenu principal */}
+        <main className="flex min-h-screen flex-col items-center justify-between p-24">
+          <div className="grid grid-cols-10 font-bold text-2xl text-gray-200">
+            <div className="col-span-8">
+              {/* Input pour le nom des événements */}
+              <input
+                type="text"
+                value={eventName}
+                onChange={(e) => setEventName(e.target.value)}
+                placeholder="Entrer le nom de l'événement"
+              />
 
-            {/* Input pour nom des couleur */}
-            <input
-              type="color"
-              value={eventColor}
-              onChange={(e) => setEventColor(e.target.value)}
-            />
+              {/* Input pour la couleur des événements */}
+              <input
+                type="color"
+                value={eventColor}
+                onChange={(e) => setEventColor(e.target.value)}
+              />
 
-            {/* Affiche Agenda */}
-            <CalendarComponent
-              handleDateClick={handleDateClick}
-              handleEventClick={handleEventClick}
-              handleEventDrop={handleEventDrop}	
-              // Inside CalendarComponent
-              
-          
-            />
+              {/* Affichage du calendrier */}
+              <CalendarComponent
+                handleDateClick={handleDateClick}
+                handleEventClick={handleEventClick}
+                handleEventDrop={handleEventDrop}
+                // À l'intérieur de CalendarComponent
+              />
+            </div>
+            {/* Autres composants */}
           </div>
-          {/* autre components */}
-        </div>
-      </main>
+        </main>
       </div>
     </>
-  );    
-
+  );
 };
 
 export default Home;
