@@ -73,12 +73,20 @@ CORS(app)  # Enable CORS
 # Endpoint to receive messages from users
 @app.route('/message', methods=['POST'])
 def handle_message():
-    data = request.json
-    id_utilisateur = data.get('id_utilisateur')
-    saisie_utilisateur = data.get('saisie_utilisateur')
-    message_queue.put((id_utilisateur, saisie_utilisateur))
-    reponse = ai_interaction(id_utilisateur, saisie_utilisateur)
-    return jsonify({'message': reponse})
+    try:
+        data = request.json
+        id_utilisateur = data.get('id_utilisateur')
+        saisie_utilisateur = data.get('saisie_utilisateur')
+
+        if id_utilisateur is None or saisie_utilisateur is None:
+            return jsonify({'message': 'Invalid request format'}), 400
+
+        message_queue.put((id_utilisateur, saisie_utilisateur))
+        reponse = ai_interaction(id_utilisateur, saisie_utilisateur)
+        return jsonify({'message': reponse})
+    except Exception as e:
+        return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
+
 
 if __name__ == '__main__':
     app.run(debug=True)

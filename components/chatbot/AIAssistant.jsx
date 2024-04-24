@@ -7,9 +7,9 @@ import './AIAssistant.css';
 const apiUrl = 'http://localhost:5000/message';
 
 // Function to send a request to the OpenAI API
-async function sendRequest(prompt) {
+async function sendRequest(prompt, userId) {
   try {
-    const response = await axios.post(apiUrl, { message: prompt });
+    const response = await axios.post(apiUrl, { id_utilisateur: userId, saisie_utilisateur: prompt });
     return response.data.message;
   } catch (error) {
     console.error('Error sending request:', error);
@@ -17,19 +17,19 @@ async function sendRequest(prompt) {
   }
 }
 
+
 const AIAssistant = () => {
   const pathname = usePathname();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const { user } = useUser(); // Access the user object from Clerk
 
-  // Function to handle user input and display the AI's response
-  async function handleUserInput(event) {
-    event.preventDefault();
-    const aiResponse = await sendRequest(inputMessage, messages.map(msg => msg.message).join('\n'));
-    setMessages([...messages, { user: true, message: inputMessage.trim() }, { user: false, message: aiResponse }]);
-    setInputMessage('');
-  }
+async function handleUserInput(event) {
+  event.preventDefault();
+  const aiResponse = await sendRequest(inputMessage.trim(), user.id);
+  setMessages([...messages, { user: true, message: inputMessage.trim() }, { user: false, message: aiResponse }]);
+  setInputMessage('');
+}
 
   useEffect(() => {
     if (user) {
