@@ -126,7 +126,7 @@ const ShareBtn = ({ threadId }: ShareBtnProps) => {
           <button
             type="button"
             onClick={handleShare}
-            className="align-middle self-center"
+            className="align-middle self-center bg-transparent shadow-none"
             title="Share"
           >
             <Image

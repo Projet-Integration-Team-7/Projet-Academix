@@ -39,7 +39,7 @@ const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps)
                 className="cursor-pointer object-contain transition ease-in-out hover:scale-110 hover:-translate-y-1"
                 onClick={handleClick}
             />
-            <span className="text-gray-200 m-0">{nbLikes}</span>
+            <span className="text-dark-200 m-0">{nbLikes}</span>
         </div>
     );
 };

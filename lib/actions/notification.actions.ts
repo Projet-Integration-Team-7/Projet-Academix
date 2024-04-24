@@ -1,4 +1,5 @@
 "use server";
+import { currentUser } from "@clerk/nextjs";
 import Notification from "../models/notification.model";
 import User from "../models/user.model";
 import { connectToDB } from "../mongoose";
@@ -204,6 +205,31 @@ export async function checkIfFriendRequestExists(
   } catch (error: any) {
     throw new Error(
       `Error checking if a friend request exists: ${error.message}`
+    );
+  }
+}
+
+export async function checkIfUnreadNotifs(
+  currentUserId: string,
+): Promise<boolean> {
+  try {
+    connectToDB();
+    const currentUser = await User.findOne({ id: currentUserId });
+    if (!currentUser) {
+      throw new Error("Current User not found");
+    }
+
+    const unreadNotifications = await Notification.find({
+      userId: currentUserId,
+      read: false,
+    });
+
+    console.log("unread notifications:", unreadNotifications);
+
+    return unreadNotifications.length > 0;
+  } catch (error: any) {
+    throw new Error(
+      `Error checking if unread notifications exist: ${error.message}`
     );
   }
 }
