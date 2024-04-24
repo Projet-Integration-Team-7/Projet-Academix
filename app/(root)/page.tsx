@@ -11,8 +11,8 @@ export default async function Home() {
   const communityDetails = await fetchCommunityDetails(user?.id || "");
   
   //console.log(result);
-  removeDeletedUsers();
-  removeAllDeletedThreadsFromUsers();  
+  // removeDeletedUsers();
+  // removeAllDeletedThreadsFromUsers();  
 
   return (
     <> 
