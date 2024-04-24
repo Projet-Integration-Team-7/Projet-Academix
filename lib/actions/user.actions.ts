@@ -281,25 +281,32 @@ export async function addFriend(userId: string, friendId: string) {
     }
 }
 
-export async function removeFriend(userId: string, friendId: string) { 
+export async function removeFriend(currentUserId: string, friendId: string) { 
     try {
-        connectToDB();
-        const user = await User.findOne({ id: userId });
-        if (!user) {
-            throw new Error("User not found");
-        }
+    const currentUser = await User.findOne({ id: currentUserId });
+    if (!currentUser) {
+        throw new Error("Current User not found");
+    }
 
-        const friend = await User.findOne({ id: friendId });
-        if (!friend) {
-            throw new Error("Friend User not found");
-        }
-        
-        user.friends = user.friends.filter((id:any) => id !== friend._id);
-        friend.friends = friend.friends.filter((id) => id !== user._id);
+    const friend = await User.findOne({ id: friendId });
+    if (!friend) {
+        throw new Error(`Friend User ${friendId} not found`);
+    }
 
-        user.save();
-        friend.save();
+    // Remove friend from current user's friends array
+    const friendIndex = currentUser.friends.indexOf(friend._id);
+    if (friendIndex !== -1) {
+        currentUser.friends.splice(friendIndex, 1);
+    }
 
+    // Remove current user from friend's friends array
+    const currentUserIndex = friend.friends.indexOf(currentUser._id);
+    if (currentUserIndex !== -1) {
+        friend.friends.splice(currentUserIndex, 1);
+    }
+
+    await currentUser.save();
+    await friend.save();
     } catch (error:any) {
         throw new Error(`Failed to remove friend: ${error.message}`);
     }
