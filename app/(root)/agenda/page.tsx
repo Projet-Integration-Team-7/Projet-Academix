@@ -17,6 +17,7 @@ interface CalendarProps {
   handleDateClick: (arg: { date: Date; allDay: boolean }) => void;
   handleEventClick: (data: any) => void; // Function to handle event click
 }
+
 // Définition du composant Home comme un composant fonctionnel
 const Home: React.FC = () => {
     // Variables d'état pour gérer les événements et les détails des événements
@@ -24,7 +25,17 @@ const Home: React.FC = () => {
   const [events, setEvents] = useState<any[]>([]); // State to manage events
   const [eventName, setEventName] = useState(''); // State to manage event name
   const [eventColor, setEventColor] = useState('#3788d8'); // State to manage event color
-  
+  useEffect(() => {
+    const fetchAndSetEvents = async () => {
+      const fetchedEvents = await fetchEvents();
+      setEvents(fetchedEvents);
+    };
+
+    fetchAndSetEvents(); // Fetch on initial render
+    const interval = setInterval(fetchAndSetEvents, 5000); // Fetch every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup on component unmount
+  }, []);
     // Hook d'effet pour rendre les éléments déplaçables
 
   useEffect(() => {
@@ -55,7 +66,7 @@ const Home: React.FC = () => {
     };
     const response = await createEvent(newEvent);
     setEvents(prevEvents => [...prevEvents, response]);
-    
+    window.location.reload();
     
   };
   
@@ -68,7 +79,7 @@ const Home: React.FC = () => {
       // Call the deleteEvent function with the event's ID
       await deleteEvent(clickInfo.event.title);
       // Update the UI by removing the event from the list of events
-    } catch (error) {
+      window.location.reload();    } catch (error) {
       console.error('Error deleting event:', error);
       // Handle errors, such as displaying an error message to the user
     }

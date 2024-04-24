@@ -17,14 +17,15 @@ const Page = async ({ params}: {params: { id: string}}) => {
 
     const thread = await fetchThreadById(params.id)
     useEffect(() => {
-        const interval = setInterval(() => {
-            fetchThreadById(params.id).then(updatedThread => {
-                thread = updatedThread;
-            });
-        }, 5000); // 30 seconds
+        const timeout = setTimeout(() => {
+            window.location.reload();
+        }, 5000); // Refresh the page every 5 seconds
 
-        return () => clearInterval(interval);
-    }, [params.id]);
+        return () => clearTimeout(timeout);
+    }, []); // Empty dependency array means this effect runs once after the initial render
+
+    if (!thread) return <p>Loading...</p>;
+
 
    return (
         <section className="relative">
