@@ -1,290 +1,283 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Composants personnalisés */
 @layer components {
-    /* main */
-    @keyframes move {
-      0% {
-        transform: translateX(0) translateY(0);
-      }
-      100% {
-        transform: translateX(100vw) translateY(100vh);
-      }
+  /* Animation de déplacement */
+  @keyframes move {
+    0% {
+      transform: translateX(0) translateY(0);
     }
-    
-    .main-container {
-      @apply flex min-h-screen flex-1 flex-col items-center bg-[#0f0f20] px-6 pb-10 pt-28 max-md:pb-32 sm:px-10 relative overflow-hidden;
-    }
-    
-    .main-container::before {
-      content: '';
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%; /* Large size to cover the entire container */
-      height: 200%;
-      background: repeating-linear-gradient(
-          -45deg,
-          rgba(255, 255, 255, 0.1),
-          rgba(255, 255, 255, 0.1) 1px,
-          transparent 1px,
-          transparent 50px
-      ); /* Creates a grid of lines */
-      animation: move 25s linear infinite; /* Adjust time as needed */
-      filter: blur(10px); /* Apply a blur to the entire pseudo-element */
-    }
-    /* Head Text */
-    .head-text {
-      @apply text-heading2-bold text-light-1;
-    }
-  
-    /* Activity */
-    .activity-card {
-      @apply flex items-center gap-2 rounded-md bg-dark-2 px-7 py-4;
-    }
-  
-    /* No Result */
-    .no-result {
-      @apply text-center !text-base-regular text-light-3;
-    }
-  
-    /* Community Card */
-    .community-card {
-      @apply w-full rounded-lg bg-emerald-50 px-4 py-5 sm:w-96;
-    }
-  
-    .community-card_btn {
-      @apply rounded-lg bg-primary-500 px-5 py-1.5 text-small-regular !important;
-    }
-  
-    /* thread card  */
-    .thread-card_bar {
-      @apply relative mt-2 w-0.5 grow rounded-full bg-lime-200;
-    }
-  
-    /* User card */
-    .user-card {
-      @apply flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
-    }
-  
-    .user-card_avatar {
-      @apply flex flex-1 items-start justify-start gap-3 xs:items-center;
-    }
-  
-    .user-card_btn {
-      @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
-    }
-  
-    .searchbar_input {
-      transition: all 0.3s ease-in-out;
-      width: 100%; /* Default width */
-      background-color: #f0f0f0; /* Light grey background */
-    }
-    
-    .searchbar_input:focus {
-      width: 100%; /* Expand to full width on focus */
-      background-color: #ffffff; /* Change to white on focus */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
-    }
-  
-    .topbar {
-      @apply fixed top-0 z-30 flex w-full items-center justify-between bg-dark-2 px-6 py-3;
-    }
-  
-    .bottombar {
-      @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
-    }
-  
-    .bottombar_container {
-      @apply flex items-center justify-between gap-3 xs:gap-5;
-    }
-  
-    .bottombar_link {
-      @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
-    }
-  
-    .leftsidebar {
-      @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-dark-2 pb-5 pt-28 max-md:hidden;
-    }
-  
-    .leftsidebar_link {
-      @apply relative flex justify-start gap-4 rounded-lg p-4;
-    }
-  
-    .pagination {
-      @apply mt-10 flex w-full items-center justify-center gap-5;
-    }
-  
-    .rightsidebar {
-      @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-2 px-10 pb-6 pt-28 max-xl:hidden;
+    100% {
+      transform: translateX(100vw) translateY(100vh);
     }
   }
-  
-  @layer utilities {
-    .css-invert {
-      @apply invert-[50%] brightness-200;
-    }
-  
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 3px;
-      height: 3px;
-      border-radius: 2px;
-    }
-  
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #09090a;
-    }
-  
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #5c5c7b;
-      border-radius: 50px;
-    }
-  
-    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-      background: #7878a3;
-    }
+
+  /* Conteneur principal */
+  .main-container {
+    @apply flex min-h-screen flex-1 flex-col items-center bg-[#0f0f20] px-6 pb-10 pt-28 max-md:pb-32 sm:px-10 relative overflow-hidden;
   }
-  
-  /* Clerk Responsive fix */
-  .cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
-    @apply max-sm:hidden;
+
+  /* Arrière-plan en grille */
+  .main-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%; /* Taille plus grande pour couvrir tout le conteneur */
+    height: 200%;
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px,
+      transparent 50px
+    ); /* Crée une grille de lignes */
+    animation: move 25s linear infinite; /* Ajuster la durée au besoin */
+    filter: blur(10px); /* Appliquer un flou à l'ensemble de la pseudo-élément */
   }
-  
-  .cl-organizationSwitcherTrigger
-    .cl-organizationPreview
-    .cl-organizationPreviewTextContainer {
-    @apply max-sm:hidden;
+
+  /* Texte principal */
+  .head-text {
+    @apply text-heading2-bold text-light-1;
   }
-  
-  /* Shadcn Component Styles */
-  
-  /* Tab */
-  .tab {
-    @apply flex min-h-[50px] flex-1 items-center gap-3 bg-dark-2 text-light-2 data-[state=active]:bg-[#0e0e12] data-[state=active]:text-light-2 !important;
+
+  /* Carte d'activité */
+  .activity-card {
+    @apply flex items-center gap-2 rounded-md bg-dark-2 px-7 py-4;
   }
-  
-  .no-focus {
-    @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+
+  /* Aucun résultat */
+  .no-result {
+    @apply text-center !text-base-regular text-light-3;
   }
-  
-  /* Account Profile  */
-  .account-form_image-label {
-    @apply flex h-24 w-24 items-center justify-center rounded-full bg-dark-4 !important;
+
+  /* Carte de la communauté */
+  .community-card {
+    @apply w-full rounded-lg bg-emerald-50 px-4 py-5 sm:w-96;
   }
-  
-  .account-form_image-input {
-    @apply cursor-pointer border-none bg-transparent outline-none file:text-blue !important;
+
+  .community-card_btn {
+    @apply rounded-lg bg-primary-500 px-5 py-1.5 text-small-regular !important;
   }
-  
-  .account-form_input {
-    @apply border border-dark-4 bg-dark-3 text-light-1 !important;
+
+  /* Barre de progression de la carte de discussion */
+  .thread-card_bar {
+    @apply relative mt-2 w-0.5 grow rounded-full bg-lime-200;
   }
-  
-  /* Comment Form */
-  .comment-form {
-    @apply mt-10 flex items-center gap-4 border-y border-y-dark-4 py-5 max-xs:flex-col !important;
+
+  /* Carte utilisateur */
+  .user-card {
+    @apply flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
   }
-  
-  .comment-form_btn {
-    @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
+
+  .user-card_avatar {
+    @apply flex flex-1 items-start justify-start gap-3 xs:items-center;
   }
+
+  .user-card_btn {
+    @apply h-auto min-w-[74px] rounded-lg bg-primary-500 text-[12px] text-light-1 !important;
+  }
+
+  /* Champ de recherche */
+  .searchbar_input {
+    transition: all 0.3s ease-in-out;
+    width: 100%; /* Largeur par défaut */
+    background-color: #f0f0f0; /* Fond gris clair */
+  }
+
+  .searchbar_input:focus {
+    width: 100%; /* S'étendre sur toute la largeur lorsqu'il est sélectionné */
+    background-color: #ffffff; /* Passer au blanc lorsqu'il est sélectionné */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Ombre douce pour la profondeur */
+  }
+
+  /* Barre supérieure */
+  .topbar {
+    @apply fixed top-0 z-30 flex w-full items-center justify-between bg-dark-2 px-6 py-3;
+  }
+
+  /* Barre inférieure */
+  .bottombar {
+    @apply fixed bottom-0 z-10 w-full rounded-t-3xl bg-glassmorphism p-4 backdrop-blur-lg xs:px-7 md:hidden;
+  }
+
+  .bottombar_container {
+    @apply flex items-center justify-between gap-3 xs:gap-5;
+  }
+
+  .bottombar_link {
+    @apply relative flex flex-col items-center gap-2 rounded-lg p-2 sm:flex-1 sm:px-2 sm:py-2.5;
+  }
+
+  /* Barre latérale gauche */
+  .leftsidebar {
+    @apply sticky left-0 top-0 z-20 flex h-screen w-fit flex-col justify-between overflow-auto border-r border-r-dark-4 bg-dark-2 pb-5 pt-28 max-md:hidden;
+  }
+
+  .leftsidebar_link {
+    @apply relative flex justify-start gap-4 rounded-lg p-4;
+  }
+
+  /* Pagination */
+  .pagination {
+    @apply mt-10 flex w-full items-center justify-center gap-5;
+  }
+
+  /* Barre latérale droite */
+  .rightsidebar {
+    @apply sticky right-0 top-0 z-20 flex h-screen w-fit flex-col justify-between gap-12 overflow-auto border-l border-l-dark-4 bg-dark-2 px-10 pb-6 pt-28 max-xl:hidden;
+  }
+}
+
+/* Utilitaires personnalisés */
+@layer utilities {
+  /* Inversion des couleurs */
+  .css-invert {
+    @apply invert-[50%] brightness-200;
+  }
+
+  /* Personnalisation de la barre de défilement */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #09090a;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #5c5c7b;
+    border-radius: 50px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #7878a3;
+  }
+}
+
+/* Styles spécifiques à Clerk */
+/* Masquer certains éléments pour une meilleure intégration avec le style Fallout */
+.cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
+  @apply max-sm:hidden;
+}
+
+.cl-organizationSwitcherTrigger .cl-organizationPreview .cl-organizationPreviewTextContainer {
+  @apply max-sm:hidden;
+}
+
+/* Styles spécifiques à Shadcn Component */
+/* Onglet */
+.tab {
+  @apply flex min-h-[50px] flex-1 items-center gap-3 bg-dark-2 text-light-2 data-[state=active]:bg-[#0e0e12] data-[state=active]:text-light-2 !important;
+}
+
+/* Supprimer la mise au point par défaut pour une meilleure intégration avec le style Fallout */
+.no-focus {
+  @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
+}
+
+/* Profil de compte */
+.account-form_image-label {
+  @apply flex h-24 w-24 items-center justify-center rounded-full bg-dark-4 !important;
+}
+
+.account-form_image-input {
+  @apply cursor-pointer border-none bg-transparent outline-none file:text-blue !important;
+}
+
+.account-form_input {
+  @apply border border-dark-4 bg-dark-3 text-light-1 !important;
+}
+
+/* Formulaire de commentaire */
+.comment-form {
+  @apply mt-10 flex items-center gap-4 border-y border-y-dark-4 py-5 max-xs:flex-col !important;
+}
+
+.comment-form_btn {
+  @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
+}
+
+/* Conteneur de calendrier */
+.fullcalendar-container {
+  width: 100%; /* Utiliser 100% de la largeur disponible */
+  height: 80vh; /* Utiliser 80% de la hauteur de la fenêtre */
+  min-width: 500px; /* Largeur minimale du calendrier */
+  min-height: 500px; /* Hauteur minimale du calendrier */
+  padding: 20px;
+  overflow: hidden; /* Masquer le débordement */
+}
+
+@media (max-width: 768px) {
   .fullcalendar-container {
-    width: 100%; /* Use 100% of the available width */
-    height: 80vh; /* Use 80% of the viewport height */
-    min-width: 500px; /* Minimum width of the calendar */
-    min-height: 500px; /* Minimum height of the calendar */
-    padding: 20px;
-    overflow: hidden; /* Hide overflow */
+    height: 100vh;
   }
-  
-  @media (max-width: 768px) {
-    .fullcalendar-container {
-      height: 100vh;
-    }
-  }
-  
-  @media (orientation: landscape) {
-    .fullcalendar-container {
-      height: 100vh;
-    }
-    .card-hover-effect {
-  transition: transform 0.3s ease-in-out;
 }
 
-.card-hover-effect:hover {
-  transform: scale(1.05);
+@media (orientation: landscape) {
+  .fullcalendar-container {
+    height: 100vh;
+  }
 }
 
-@keyframes bubble {
-  0% {
-      transform: translateY(100vh) translateX(0); /* Start just below the screen */
-      opacity: 0.1; /* Start slightly visible for a smooth entry */
-  }
-  50% {
-      opacity: 0.6; /* More visible in the middle of the screen */
-  }
-  100% {
-      transform: translateY(-100vh) translateX(0); /* Move to just above the top of the screen */
-      opacity: 0.1; /* Fade out before exiting */
-  }
-}
-/* Fallout-inspired styles */
+/* Styles inspirés de Fallout */
+/* Barre supérieure */
 .topbar {
-    background-color: #0f0f20; /* Dark blue reminiscent of Fallout's color scheme */
-    color: #ffffff; /* White text for readability */
-    font-family: 'VT323', monospace;
-    border-bottom: 4px solid #d9f99d; /* Rusty orange accent for the bottom border */
+  background-color: #0f0f20; /* Bleu foncé rappelant le style de couleur de Fallout */
+  color: #ffffff; /* Texte blanc pour une meilleure lisibilité */
+  font-family: 'VT323', monospace;
+  border-bottom: 4px solid #d9f99d; /* Accent orange rouillé pour la bordure inférieure */
 }
 
-.topbar a, .topbar a:hover {
-    color: #d9f99d; /* Rusty orange link color */
+.topbar a,
+.topbar a:hover {
+  color: #d9f99d; /* Couleur orange rouillée pour les liens */
 }
 
-/* Style modifications for retro feel */
-button, .organizationSwitcherTrigger {
-    background-color: #336699; /* Muted blue for buttons */
-    border: none; /* Remove border for a flat design */
-    font-family: 'Courier New', Courier, monospace; /* Consistent monospace font */
-    text-transform: uppercase;
-    letter-spacing: 1px; /* Increase letter spacing for a typewriter effect */
-    box-shadow: 2px 2px 0px #d9f99d; /* Add shadow for a 3D effect */
+/* Styles personnalisés pour les boutons */
+button,
+.organizationSwitcherTrigger {
+  background-color: #336699; /* Bleu atténué pour les boutons */
+  border: none; /* Supprimer la bordure pour un design plat */
+  font-family: 'Courier New', Courier, monospace; /* Police monospace cohérente */
+  text-transform: uppercase;
+  letter-spacing: 1px; /* Augmenter l'espacement des lettres pour un effet de machine à écrire */
+  box-shadow: 2px 2px 0px #d9f99d; /* Ajouter une ombre pour un effet 3D */
 }
 
-/* Remove the default clerk themes to better suit the Fallout style */
-button.clerk, .organizationSwitcherTrigger {
-    background-color: transparent; /* Remove background */
-    color: #ffffff; /* Set text color to white */
-    padding: 10px 20px;
+/* Supprimer les thèmes par défaut de Clerk pour mieux s'intégrer au style Fallout */
+button.clerk,
+.organizationSwitcherTrigger {
+  background-color: transparent; /* Supprimer l'arrière-plan */
+  color: #ffffff; /* Définir la couleur du texte en blanc */
+  padding: 10px 20px;
 }
 
-
+/* Bulle animée */
 .bubble {
   position: absolute;
   bottom: 0;
-  width: 4px;  /* Smaller size for more bubbles */
+  width: 4px; /* Taille plus petite pour plus de bulles */
   height: 4px;
-  background-color: white; /* Color of the bubbles */
+  background-color: white; /* Couleur des bulles */
   border-radius: 50%;
   opacity: 0;
-  animation: bubble 15s linear infinite; /* Adjust timing as needed for speed */
+  animation: bubble 15s linear infinite; /* Ajuster la durée pour la vitesse souhaitée */
 }
 
-
-
-/*left side bare
-*/
-/* Fallout-inspired sidebar styles */
-.custom-scrollbar {
-  scrollbar-color: ##d9f99d #d9f99d; /* Custom scrollbar colors */
-}
-
+/* Barre latérale gauche inspirée de Fallout */
 .leftsidebar {
-  background-color: #0f0f20; /* Dark background color */
-  color: #ffffff; /* White text for readability */
+  background-color: #0f0f20; /* Couleur de fond sombre */
+  color: #ffffff; /* Texte blanc pour une meilleure lisibilité */
 }
 
-.leftsidebar a, .leftsidebar a:after {
-  color: #d9f99d; /* Light green text color */
+.leftsidebar a,
+.leftsidebar a:after {
+  color: #d9f99d; /* Couleur du texte vert clair */
 }
 
 .leftsidebar_link {
@@ -293,412 +286,93 @@ button.clerk, .organizationSwitcherTrigger {
   gap: 16px;
   padding: 10px;
   border-radius: 4px;
-  font-family: 'VT323', monospace; /* Retro monospace font */
-  transition: background-color 0.3s; /* Smooth transition for hover states */
-  position: relative; /* Enable absolute positioning for pseudo-elements */
+  font-family: 'VT323', monospace; /* Police monospace rétro */
+  transition: background-color 0.3s; /* Transition en douceur pour les états survolés */
+  position: relative; /* Permet le positionnement absolu pour les pseudo-éléments */
 }
 
-.leftsidebar_link:hover, .leftsidebar_link.bg-primary-500 {
-  background-color: #3352da; /* Blue color for active or hovered links */
+.leftsidebar_link:hover,
+.leftsidebar_link.bg-primary-500 {
+  background-color: #3352da; /* Couleur bleue pour les liens actifs ou survolés */
 }
 
-/* This will add a yellow line after each .leftsidebar_link */
+/* Ajouter une ligne jaune après chaque .leftsidebar_link */
 .leftsidebar_link::after {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
-  width: 4px; /* Width of the yellow line */
-  height: 100%; /* Full height of the parent element */
-  background-color: #d9f99d; /* Yellow color for the line */
+  width: 4px; /* Largeur de la ligne jaune */
+  height: 100%; /* Hauteur totale de l'élément parent */
+  background-color: #d9f99d; /* Couleur jaune pour la ligne */
 }
 
 .leftsidebar_link:not(:last-child)::after {
-  height: calc(100% + 16px); /* Extend line height beyond each item for continuous lines */
+  height: calc(100% + 16px); /* Augmenter la hauteur de la ligne au-delà de chaque élément pour des lignes continues */
 }
 
 .leftsidebar_link:last-child::after {
-  height: 100%; /* Last item should not extend line beyond itself */
+  height: 100%; /* Le dernier élément ne doit pas dépasser la ligne */
 }
 
 .leftsidebar_link p {
-  color: inherit; /* Ensures text color matches the parent */
+  color: inherit; /* Assurez-vous que la couleur du texte correspond à celle du parent */
 }
 
-/* Add custom styles for logout button */
+/* Styles personnalisés pour le bouton de déconnexion */
 .sign-out-button div {
-  transition: background-color 0.3s; /* Smooth transition for hover states */
+  transition: background-color 0.3s; /* Transition en douceur pour les états survolés */
 }
 
 .sign-out-button div:hover {
-  background-color: #336699; /* A muted blue for the hover state */
-  box-shadow: 0 0 10px #e69900; /* Glow effect on hover */
+  background-color: #336699; /* Bleu atténué pour l'état survolé */
+  box-shadow: 0 0 10px #e69900; /* Effet de lueur au survol */
 }
 
-
-.input-focus-effect:focus, .textarea-focus-effect:focus {
-  outline: none;
-  border-color: #f5f5dc; /* Light beige border */
-  background-color: #e2e2e2; /* Lighter grey background */
-  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
+/* Effet de survol pour les cartes */
+.card-hover-effect {
+  transition: transform 0.3s ease-in-out;
 }
 
-/* Hover animation for buttons */
-.button-hover-effect:hover {
-  background-color: #d9f99d; /* Light green background */
-  transform: scale(1.05); /* Slightly larger */
-  transition: background-color 300ms ease-in-out, transform 300ms ease-in-out;
+.card-hover-effect:hover {
+  transform: scale(1.05);
 }
 
-
-/* Custom styling for <select> dropdowns */
-.select-custom {
-  appearance: none;  /* Remove default styling */
-  background-color: #336699; /* Dark background */
-  color: #d9f99d; /* Light text */
-  border: 2px solid #d9f99d; /* Slightly lighter border than the background */
-  padding: 8px 16px; /* Padding for text */
-  border-radius: 8px; /* Rounded corners */
-  outline: none; /* Remove default focus outline */
-  position: relative; /* For positioning the custom arrow */
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow */
-  background-repeat: no-repeat;
-  background-position: right 10px center; /* Position for the arrow */
-  background-size: 12px; /* Size of the arrow */
-  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out; /* Smooth transition for background and border */
+/* Animation de bulle */
+@keyframes bubble {
+  0% {
+    transform: translateY(100vh) translateX(0); /* Départ juste en dessous de l'écran */
+    opacity: 0.1; /* Légèrement visible pour une entrée en douceur */
+  }
+  50% {
+    opacity: 0.6; /* Plus visible au milieu de l'écran */
+  }
+  100% {
+    transform: translateY(-100vh) translateX(0); /* Déplacer juste au-dessus du haut de l'écran */
+    opacity: 0.1; /* Disparaître avant de sortir */
+  }
 }
 
-.select-custom:focus {
-  background-color: #222; /* Darker background on focus */
-  border-color: #d9f99d; /* Lighter border on focus */
-}
-
-
-/* Custom styling for file input */
-.file-input-container {
-  position: relative;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.file-input-button {
-  border: 2px solid #d9f99d; /* Darker border for better contrast */
-  color: #d9f99d; /* White text */
-  background-color: #336699; /* Dark background */
-  padding: 8px 20px;
-  border-radius: 8px;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-  display: inline-block;
-}
-
-.file-input-field {
-  font-size: 100px; /* Large size so the file input spans wider than the button */
-  position: absolute;
-  left: 0;
-  top: 0;
-  opacity: 0; /* Hide the actual file input control */
-}
-
-.file-input-button:hover,
-.file-input-button:focus {
-  background-color: #222; /* Slightly darker background on hover/focus */
-  border-color: #888; /* Lighter border on hover/focus */
-  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out; /* Smooth transition */
-}
-
-
-.avatar-animation-container {
-  width: 100px;
-  height: 100px;
-  position: relative;
-  overflow: hidden;
-  border-radius: 50%;
-  border: 5px solid #ffd700; /* Gold border */
-  animation: float 5s ease-in-out infinite;
-}
-
-.avatar-image {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-/*animation*/
-
-
-.animation-container {
-	display: block;
-	position: relative;
-	width: 800px;
-	max-width: 100%;
-	margin: 0 auto;
-	
-	.lightning-container {
-		position: absolute;
-		top: 50%;
-		left: 0;
-		display: flex;
-		transform: translateY(-50%);
-		
-		.lightning {
-			position: absolute;
-			display: block;
-			height: 12px;
-			width: 12px;
-			border-radius: 12px;
-			transform-origin: 6px 6px;
-
-			animation-name: woosh;
-			animation-duration: 1.5s;
-			animation-iteration-count: infinite;
-			animation-timing-function: cubic-bezier(0.445, 0.050, 0.550, 0.950);
-			animation-direction: alternate;
-
-			&.white {
-				background-color: white;
-				box-shadow: 0px 50px 50px 0px transparentize(white, 0.7);
-			}
-
-			&.red {
-				background-color: #fc7171;
-				box-shadow: 0px 50px 50px 0px transparentize(#fc7171, 0.7);
-				animation-delay: 0.2s;
-			}
-		}
-	}
-	
-	
-	.boom-container {
-		position: absolute;
-		display: flex;
-		width: 80px;
-		height: 80px;
-		text-align: center;
-		align-items: center;
-		transform: translateY(-50%);
-    left: 200px;
-    top: -145px;
-		
-		.shape {
-			display: inline-block;
-			position: relative;
-			opacity: 0;
-			transform-origin: center center;
-			
-			&.triangle {
-				width: 0;
-				height: 0;
-				border-style: solid;
-				transform-origin: 50% 80%;
-				animation-duration: 1s;
-				animation-timing-function: ease-out;
-				animation-iteration-count: infinite;
-				margin-left: -15px;
-				border-width: 0 2.5px 5px 2.5px;
-				border-color: transparent transparent #42e599 transparent;
-				animation-name: boom-triangle;
-				
-				&.big {
-					margin-left: -25px;
-					border-width: 0 5px 10px 5px;
-					border-color: transparent transparent #fade28 transparent;
-					animation-name: boom-triangle-big;
-				}
-			}
-			
-			&.disc {
-				width: 8px;
-				height: 8px;
-				border-radius: 100%;
-				background-color: #d15ff4;
-				animation-name: boom-disc;
-				animation-duration: 1s;
-				animation-timing-function: ease-out;
-				animation-iteration-count: infinite;
-			}
-			
-			&.circle {
-				width: 20px;
-				height: 20px;
-				animation-name: boom-circle;
-				animation-duration: 1s;
-				animation-timing-function: ease-out;
-				animation-iteration-count: infinite;
-				border-radius: 100%;
-				margin-left: -30px;
-				
-				&.white {
-					border: 1px solid white;
-				}
-				
-				&.big {
-					width: 40px;
-					height: 40px;
-					margin-left: 0px;
-					
-					&.white {
-						border: 2px solid white;
-					}
-				}
-			}
-			
-			&:after {
-				background-color: rgba(178, 215, 232, 0.2);
-			}
-		}
-		
-		.shape {
-			&.triangle, &.circle, &.circle.big, &.disc {
-				animation-delay: .38s;
-				animation-duration: 3s;
-			}
-			
-			&.circle {
-				animation-delay: 0.6s;
-			}
-		}
-		
-		&.second {
-			left: 485px;
-			top: 155px;
-			.shape {
-				&.triangle, &.circle, &.circle.big, &.disc {
-					animation-delay: 1.9s;
-				}
-				&.circle {
-					animation-delay: 2.15s;
-				}
-			}
-		}
-	}
-}
-
-@keyframes woosh {
-	0% {
-		width: 12px;
-		transform: translate(0px, 0px) rotate(-35deg);
-	}
-	15% {
-		width: 50px;
-	}
-	30% {
-		width: 12px;
-		transform: translate(214px, -150px) rotate(-35deg);
-	}
-	30.1% {
-		transform: translate(214px, -150px) rotate(46deg);
-	}
-	50% {
-		width: 110px;
-	}
-	70% {
-		width: 12px;
-		transform: translate(500px, 150px) rotate(46deg);
-	}
-	70.1% {
-		transform: translate(500px, 150px) rotate(-37deg);
-	}
-	
-	85% {
-		width: 50px;
-	}
-	100% {
-		width: 12px;
-		transform: translate(700px, 0) rotate(-37deg);
-	}
-}
-
-@keyframes boom-circle {
-	0% {
-		opacity: 0;
-	}
-	5% {
-		opacity: 1;
-	}
-	30% {
-		opacity: 0;
-		transform: scale(3);
-	}
-	100% {
-	}
-}
-
-@keyframes boom-triangle-big {
-	0% {
-		opacity: 0;
-	}
-	5% {
-		opacity: 1;
-	}
-	
-	40% {
-		opacity: 0;
-		transform: scale(2.5) translate(50px, -50px) rotate(360deg);
-	}
-	100% {
-	}
-}
-
-@keyframes boom-triangle {
-	0% {
-		opacity: 0;
-	}
-	5% {
-		opacity: 1;
-	}
-	
-	30% {
-		opacity: 0;
-		transform: scale(3) translate(20px, 40px) rotate(360deg);
-	}
-	
-	100% {
-	}
-}
-
-@keyframes boom-disc {
-	0% {
-		opacity: 0;
-	}
-	5% {
-		opacity: 1;
-	}
-	40% {
-		opacity: 0;
-		transform: scale(2) translate(-70px, -30px);
-	}
-	100% {
-		
-	}
-}
+/* Pied de page */
 .footer {
-	color: white;
-	font-size: 10px;
-	position: fixed;
-	bottom: 0;
-	font-weight: 200;
-	padding: 10px 20px;
-	
-	a {
-		&,
-		&:hover,
-		&:focus,
-		&:visited {
-			color: #c6c6c6;
-		}
-	}
+  color: white;
+  font-size: 10px;
+  position: fixed;
+  bottom: 0;
+  font-weight: 200;
+  padding: 10px 20px;
+
+  a {
+    &,
+    &:hover,
+    &:focus,
+    &:visited {
+      color: #c6c6c6;
+    }
+  }
 }
 
+/* Effet de survol pour les images */
 .card-hover-effect {
   display: flex;
   flex-direction: column;
@@ -707,8 +381,8 @@ button.clerk, .organizationSwitcherTrigger {
 
 .image-hover-container {
   position: relative;
-  width: 100%; /* Adjusts to full width of the parent container */
-  height: 700px; /* Height to match the image */
+  width: 100%; /* S'adapte à la largeur totale du conteneur parent */
+  height: 700px; /* Hauteur correspondant à l'image */
 }
 
 .hover-button {
@@ -718,13 +392,13 @@ button.clerk, .organizationSwitcherTrigger {
   padding: 8px 16px;
   background-color: #f0f0f0;
   cursor: pointer;
-  opacity: 1; /* Fully visible initially */
-  transition: opacity 0.5s ease; /* Smooth transition for opacity change */
-  z-index: 2; /* Ensures button is above the image */
+  opacity: 1; /* Entièrement visible initialement */
+  transition: opacity 0.5s ease; /* Transition en douceur pour le changement d'opacité */
+  z-index: 2; /* Assure que le bouton est au-dessus de l'image */
 }
 
 .hover-button:hover {
-  opacity: 0; /* Button becomes transparent on hover */
+  opacity: 0; /* Le bouton devient transparent au survol */
 }
 
 .image-hover {
@@ -734,12 +408,11 @@ button.clerk, .organizationSwitcherTrigger {
   left: 0;
   width: 700px;
   height: 700px;
-  z-index: 1; /* Lower than button to keep it clickable */
+  z-index: 1; /* Inférieur au bouton pour le rendre cliquable */
   overflow: hidden;
 }
+
 .hover-button:hover + .image-hover {
   display: block;
 }
 
-
-  }
