@@ -32,7 +32,7 @@ async function Page({ params }: { params: { id: string } }) {
           imgUrl={userInfo.image}
           bio={userInfo.bio}
         />
-      <ModifyCard/>
+        {user.id === userInfo.id && <ModifyCard/>}
         <div className=" translate-y-6"> 
           {user.id !== userInfo.id && <FriendRequest currentUserId={JSON.parse(JSON.stringify(user.id))} userId={JSON.parse(JSON.stringify(userInfo.id))}/>}
         </div>
