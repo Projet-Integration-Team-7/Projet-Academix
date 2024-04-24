@@ -101,19 +101,8 @@ Props) => {
                       {author.name}
                     </h4>
                   </Link>
-                  <ThreadMenu
-                    threadId={id}
-                    currentUserId={currentUserId}
-                    authorId={author.id}
-                  />
+
                 </div>
-              )}
-              {author && (
-                <ThreadMenu
-                  threadId={id}
-                  currentUserId={currentUserId}
-                  authorId={author.id}
-                />
               )}
             </div>
             {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && (
