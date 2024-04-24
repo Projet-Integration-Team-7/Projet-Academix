@@ -84,13 +84,45 @@ const ThreadCard = ({
                         <div className="thread-card_bar"/>
                     </div>
 
-                    <div className="flex w-full flex-col">
-                         {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
+          <div className="flex w-full flex-col">
+            <div className=" inline-flex justify-between">
+              {author && (
+                <div className=" inline-flex justify-between">
+                  <Link href={`/profile/${author.id}`} className="w-fit">
+                    <h4 className="cursor-pointer text-base-semibold text-black">
+                      {author.name}
+                    </h4>
+                  </Link>
+                  <ThreadMenu
+                    threadId={id}
+                    currentUserId={currentUserId}
+                    authorId={author.id}
+                  />
+                </div>
+              )}
+              {author && (
+                <ThreadMenu
+                  threadId={id}
+                  currentUserId={currentUserId}
+                  authorId={author.id}
+                />
+              )}
+            </div>
+            {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && (
+              <div className="image-hover-container">
+                <button className="hover-button">Hover Over Me</button>
+                <div className="image-hover">
+                  <Image
+                    src={imgUrl}
+                    alt="Thread Image"
+                    width={600}
+                    height={600}
+                  />
+                </div>
+              </div>
+            )}
 
-
-                        <p className="mt-2 text-small-regular text-light-2">{content}</p>
-
-                        
+            <p className="mt-2 text-small-mono text-black">{content}</p>
 
                         <div className=" flex mb-10 mt-5 flex-col gap-3 align-middle">
                             <div className=" flex gap-3.5 align-middle">
