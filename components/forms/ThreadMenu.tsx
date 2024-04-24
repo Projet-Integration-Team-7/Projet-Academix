@@ -33,7 +33,7 @@ const ThreadMenu = ({ threadId, currentUserId, authorId }: ThreadMenuProps) => {
 
   return (
     <Popover>
-      <Popover.Button>
+      <Popover.Button className={" bg-transparent shadow-none"}>
         <div className='rounded-full ring-2 ring-dark'>
           <Image
             src="/assets/three_dots.svg"
