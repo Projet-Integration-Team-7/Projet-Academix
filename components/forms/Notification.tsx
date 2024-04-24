@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { deleteFriendRequestNotification, markAllNotificationsAsRead } from "@/lib/actions/notification.actions";
+import { deleteFriendRequestNotification, markAllNotificationsAsRead, checkIfUnreadNotifs } from "@/lib/actions/notification.actions";
 import { addFriend } from "@/lib/actions/user.actions";
 import { fetchUserNotifications } from "@/lib/actions/notification.actions";
 import { Popover } from "@headlessui/react";
@@ -11,17 +11,21 @@ interface NotifProps {
 }
 
 function Notification({ currentUserId }: NotifProps) {
-  const [notifications, setNotifications] = useState<any[]>(
-    []
-  );
+  // prettier-ignore
+  const [notifications, setNotifications] = useState<any[]>([]);
+  const [hasUnread, setHasUnread] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchNotifications = async () => {
       const userNotifications = await fetchUserNotifications(currentUserId);
       setNotifications(userNotifications);
     };
-
     fetchNotifications();
+
+    const checkUnread = async () => {
+      const unread = await checkIfUnreadNotifs(currentUserId);
+      setHasUnread(unread);
+    };
   }, [currentUserId]);
 
   const handleGreenButton = async (index: number,senderId: string) => {
@@ -38,6 +42,7 @@ function Notification({ currentUserId }: NotifProps) {
     // Usage:
     // <button onClick={() => acceptFriendRequest(index)}>Accept</button>
   };
+
   const handleRedButton = async (index: number,senderId: string) => {
     // Delete the friend request notification
     const updatedNotifications = [...notifications];
@@ -55,7 +60,8 @@ function Notification({ currentUserId }: NotifProps) {
       <Popover.Button onClick={() => markAllNotificationsAsRead(currentUserId)}>
           <div>
             <Image
-              src="/assets/notif.svg"
+              src={`${hasUnread ? "/assets/notif-unread.svg" : "/assets/notif.svg"}`} 
+
               alt="notification icon"
               width={24}
               height={24}
