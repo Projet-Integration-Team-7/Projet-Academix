@@ -86,19 +86,7 @@ const ThreadCard = ({
                     </div>
 
                     <div className="flex w-full flex-col">
-                        <div className=" inline-flex justify-between">
-                        {author && (
-    <div className=" inline-flex justify-between">
-        <Link href={`/profile/${author.id}`} className="w-fit">
-            <h4 className="cursor-pointer text-base-semibold text-black">{author.name}</h4>
-        </Link>
-        <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
-    </div>
-)}
-                           {author && (
-    <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
-)} 
-                        </div>
+                        <ThreadMenu threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} authorId={author ? author.id ?? '' : ''}/>     
                                               {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
 
 
@@ -131,8 +119,7 @@ const ThreadCard = ({
                
 
 
-                <ThreadMenu threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} authorId={author.id}/>     
-            </div>
+                <ThreadMenu threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} authorId={author ? author.id ?? '' : ''}/>                 </div>
             
             <p className='text-subtle-medium text-gray-1'>
                 {threadType === "exercise" && "Exercise"}
