@@ -9,6 +9,7 @@ import { profileTabs } from "@/constants";
 import Image from "next/image";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import FriendRequest from "@/components/forms/FriendRequest";
+import ModifyCard from "@/components/cards/ModifyCard";
 
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
@@ -31,6 +32,7 @@ async function Page({ params }: { params: { id: string } }) {
           imgUrl={userInfo.image}
           bio={userInfo.bio}
         />
+      <ModifyCard/>
         <div className=" translate-y-6"> 
           {user.id !== userInfo.id && <FriendRequest currentUserId={JSON.parse(JSON.stringify(user.id))} userId={JSON.parse(JSON.stringify(userInfo.id))}/>}
         </div>
