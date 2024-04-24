@@ -28,23 +28,24 @@ const Searchbar: React.FC<SearchbarProps> = ({ routeType }) => {
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm, routeType]);
 
-  const placeholderText = routeType !== "/search" ? "Search communities" : "Search creators";
+  const placeholderText = routeType !== "/search" ? "Search users" : "Search creators";
 
   return (
-    <div className='searchbar'>
-      <Image
-        src='/assets/search-gray.svg'
-        alt='search'
-        width={24}
-        height={24}
-        className='object-contain'
-      />
+    <div className='searchbar flex items-center border-b-2 py-2 '>
+    <Image
+      src='/assets/search-gray.svg'
+      alt='Search Icon'
+      width={24}
+      height={24}
+      className='absolute left-3'
+    />
       <Input
         id='text'
+        type="text"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         placeholder={placeholderText}
-        className='no-focus searchbar_input'
+        className='pl-10 pr-3 py-1 w-full bg-transparent focus:outline-none focus:w-auto focus:bg-white transition-all duration-500 ease-in-out'
       />
     </div>
   );
