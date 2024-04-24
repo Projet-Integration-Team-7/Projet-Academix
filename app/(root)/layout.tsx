@@ -14,7 +14,6 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata={
   title:'Academix',
   description:'A Next.js 13 Meta Academix app'
-
 }
 
 export default function RootLayout({
@@ -31,7 +30,10 @@ export default function RootLayout({
           <main className='flex flex-row'>
             <LeftSidebar />
             <section className='main-container'>
-              <div className='w-full max-w-4xl'>{children}</div>
+              
+            <div className='w-full max-w-4xl' style={{ position: 'relative', zIndex: 1 }}>
+              {children}
+            </div>
             </section>
             <RightSidebar />
           </main>

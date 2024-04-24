@@ -146,8 +146,7 @@ const handleImage = (
                 Content
 
                 </FormLabel>
-                <FormControl className="no-focus border 
-                border-dark-4 bg-dark-3 text-light-1">
+                <FormControl className="no-focus input-focus-effect">
                   <Textarea 
                   rows={15}
                   {...field}
@@ -188,6 +187,9 @@ const handleImage = (
                    )}
                 </FormLabel>
                 <FormControl className="flex-1 text-base-semibold text-gray-200">
+                <div className="file-input-container">
+                 <label className="file-input-button">
+                 Upload une Photo
                   <Input 
                   type="file"
                   accept="image/*"
@@ -195,6 +197,9 @@ const handleImage = (
                   className="account-form_image-input"
                   onChange={(e)=> handleImage(e,field.onChange)}
                   />
+    
+               </label>
+                  </div>
                 </FormControl>
                 
                 <FormMessage />
@@ -209,20 +214,20 @@ const handleImage = (
             <FormLabel className="text-base-semibold text-light-2">
         Thread Type
            </FormLabel>
-            <FormControl className="no-focus border border-dark-4 bg-dark-3 text-light-1">
-                <select {...field}>
-          <option value="exercise">Exercices</option>
-          <option value="course_note">Notes de cours</option>
-          <option value="evaluation">Evaluation</option>
-          // Add more options as needed
-                 </select>
+            <FormControl className="no-focus">
+            <select {...field} className="select-custom">
+         <option value="exercise">Exercices</option>
+         <option value="course_note">Notes de cours</option>
+         <option value="evaluation">Evaluation</option>
+         // Add more options as needed
+       </select>
            </FormControl>
                <FormMessage />
                 </FormItem>
                 )}
 />
           <Button type="submit"
-          className="bg-primary-500">
+          className="button-hover-effect">
             Postez un Thread
           </Button>
          </form>
