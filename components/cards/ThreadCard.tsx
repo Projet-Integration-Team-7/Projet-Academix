@@ -86,8 +86,7 @@ const ThreadCard = ({
                     </div>
 
                     <div className="flex w-full flex-col">
-                        <ThreadMenu threadId={JSON.parse(JSON.stringify(id))} currentUserId={currentUserId} authorId={author ? author.id ?? '' : ''}/>     
-                                              {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
+                         {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && <Image src={imgUrl} alt="image-thread" width={100} height={100} />}
 
 
                         <p className="mt-2 text-small-regular text-light-2">{content}</p>
