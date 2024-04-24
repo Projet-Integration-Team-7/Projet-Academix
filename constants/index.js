@@ -20,6 +20,7 @@
       route: "/create-thread",
       label: "Create Thread",
     },
+  
     {
       imgURL: "/assets/community.svg",
       route: "/communities",
@@ -37,6 +38,11 @@
       label: "Ressources",
     },
     {
+      imgURL: "/assets/timer.svg",
+      route: "/timer",
+      label: "Timer",
+    },
+    {
       imgURL: "/assets/agenda.svg",
       route: "/agenda",
       label: "Agenda",
@@ -49,6 +55,7 @@
     {imgURL: "/assets/bot.svg",
     route:"/chatbot",
     label: "Chatbot"}
+    
   ];
   
   export const profileTabs = [
@@ -64,4 +71,5 @@
     { value: "exercise", label: "Exercices", icon: "/assets/Eval.png" },
     { value: "course_note", label: "Notes de Cours", icon: "/assets/request.svg" },
     { value: "evaluation", label: "Evaluation", icon: "/assets/request.svg" },
+
   ];
