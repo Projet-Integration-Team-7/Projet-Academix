@@ -49,6 +49,7 @@ const Home: React.FC = () => {
           let start = eventEl.getAttribute('start');
           let end = eventEl.getAttribute('end');
           return { title, id, start,end };
+          
         },
       });
     }
@@ -99,6 +100,7 @@ const Home: React.FC = () => {
       color: event.backgroundColor,
     };
     await updateEvent(info.event.title, updatedEventData);
+    window.location.reload();
     try {
       console.log('L\'événement a été mis à jour avec succès.');
     } catch (error) {
@@ -149,6 +151,7 @@ const Home: React.FC = () => {
           </div>
           {/* autre components */}
         </div>
+        
       </main>
       </div>
     </>
