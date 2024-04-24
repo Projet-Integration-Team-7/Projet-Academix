@@ -33,7 +33,7 @@
     },
 
     {
-      imgURL: "/assets/ressources.jpg",
+      imgURL: "/assets/ressources.svg",
       route: "/ressources",
       label: "Ressources",
     },
