@@ -1,31 +1,40 @@
 import { SignIn } from "@clerk/nextjs";
 import { shadesOfPurple } from "@clerk/themes";
-
+/**
+ * Composant CustomSignIn pour afficher une page de connexion personnalisée.
+ * Utilise le thème `shadesOfPurple` de Clerk avec des modifications spécifiques.
+ */
 export default function CustomSignIn() {
-    return (
-        <div
-            style={{
-                position: "fixed", // Position the container fixed to the viewport
-                top: 0, // Position at the top
-                left: 0, // Position at the left
-                width: "100%", // Cover the entire viewport width
-                height: "100%", // Cover the entire viewport height
-                backgroundImage: "url('/assets/Vault1.jpg')", // Set the background image
-                backgroundSize: "cover", // Cover the entire area
-                backgroundPosition: "center", // Center the background image
+    
+        
+        const backgroundStyle ={
+                position: "fixed", // Fixe le conteneur dans le viewport
+                top: 0, // Positionne en haut
+                left: 0, // Positionne à gauche
+                width: "100%", // Couvre la largeur entière du viewport
+                height: "100%", // Couvre la hauteur entière du viewport
+                backgroundImage: "url('/assets/fond5.png')", // Définit l'image de fond
+                backgroundSize: "cover", // Assure que l'image de fond couvre tout l'espace disponible
+                backgroundPosition: "center", // Centre l'image de fond
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
-            <div style={{ maxWidth: 400, width: "100%" }}> {/* Adjust the max-width of the sign-in box */}
+                alignItems: "center",// Centre le contenu (horizontalement et verticalement)
+            };
+        
+            const formContainerStyle = {
+                maxWidth: 400, // Définit la largeur maximale de la boîte de formulaire à 400px
+                width: "100%" // Assure que la largeur est responsive
+            };
+            return (
+                <div style={backgroundStyle}>
+               <div style={formContainerStyle}>
                 <SignIn
                     appearance={{
-                        baseTheme: shadesOfPurple,
+                        baseTheme: shadesOfPurple,// Utilise le thème de base shadesOfPurple
                         elements: {
                             formButtonPrimary: {
-                                backgroundColor: "blue", // Set the background color to blue
-                                color: "yellow", // Set the text color to yellow
+                                backgroundColor: "blue", // Couleur de fond des boutons primaires à bleu
+                                color: "yellow", // Couleur de texte des boutons primaires à jaune
                             },
                         },
                     }}
