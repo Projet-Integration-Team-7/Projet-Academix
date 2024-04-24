@@ -92,7 +92,6 @@ const ThreadCard = ({
         <Link href={`/profile/${author.id}`} className="w-fit">
             <h4 className="cursor-pointer text-base-semibold text-black">{author.name}</h4>
         </Link>
-        <ThreadMenu threadId={id} currentUserId={currentUserId} authorId={author.id}/>     
     </div>
 )}
                            {author && (
