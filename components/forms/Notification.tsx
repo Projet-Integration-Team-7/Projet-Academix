@@ -50,25 +50,43 @@ function Notification({ currentUserId }: NotifProps) {
     // <button onClick={() => declineFriendRequest(index)}>Decline</button>
   };
 
-    return (
-        <div className='relative align-middle text-center bg-center self-center items-center place-items-center'>
-            <button onClick={() => setIsOpen(!isOpen)} className='bg-transparent'>
-                <Image 
-                    src="/assets/notif.svg"
-                    alt='notification icon'
-                    width={24} height={24}
-                    className='cursor-pointer object-contain align-middle pt-1 rounded-xl scale-110 bg-transparent transition ease-in-out hover:scale-125'
-                />
-            </button>
-            {isOpen && (
-                <div className='absolute -translate-x-32 h-52 w-36 scroll-auto p-4 bg-white rounded-md shadow-lg'>
-                    {notifications.map((notification, index) => (
-                        <p key={index} className=' flex-wrap'>{notification}</p>
-                    ))}
-                </div>
-            )}
-        </div>
-    );
-}
+  return (
+    <Popover>
+      <Popover.Button onClick={() => markAllNotificationsAsRead(currentUserId)}>
+          <div>
+            <Image
+              src="/assets/notif.svg"
+              alt="notification icon"
+              width={24}
+              height={24}
+              className="cursor-pointer object-contain align-middle pt-1 rounded-xl scale-110 bg-transparent transition ease-in-out hover:scale-125"
+            />
+          </div>
+      </Popover.Button>
+      
+      <Popover.Panel> 
+          <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg ">
+            {notifications.map((notification, index) => (
+              <div key={index} className=" flex bg-[#dedede] rounded-md text-black text-sm">
+                {notification.message}
+                {notification.notifType === "friendRequest" && (
+                  <div className=" flex gap-1 align-middle self-center items-center place-items-center">
+                    <button
+                      className="bg-green-500 rounded-full h-4 w-4"
+                      onClick={() => handleGreenButton(index,notification.senderId)}
+                    ></button>
+                    <button
+                      className="bg-red-500 rounded-full h-4 w-4"
+                      onClick={() => handleRedButton(index,notification.senderId)}
+                    ></button>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+      </Popover.Panel>
+    </Popover>
+  );
+};
 
 export default Notification;
