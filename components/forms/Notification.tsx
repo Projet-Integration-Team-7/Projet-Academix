@@ -26,6 +26,7 @@ function Notification({ currentUserId }: NotifProps) {
       const unread = await checkIfUnreadNotifs(currentUserId);
       setHasUnread(unread);
     };
+    checkUnread();
   }, [currentUserId]);
 
   const handleGreenButton = async (index: number,senderId: string) => {
