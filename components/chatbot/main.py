@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import httpx
-from openai import OpenAI, OpenAIError
+import openai
+from openai import OpenAIError
 import threading
 import queue
 import datetime
@@ -11,66 +12,79 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialiser le client OpenAI
-client = OpenAI(api_key='')
+client = openai.Client(api_key='')
 
-# Global dictionary to store the context of each user
+# Dictionnaire global pour stocker le contexte de chaque utilisateur
 contexte_utilisateur = {}
 
-# Function to interact with the OpenAI API
+# Fonction pour interagir avec l'API OpenAI
 def ai_interaction(id_utilisateur, texte_entree):
     try:
-        contexte = contexte_utilisateur.get(id_utilisateur)
-        if not contexte:
-            contexte = None
+        contexte = contexte_utilisateur.get(id_utilisateur, [])
 
-        reponse = client.Completion.create(
+        message = {
+            "role": "user",
+            "content": texte_entree
+        }
+        contexte.append(message)
+
+        chat_completion = client.chat.completions.create(
             model="gpt-3.5-turbo",
-            prompt=texte_entree,
-            max_tokens=100,
-            context=contexte
+            messages=contexte
         )
 
-        contexte_utilisateur[id_utilisateur] = reponse.choices[0].context
+        # Extraire le message de l'assistant de la réponse
+        assistant_message = chat_completion.choices[0].message.content
 
-        return reponse.choices[0].text.strip()
+        # Ajouter le message de l'assistant au contexte
+        contexte.append({
+            "role": "assistant",
+            "content": assistant_message
+        })
+
+        contexte_utilisateur[id_utilisateur] = contexte
+
+        return assistant_message
     except OpenAIError as e:
         if "Réessayez plus tard" in str(e):
             return "Désolé, nous avons rencontré une erreur. Veuillez réessayer plus tard."
         else:
+            print(f"Exception: {e}")
             return "Désolé, je n'ai pas compris. Veuillez reformuler votre question."
     except Exception as e:
+        print(f"Exception: {e}")
         return "Désolé, nous avons rencontré une erreur. Veuillez essayer de rafraîchir la page."
 
-# Function for the thread to continuously check for new messages
+# Fonction pour le thread qui vérifie continuellement les nouveaux messages
 def message_handler(q):
     while True:
         id_utilisateur, message = q.get()
         timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         print(f"[{timestamp}] Utilisateur {id_utilisateur}: {message}")
 
-        # Check if the message is not None and indicates that the user has finished
+        # Vérifier si le message n'est pas None et indique que l'utilisateur a terminé
         if message and isinstance(message, str) and message.lower() == "end chat":
             print(f"[{timestamp}] Fermeture du chat pour l'utilisateur {id_utilisateur}...")
             contexte_utilisateur.pop(id_utilisateur, None)
-            break # Exit the loop and end the program
+            break # Sortir de la boucle et terminer le programme
 
         reponse = ai_interaction(id_utilisateur, message)
         print(f"[{timestamp}] IA: {reponse}")
         q.task_done()
 
-# Create a queue to store incoming messages
+# Créer une file d'attente pour stocker les messages entrants
 message_queue = queue.Queue()
 
-# Create a thread for the message handler
+# Créer un thread pour le gestionnaire de messages
 thread = threading.Thread(target=message_handler, args=(message_queue,))
 thread.daemon = True
 thread.start()
 
-# Create a Flask application
+# Créer une application Flask
 app = Flask(__name__)
-CORS(app)  # Enable CORS
+CORS(app)  # Activer CORS
 
-# Endpoint to receive messages from users
+# Point de terminaison pour recevoir les messages des utilisateurs
 @app.route('/message', methods=['POST'])
 def handle_message():
     try:
@@ -79,13 +93,13 @@ def handle_message():
         saisie_utilisateur = data.get('saisie_utilisateur')
 
         if id_utilisateur is None or saisie_utilisateur is None:
-            return jsonify({'message': 'Invalid request format'}), 400
+            return jsonify({'message': 'Format de requête invalide'}), 400
 
         message_queue.put((id_utilisateur, saisie_utilisateur))
         reponse = ai_interaction(id_utilisateur, saisie_utilisateur)
         return jsonify({'message': reponse})
     except Exception as e:
-        return jsonify({'message': 'An error occurred', 'error': str(e)}), 500
+        return jsonify({'message': 'Une erreur est survenue', 'error': str(e)}), 500
 
 
 if __name__ == '__main__':
