@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import ThreadCard from "@/components/cards/ThreadCard";
 import Comment from "@/components/forms/Comment";
 import { fetchThreadById } from "@/lib/actions/thread.action";
@@ -6,25 +6,28 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-const Page = async ({ params}: {params: { id: string}}) => {
-    if(!params.id) return null;
+const Page = async ({ params }: { params: { id: string } }) => {
+    if (!params.id) return null;
 
     const user = await currentUser();
-    if(!user) return null;
+    if (!user) return null;
 
     const userInfo = await fetchUser(user.id);
-    if(!userInfo?.onboarded) redirect('/onboarding')
+    if (!userInfo?.onboarded) redirect('/onboarding')
 
-    const thread = await fetchThreadById(params.id)
+    const thread = await fetchThreadById(params.id);
+
+    const [threadState, setThreadState] = useState(thread);
+
     useEffect(() => {
         const interval = setInterval(() => {
             fetchThreadById(params.id).then(updatedThread => {
-                thread = updatedThread;
+                setThreadState(updatedThread);
             });
         }, 5000); // 30 seconds
 
         return () => clearInterval(interval);
-    }, [params.id]);
+    }, []);
 
    return (
         <section className="relative">
