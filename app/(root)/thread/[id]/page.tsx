@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect,useState } from 'react';
 import ThreadCard from "@/components/cards/ThreadCard";
 import Comment from "@/components/forms/Comment";
@@ -6,29 +7,37 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-const Page = async ({ params }: { params: { id: string } }) => {
-    if (!params.id) return null;
-
-    const user = await currentUser();
-    if (!user) return null;
-
-    const userInfo = await fetchUser(user.id);
-    if (!userInfo?.onboarded) redirect('/onboarding')
-
-    const thread = await fetchThreadById(params.id);
-
-    const [threadState, setThreadState] = useState(thread);
+const Page = ({ params }: { params: { id: string } }) => {
+    const router = useRouter();
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            fetchThreadById(params.id).then(updatedThread => {
-                setThreadState(updatedThread);
-            });
-        }, 5000); // 30 seconds
+        const loadUserAndThread = async () => {
+            if (!params.id) {
+                router.push('/404'); // Redirect to a Not Found page or handle appropriately
+                return;
+            }
 
-        return () => clearInterval(interval);
-    }, []);
+            const user = await currentUser();
+            if (!user) {
+                router.push('/login'); // Redirect to login
+                return;
+            }
 
+            const userInfo = await fetchUser(user.id);
+            if (!userInfo?.onboarded) {
+                router.push('/onboarding');
+                return;
+            }
+
+            const thread = await fetchThreadById(params.id);
+            setThreadState(thread);
+        };
+
+        loadUserAndThread();
+    }, [params.id]);
+    const [threadState, setThreadState] = useState(null);
+
+    if (!threadState) return null;
    return (
         <section className="relative">
             <div>
