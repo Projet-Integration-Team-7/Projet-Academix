@@ -2,6 +2,7 @@
 import Navigation from '@/components/forms/Navigation';
 import Timer from '@/components/forms/Timer';
 import React, {useEffect, useState} from "react";
+import Alarm from './Alarm';
 export default function Pomodoro (){
     const [pomodoro,setPomodoro]=useState(25)
     const [shortBreak,setShortBreak]=useState(5)
@@ -93,6 +94,7 @@ const reset =()=>{
                ticking ={ticking}
                setTicking={setTicking}
                />
+              <Alarm/>
               </div>
             </section>
             </section>
