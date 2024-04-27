@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import ThreadCard from "@/components/cards/ThreadCard";
 import Comment from "@/components/forms/Comment";
 import { fetchThreadById } from "@/lib/actions/thread.action";
