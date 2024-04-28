@@ -1,82 +1,81 @@
 /* NewChat.css */
 .new-chat-container {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 20px;
-  margin: 20px;
-  width: 400px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: transparent;
-}
-
-.new-chat-container button {
-  background-color: #2196f3;
-  color: #fff;
-  border: none;
-  padding: 8px 16px;
-  margin-top: 10px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.create-chat {
-  margin-top: 20px;
-}
-
-.search-results {
-  margin-top: 10px;
-}
-
-.selected-users {
-  margin-top: 10px;
-}
-
-.search-results div,
-.selected-users div {
-  padding: 8px;
-  margin-top: 5px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.search-results div:hover,
-.selected-users div:hover {
-  background-color: #f3f3f3;
-}
-
-button:hover {
-  background-color: #0d8bf2;
-}
-
-button:active {
-  background-color: #0a6ebd;
-}
-
-button:focus {
-  outline: none;
-}
-
-input[type="text"] {
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-ul li {
-  padding: 8px;
-  border-bottom: 1px solid #ccc;
-}
-
-ul li:last-child {
-  border-bottom: none;
-}
-
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px;
+    width: 400px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+  }
+  
+  .new-chat-container button {
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    margin-top: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .create-chat {
+    margin-top: 20px;
+  }
+  
+  .search-results {
+    margin-top: 10px;
+  }
+  
+  .selected-users {
+    margin-top: 10px;
+  }
+  
+  .search-results div,
+  .selected-users div {
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .search-results div:hover,
+  .selected-users div:hover {
+    background-color: #f3f3f3;
+  }
+  
+  button:hover {
+    background-color: #0d8bf2;
+  }
+  
+  button:active {
+    background-color: #0a6ebd;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  
+  input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  ul li {
+    padding: 8px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  ul li:last-child {
+    border-bottom: none;
+  }
   

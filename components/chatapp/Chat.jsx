@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import ChatList from './ChatList';
 import ChatBox from './ChatBox';
 import NewChat from './NewChat';
-import { sendMessage, createConversation, addUser, userLeft } from './apiService'; 
+import { sendMessage, createConversation, addUser, userLeft } from './apiService'; // Importez vos fonctions API
 
 const ChatApp = () => {
   const [chats, setChats] = useState([]);
@@ -24,29 +25,13 @@ const ChatApp = () => {
   const sendMessageToChat = async (conversationId, message) => {
     try {
       await sendMessage(conversationId, message);
-      // Update the chat messages in the local state if needed
+      // Mettez à jour les messages du chat dans l'état local si nécessaire
     } catch (error) {
       console.error('Error sending message:', error);
     }
   };
 
-  const addUserToChat = async (conversationId, userId) => {
-    try {
-      await addUser(conversationId, userId);
-      // Update the chat participants in the local state if needed
-    } catch (error) {
-      console.error('Error adding user to chat:', error);
-    }
-  };
-
-  const userLeftChat = async (conversationId, userId) => {
-    try {
-      await userLeft(conversationId, userId);
-      // Update the chat participants in the local state if needed
-    } catch (error) {
-      console.error('Error removing user from chat:', error);
-    }
-  };
+  // Définissez les fonctions addUser et userLeft de manière similaire à sendMessageToChat
 
   return (
     <div className="chat-page">
@@ -55,12 +40,7 @@ const ChatApp = () => {
       </div>
       <div className="chatbox-section">
         {selectedChat ? (
-          <ChatBox
-            chat={selectedChat}
-            sendMessage={sendMessageToChat}
-            addUser={addUserToChat}
-            userLeft={userLeftChat}
-          />
+          <ChatBox chat={selectedChat} sendMessage={sendMessageToChat} />
         ) : (
           <div className="empty-message">Please select a conversation</div>
         )}
@@ -73,4 +53,3 @@ const ChatApp = () => {
 };
 
 export default ChatApp;
-
