@@ -21,6 +21,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(root)/messages/Messages.js", "app/(auth)/messages/message.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(root)/messages/Messages.js", "app/(auth)/messages/message.tsx", "components/chatapp/ChatBox.jsx", "components/chatapp/ChatList.jsx"],
   "exclude": ["node_modules"]
 }

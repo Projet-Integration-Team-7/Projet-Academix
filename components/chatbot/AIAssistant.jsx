@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
-import { useUser } from '@clerk/clerk-react'; // Import useUser hook from Clerk
+import { useUser } from '@clerk/clerk-react'; 
 import './AIAssistant.css';
 
 const apiUrl = 'http://localhost:5000/message';

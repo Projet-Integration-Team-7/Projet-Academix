@@ -49,8 +49,8 @@
     },
     {
       imgURL: "/assets/messages.svg",
-      route: "/messages",
-      label :"Messages",
+      route: "/chat",
+      label :"Chat",
     },
     {imgURL: "/assets/bot.svg",
     route:"/chatbot",
