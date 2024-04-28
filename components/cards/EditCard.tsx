@@ -17,9 +17,9 @@ interface Props {
 const EditCard =({id, name,username , imgUrl,personType} : Props) => {
   
     const router=useRouter();
-    const [newbio, setTextareaValue] = useState('');
-    const [newName,setNewName]=useState('');
-    const [imageUrl, setImageUrl] = useState("");
+    const [newbio, setTextareaValue] = useState("");
+    const [newName,setNewName]=useState(name);
+    const [imageUrl, setImageUrl] = useState(imgUrl);
     const [imageUrlKey, setImageUrlKey] = useState(Math.random());
 
 
@@ -69,8 +69,12 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
       console.log('Contenu du textarea :', newName);
       console.log("contenue du url : " , imageUrl)
       try {
-        
+        if(newbio!=""){
         await updateBio(id, newbio); 
+        }
+        
+     
+
     } catch (error) {
         console.error('erreur la transmission ne marche pas :', error);
     }
