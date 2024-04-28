@@ -19,7 +19,7 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     const router=useRouter();
     const [newbio, setTextareaValue] = useState("");
     const [newName,setNewName]=useState(name);
-    const [imageUrl, setImageUrl] = useState(imgUrl);
+    const [imageUrl, setImageUrl] = useState("");
     const [imageUrlKey, setImageUrlKey] = useState(Math.random());
 
 
@@ -80,8 +80,9 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     }
 
     try {
-        
+      if(newName!=""){
       await updateName(id, newName); 
+      }
   } catch (error) {
       console.error('erreur la transmission ne marche pas :', error);
   }
