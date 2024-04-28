@@ -1,12 +1,16 @@
 import React from "react";
 
+interface AlarmProps {
 
-const  Alarm=React.forwardRef((_,ref)=>{
+  ref: React.RefObject<HTMLAudioElement>;
+}
+
+const Alarm = React.forwardRef((props: AlarmProps, ref: React.Ref<HTMLAudioElement>) => {
   return (
     <audio ref={ref}>
       <source src="/alarm.mp3" type="audio/mp3" />
     </audio>
   );
-})
+});
 
 export default Alarm;
