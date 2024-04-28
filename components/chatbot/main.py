@@ -9,10 +9,10 @@ import os
 from flask_cors import CORS
 from dotenv import load_dotenv
 
-load_dotenv()
+load_dotenv('.env.local')
 
 # Initialiser le client OpenAI
-client = openai.Client(api_key='')
+client = openai.Client(api_key= os.getenv('OPENAI_API_KEY'))
 
 # Dictionnaire global pour stocker le contexte de chaque utilisateur
 contexte_utilisateur = {}

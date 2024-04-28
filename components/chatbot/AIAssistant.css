@@ -1,6 +1,3 @@
-/* AIAssistant.css */
-
-/* Conteneur principal */
 .ai-assistant-container {
   display: flex;
   flex-direction: column;
@@ -8,9 +5,7 @@
   position: relative;
 }
 
-/* Titre de l'assistant */
 .ai-assistant-title {
-  background-color: transparent;
   color: #fff;
   padding: 5px;
   text-align: left;
@@ -21,58 +16,46 @@
   border-bottom: 2px solid #fff;
 }
 
-/* Zone des messages */
 .ai-assistant-messages {
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Aligner les messages à gauche */
-  justify-content: flex-start; /* Aligner les messages en haut */
-  overflow-y: auto; /* Défilement vertical si nécessaire */
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow-y: auto;
   padding: 10px;
 }
 
-/* Style des messages */
 .message {
   padding: 8px 12px;
   margin-bottom: 8px;
-  max-width: 70%; /* Largeur maximale des messages */
-  word-wrap: break-word; /* Permettre le retour à la ligne */
+  max-width: 70%;
+  word-wrap: break-word;
   border-radius: 8px;
-  margin-left: auto; /* Aligner à droite */
-  margin-right: auto; /* Aligner à gauche */
 }
 
-/* Style des messages de l'utilisateur */
 .user {
-  /* Style des messages de l'utilisateur */
-.user {
-  background-color: #2196F3; /* Bleu */
-  color: #fff; /* Texte blanc */
+  background-color: #2196F3;
+  color: #fff;
   padding: 8px 12px;
   margin-bottom: 8px;
-  max-width: 70%; /* Largeur maximale des messages */
-  word-wrap: break-word; /* Permettre le retour à la ligne */
+  max-width: 70%;
+  word-wrap: break-word;
   border-radius: 8px;
-  margin-left: auto; /* Aligner à droite */
+  margin-left: auto;
 }
 
-}
-
-/* Style des messages de l'assistant */
 .ai {
   padding: 8px 12px;
   margin-bottom: 8px;
-  max-width: 70%; /* Largeur maximale des messages */
-  word-wrap: break-word; /* Permettre le retour à la ligne */
+  max-width: 70%;
+  word-wrap: break-word;
   border-radius: 8px;
-  margin-left: 5px; /* Aligner à gauche avec un padding de 20px */
-  background-color: #fff; /* Arrière-plan transparent en noir */
-  color: #2196F3; /* Texte blanc */
+  margin-left: 5px;
+  background-color: #fff;
+  color: #2196F3;
 }
 
-
-/* Zone de saisie de l'utilisateur */
 .ai-assistant-input {
   display: flex;
   align-items: center;
@@ -90,7 +73,7 @@
 
 .input-container {
   flex: 1;
-  display: flex; /* Utilisation de flexbox pour aligner l'input et le bouton */
+  display: flex;
 }
 
 .ai-assistant-input input[type="text"] {
@@ -111,12 +94,11 @@
   margin-left: 8px;
   background-color: transparent;
   color: #2196F3;
-  border: 1px transparent; /* Ajouter une bordure transparente */
-  border-radius: 5px; /* Ajouter un border-radius pour arrondir les coins */
+  border: 1px transparent;
+  border-radius: 5px;
   cursor: pointer;
 }
 
-/* Flèche dans le bouton d'envoi */
 .ai-assistant-input button::before {
   content: '\25B2';
   font-size: 2em;
