@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useClerk } from '@clerk/clerk-react';
 import UserCard from "@/components/cards/UserCard";
 import Pagination from "@/components/shared/Pagination";
 import { fetchUsers } from "@/lib/actions/user.actions";
 
-const SearchPage = (props) => {
+
+const SearchUser = ({ searchParams }) => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [isNext, setIsNext] = useState(false);
@@ -14,7 +14,7 @@ const SearchPage = (props) => {
 
   useEffect(() => {
     if (typeof window === "undefined") {
-      return; // Ensure code only runs on the client side
+      return;
     }
 
     if (!user) {
@@ -25,8 +25,8 @@ const SearchPage = (props) => {
 
     const fetchUsersData = async () => {
       const result = await fetchUsers({
-        userId: user.id,
-        searchString: props.searchParams?.q,
+        userId: user.id.toString(), // Convertir en chaîne
+        searchString: searchParams?.q,
         pageNumber: page
       });
 
@@ -37,13 +37,13 @@ const SearchPage = (props) => {
     };
 
     fetchUsersData();
-  }, [user, page, props.searchParams]);
+  }, [user, page, searchParams]);
 
   const handleSearch = (event) => {
-    event.preventDefault(); // Prevent the form from causing a page reload
+    event.preventDefault();
     setPage(1);
     fetchUsers({
-      userId: user.id,
+      userId: user.id.toString(), // Convertir en chaîne
       searchString: searchQuery,
       pageNumber: 1
     }).then(result => {
@@ -89,8 +89,8 @@ const SearchPage = (props) => {
         setPage={(newPage) => {
           setPage(newPage);
           fetchUsers({
-            userId: user.id,
-            searchString: props.searchParams?.q,
+            userId: user.id.toString(), // Convertir en chaîne
+            searchString: searchQuery || (searchParams && searchParams.q),
             pageNumber: newPage
           }).then(result => {
             if (result) {
@@ -105,4 +105,4 @@ const SearchPage = (props) => {
   );
 };
 
-export default SearchPage;
+export default SearchUser;
