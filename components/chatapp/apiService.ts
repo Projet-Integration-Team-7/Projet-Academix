@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3001/api'; // Votre URL API
+const baseURL = 'http://localhost:3000/api'; // Votre URL API
 
 export async function sendMessage(conversationId: string, message: string) {
   try {

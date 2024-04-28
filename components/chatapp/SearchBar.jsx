@@ -1,24 +1,41 @@
-// SearchBar.jsx
-import React, { useState } from 'react';
+import React from 'react';
 
-const SearchBar = ({ onSearch }) => {
-  const [searchTerm, setSearchTerm] = useState('');
+class SearchBar extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { searchTerm: '' };
+  }
 
-  const handleSearch = () => {
-    onSearch(searchTerm.trim());
+  handleSearch = (event) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    this.props.onSearch(this.state.searchTerm.trim());
   };
 
-  return (
-    <div className="search-bar">
-      <input
-        type="text"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        placeholder="Search users..."
-      />
-      <button onClick={handleSearch}>Search</button>
-    </div>
-  );
-};
+  handleInputChange = (event) => {
+    this.setState({ searchTerm: event.target.value });
+  };
+
+  handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      this.handleSearch(event);
+    }
+  };
+
+  render() {
+    return (
+      <form onSubmit={this.handleSearch} className="search-bar">
+        <input
+          type="text"
+          value={this.state.searchTerm}
+          onChange={this.handleInputChange}
+          onKeyDown={this.handleKeyDown}
+          placeholder="Search users..."
+          aria-label="Search users"
+        />
+        <button type="submit">Search</button>
+      </form>
+    );
+  }
+}
 
 export default SearchBar;
