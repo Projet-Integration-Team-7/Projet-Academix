@@ -16,15 +16,6 @@ const Page = async ({ params}: {params: { id: string}}) => {
     if(!userInfo?.onboarded) redirect('/onboarding')
 
     const thread = await fetchThreadById(params.id)
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetchThreadById(params.id).then(updatedThread => {
-                thread = updatedThread;
-            });
-        }, 5000); // 30 seconds
-
-        return () => clearInterval(interval);
-    }, [params.id]);
 
    return (
         <section className="relative">
