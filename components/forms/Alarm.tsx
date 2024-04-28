@@ -1,8 +1,12 @@
-import React from "react"
-export default function Alarm(){
-    return(
-        <audio controls>
-        <source src="/alarm.mp3" type="audio/mp3" />
-      </audio>
-    )
-}
+import React from "react";
+
+
+const  Alarm=React.forwardRef((_,ref)=>{
+  return (
+    <audio ref={ref}>
+      <source src="/alarm.mp3" type="audio/mp3" />
+    </audio>
+  );
+})
+
+export default Alarm;

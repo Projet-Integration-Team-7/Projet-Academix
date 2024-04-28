@@ -1,7 +1,7 @@
 "use client"
 import Navigation from '@/components/forms/Navigation';
 import Timer from '@/components/forms/Timer';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState,useRef} from "react";
 import Alarm from './Alarm';
 export default function Pomodoro (){
     const [pomodoro,setPomodoro]=useState(25)
@@ -11,6 +11,8 @@ export default function Pomodoro (){
     const [stage, setStage]=useState(0);
     const [consumedSecond,setConsumedSecond]=useState(0);
     const[ticking,setTicking]=useState(false);
+    const alarmRef= useRef<HTMLAudioElement>(null)
+
     const switchStage=(index : number) =>{
         const isYes=consumedSecond && stage!== index ? confirm ("Are you sure to switch")
         : false
@@ -49,12 +51,20 @@ const reset =()=>{
     setShortBreak(5)
     setSecond(0)
 }
+const timeUp =() =>{
+ reset();
+ if(alarmRef.current){
+    alarmRef.current.play()
 
+ }else{
+    console.error("ref pas defini")
+ }
+};
    const clockTicking =() =>{
     const minutes=getTickingTime();
     const setMinutes=updateMinute();
     if(minutes===0 && seconds===0){
-        reset()
+        timeUp()
 }else if (seconds ===0){
      setMinutes((minute) => minute-1)
      setSecond(59);
@@ -94,7 +104,7 @@ const reset =()=>{
                ticking ={ticking}
                setTicking={setTicking}
                />
-              <Alarm/>
+              <Alarm ref={alarmRef}/>
               </div>
             </section>
             </section>
