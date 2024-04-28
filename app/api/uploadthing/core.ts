@@ -1,37 +1,33 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
-import { currentUser } from "@clerk/nextjs";
-
-// Création de l'instance de Uploadthing
+ import { currentUser } from "@clerk/nextjs";
 const f = createUploadthing();
-
-// Fonction asynchrone pour obtenir l'utilisateur actuel
-const getUser = async () => await currentUser();
-
-// Définition du FileRouter pour votre application, pouvant contenir plusieurs FileRoutes
+ 
+const getUser=async()=> await currentUser ();
+// FileRouter for your app, can contain multiple FileRoutes
 export const ourFileRouter = {
-  // Définissez autant de FileRoutes que vous le souhaitez, chacune avec un routeSlug unique
+  // Define as many FileRoutes as you like, each with a unique routeSlug
   media: f({ image: { maxFileSize: "16MB", maxFileCount: 1 } })
-    // Définissez les autorisations et les types de fichiers pour cette FileRoute
+    // Set permissions and file types for this FileRoute
     .middleware(async ({ }) => {
-      // Ce code s'exécute sur votre serveur avant le téléchargement
+      // This code runs on your server before upload
       const user = await getUser();
-
-      // Si vous lancez une exception, l'utilisateur ne pourra pas télécharger
+ 
+      // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError("Unauthorized");
-
-      // Tout ce qui est renvoyé ici est accessible dans onUploadComplete en tant que `metadata`
+ 
+      // Whatever is returned here is accessible in onUploadComplete as `metadata`
       return { userId: user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      // Ce code s'exécute sur votre serveur après le téléchargement
-      console.log("Téléchargement terminé pour l'utilisateur :", metadata.userId);
-
-      console.log("URL du fichier :", file.url);
-
-      // !!! Tout ce qui est renvoyé ici est envoyé au callback `onClientUploadComplete` côté client
+      // This code RUNS ON YOUR SERVER after upload
+      console.log("Upload complete for userId:", metadata.userId);
+ 
+      console.log("file url", file.url);
+ 
+      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
       return { uploadedBy: metadata.userId };
     }),
-} 
-
+} satisfies FileRouter;
+ 
 export type OurFileRouter = typeof ourFileRouter;
