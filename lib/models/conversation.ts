@@ -1,5 +1,4 @@
-// models/Conversation.ts
-import mongoose, { Document } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
 export interface IMessage {
   sender: string;
@@ -11,12 +10,12 @@ export interface IConversation extends Document {
   messages: IMessage[];
 }
 
-const messageSchema = new mongoose.Schema({
+const messageSchema = new Schema<IMessage>({
   sender: { type: String, required: true },
   text: { type: String, required: true },
 });
 
-const conversationSchema = new mongoose.Schema({
+const conversationSchema = new Schema<IConversation>({
   name: { type: String, required: true },
   messages: [messageSchema],
 });
@@ -24,3 +23,7 @@ const conversationSchema = new mongoose.Schema({
 const Conversation = mongoose.model<IConversation>('Conversation', conversationSchema);
 
 export default Conversation;
+export const createConversation = async (name: string) => {
+  const conversation = new Conversation({ name, messages: [] });
+  return conversation.toObject();
+};
