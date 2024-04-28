@@ -1,8 +1,6 @@
-// apiService.ts
-
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3001/api'; // Votre URL API
+const baseURL = 'http://localhost:3000/api';
 
 export async function sendMessage(conversationId: string, message: string) {
   try {
@@ -44,5 +42,25 @@ export async function userLeft(conversationId: string, userId: string) {
   } catch (error) {
     console.error('Error removing user from conversation:', error);
     throw new Error('Error removing user from conversation');
+  }
+}
+
+export async function addUserToChat(conversationId: string, userId: string) {
+  try {
+    const response = await axios.post(`${baseURL}/addUserToChat`, { conversationId, userId });
+    return response.data;
+  } catch (error) {
+    console.error('Error adding user to chat:', error);
+    throw new Error('Error adding user to chat');
+  }
+}
+
+export async function userLeftChat(conversationId: string, userId: string) {
+  try {
+    const response = await axios.post(`${baseURL}/userLeftChat`, { conversationId, userId });
+    return response.data;
+  } catch (error) {
+    console.error('Error removing user from chat:', error);
+    throw new Error('Error removing user from chat');
   }
 }
