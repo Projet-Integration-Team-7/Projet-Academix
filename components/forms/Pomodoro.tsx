@@ -12,7 +12,7 @@ export default function Pomodoro (){
     const [consumedSecond,setConsumedSecond]=useState(0);
     const[ticking,setTicking]=useState(false);
     const alarmRef= useRef<HTMLAudioElement>(null)
-
+     const [isTimeUp,setIsTimeUp]=useState(false)
     const switchStage=(index : number) =>{
         const isYes=consumedSecond && stage!== index ? confirm ("Are you sure to switch")
         : false
@@ -24,7 +24,11 @@ export default function Pomodoro (){
         }
         setStage(index)
     }
-   
+   const startTimer=() =>{
+       setIsTimeUp(false)
+       muteAlarm()
+       setTicking((ticking)=> !ticking)
+    }
     const getTickingTime=() =>{
         const timeStage: { [key: number]: number } = {
             0:pomodoro,
@@ -53,6 +57,7 @@ const reset =()=>{
 }
 const timeUp =() =>{
  reset();
+ setIsTimeUp(true)
  if(alarmRef.current){
     alarmRef.current.play()
 
@@ -72,6 +77,14 @@ const timeUp =() =>{
     setSecond((second) => second-1);
    
 }
+   }
+   const muteAlarm =() =>{
+    if(alarmRef.current){
+    alarmRef.current.pause();
+    alarmRef.current.currentTime=0;
+    }else{
+        console.error("ref pas defini")
+     }
    }
     useEffect(() =>{
       
@@ -102,7 +115,10 @@ const timeUp =() =>{
                getTickingTime={getTickingTime}
                seconds={seconds}
                ticking ={ticking}
-               setTicking={setTicking}
+               startTimer={startTimer}
+               isTimeUp={isTimeUp}
+               muteAlarm={muteAlarm}
+               reset={reset}
                />
               <Alarm ref={alarmRef}/>
               </div>
