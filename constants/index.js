@@ -54,8 +54,10 @@
     },
     {imgURL: "/assets/bot.svg",
     route:"/chatbot",
-    label: "Chatbot"}
-    
+    label: "Chatbot"},
+    {imgURL: "/assets/bt.svg",
+    route:"/statistics",
+    label: "Statistics"}
   ];
   
   export const profileTabs = [
