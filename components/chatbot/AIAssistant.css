@@ -1,14 +1,28 @@
-/* AIAssistant.css */
-
 .ai-assistant-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; /* Make the component take full height of the viewport */
+  height: 100vh;
+  position: relative;
+}
+
+.ai-assistant-title {
+  color: #fff;
+  padding: 5px;
+  text-align: left;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 1.2em;
+  margin-top: 0;
+  border-bottom: 2px solid #fff;
 }
 
 .ai-assistant-messages {
-  flex: 1; /* Expand to fill remaining space */
-  overflow-y: auto; /* Enable scrolling if messages overflow */
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow-y: auto;
   padding: 10px;
 }
 
@@ -21,39 +35,71 @@
 }
 
 .user {
-  background-color: #2196F3; /* Blue */
-  color: #000; /* Black text */
-  align-self: flex-end; /* Align user messages to the right */
+  background-color: #2196F3;
+  color: #fff;
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  max-width: 70%;
+  word-wrap: break-word;
+  border-radius: 8px;
+  margin-left: auto;
 }
 
 .ai {
-  background-color: #4CAF50; /* Green */
-  color: #000; /* Black text */
-  align-self: flex-start; /* Align AI messages to the left */
+  padding: 8px 12px;
+  margin-bottom: 8px;
+  max-width: 70%;
+  word-wrap: break-word;
+  border-radius: 8px;
+  margin-left: 5px;
+  background-color: #fff;
+  color: #2196F3;
 }
 
 .ai-assistant-input {
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  align-items: center;
+  padding: 8px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: transparent;
+  border-top: 1px solid #ccc;
+}
+
+.input-container {
+  flex: 1;
+  display: flex;
 }
 
 .ai-assistant-input input[type="text"] {
+  flex: 1;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: none;
+  outline: none;
   border-radius: 5px;
-  margin-bottom: 8px;
+  border: 1px solid #fff;
+  color: #fff;
+  background-color: transparent;
+  padding-right: 40px;
 }
 
 .ai-assistant-input button {
-  padding: 8px 16px;
-  background-color: #f44336; /* Red */
-  color: #fff; /* White text */
-  border: none;
+  width: 40px;
+  height: 40px;
+  margin-left: 8px;
+  background-color: transparent;
+  color: #2196F3;
+  border: 1px transparent;
   border-radius: 5px;
   cursor: pointer;
 }
 
-.ai-assistant-input button:hover {
-  background-color: #d32f2f; /* Darker red on hover */
+.ai-assistant-input button::before {
+  content: '\25B2';
+  font-size: 2em;
 }

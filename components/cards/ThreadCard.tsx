@@ -5,7 +5,6 @@ import LikeBtn from "../forms/LikeBtn";
 import ShareBtn from "../forms/ShareBtn";
 import ThreadMenu from "../forms/ThreadMenu";
 import { formatDateString } from "@/lib/utils";
-import { calculateTimePassed } from "@/lib/actions/thread.action";
 
 
 interface Props {

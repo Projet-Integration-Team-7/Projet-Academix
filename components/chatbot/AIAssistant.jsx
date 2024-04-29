@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { usePathname } from 'next/navigation';
-import { useUser } from '@clerk/clerk-react'; // Import useUser hook from Clerk
+import { useUser } from '@clerk/clerk-react'; 
 import './AIAssistant.css';
 
 const apiUrl = 'http://localhost:5000/message';
-
 // Function to send a request to the OpenAI API
 async function sendRequest(prompt, userId) {
   try {
@@ -17,50 +16,72 @@ async function sendRequest(prompt, userId) {
   }
 }
 
-
 const AIAssistant = () => {
   const pathname = usePathname();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const { user } = useUser(); // Access the user object from Clerk
 
-async function handleUserInput(event) {
-  event.preventDefault();
-  const aiResponse = await sendRequest(inputMessage.trim(), user.id);
-  setMessages([...messages, { user: true, message: inputMessage.trim() }, { user: false, message: aiResponse }]);
-  setInputMessage('');
-}
-
   useEffect(() => {
-    if (user) {
-      // Log the user ID when the component mounts
-      console.log('User ID:', user.id);
+    async function sendInitialMessage() {
+      if (user) {
+        try {
+          const response = await axios.post(apiUrl, { id_utilisateur: user.id, saisie_utilisateur: '' });
+          const aiResponse = response.data.message;
+          setMessages([...messages, { user: false, message: aiResponse }]);
+        } catch (error) {
+          console.error('Error sending initial message:', error);
+        }
+      }
     }
-  }, [user]);
+
+    sendInitialMessage();
+  }, []); // Empty dependency array to run only once when component mounts
+
+  async function handleUserInput(event) {
+    event.preventDefault();
+    const aiResponse = await sendRequest(inputMessage.trim(), user.id);
+    setMessages([...messages, { user: true, message: inputMessage.trim() }, { user: false, message: aiResponse }]);
+    setInputMessage('');
+  }
+
+  function handleKeyPress(event) {
+    if (event.key === 'Enter') {
+      handleUserInput(event);
+    }
+  }
 
   if (pathname === '/chatbot') {
     return (
       <div className="ai-assistant-container">
+        <div className="ai-assistant-title">Assistant Personnel</div>
         <div className="ai-assistant-messages">
           {messages.map((msg, index) => (
             <div key={index} className={`message ${msg.user ? 'user' : 'ai'}`}>
+              <div className="message-title">{msg.user ? 'Vous' : 'Assistant Personnel'}</div>
               {msg.message}
             </div>
           ))}
         </div>
         <div className="ai-assistant-input">
+          <div className="input-container">
           <input
-            type="text"
-            placeholder="Type your message..."
-            value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
-          />
-          <button onClick={handleUserInput}>Send</button>
+  type="text"
+  placeholder="Entrez votre question..."
+  value={inputMessage}
+  onChange={(e) => setInputMessage(e.target.value)}
+  onKeyPress={(e) => e.key === 'Enter' && handleUserInput(e)}
+/>
+
+          </div>
+          <button onClick={handleUserInput}></button>
         </div>
       </div>
     );
+    
+    
   } else {
-    return null; // Render nothing if the path is not /chatbot
+    return null; // Ne rien afficher si le chemin n'est pas /chatbot
   }
 };
 

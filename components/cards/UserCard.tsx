@@ -1,4 +1,3 @@
-"use client"
 import Image from "next/image";
 import React from "react";
 import { useRouter } from "next/navigation";
@@ -9,8 +8,9 @@ interface Props {
     username : string ; 
     imgUrl: string; 
     personType : string ;
+    usage: string;
 }
-const UserCard =({id, name,username, imgUrl,personType} : Props) => {
+const UserCard =({id, name,username, imgUrl,personType,usage} : Props) => {
     const router=useRouter();
     return (
         <article className="user-card">
@@ -29,9 +29,11 @@ const UserCard =({id, name,username, imgUrl,personType} : Props) => {
               <p className="text-small-medium text-gray-1">@{username}</p>
             </div>
             </div>
-            <Button className="user-card_btn" onClick={() => router.push(`/profile/${id}`) }>
+            {usage === "search" && (
+              <Button className="user-card_btn" onClick={() => router.push(`/profile/${id}`) }>
                 View
-            </Button>
+              </Button>
+            )}
         </article>
     )
 }

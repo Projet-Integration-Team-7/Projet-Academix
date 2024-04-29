@@ -1,17 +1,17 @@
 "use client"
 import React from 'react'
-import AIAssistant from '../../../components/chatbot/AIAssistant'
+import ChatApp from '../../../components/chatapp/Chat'
 import { usePathname } from 'next/navigation';
 
-function Chatbot() {
+function Chat() {
   const pathname = usePathname();
 
-  if (pathname === '/chatbot') {
-    return <AIAssistant />
+  if (pathname === '/chat') {
+    return <ChatApp />
   } else {
     return null; // retourne rien sur path n'est pas /chat
   }
   }
 
 
-export default Chatbot;
+export default Chat;

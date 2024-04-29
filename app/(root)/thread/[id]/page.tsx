@@ -16,22 +16,13 @@ const Page = async ({ params}: {params: { id: string}}) => {
     if(!userInfo?.onboarded) redirect('/onboarding')
 
     const thread = await fetchThreadById(params.id)
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetchThreadById(params.id).then(updatedThread => {
-                thread = updatedThread;
-            });
-        }, 5000); // 30 seconds
-
-        return () => clearInterval(interval);
-    }, [params.id]);
 
    return (
         <section className="relative">
             <div>
             <ThreadCard 
                    key={thread._id}
-                   id={thread._id}
+                   id={JSON.stringify(thread._id)}
                    currentUserId={user?.id || " "}
                    parentId={thread.parentId}
                    content={thread.text}
@@ -56,7 +47,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                 {thread.children.map((childItem: any) => (
                     <ThreadCard 
                         key={childItem._id}
-                        id={childItem._id}
+                        id={JSON.stringify(childItem._id)}
                         currentUserId={user?.id || " "}
                         parentId={childItem.parentId}
                         content={childItem.text}
