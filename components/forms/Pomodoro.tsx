@@ -3,6 +3,7 @@ import Navigation from '@/components/forms/Navigation';
 import Timer from '@/components/forms/Timer';
 import React, {useEffect, useState,useRef} from "react";
 import Alarm from './Alarm';
+import ModalSetting from './ModalSetting';
 export default function Pomodoro (){
     const [pomodoro,setPomodoro]=useState(25)
     const [shortBreak,setShortBreak]=useState(5)
@@ -12,8 +13,19 @@ export default function Pomodoro (){
     const [consumedSecond,setConsumedSecond]=useState(0);
     const[ticking,setTicking]=useState(false);
     const alarmRef= useRef<HTMLAudioElement>(null)
-     const [isTimeUp,setIsTimeUp]=useState(false)
-    const switchStage=(index : number) =>{
+    const[openSetting,setOpenSetting]=useState(false)
+    const [isTimeUp,setIsTimeUp]=useState(false)
+    const pomodoroRef=useRef()
+    const shortBreakRef=useRef()
+  const longBreakRef=useRef()
+  const updateTimeDefaultValue =() =>
+{
+    setPomodoro(pomodoroRef.current.value);
+    setShortBreak(shortBreakRef.current.value);
+    setLongBreak(longBreakRef.current.value)
+    setOpenSetting(false)
+}   
+const switchStage=(index : number) =>{
         const isYes=consumedSecond && stage!== index ? confirm ("Are you sure to switch")
         : false
         if(isYes){
@@ -109,7 +121,7 @@ const timeUp =() =>{
             <h1  className="head-text mb-10">   </h1>
             <section className="mt-10 flex flex-col gap-5">
               <div className='max-w-2xl min-h-screen mx-auto'>
-              <Navigation/>
+              <Navigation setOpenSetting={setOpenSetting}/>
               <Timer stage={stage} 
               switchStage={switchStage}
                getTickingTime={getTickingTime}
@@ -121,6 +133,14 @@ const timeUp =() =>{
                reset={reset}
                />
               <Alarm ref={alarmRef}/>
+              <ModalSetting 
+              openSetting={openSetting} 
+              setOpenSetting={setOpenSetting}
+              pomodoroRef={pomodoroRef}
+              shortBreakRef={shortBreakRef}
+              longBreakRef={longBreakRef}
+              updateTimeDefaultValue={updateTimeDefaultValue}/>
+         
               </div>
             </section>
             </section>
