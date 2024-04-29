@@ -1,37 +1,85 @@
 /* Chat.css */
-.chat-page {
-    display: grid;
-    grid-template-columns: 1fr 2fr; /* 1/3 et 2/3 de largeur */
-    grid-template-rows: auto 1fr; /* Hauteur automatique pour le nouveau chat, 1/3 et 2/3 de la hauteur pour la liste de chat et la boîte de chat */
-    grid-template-areas:
-      "new-chat chat-list"
-      "chat-box chat-box";
-    height: 100vh; /* Hauteur complète de la fenêtre */
-  }
-  
-  .conversation-section {
-    grid-area: chat-list;
-    overflow-y: auto; /* Autoriser le défilement de la liste de chat si nécessaire */
-    border: 1px solid white; /* Ajouter une bordure blanche */
-    padding: 10px; /* Ajouter un espacement intérieur */
-  }
-  
-  .chatbox-section {
-    grid-area: chat-box;
-    overflow-y: auto; /* Autoriser le défilement de la boîte de chat si nécessaire */
-    border: 1px solid white; /* Ajouter une bordure blanche */
-    padding: 10px; /* Ajouter un espacement intérieur */
-  }
-  
-  .new-chat-section {
-    grid-area: new-chat;
-    border: 1px solid white; /* Ajouter une bordure blanche */
-    padding: 10px; /* Ajouter un espacement intérieur */
-  }
-  
-  .empty-message {
-    padding: 16px;
-    text-align: center;
-    color: #777;
-  }
-  
+
+/* Styles pour le ChatList */
+.conversation-section {
+  grid-area: chat-list;
+  overflow-y: auto;
+  border: 1px solid white;
+  padding: 10px;
+}
+
+/* Styles pour le ChatBox */
+.chatbox-section {
+  grid-area: chat-box;
+  overflow-y: auto;
+  border: 1px solid white;
+  padding: 10px;
+  width: calc(2/3 * 100vw); /* 2/3 de la largeur de la page */
+  height: 100vh; /* Hauteur de la page */
+  background-color: transparent; /* Fond transparent */
+  box-sizing: border-box; /* Inclure les bordures et le padding dans le calcul de la taille */
+}
+
+/* Styles pour le NewChat */
+.new-chat-section {
+  grid-area: new-chat;
+  border: 1px solid white;
+  padding: 10px;
+  position: relative;
+}
+
+.new-chat-container {
+  position: absolute;
+  background-color: white;
+  width: calc(100% - 20px);
+  max-height: calc(100vh - 20px);
+  overflow-y: auto;
+  padding: 10px;
+  z-index: 1;
+}
+
+/* Styles supplémentaires */
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.messages {
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+
+form {
+  margin-top: 20px;
+  display: flex;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #2196f3;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  margin-left: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0d8bf2;
+}
+
+button:active {
+  background-color: #0a6ebd;
+}
+
+button:focus {
+  outline: none;
+}

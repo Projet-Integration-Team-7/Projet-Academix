@@ -5,9 +5,18 @@ export interface IMessage {
   text: string;
 }
 
+export interface IParticipant {
+  userId: string;
+}
+
 export interface IConversation extends Document {
   name: string;
+  participants: IParticipant[];
   messages: IMessage[];
+}
+
+interface IConversationModel extends mongoose.Model<IConversation> {
+  createConversation(name: string, participants: IParticipant[], messages: IMessage[]): Promise<IConversation>;
 }
 
 const messageSchema = new Schema<IMessage>({
@@ -15,15 +24,21 @@ const messageSchema = new Schema<IMessage>({
   text: { type: String, required: true },
 });
 
+const participantSchema = new Schema<IParticipant>({
+  userId: { type: String, required: true },
+});
+
 const conversationSchema = new Schema<IConversation>({
   name: { type: String, required: true },
+  participants: [participantSchema],
   messages: [messageSchema],
 });
 
-const Conversation = mongoose.model<IConversation>('Conversation', conversationSchema);
+conversationSchema.statics.createConversation = async function(name: string, participants: IParticipant[], messages: IMessage[]) {
+  const conversation = new this({ name, participants, messages });
+  return conversation.save();
+};
+
+const Conversation = mongoose.model<IConversation, IConversationModel>('Conversation', conversationSchema);
 
 export default Conversation;
-export const createConversation = async (name: string) => {
-  const conversation = new Conversation({ name, messages: [] });
-  return conversation.toObject();
-};

@@ -1,0 +1,54 @@
+.chat-box {
+    width: calc(2/3 * 100vw); /* 2/3 de la largeur de la page */
+    height: 100vh; /* Hauteur de la page */
+    background-color: transparent; /* Fond transparent */
+    border: 1px solid white; /* Bordure blanche */
+    box-sizing: border-box; /* Inclure les bordures et le padding dans le calcul de la taille */
+    padding: 20px; /* Espacement intérieur */
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .messages {
+    max-height: calc(100vh - 100px); /* Hauteur maximale pour les messages avec une marge pour le formulaire de saisie */
+    overflow-y: auto; /* Défilement vertical si nécessaire */
+  }
+  
+  form {
+    margin-top: 20px;
+    display: flex;
+  }
+  
+  input[type="text"] {
+    flex: 1; /* Le champ de texte prendra tout l'espace disponible */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    background-color: #2196f3;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0d8bf2;
+  }
+  
+  button:active {
+    background-color: #0a6ebd;
+  }
+  
+  button:focus {
+    outline: none;
+  }
+  

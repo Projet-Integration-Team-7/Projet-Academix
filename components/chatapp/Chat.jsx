@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import ChatList from './ChatList';
 import ChatBox from './ChatBox';
 import NewChat from './NewChat';
-import { sendMessage, createConversation, addUser, userLeft } from './apiService'; 
+
+import { sendMessage, createConversation, addUser, userLeft } from './api/apiService'; 
 
 const ChatApp = () => {
   const [chats, setChats] = useState([]);
@@ -50,6 +51,9 @@ const ChatApp = () => {
 
   return (
     <div className="chat-page">
+      <div className="new-chat-section">
+        <NewChat createChat={createChat} />
+      </div>
       <div className="conversation-section">
         <ChatList chats={chats} selectChat={selectChat} />
       </div>
@@ -64,9 +68,6 @@ const ChatApp = () => {
         ) : (
           <div className="empty-message">Please select a conversation</div>
         )}
-      </div>
-      <div className="new-chat-section">
-        <NewChat createChat={createChat} />
       </div>
     </div>
   );
