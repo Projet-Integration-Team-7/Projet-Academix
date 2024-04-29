@@ -19,6 +19,8 @@ const NewChat = ({ createChat }) => {
   };
 
   const handleCreateChat = async (data) => {
+    console.error('hop');
+
   setIsCreating(true); // Activer l'indicateur de création
   try {
     console.error('hop');
