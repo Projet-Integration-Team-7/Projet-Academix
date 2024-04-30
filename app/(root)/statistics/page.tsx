@@ -6,7 +6,6 @@ import dynamic from 'next/dynamic';
 import { fetchTopAuthors } from '@/lib/actions/statistics'; // Replace with your actual path
 
 // Importation dynamique du StatisticsChart pour s'assurer qu'il est rendu uniquement côté client
-const StatisticsChart = dynamic(() => import('@/components/forms/StatisticsMenu'), { ssr: false });
 // Importation dynamique pour s'assurer qu'elle est rendue côté client
 const AuthorList = dynamic(() => import('@/components/forms/AuthorList'), { ssr: false });
 const Statistics = () => {
