@@ -1,15 +1,33 @@
 "use client"
-import { CircularProgressbar,buildStyles } from 'react-circular-progressbar';
+import { IoIosVolumeOff } from "react-icons/io";
+
 import 'react-circular-progressbar/dist/styles.css';
+import { Button } from '../ui/button';
+import { start } from "repl";
 interface TimerProps {
     stage: number;
     switchStage: (index: number) => void;
     getTickingTime: () => number;
     seconds :number;
     ticking : boolean
-    setTicking: any 
-}
-export default function Timer({ stage, switchStage, getTickingTime,seconds,ticking,setTicking }: TimerProps) {
+    startTimer: any
+    isTimeUp : boolean
+    muteAlarm : any
+    reset : any
+}    
+export default function Timer({ stage, 
+    switchStage,
+     getTickingTime,
+     seconds,
+     ticking,
+     startTimer,
+     isTimeUp,
+     muteAlarm,
+     reset
+    }:
+
+      TimerProps) 
+      {
     const options =["Pomodoro","Short Break","Long Break"]
     return (
 
@@ -40,11 +58,31 @@ export default function Timer({ stage, switchStage, getTickingTime,seconds,ticki
     {getTickingTime()}:{seconds.toString().padStart(2,"0")}
 </h1>
             </div>
-            <button className='px-16 py-2 text-2xl rounded-md bg-white uppercase font-bold' style={{ color: 'black' }} onClick={()=> setTicking((ticking : boolean) => !ticking)}>
+            
+            <div></div>
+<div>
+            {isTimeUp && (
+        <IoIosVolumeOff
+        className="text-9xl text-white cursor-pointer"
+        onClick={muteAlarm}
+        />
+    
+    ) }
+    </div>
+    <div className="my-10">
+            <Button className="user-card_btn w-48 h-12 mx-2"  
+            onClick={startTimer}>
+
     {ticking? "Stop" : "Start"}
-</button>
-
-
+    </Button>
+    </div>
+{ticking &&(
+ <Button className="user-card_btn w-48 h-12 mx-2"
+ onClick={reset}>
+ reset
+</Button>
+) }
+   
         </div>
     );
 }
