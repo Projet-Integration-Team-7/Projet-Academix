@@ -55,7 +55,8 @@
     {imgURL: "/assets/bot.svg",
     route:"/chatbot",
     label: "Chatbot"},
-    {imgURL: "/assets/bt.svg",
+
+    {imgURL: "/assets/statistics.svg",
     route:"/statistics",
     label: "Statistics"}
   ];
