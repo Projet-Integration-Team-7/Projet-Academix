@@ -20,7 +20,7 @@ const AIAssistant = () => {
   const pathname = usePathname();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-  const { user } = useUser(); // Access the user object from Clerk
+  const { user } = useUser(); 
 
   useEffect(() => {
     async function sendInitialMessage() {
@@ -36,7 +36,7 @@ const AIAssistant = () => {
     }
 
     sendInitialMessage();
-  }, []); // Empty dependency array to run only once when component mounts
+  }, []); 
 
   async function handleUserInput(event) {
     event.preventDefault();
@@ -70,7 +70,7 @@ const AIAssistant = () => {
   placeholder="Entrez votre question..."
   value={inputMessage}
   onChange={(e) => setInputMessage(e.target.value)}
-  onKeyPress={(e) => e.key === 'Enter' && handleUserInput(e)}
+  onKeyPress={(e) => e.key === 'Enter' && handleKeyPress(e)}
 />
 
           </div>

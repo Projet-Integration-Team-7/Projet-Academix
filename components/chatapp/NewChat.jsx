@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import SearchUser from './SearchUser';
 import './NewChat.css';
 import { useForm } from 'react-hook-form';
-import Conversation from '../../lib/actions/conversation.action'; // Assurez-vous que ce chemin est correct
+import {createConversation} from '../../lib/actions/conversation.action'; 
 
-const NewChat = ({ createChat }) => {
+const NewChat = ({ }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -17,26 +17,18 @@ const NewChat = ({ createChat }) => {
       return isSelected ? prevUsers.filter(id => id !== userId.toString()) : [...prevUsers, userId.toString()];
     });
   };
+  
+  const handleCreateChat = async () => {
+    try {
+      const name = ('ISK');
+      const participants = selectedUsers;
+      const newConversation = await createConversation(name, participants);
+      console.log('Conversation created:', newConversation);
+    } catch (error) {
+      console.error('Error creating chat:', error);
+    }
+  };
 
-  const handleCreateChat = async (data) => {
-    console.error('hop');
-
-  setIsCreating(true); // Activer l'indicateur de création
-  try {
-    console.error('hop');
-
-    const { name } = data;
-    const participants = selectedUsers; // Utiliser directement l'array des IDs
-    const newConversation = await Conversation.createConversation(name, participants.toString);
-    console.log('Conversation created:', newConversation);
-    createChat(newConversation._id); // Supposé que createChat est une fonction pour gérer l'ID créé
-    setSelectedUsers([]); // Réinitialiser les utilisateurs sélectionnés
-    setIsCreating(false); // Désactiver l'indicateur de création
-  } catch (error) {
-    console.error('Error creating chat:', error);
-    setIsCreating(false); // Assurez-vous de désactiver isCreating même en cas d'erreur
-  }
-};
 
 
 return (
@@ -47,7 +39,7 @@ return (
         <SearchUser searchTerm={searchTerm} setSearchResults={setSearchResults} />
         <div className="search-results">
           {searchResults.map(user => (
-            <div key={user.id} className={selectedUsers.includes(user.id.toString()) ? 'selected-user' : ''} onClick={() => handleUserSelect(user.id)}>
+            <div key={user.id} className={selectedUsers.includes(user) ? 'selected-user' : ''} onClick={() => handleUserSelect(user.id).toString()}>
               {user.name}
             </div>
           ))}

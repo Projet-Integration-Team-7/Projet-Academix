@@ -1,10 +1,8 @@
 .chat-box {
-    width: calc(2/3 * 100vw); /* 2/3 de la largeur de la page */
-    height: 100vh; /* Hauteur de la page */
-    background-color: transparent; /* Fond transparent */
-    border: 1px solid white; /* Bordure blanche */
-    box-sizing: border-box; /* Inclure les bordures et le padding dans le calcul de la taille */
-    padding: 20px; /* Espacement intérieur */
+    width: calc(2/3 * 100vw); 
+    height: 100vh;
+    background-color: transparent; 
+    box-sizing: border-box; 
   }
   
   .section-title {
@@ -14,8 +12,8 @@
   }
   
   .messages {
-    max-height: calc(100vh - 100px); /* Hauteur maximale pour les messages avec une marge pour le formulaire de saisie */
-    overflow-y: auto; /* Défilement vertical si nécessaire */
+    max-height: calc(100vh - 100px);
+    overflow-y: auto; 
   }
   
   form {
@@ -24,7 +22,7 @@
   }
   
   input[type="text"] {
-    flex: 1; /* Le champ de texte prendra tout l'espace disponible */
+    flex: 1; 
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
