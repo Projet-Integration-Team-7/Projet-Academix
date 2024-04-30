@@ -6,13 +6,13 @@ import { fetchUsers, fetchUser } from "@/lib/actions/user.actions";
 import { Button } from '../ui/button';
 
 
-const SearchUser = ({ searchParams }) => {
+const SearchUser = ({ searchParams, selectedUsers, setSelectedUsers}) => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [isNext, setIsNext] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { user } = useClerk();
-  const [selectedUsers, setSelectedUsers] = useState([]); 
+  // const [selectedUsers, setSelectedUsers] = useState([]); 
 
   useEffect(() => {
     if (typeof window === "undefined") {
@@ -118,7 +118,7 @@ const SearchUser = ({ searchParams }) => {
           <p className='no-result'>No Result</p>
         ) : (
           filteredUsers.map(person => (
-            <div className='flex justify-between'>
+            <div className=' flex justify-between items-center align-middle place-items-center'>
               <UserCard
                 key={JSON.stringify(person.id)}
                 id={JSON.stringify(person.id)}

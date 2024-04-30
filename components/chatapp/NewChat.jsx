@@ -26,7 +26,7 @@ const NewChat = ({ createChat }) => {
     console.error('hop');
 
     const { name } = data;
-    const participants = selectedUsers; // Utiliser directement l'array des IDs
+    const participants = selectedUsers.map(user => user.id.toString()); // Utiliser directement l'array des IDs en tant que chaînes de caractères
     const newConversation = await Conversation.createConversation(name, participants.toString);
     console.log('Conversation created:', newConversation);
     createChat(newConversation._id); // Supposé que createChat est une fonction pour gérer l'ID créé
@@ -43,15 +43,8 @@ return (
   <div className="new-chat-container">
     <button onClick={() => setIsCreating(true)}>New Conversation</button>
     {isCreating && (
-      <form onSubmit={handleSubmit(handleCreateChat)} className="create-chat">
-        <SearchUser searchTerm={searchTerm} setSearchResults={setSearchResults} />
-        <div className="search-results">
-          {searchResults.map(user => (
-            <div key={user.id} className={selectedUsers.includes(user.id.toString()) ? 'selected-user' : ''} onClick={() => handleUserSelect(user.id)}>
-              {user.name}
-            </div>
-          ))}
-        </div>
+      <form onSubmit={handleSubmit(handleCreateChat)} className="create-chat flex-col gap-4 place-items-center">
+        <SearchUser searchTerm={searchTerm} setSearchResults={setSearchResults} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
         <input 
           name="name" 
           {...register('name', { required: true })}
