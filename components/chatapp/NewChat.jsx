@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import SearchUser from './SearchUser';
 import './NewChat.css';
 import { useForm } from 'react-hook-form';
-import Conversation from '../../lib/actions/conversation.action'; // Assurez-vous que ce chemin est correct
+import {createConversation} from '../../lib/actions/conversation.action'; 
 
-const NewChat = ({ createChat }) => {
+const NewChat = ({ }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
@@ -16,6 +16,17 @@ const NewChat = ({ createChat }) => {
       const isSelected = prevUsers.includes(userId.toString());
       return isSelected ? prevUsers.filter(id => id !== userId.toString()) : [...prevUsers, userId.toString()];
     });
+  };
+  
+  const handleCreateChat = async () => {
+    try {
+      const name = ('ISK');
+      const participants = selectedUsers;
+      const newConversation = await createConversation(name, participants);
+      console.log('Conversation created:', newConversation);
+    } catch (error) {
+      console.error('Error creating chat:', error);
+    }
   };
 
   const handleCreateChat = async (data) => {

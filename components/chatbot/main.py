@@ -82,7 +82,7 @@ thread.start()
 
 # Créer une application Flask
 app = Flask(__name__)
-CORS(app)  # Activer CORS
+CORS(app)  
 
 # Point de terminaison pour recevoir les messages des utilisateurs
 @app.route('/message', methods=['POST'])

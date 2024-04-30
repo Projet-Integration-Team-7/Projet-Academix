@@ -1,10 +1,10 @@
-/* NewChat.css */
+
 .new-chat-container {
   border: 1px solid #ccc;
   border-radius: 8px;
-  padding: 10px; /* Réduit la taille du padding */
+  padding: 10px; 
   margin: 20px;
-  width: calc(33.33% - 40px); /* 1/3 de la page moins les marges */
+  width: calc(33.33% - 40px); 
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background-color: transparent;
 }
@@ -13,9 +13,9 @@
   background-color: #2196f3;
   color: #fff;
   border: none;
-  padding: 8px 0; /* Ajuste le padding pour occuper toute la hauteur */
-  width: 100%; /* Ajuste la largeur pour occuper toute la largeur du bouton */
-  border-radius: 0; /* Supprime le border-radius */
+  padding: 8px 0; 
+  width: 100%; 
+  border-radius: 0; 
   cursor: pointer;
 }
 

@@ -1,6 +1,6 @@
-// Message.jsx
+
 import React from 'react';
-import { useUser } from '@clerk/clerk-react'; // Clerk pour gérer les utilisateurs
+import { useUser } from '@clerk/clerk-react'; 
 
 const Message = ({ message }) => {
   const { user } = useUser();

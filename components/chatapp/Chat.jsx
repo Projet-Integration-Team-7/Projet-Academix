@@ -3,7 +3,7 @@ import ChatList from './ChatList';
 import ChatBox from './ChatBox';
 import NewChat from './NewChat';
 
-import { sendMessage, createConversation, addUser, userLeft } from './api/apiService'; 
+import { createConversation, sendMessage, addUser, userLeft } from './api/apiService';
 
 const ChatApp = () => {
   const [chats, setChats] = useState([]);
@@ -58,7 +58,7 @@ const ChatApp = () => {
         <ChatList chats={chats} selectChat={selectChat} />
       </div>
       <div className="chatbox-section">
-        {selectedChat ? (
+        {selectedChat? (
           <ChatBox
             chat={selectedChat}
             sendMessage={sendMessageToChat}
@@ -74,4 +74,3 @@ const ChatApp = () => {
 };
 
 export default ChatApp;
-
