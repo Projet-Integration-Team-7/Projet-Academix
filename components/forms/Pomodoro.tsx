@@ -1,7 +1,9 @@
 "use client"
 import Navigation from '@/components/forms/Navigation';
 import Timer from '@/components/forms/Timer';
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState,useRef} from "react";
+import Alarm from './Alarm';
+import ModalSetting from './ModalSetting';
 export default function Pomodoro (){
     const [pomodoro,setPomodoro]=useState(25)
     const [shortBreak,setShortBreak]=useState(5)
@@ -10,7 +12,20 @@ export default function Pomodoro (){
     const [stage, setStage]=useState(0);
     const [consumedSecond,setConsumedSecond]=useState(0);
     const[ticking,setTicking]=useState(false);
-    const switchStage=(index : number) =>{
+    const alarmRef= useRef<HTMLAudioElement>(null)
+    const[openSetting,setOpenSetting]=useState(false)
+    const [isTimeUp,setIsTimeUp]=useState(false)
+    const pomodoroRef=useRef()
+    const shortBreakRef=useRef()
+  const longBreakRef=useRef()
+  const updateTimeDefaultValue =() =>
+{
+    setPomodoro(pomodoroRef.current.value);
+    setShortBreak(shortBreakRef.current.value);
+    setLongBreak(longBreakRef.current.value)
+    setOpenSetting(false)
+}   
+const switchStage=(index : number) =>{
         const isYes=consumedSecond && stage!== index ? confirm ("Are you sure to switch")
         : false
         if(isYes){
@@ -21,7 +36,11 @@ export default function Pomodoro (){
         }
         setStage(index)
     }
-   
+   const startTimer=() =>{
+       setIsTimeUp(false)
+       muteAlarm()
+       setTicking((ticking)=> !ticking)
+    }
     const getTickingTime=() =>{
         const timeStage: { [key: number]: number } = {
             0:pomodoro,
@@ -48,12 +67,21 @@ const reset =()=>{
     setShortBreak(5)
     setSecond(0)
 }
+const timeUp =() =>{
+ reset();
+ setIsTimeUp(true)
+ if(alarmRef.current){
+    alarmRef.current.play()
 
+ }else{
+    console.error("ref pas defini")
+ }
+};
    const clockTicking =() =>{
     const minutes=getTickingTime();
     const setMinutes=updateMinute();
     if(minutes===0 && seconds===0){
-        reset()
+        timeUp()
 }else if (seconds ===0){
      setMinutes((minute) => minute-1)
      setSecond(59);
@@ -61,6 +89,14 @@ const reset =()=>{
     setSecond((second) => second-1);
    
 }
+   }
+   const muteAlarm =() =>{
+    if(alarmRef.current){
+    alarmRef.current.pause();
+    alarmRef.current.currentTime=0;
+    }else{
+        console.error("ref pas defini")
+     }
    }
     useEffect(() =>{
       
@@ -85,14 +121,26 @@ const reset =()=>{
             <h1  className="head-text mb-10">   </h1>
             <section className="mt-10 flex flex-col gap-5">
               <div className='max-w-2xl min-h-screen mx-auto'>
-              <Navigation/>
+              <Navigation setOpenSetting={setOpenSetting}/>
               <Timer stage={stage} 
               switchStage={switchStage}
                getTickingTime={getTickingTime}
                seconds={seconds}
                ticking ={ticking}
-               setTicking={setTicking}
+               startTimer={startTimer}
+               isTimeUp={isTimeUp}
+               muteAlarm={muteAlarm}
+               reset={reset}
                />
+              <Alarm ref={alarmRef}/>
+              <ModalSetting 
+              openSetting={openSetting} 
+              setOpenSetting={setOpenSetting}
+              pomodoroRef={pomodoroRef}
+              shortBreakRef={shortBreakRef}
+              longBreakRef={longBreakRef}
+              updateTimeDefaultValue={updateTimeDefaultValue}/>
+         
               </div>
             </section>
             </section>
