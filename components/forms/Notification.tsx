@@ -14,6 +14,12 @@ function Notification({ currentUserId }: NotifProps) {
   // prettier-ignore
   const [notifications, setNotifications] = useState<any[]>([]);
   const [hasUnread, setHasUnread] = useState<boolean>(false);
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const location = window.location.href.toString();
+
+  useEffect(() => {
+    setIsOpen(false);
+  }, [location]);
 
   useEffect(() => {
     const fetchNotifications = async () => {
@@ -58,7 +64,7 @@ function Notification({ currentUserId }: NotifProps) {
 
   return (
     <Popover>
-      <Popover.Button onClick={() => markAllNotificationsAsRead(currentUserId)} className={" bg-transparent shadow-none"}> 
+      <Popover.Button onClick={() => {markAllNotificationsAsRead(currentUserId); setIsOpen(!isOpen)}} className={" bg-transparent shadow-none"}> 
           <div>
             <Image
               src={`${hasUnread ? "/assets/notif-unread.svg" : "/assets/notif.svg"}`} 
@@ -71,7 +77,8 @@ function Notification({ currentUserId }: NotifProps) {
           </div>
       </Popover.Button>
       
-      <Popover.Panel> 
+      {isOpen && (
+        <Popover.Panel> 
           <div className="absolute flex-wrap -translate-x-48 h-64 w-52 scroll-auto p-2 bg-white rounded-md shadow-lg ">
             {notifications.map((notification, index) => (
               <div key={index} className=" flex bg-[#dedede] rounded-md text-black text-sm">
@@ -92,6 +99,7 @@ function Notification({ currentUserId }: NotifProps) {
             ))}
           </div>
       </Popover.Panel>
+      )}
     </Popover>
   );
 };
