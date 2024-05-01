@@ -69,8 +69,8 @@ const ShareBtn = ({ threadId }: ShareBtnProps) => {
   return (
     <div>
       {getBrowserName() === "Chrome" ? (
-        <Popover>
-          <Popover.Button>
+        <Popover className={"bg-transparent shadow-none"}>
+          <Popover.Button className={"bg-transparent shadow-none"}>
             <Image
               src="/assets/share.svg"
               alt="share"
