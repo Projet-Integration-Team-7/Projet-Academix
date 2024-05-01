@@ -3,13 +3,18 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import Image from "next/image";
 import User from "@/lib/models/user.model";
+import UserCard from "../cards/UserCard";
 
 async function RightSidebar() {
-  const user = await currentUser();
+  const cUser = await currentUser();
 
-  if(!user) return null;
+  if(!cUser) return null;
 
-  const userInfo = await fetchUser(user.id);
+  let userInfo = null;
+  if (cUser !== null) {
+   userInfo = await fetchUser(cUser.id);
+  }
+  
 
 
   return (
@@ -36,33 +41,39 @@ async function RightSidebar() {
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-start">
-        <h3 className="text-heading4-medium text-yellow-100 underline underline-offset-4">
+        <h3 className="text-heading4-medium text-light-1 underline underline-offset-4">
           Friends
         </h3>
+        {userInfo!== null && (
         <ul className="custom-scrollbar flex flex-col overflow-y-auto ">
-            {userInfo.friends.map( (friend: any) => (
-            <li key={friend._id} className="flex items-center justify-between  my-3 border-2 rounded-md p-2">
-              <div className=" flex-auto items-center gap-2">
-                <Image
-                  src={friend.image}
-                  alt="profile"
-                  width={40}
-                  height={40}
-                  className="rounded-full"
+          {userInfo.friends.map(async (user: any) => {
+            console.log(userInfo.friends);
+            console.log(userInfo.friends.map((friend:any) => friend.id)); // Add console.log here
+            const friend = await User.findById(user);
+            return (
+              <li
+                key={friend._id}
+                className="flex items-center justify-between  my-3 border-2 rounded-md p-2"
+              >
+                <UserCard
+                  key={friend.id}
+                  id={friend.id}
+                  name={friend.name}
+                  username={friend.username}
+                  imgUrl={friend.image}
+                  personType="User"
                 />
-                <span className=" text-light-1">{friend.name}</span>
-              </div>
-              <button className="text-yellow-100">Follow</button>
-            </li>
-              
-            ))}
-        </ul>
+              </li>
+            );
+          })}
+        </ul>)
+        }
       </div>
-      <div className="flex flex-1 flex-col justify-start">
+      {/* <div className="flex flex-1 flex-col justify-start">
         <h3 className="text-heading4-medium text-yellow-100">
           Suggested Users
         </h3>
-      </div>
+      </div> */}
       <div className="w-full max-w-4xl relative z-10"></div>
     </section>
   );
