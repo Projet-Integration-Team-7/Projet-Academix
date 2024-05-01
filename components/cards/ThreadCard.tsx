@@ -68,7 +68,7 @@ const ThreadCard = ({
 
     
         // Your component logic here
-        console.log(threadType)
+        // console.log(threadType)
         return (
         
 <article className={`card-hover-effect flex w-full flex-col rounded-xl  ${isComment ? 'px-0 xs:px-7 border-2 border-yellow-300' : 'bg-emerald-50  p-7 '}`}>

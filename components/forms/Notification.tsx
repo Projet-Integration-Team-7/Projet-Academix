@@ -14,7 +14,7 @@ function Notification({ currentUserId }: NotifProps) {
   // prettier-ignore
   const [notifications, setNotifications] = useState<any[]>([]);
   const [hasUnread, setHasUnread] = useState<boolean>(false);
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
   const location = window.location.href.toString();
 
   useEffect(() => {
