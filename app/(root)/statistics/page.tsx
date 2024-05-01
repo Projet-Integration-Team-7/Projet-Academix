@@ -55,6 +55,9 @@ const Statistics = () => {
 
     return (
         <>
+
+        <section><h1  className="head-text mb-10">Statisitcs </h1></section>
+    
             <nav className="flex justify-between mb-12 border-b border-gray-200 p-4">
                 <h1 className="font-bold text-2xl text-white">users qui poste le plus</h1>
             </nav>

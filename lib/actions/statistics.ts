@@ -82,44 +82,38 @@ export async function fetchThreadsLikes() {
     try {
         // Utiliser l'agrégation pour grouper par 'author' et compter les occurrences
         const topThreadsLikes = await Thread.aggregate([
-            {
-                $project: {
-                    _id: 1,
-                    text: 1,
-                    likes: { $objectToArray: "$likes" } // Convertir l'objet likes en tableau clé-valeur
-                }
-            },
-            {
-                $addFields: {
-                    numberTopLikes: { $size: "$likes" } // Compter le nombre d'éléments dans le tableau likes
-                }
-            },
-            {
-                $sort: { numberTopLikes: -1 }
-            },
-            {
-                $limit: 3
-            },
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "_id",
-                    foreignField: "_id",
-                    as: "authorDetails"
-                }
-            },
-            {
-                $unwind: "$authorDetails"
-            },
-            {
-                $project: {
-                    _id: 1,
-                    authorName: "$authorDetails.name",
-                    text: 1,
-                    numberTopLikes: 1
-                }
+          {
+            $project: {
+                _id: 1,
+                author: 1,
+                likesCount: { $size: { $objectToArray: "$likes" } }
             }
-        ]);
+        },
+        {
+            $sort: { likesCount: -1 }
+        },
+        {
+            $limit: 3
+        },
+        {
+            $lookup: {
+                from: "users",
+                localField: "author",
+                foreignField: "_id",
+                as: "authorInfo"
+            }
+        },
+        {
+            $unwind: "$authorInfo"
+        },
+        {
+            $project: {
+                _id: 1,
+                "authorInfo.name": 1,
+                likesCount: 1
+            }
+        }
+    ]);
         console.log("Top threads likes:", topThreadsLikes); // Affichez les résultats de l'agrégation
 
         return topThreadsLikes;
