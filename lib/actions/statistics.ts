@@ -58,8 +58,21 @@ export async function fetchNumberOfUsers() {
     connectToDB();
     try{
 const numberOfUsers=await User.countDocuments();
+
+
+
 return numberOfUsers;
     } catch (error: any) {
         throw new Error(`Error creating event: ${error.message}`);
       }
 }
+export async function fetchNumberOfCommunities() {
+    connectToDB();
+    try{
+const numberOfPosts=await Community.countDocuments();
+return numberOfPosts;
+    } catch (error: any) {
+        throw new Error(`Error creating event: ${error.message}`);
+      }
+}
+

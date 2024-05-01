@@ -3,7 +3,7 @@
 // Importation des bibliothèques et composants nécessaires
 import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { fetchTopAuthors,fetchNumberOfUsers } from '@/lib/actions/statistics'; // Replace with your actual path
+import { fetchTopAuthors,fetchNumberOfUsers,fetchNumberOfCommunities } from '@/lib/actions/statistics'; // Replace with your actual path
 
 // Importation dynamique du StatisticsChart pour s'assurer qu'il est rendu uniquement côté client
 // Importation dynamique pour s'assurer qu'elle est rendue côté client
@@ -11,6 +11,8 @@ const AuthorList = dynamic(() => import('@/components/forms/AuthorList'), { ssr:
 const Statistics = () => {
     const [topAuthors, setTopAuthors] = useState([0]);
     const [numberUsers,setNumberUsers]=useState(0)
+    const [numberCommunities,setNumberCommunities]=useState(0)
+
     useEffect(() => {
         const loadTopAuthors = async () => {
             const authors = await fetchTopAuthors();
@@ -27,8 +29,16 @@ const Statistics = () => {
      loadNumberOfUsers();
     }
     
+    
     )
-
+    useEffect(()=>{
+        const loadNumberOfCommunities=async() => {
+           const numberOfCommunities=await fetchNumberOfCommunities();
+           setNumberCommunities(numberOfCommunities)
+           
+        }
+        loadNumberOfCommunities();
+       })
 
     return (
         <>
@@ -49,7 +59,13 @@ const Statistics = () => {
                     Nombre d'utilisateurs 
                <p>{numberUsers}</p>
               </main>
-            
+              <nav className="flex justify-between mb-12 border-b border-gray-200 p-4 mt-5 mb-5">
+                <h2 className="font-bold text-2xl text-white">Nombre d'utilisateurs sur le site au total</h2>
+                </nav>
+              <main className=' text-white text-xl'>
+                    Nombre de communities au total
+               <p>{numberCommunities}</p>
+              </main>
         </>
     );
 };
