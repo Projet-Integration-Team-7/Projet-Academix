@@ -7,14 +7,6 @@ import { threadId } from "worker_threads";
 import Community from "../models/community.model";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
-
-
-
-
-
-
-
-
 export const fetchStatistics = async () => {
     // Logique pour récupérer les statistiques
   };
@@ -61,4 +53,13 @@ export const fetchStatistics = async () => {
         console.error("Error while fetching top authors:", error);
         throw new Error(`Failed to fetch top authors: ${error.message}`);
     }
+}
+export async function fetchNumberOfUsers() {
+    connectToDB();
+    try{
+const numberOfUsers=await User.countDocuments();
+return numberOfUsers;
+    } catch (error: any) {
+        throw new Error(`Error creating event: ${error.message}`);
+      }
 }
