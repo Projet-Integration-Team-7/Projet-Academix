@@ -86,6 +86,20 @@ export async function fetchUserNotifications(userId: string) {
 export async function deleteNotification(notificationId: string) {
   try {
     connectToDB();
+    const notification = await Notification.findById(notificationId);
+    if (!notification) {
+      throw new Error("Notification not found");
+    }
+
+    const user = await User.findOne({ id: notification.userId });
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // user.notifications = user.notifications.filter( notif => notif.toString() !== notificationId);
+    user.notifications.pull(notification);
+    user.save();
+
     await Notification.findByIdAndDelete(notificationId);
     console.log("Notification deleted successfully");
   } catch (error: any) {
@@ -114,6 +128,7 @@ export async function deleteFriendRequestNotification(
         notifType: "friendRequest",
         senderId,
       });
+      
     }
 
     // Check if senderId sent a friend request to userId
@@ -223,8 +238,6 @@ export async function checkIfUnreadNotifs(
       userId: currentUserId,
       read: false,
     });
-
-    console.log("unread notifications:", unreadNotifications);
 
     return unreadNotifications.length > 0;
   } catch (error: any) {

@@ -33,7 +33,7 @@
     },
 
     {
-      imgURL: "/assets/ressources.jpg",
+      imgURL: "/assets/ressources.svg",
       route: "/ressources",
       label: "Ressources",
     },
@@ -54,11 +54,11 @@
     },
     {imgURL: "/assets/bot.svg",
     route:"/chatbot",
-    label: "Chatbot"},
-
-    {imgURL: "/assets/statistics.svg",
-    route:"/statistics",
-    label: "Statistics"}
+    label: "Chatbot"}
+    ,
+    {imgURL: "/assets/bot.svg",
+    route:"/conversation",
+    label: "Conversation"}
   ];
   
   export const profileTabs = [

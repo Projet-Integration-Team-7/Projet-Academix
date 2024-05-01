@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useClerk } from '@clerk/clerk-react';
 import UserCard from "@/components/cards/UserCard";
 import Pagination from "@/components/shared/Pagination";
-import { fetchUsers } from "@/lib/actions/user.actions";
+import { fetchUsers, fetchUser } from "@/lib/actions/user.actions";
+import { Button } from '../ui/button';
 
-const SearchPage = (props) => {
+
+const SearchUser = ({ searchParams, selectedUsers, setSelectedUsers}) => {
   const [users, setUsers] = useState([]);
   const [page, setPage] = useState(1);
   const [isNext, setIsNext] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { user } = useClerk();
+  // const [selectedUsers, setSelectedUsers] = useState([]); 
 
   useEffect(() => {
     if (typeof window === "undefined") {
-      return; // Ensure code only runs on the client side
+      return;
     }
 
     if (!user) {
@@ -25,8 +27,8 @@ const SearchPage = (props) => {
 
     const fetchUsersData = async () => {
       const result = await fetchUsers({
-        userId: user.id,
-        searchString: props.searchParams?.q,
+        userId: user.id.toString(), // Convertir en chaîne
+        searchString: searchParams?.q,
         pageNumber: page
       });
 
@@ -37,13 +39,13 @@ const SearchPage = (props) => {
     };
 
     fetchUsersData();
-  }, [user, page, props.searchParams]);
+  }, [user, page, searchParams]);
 
   const handleSearch = (event) => {
-    event.preventDefault(); // Prevent the form from causing a page reload
+    event.preventDefault();
     setPage(1);
     fetchUsers({
-      userId: user.id,
+      userId: user.id.toString(), // Convertir en chaîne
       searchString: searchQuery,
       pageNumber: 1
     }).then(result => {
@@ -53,6 +55,28 @@ const SearchPage = (props) => {
       }
     });
   };
+
+  const handleUserSelect = async (userId) => {
+    const user = await fetchUser(userId);
+    if (!user) {
+      throw new Error("User not found"); 
+    }
+
+    const updatedSelectedUsers = [...selectedUsers];
+    if (updatedSelectedUsers.map(select => select._id).includes(user._id)) {
+      const index = updatedSelectedUsers.findIndex(select => select._id === user._id);
+      if (index > -1) {
+        updatedSelectedUsers.splice(index, 1);
+      }
+    }
+    else {
+      updatedSelectedUsers.push(user);
+    }
+    
+    setSelectedUsers(updatedSelectedUsers);
+  }
+
+  const filteredUsers = users.filter(person => !selectedUsers.some(selected => selected.id === person.id));
 
   return (
     <section>
@@ -67,19 +91,47 @@ const SearchPage = (props) => {
         />
         <button type="submit" className="search-button">Search</button>
       </form>
+
+      <div className=' mt-5 border-2 rounded-md p-2'>
+        <h2 className='text-light-1 underline '>Selected Users</h2>
+        <ul className=''>
+          {selectedUsers.map(person => (
+            <li key={person.id} className='flex justify-between'>
+              <UserCard
+                id={JSON.stringify(person.id)}
+                name={person.name}
+                username={person.username}
+                imgUrl={person.image}
+                personType='User'
+                usage='chat'
+              />
+              <Button key={person.id} className="user-card_btn" onClick={() => handleUserSelect(person.id)} >
+                Remove
+              </Button>
+            </li>
+          ))}
+        </ul>
+      </div>
+
       <div className='mt-14 flex flex-col gap-9'>
-        {users.length === 0 ? (
+        {filteredUsers.length === 0 ? (
           <p className='no-result'>No Result</p>
         ) : (
-          users.map(person => (
-            <UserCard
-              key={person.id}
-              id={person.id}
-              name={person.name}
-              username={person.username}
-              imgUrl={person.image}
-              personType='User'
-            />
+          filteredUsers.map(person => (
+            <div className=' flex justify-between items-center align-middle place-items-center'>
+              <UserCard
+                key={JSON.stringify(person.id)}
+                id={JSON.stringify(person.id)}
+                name={person.name}
+                username={person.username}
+                imgUrl={person.image}
+                personType='User'
+                usage='chat'
+              />
+              <Button className="user-card_btn" onClick={() => handleUserSelect(person.id)} >
+                Add
+              </Button>
+            </div>
           ))
         )}
       </div>
@@ -89,8 +141,8 @@ const SearchPage = (props) => {
         setPage={(newPage) => {
           setPage(newPage);
           fetchUsers({
-            userId: user.id,
-            searchString: props.searchParams?.q,
+            userId: user.id.toString(), // Convertir en chaîne
+            searchString: searchQuery || (searchParams && searchParams.q),
             pageNumber: newPage
           }).then(result => {
             if (result) {
@@ -105,4 +157,4 @@ const SearchPage = (props) => {
   );
 };
 
-export default SearchPage;
+export default SearchUser;

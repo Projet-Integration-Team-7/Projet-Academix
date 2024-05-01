@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { useUser } from '@clerk/clerk-react'; // Assuming you are using Clerk's React SDK
+import { useUser } from '@clerk/clerk-react'; 
 
 const User = () => {
   const { user } = useUser();
