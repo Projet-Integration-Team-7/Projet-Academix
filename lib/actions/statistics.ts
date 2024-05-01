@@ -76,3 +76,50 @@ return numberOfPosts;
       }
 }
 
+export async function fetchThreadsLikes() {
+    connectToDB();
+
+    try {
+        // Utiliser l'agrégation pour grouper par 'author' et compter les occurrences
+        const topThreadsLikes= await Thread.aggregate([
+            {
+                $project: {
+                    _id: 1,
+                    numberTopLikes: { $size: { $objectToArray: "$likes" } } // Convertir l'objet likes en tableau et compter ses éléments
+                }
+            },
+            {
+                $sort: { numberTopLikes: -1 }  // Sort by count in descending order
+            },
+            {
+                $limit: 3  // Limit to the top 3
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "_id",
+                    foreignField: "_id",
+                    as: "authorDetails"
+                }
+            },
+            {
+                $unwind: "$authorDetails"
+            },
+            {
+                $project: {
+                    _id: 1,
+                    authorName: "$authorDetails.name",
+                    text: 1,
+                    likes: 1
+                }
+            }
+         
+            
+        ]);
+
+        return topThreadsLikes;
+    } catch (error) {
+        console.error("Error while fetching top authors:", error);
+        throw new Error(`Failed to fetch top authors: ${error.message}`);
+    }
+}
