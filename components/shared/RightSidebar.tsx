@@ -62,6 +62,7 @@ async function RightSidebar() {
                   username={friend.username}
                   imgUrl={friend.image}
                   personType="User"
+                  usage="amis"
                 />
               </li>
             );
