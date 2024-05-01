@@ -239,8 +239,6 @@ export async function checkIfUnreadNotifs(
       read: false,
     });
 
-    console.log("unread notifications:", unreadNotifications);
-
     return unreadNotifications.length > 0;
   } catch (error: any) {
     throw new Error(
