@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "start:dev": "concurrently \"npm run dev\" \"cd components/chatbot && python main.py\""
+    "start:dev": "concurrently \"npm run dev\" \"cd components && cd chatbot && python main.py\""
   },
   "dependencies": {
     "@clerk/nextjs": "^4.30.0",
