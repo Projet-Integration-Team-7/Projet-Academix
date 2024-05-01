@@ -69,20 +69,15 @@ const Statistics = () => {
                 <h1 className="font-bold text-2xl text-white">Threads avec le plus de like </h1>
             </nav>
             <main className="p-4 text-white ">
-            <h2>Top threads</h2>
-            <ul>
+         
                 {topThreadLikes.length > 0 ? (
-                    topThreadLikes.map(thread => (
-                        <li key={thread._id}>
-                            <p>Auteur du thread : {thread.authorName}</p>
-                            <p>Contenu du thread : {thread.text}</p>
-                            <p>Nombre de likes du thread : {thread.likes}</p>
-                        </li>
-                    ))
+                 
+                 <TopLikeList likes={topThreadLikes} />
+
                 ) : (
                     <p>Loading top Thread likes...</p>
                 )}
-            </ul>
+
             </main>
             <nav className="flex justify-between mb-12 border-b border-gray-200 p-4 mt-5 mb-5">
                 <h2 className="font-bold text-2xl text-white">Nombre d'utilisateurs sur le site au total</h2>

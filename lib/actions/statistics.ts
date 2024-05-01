@@ -12,7 +12,7 @@ export const fetchStatistics = async () => {
   };
   export async function fetchTopAuthors() {
     connectToDB();
-
+    console.log( "Connected to mongo DB 1")
     try {
         // Utiliser l'agrégation pour grouper par 'author' et compter les occurrences
         const topAuthors = await Thread.aggregate([
@@ -78,21 +78,27 @@ return numberOfPosts;
 
 export async function fetchThreadsLikes() {
     connectToDB();
-
+    console.log("Connected to mongo")
     try {
         // Utiliser l'agrégation pour grouper par 'author' et compter les occurrences
-        const topThreadsLikes= await Thread.aggregate([
+        const topThreadsLikes = await Thread.aggregate([
             {
                 $project: {
                     _id: 1,
-                    numberTopLikes: { $size: { $objectToArray: "$likes" } } // Convertir l'objet likes en tableau et compter ses éléments
+                    text: 1,
+                    likes: { $objectToArray: "$likes" } // Convertir l'objet likes en tableau clé-valeur
                 }
             },
             {
-                $sort: { numberTopLikes: -1 }  // Sort by count in descending order
+                $addFields: {
+                    numberTopLikes: { $size: "$likes" } // Compter le nombre d'éléments dans le tableau likes
+                }
             },
             {
-                $limit: 3  // Limit to the top 3
+                $sort: { numberTopLikes: -1 }
+            },
+            {
+                $limit: 3
             },
             {
                 $lookup: {
@@ -110,12 +116,11 @@ export async function fetchThreadsLikes() {
                     _id: 1,
                     authorName: "$authorDetails.name",
                     text: 1,
-                    likes: 1
+                    numberTopLikes: 1
                 }
             }
-         
-            
         ]);
+        console.log("Top threads likes:", topThreadsLikes); // Affichez les résultats de l'agrégation
 
         return topThreadsLikes;
     } catch (error) {

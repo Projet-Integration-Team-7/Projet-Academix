@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TopLikeList = ({ likes }) => {
+const TopLikeList = ({ likes } : any) => {
     return (
         <div>
             <h2>Top threads</h2>
@@ -9,7 +9,7 @@ const TopLikeList = ({ likes }) => {
                     <li key={thread._id}> {/* Utilisez une clé unique, comme _id */}
                         <p>Auteur du thread : {thread.authorName}</p>
                         <p>Contenu du thread : {thread.text}</p>
-                        <p>Nombre de likes du thread : {thread.likes}</p>
+                        <p>Nombre de likes du thread : {thread.numberTopLikes}</p>
                     </li>
                 ))}
             </ul>
