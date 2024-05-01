@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { createEvent,deleteEvent,fetchEvents,findEvent,updateEvent } from '@/lib/actions/events.action';
 import { ObjectId } from 'mongoose';
-import { Draggable } from '@fullcalendar/interaction/index.js';
+import { Draggable } from "@fullcalendar/interaction/index.js";
 import { start } from 'repl';
 
 // Importation dynamique du CalendarComponent pour s'assurer qu'il est rendu uniquement côté client

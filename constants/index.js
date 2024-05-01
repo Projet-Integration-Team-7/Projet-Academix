@@ -55,7 +55,10 @@
     {imgURL: "/assets/bot.svg",
     route:"/chatbot",
     label: "Chatbot"}
-    
+    ,
+    {imgURL: "/assets/bot.svg",
+    route:"/conversation",
+    label: "Conversation"}
   ];
   
   export const profileTabs = [

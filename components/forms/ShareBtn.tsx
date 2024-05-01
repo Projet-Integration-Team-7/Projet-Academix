@@ -15,7 +15,10 @@ import {
 } from "react-share";
 
 const getBrowserName = () => {
-  let browserInfo = navigator.userAgent;
+  let browserInfo = "";
+  if (typeof navigator !== "undefined") {
+    browserInfo = navigator.userAgent;
+  }
   let browser;
   if (browserInfo.includes("Opera") || browserInfo.includes("Opr")) {
     browser = "Opera";

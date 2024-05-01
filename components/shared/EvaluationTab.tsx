@@ -31,7 +31,7 @@ const EvaluationTab = async ({ currentUserId, accountId, accountType }: Props) =
         {exerciseThreads.map((thread: any) => (
           <ThreadCard
                 key={thread._id}
-                id={JSON.stringify(thread._id)}
+                id={JSON.parse(JSON.stringify(thread._id))}
                 currentUserId={currentUserId}
                 parentId={thread.parentId}
                 content={thread.text}

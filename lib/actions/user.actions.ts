@@ -261,12 +261,12 @@ export const updateImage= async (userId: string, newImage: string): Promise<void
 export async function addFriend(userId: string, friendId: string) {
     try {
         connectToDB();
-        const user = await User.findOne({ id: userId });
+        const user = await fetchUser(userId);
         if (!user) {
             throw new Error("User not found");
         }
 
-        const friend = await User.findOne({ id: friendId });
+        const friend = await fetchUser(friendId);
         if (!friend) {
             throw new Error(`Friend User ${friendId} not found`);
         }
