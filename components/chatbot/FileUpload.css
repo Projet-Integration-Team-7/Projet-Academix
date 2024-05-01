@@ -1,0 +1,26 @@
+.file-upload-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .file-upload-label {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: #2196F3;
+    border: 1px solid #2196F3;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .file-upload-input {
+    display: none; 
+  }
+  
+  .file-upload-label::before {
+    content: '\1F4CE'; 
+    font-size: 1.5em;
+  }

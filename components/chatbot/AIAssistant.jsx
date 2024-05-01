@@ -3,7 +3,7 @@ import axios from 'axios';
 import { usePathname } from 'next/navigation';
 import { useUser } from '@clerk/clerk-react'; 
 import './AIAssistant.css';
-
+import FileUpload from './FileUpload';
 const apiUrl = 'http://localhost:5000/message';
 // Function to send a request to the OpenAI API
 async function sendRequest(prompt, userId) {
@@ -65,6 +65,7 @@ const AIAssistant = () => {
         </div>
         <div className="ai-assistant-input">
           <div className="input-container">
+          <FileUpload /> 
           <input
   type="text"
   placeholder="Entrez votre question..."
