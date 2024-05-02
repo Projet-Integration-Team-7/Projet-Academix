@@ -3,7 +3,7 @@ import ChatList from './ChatList';
 import ChatBox from './ChatBox';
 import NewChat from './NewChat';
 
-import { createConversation, sendMessage, addUser, userLeft } from './api/apiService';
+//import { createConversation, sendMessage, addUser, userLeft } from './api/apiService';
 
 const ChatApp = () => {
   const [chats, setChats] = useState([]);
