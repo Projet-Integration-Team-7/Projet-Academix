@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "concurrently \"npm run start:next\" \"npm run start:flask\"",
     "start:next": "next dev",
-    "start:flask": "python components/chatbot/main.py",
+    "start:flask": "python -m components.chatbot.main",
     "lint": "next lint"
   },
   "dependencies": {
@@ -30,6 +30,7 @@
     "childprocess": "^2.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
+    "cors": "^2.8.5",
     "inspector": "^0.5.0",
     "lucide-react": "^0.344.0",
     "mongodb": "^6.5.0",

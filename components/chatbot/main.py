@@ -9,13 +9,15 @@ import datetime
 import os
 from flask_cors import CORS
 from dotenv import load_dotenv
-
-
+from ..chatapp.chat import chat_app 
+from ..chatapp.chat import init_socketio
 
 # Créer une application Flask
 app = Flask(__name__)
-CORS(app)  
+CORS(app, resources={r"/*": {"origins": "*"}})  
 
+# enregistrer le chat app
+app.register_blueprint(chat_app)
 
 load_dotenv('.env.local')
 UPLOAD_FOLDER = 'uploads'
@@ -180,4 +182,5 @@ def upload_file():
 
     
 if __name__ == '__main__':
+    init_socketio(app)
     app.run(debug=True)

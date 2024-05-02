@@ -4,6 +4,8 @@ import axios from 'axios';
 import Select from 'react-select';
 import { fetchUsers } from "@/lib/actions/user.actions";
 import{createConversation} from "@/lib/actions/conversation.action";
+import { currentUser, useUser } from '@clerk/nextjs';
+const APIURL = 'http://localhost:5000/';
 // les users selectionnes
 interface SelectedUser {
     value: string; 
@@ -16,7 +18,6 @@ const CreateConversationPage = () => {
     const [conversationName, setConversationName] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-
     // actualise la liste des utilisateurs
     useEffect(() => {
         const fetchUsersData = async () => {
@@ -56,10 +57,21 @@ const CreateConversationPage = () => {
         }
 
         setLoading(true);
-        
-            const participantIds = selectedUsers.map(user => user.value);
-            const response = await createConversation( conversationName,  participantIds );
-            
+
+        try {
+            const participantIds =selectedUsers.map(user => user.value);
+            console.log(conversationName)
+            console.log(participantIds)
+            const response = await axios.post(`${APIURL}createConversation`, {
+                name: conversationName,
+                participants: participantIds
+            });
+            console.log('Conversation created:', response.data);
+        } catch (error) {
+            console.error('Failed to create conversation:', error);
+            setError('Failed to create conversation');
+        }
+
         
         setLoading(false);
     };
