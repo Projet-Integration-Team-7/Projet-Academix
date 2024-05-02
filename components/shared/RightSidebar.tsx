@@ -47,8 +47,6 @@ async function RightSidebar() {
         {userInfo!== null && (
         <ul className="custom-scrollbar flex flex-col overflow-y-auto ">
           {userInfo.friends.map(async (user: any) => {
-            console.log(userInfo.friends);
-            console.log(userInfo.friends.map((friend:any) => friend.id)); // Add console.log here
             const friend = await User.findById(user);
             return (
               <li

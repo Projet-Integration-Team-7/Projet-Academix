@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { usePathname } from 'next/navigation';
+import { redirect, usePathname } from 'next/navigation';
 import { useUser } from '@clerk/clerk-react'; 
 import './AIAssistant.css';
 import FileUpload from './FileUpload';
@@ -24,10 +24,10 @@ const AIAssistant = () => {
   const [inputMessage, setInputMessage] = useState('');
   const { user } = useUser();
 
-  if (!user || !user.onboarded) {
-    redirect('/onboarding');
-    return null;
-  }
+  // if (!user || !user.onboarded) {
+  //   redirect('/onboarding');
+  //   return null;
+  // }
 
   useEffect(() => {
     async function sendInitialMessage() {
