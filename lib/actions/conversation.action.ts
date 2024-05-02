@@ -69,15 +69,13 @@ export async function createConversation(name: string, participants: string[]) {
         console.error('Error removing user from chat:', error);
         throw error;
     }
-}
-export async function getConversation(conversationId:any) {
+}*/
+async function getConversations(userId : string) {
   try {
-    connectToDB();
-    const conversation = await Conversation.findById(conversationId)
-      .populate('participants', 'name');  // Simplifiez cette ligne pour ne récupérer que les informations des participants
-    return conversation;
+    const conversations = await Conversation.find({ participants: userId }).sort({ createdAt: -1 });
+    return conversations;
   } catch (error) {
-    console.error('Error fetching conversation:', error);
+    console.error('Error fetching conversations:', error);
     throw error;
   }
-}*/
+}

@@ -1,10 +1,25 @@
 // ChatList.jsx
 import React from 'react';
 import { useUser } from '@clerk/clerk-react';
-import './ChatList.css'; // Import the CSS file
+import './ChatList.css'; 
+import {getConversations} from '../../lib/actions/conversation.action'; 
 
-const ChatList = ({ chats, selectChat }) => {
+const ChatList = ({ selectChat }) => {
   const { user } = useUser();
+  const [chats, setChats] = useState([]);
+  const userid = user.id;
+  useEffect(() => {
+    const fetchConversations = async () => {
+      try {
+        const conversations = await getConversations(userid.toString()); 
+        setChats(conversations);
+      } catch (error) {
+        console.error('Error fetching conversations:', error);
+      }
+    };
+
+    fetchConversations();
+  }, [user.id]); 
 
   return (
     <div className="chat-list">

@@ -4,7 +4,9 @@ import { usePathname } from 'next/navigation';
 import { useUser } from '@clerk/clerk-react'; 
 import './AIAssistant.css';
 import FileUpload from './FileUpload';
+
 const apiUrl = 'http://localhost:5000/message';
+
 // Function to send a request to the OpenAI API
 async function sendRequest(prompt, userId) {
   try {
@@ -20,18 +22,25 @@ const AIAssistant = () => {
   const pathname = usePathname();
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
-  const { user } = useUser(); 
+  const { user } = useUser();
+
+  if (!user || !user.onboarded) {
+    redirect('/onboarding');
+    return null;
+  }
 
   useEffect(() => {
     async function sendInitialMessage() {
       if (user) {
         try {
-          const response = await axios.post(apiUrl, { id_utilisateur: user.id, saisie_utilisateur: '' });
+          const response = await axios.post(apiUrl, { id_utilisateur: user.id, saisie_utilisateur: 'Bonjour' });
           const aiResponse = response.data.message;
           setMessages([...messages, { user: false, message: aiResponse }]);
         } catch (error) {
           console.error('Error sending initial message:', error);
         }
+      }else{
+        
       }
     }
 

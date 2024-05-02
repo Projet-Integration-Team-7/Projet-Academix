@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "concurrently \"npm run start:next\" \"npm run start:flask\"",
+    "start:next": "next dev",
+    "start:flask": "python components/chatbot/main.py",
     "lint": "next lint"
   },
   "dependencies": {
@@ -27,6 +27,7 @@
     "add": "^2.0.6",
     "chart.js": "^4.4.2",
     "chatengine": "^0.0.4",
+    "childprocess": "^2.0.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "inspector": "^0.5.0",
@@ -60,6 +61,7 @@
     "@types/react": "18.2.67",
     "@types/react-dom": "^18",
     "autoprefixer": "^10.0.1",
+    "concurrently": "^8.2.2",
     "postcss": "^8",
     "tailwindcss": "^3.4.3",
     "typescript": "5.4.3"
