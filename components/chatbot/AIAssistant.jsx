@@ -49,9 +49,11 @@ const AIAssistant = () => {
 
   async function handleUserInput(event) {
     event.preventDefault();
-    const aiResponse = await sendRequest(inputMessage.trim(), user.id);
-    setMessages([...messages, { user: true, message: inputMessage.trim() }, { user: false, message: aiResponse }]);
+    const userMessage = inputMessage.trim()
+    setMessages([...messages, {user:true, message: userMessage}])
     setInputMessage('');
+    const aiResponse = await sendRequest(userMessage, user.id);
+    setMessages([...messages,{user:true, message: userMessage}, { user: false, message: aiResponse }]);
   }
 
   function handleKeyPress(event) {

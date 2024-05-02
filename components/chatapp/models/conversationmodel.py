@@ -1,6 +1,6 @@
 import datetime
 from mongoengine import Document, StringField, ListField, DateTimeField, ReferenceField
-from messagemodel import Message
+from .messagemodel import Message
 
 class Conversation(Document):
     name = StringField(required=True, default='New Conversation')

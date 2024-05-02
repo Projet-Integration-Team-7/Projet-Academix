@@ -18,6 +18,7 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 # enregistrer le chat app
 app.register_blueprint(chat_app)
+socketio = init_socketio(app)
 
 load_dotenv('.env.local')
 UPLOAD_FOLDER = 'uploads'

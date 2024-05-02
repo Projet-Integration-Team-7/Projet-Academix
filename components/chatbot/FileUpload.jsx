@@ -37,7 +37,7 @@ const FileUpload = () => {
           <FaThumbtack />
         </label>
         <input id="file-upload-input" type="file" className="file-upload-input" onChange={handleFileChange} multiple />
-        <button type="submit">Submit</button>
+        <button type="submit"></button>
       </form>
     </div>
   );

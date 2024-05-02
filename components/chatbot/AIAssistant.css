@@ -17,7 +17,7 @@
 }
 
 .ai-assistant-messages {
-  flex: 1;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

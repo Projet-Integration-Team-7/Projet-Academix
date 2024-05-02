@@ -1,19 +1,28 @@
 import os
 from flask import Blueprint, request, jsonify
 from flask_socketio import SocketIO, emit
-from mongoengine import connect
+from mongoengine import connect, errors
 from dotenv import load_dotenv
 from flask_cors import CORS
 from .models.conversationmodel import Conversation
 from .models.messagemodel import Message
-
+from pymongo.errors import ServerSelectionTimeoutError
 
 chat_app = Blueprint('chat', __name__)
 CORS(chat_app, resources={r"/*": {"origins": "*"}})
-socketio = SocketIO(chat_app)  
+socketio = SocketIO()  
 #Initiliaze clerk
 load_dotenv('.env.local')  
-connect(host=os.getenv('MONGODB_URL'))
+
+@chat_app.record_once
+def on_load(state):
+    try:
+        db = connect(host=os.getenv('MONGODB_URL'))
+        # Attempt to retrieve a document from the database
+        db.list_database_names()
+        print("MongoDB connection successful")
+    except (ServerSelectionTimeoutError, errors.ConnectionFailure):
+        print("MongoDB connection failed")
 
 #option method to allow cross origin
 @chat_app.route('/createConversation', methods=['OPTIONS'])
@@ -46,7 +55,7 @@ def get_conversations(user_id):
         print('Error fetching conversations:', e)
         return jsonify({'error': 'Failed to fetch conversations'}), 500
     
-#fonction pour retrouver tous les messages
+#fonction pour retrouver tous les messages d'une conversation
 @chat_app.route('/getMessages/<string:conv_id>', methods=['GET'])
 def get_messages(conv_id):
     try:
