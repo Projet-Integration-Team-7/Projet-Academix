@@ -1,11 +1,6 @@
 import mongoose from 'mongoose';
 
 const eventSchema = new mongoose.Schema({
-  /*eventId: {
-    type: Number, // Champ pour stocker le numéro unique de l'événement
-    required: true,
-    unique: true, // Assurez-vous que chaque numéro d'événement est unique
-  },*/
   title: {
     type: String,
     required: true,

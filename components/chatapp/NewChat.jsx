@@ -18,7 +18,7 @@ const NewChat = ({ }) => {
     });
   };
   
-  const handleCreateChat = async () => {
+  /*const handleCreateChat = async () => {
     try {
       const name = ('ISK');
       const participants = selectedUsers;
@@ -27,7 +27,7 @@ const NewChat = ({ }) => {
     } catch (error) {
       console.error('Error creating chat:', error);
     }
-  };
+  };*/
 
   const handleCreateChat = async (data) => {
     console.error('hop');
