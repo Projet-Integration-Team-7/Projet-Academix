@@ -5,7 +5,7 @@ import { useUser } from '@clerk/clerk-react';
 import './AIAssistant.css';
 import FileUpload from './FileUpload';
 
-const apiUrl = 'https://academix-app-zeta.vercel.app/message';
+const apiUrl = 'http://localhost:5000/message';
 
 // Function to send a request to the OpenAI API
 async function sendRequest(prompt, userId) {

@@ -1,0 +1,20 @@
+.chat-list {
+  width: 200px;
+  background-color: transparent;
+  border: 1px solid white;
+  padding: 10px;
+}
+
+.chat-list-item {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid white;
+  padding: 5px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.chat-list-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
