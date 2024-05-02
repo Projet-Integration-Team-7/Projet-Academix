@@ -64,7 +64,7 @@ function Notification({ currentUserId }: NotifProps) {
 
   return (
     <Popover>
-      <Popover.Button onClick={() => {markAllNotificationsAsRead(currentUserId); setIsOpen(!isOpen)}} className={" bg-transparent shadow-none"}> 
+      <Popover.Button onClick={() => {markAllNotificationsAsRead(currentUserId); setIsOpen(!isOpen)}} onBlur={() => setIsOpen(false)} className={" bg-transparent shadow-none "}> 
           <div>
             <Image
               src={`${hasUnread ? "/assets/notif-unread.svg" : "/assets/notif.svg"}`} 

@@ -8,14 +8,12 @@ import UserCard from "../cards/UserCard";
 async function RightSidebar() {
   const cUser = await currentUser();
 
-  if(!cUser) return null;
+  if (!cUser) return null;
 
   let userInfo = null;
   if (cUser !== null) {
-   userInfo = await fetchUser(cUser.id);
+    userInfo = await fetchUser(cUser.id);
   }
-  
-
 
   return (
     <section className="custom-scrollbar rightsidebar bg-[#0f0f20]">
@@ -41,32 +39,32 @@ async function RightSidebar() {
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-start">
-        <h3 className="text-heading4-medium text-light-1 underline underline-offset-4">
+        <h3 className="text-heading4-medium text-light-1 underline underline-offset-4 hover:cursor-pointer">
           Friends
         </h3>
-        {userInfo!== null && (
-        <ul className="custom-scrollbar flex flex-col overflow-y-auto ">
-          {userInfo.friends.map(async (user: any) => {
-            const friend = await User.findById(user);
-            return (
-              <li
-                key={friend._id}
-                className="flex items-center justify-between  my-3 border-2 rounded-md p-2"
-              >
-                <UserCard
-                  key={friend.id}
-                  id={friend.id}
-                  name={friend.name}
-                  username={friend.username}
-                  imgUrl={friend.image}
-                  personType="User"
-                  usage="amis"
-                />
-              </li>
-            );
-          })}
-        </ul>)
-        }
+        {userInfo !== null && (
+          <ul className="custom-scrollbar flex flex-col overflow-y-auto ">
+            {userInfo.friends.map(async (user: any) => {
+              const friend = await User.findById(user);
+              return (
+                <li
+                  key={friend._id}
+                  className="flex items-center justify-between  my-3 border-2 rounded-md p-2"
+                >
+                  <UserCard
+                    key={friend.id}
+                    id={friend.id}
+                    name={friend.name}
+                    username={friend.username}
+                    imgUrl={friend.image}
+                    personType="User"
+                    usage="amis"
+                  />
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
       {/* <div className="flex flex-1 flex-col justify-start">
         <h3 className="text-heading4-medium text-yellow-100">
