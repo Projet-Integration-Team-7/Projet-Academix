@@ -3,20 +3,38 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 import { fetchUsers } from "@/lib/actions/user.actions";
-import{createConversation} from "@/lib/actions/conversation.action";
+import{createConversation,fetchAllConversations  } from "@/lib/actions/conversation.action";
 // les users selectionnes
 interface SelectedUser {
     value: string; 
     label: string;
 }
 
-const CreateConversationPage = () => {
-    const [users, setUsers] = useState<Array<{ value: string; label: string }>>([]);
-    const [selectedUsers, setSelectedUsers] = useState<SelectedUser[]>([]);
-    const [conversationName, setConversationName] = useState('');
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+const CreateConversationPage = () => {const [users, setUsers] = useState<Array<{ value: string; label: string }>>([]);
+const [selectedUsers, setSelectedUsers] = useState<SelectedUser[]>([]);
+const [conversationName, setConversationName] = useState('');
+const [conversations, setConversations] = useState([]); // État pour stocker les conversations
+const [selectedConversation, setSelectedConversation] = useState(null); // État pour la conversation sélectionnée
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState<string | null>(null);
+const [newMessage, setNewMessage] = useState('');
 
+    const userId = "user-id-here"; // Cet ID devrait être dynamique ou récupéré par l'authentification
+    useEffect(() => {
+        const loadConversations = async () => {
+            setLoading(true);
+            try {
+                const fetchedConversations = await fetchAllConversations();
+                setConversations(fetchedConversations);
+            } catch (error) {
+                console.error('Failed to load conversations:', error);
+                setError('Failed to load conversations');
+            }
+            setLoading(false);
+        };
+
+        loadConversations();
+    }, []);
     // actualise la liste des utilisateurs
     useEffect(() => {
         const fetchUsersData = async () => {
@@ -39,7 +57,6 @@ const CreateConversationPage = () => {
 
         fetchUsersData();
     }, []);
-
     const handleUserChange = (selectedOptions: SelectedUser[]) => {
         setSelectedUsers(selectedOptions);
     };
@@ -47,6 +64,12 @@ const CreateConversationPage = () => {
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setConversationName(event.target.value);
     };
+    const handleConversationSelect = (conversationId) => {
+        const conversation = conversations.find(c => c._id === conversationId);
+        setSelectedConversation(conversation);
+    };
+
+    
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
@@ -62,6 +85,45 @@ const CreateConversationPage = () => {
             
         
         setLoading(false);
+    };
+    const handleSendMessage = async () => {
+        if (!selectedConversation || !newMessage.trim()) {
+            console.error('No conversation selected or message is empty');
+            return;
+        }
+        console.log('Posting message:', newMessage);
+        try {
+            setLoading(true);
+            await postMessage(selectedConversation._id, userId, newMessage);
+            setNewMessage('');
+        } catch (error) {
+            console.error('Failed to send message:', error);
+            setError('Failed to send message');
+        }
+        setLoading(false);
+    };
+
+    const handleNewMessageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setNewMessage(event.target.value);
+    };
+
+    const renderConversationMessages = () => {
+        if (!selectedConversation) return <p>Select a conversation to view messages.</p>;
+        return (
+            <div>
+                <h3>Messages for {selectedConversation.name}</h3>
+                {selectedConversation && selectedConversation.messages && selectedConversation.messages.map((message, index) => (
+                    <p key={index}>{message}</p> // Modification ici
+                ))}
+                <input
+                    type="text"
+                    value={newMessage}
+                    onChange={handleNewMessageChange}
+                    placeholder="Type your message here"
+                />
+                <button onClick={handleSendMessage}>Send</button>
+            </div>
+        );
     };
 
     return (
@@ -93,7 +155,26 @@ const CreateConversationPage = () => {
                 {loading && <p>Loading...</p>}
                 {error && <p className="text-red-500">{error}</p>}
             </form>
+            <div className="container mx-auto p-4">
+            <h1 className="text-xl font-bold mb-4">Create New Conversation</h1>
+            <form onSubmit={handleSubmit}>
+                {/* Input fields and buttons */}
+            </form>
+            <div>
+                <h2 className="text-xl font-bold mb-4">Conversations</h2>
+                <ul>
+                    {conversations.map((conversation) => (
+                        <li key={conversation._id} onClick={() => handleConversationSelect(conversation._id)}>
+                            {conversation.name}
+                        </li>
+                    ))}
+                </ul>
+                {renderConversationMessages()}
+            </div>
         </div>
+        
+        </div>
+        
     );
 };
 
