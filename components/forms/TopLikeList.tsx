@@ -1,9 +1,11 @@
 import React from 'react';
+import BarChart from '../charts/BarChart';
 
 const TopLikeList = ({ likes }: any) => {
     return (
         <div>
             <h2>Top threads</h2>
+            <div className=''>
             <ul>
                 {likes.map((thread: any) => (
                     <li key={thread._id}>
@@ -14,6 +16,9 @@ const TopLikeList = ({ likes }: any) => {
                     </li>
                 ))}
             </ul>
+            <BarChart 
+            chartData={likes}/>
+            </div>
         </div>
     );
 };
