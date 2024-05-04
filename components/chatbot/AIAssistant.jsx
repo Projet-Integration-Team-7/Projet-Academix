@@ -5,7 +5,7 @@ import { useUser } from '@clerk/clerk-react';
 import './AIAssistant.css';
 import FileUpload from './FileUpload';
 
-const apiUrl = 'https://academixrun-62b1ac1dd173.herokuapp.com/message';
+const apiUrl = 'https://academixbackend-b7d3e8ece074.herokuapp.com/message';
 
 // Function to send a request to the OpenAI API
 async function sendRequest(prompt, userId) {
