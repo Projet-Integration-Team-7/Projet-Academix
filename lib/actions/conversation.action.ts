@@ -75,7 +75,7 @@ export async function fetchAllConversations() {
       throw error;
   }
 }
-export async function postMessage(conversationId: string, sender: string, text: string) {
+export async function sendConversationMessage(conversationId: string, sender: string, text: string) {
   console.log('Posting message:', text);
   try {
     await connectToDB();
@@ -83,8 +83,9 @@ export async function postMessage(conversationId: string, sender: string, text: 
     if (!conversation) {
       throw new Error('Conversation not found');
     }
+    const newMessage = `${sender}: ${text}`;
     // Ajoutez le message directement à la liste des messages de la conversation
-    conversation.messages.push(text);
+    conversation.messages.push(newMessage);
     await conversation.save();
     return text; // Retourne simplement le texte du message
   } catch (error) {

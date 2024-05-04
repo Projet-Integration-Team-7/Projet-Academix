@@ -1,9 +1,11 @@
 "use client"
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Select from 'react-select';
 import { fetchUsers } from "@/lib/actions/user.actions";
-import{createConversation,fetchAllConversations  } from "@/lib/actions/conversation.action";
+import{createConversation,fetchAllConversations ,sendConversationMessage } from "@/lib/actions/conversation.action";
+import { currentUser } from '@clerk/nextjs';
 // les users selectionnes
 interface SelectedUser {
     value: string; 
@@ -18,6 +20,7 @@ const [selectedConversation, setSelectedConversation] = useState(null); // État
 const [loading, setLoading] = useState(false);
 const [error, setError] = useState<string | null>(null);
 const [newMessage, setNewMessage] = useState('');
+const user=currentUser;
 
     const userId = "user-id-here"; // Cet ID devrait être dynamique ou récupéré par l'authentification
     useEffect(() => {
@@ -94,7 +97,7 @@ const [newMessage, setNewMessage] = useState('');
         console.log('Posting message:', newMessage);
         try {
             setLoading(true);
-            await postMessage(selectedConversation._id, userId, newMessage);
+            await sendConversationMessage(selectedConversation._id, userId, newMessage);
             setNewMessage('');
         } catch (error) {
             console.error('Failed to send message:', error);
