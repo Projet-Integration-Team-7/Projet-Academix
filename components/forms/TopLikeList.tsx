@@ -26,9 +26,10 @@ const TopLikeList = ({ likes }: any) => {
     }, [likes]); 
     return (
         
-        <div>
-            <h2>Top threads</h2>
-            <div className=''>
+        <div className='flex md:space-x-20'>
+            <div>
+            <h2 className='font-bold  mb-20'>Top threads</h2>
+            
             <ul>
                 {likes.map((thread: any) => (
                     <li key={thread._id}>
@@ -39,13 +40,15 @@ const TopLikeList = ({ likes }: any) => {
                     </li>
                 ))}
             </ul>
-           
-         <h1 className='center-mid mt-10 mb-10 text-center'>Likes of the thread posted</h1>
-            <div style={{width : 700}} className='text-center'>
+            </div>
+           <div>
+         <h1 className='center-mid mb-5 mt-10 text-center'>Likes of the thread posted</h1>
+            <div style={{width : 500}} className='text-center'>
             <BarChart 
             chartData={userData}/>
             </div>
             </div>
+        
         </div>
     );
 };
