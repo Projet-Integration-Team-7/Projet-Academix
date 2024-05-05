@@ -42,6 +42,7 @@
       route: "/timer",
       label: "Timer",
     },
+   
     {
       imgURL: "/assets/agenda.svg",
       route: "/agenda",
@@ -58,7 +59,12 @@
     ,
     {imgURL: "/assets/bot.svg",
     route:"/conversation",
-    label: "Conversation"}
+    label: "Conversation"},
+    {
+      imgURL: "/assets/statistics.svg",
+      route: "/statistics",
+      label: "Statistics",
+    }
   ];
   
   export const profileTabs = [

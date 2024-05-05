@@ -15,7 +15,7 @@ const Statistics = () => {
 
     const [numberUsers,setNumberUsers]=useState(0)
     const [numberCommunities,setNumberCommunities]=useState(0)
-
+ 
     useEffect(() => {
         const loadTopAuthors = async () => {
             const authors = await fetchTopAuthors();
