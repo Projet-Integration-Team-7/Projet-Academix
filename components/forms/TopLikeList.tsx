@@ -19,7 +19,11 @@ const TopLikeList = ({ likes }: any) => {
                 data: likes.map((thread: any) => thread.likesCount),
                 backgroundColor: ["#d9f99d"],
                 borderColor: "BLACK",
-                borderWidth: 2
+                borderWidth: 2,
+                barPercentage: 0.5,
+                barThickness: 50,
+                maxBarThickness: 70,
+                minBarLength: 30,
 
             }]
         });
@@ -28,7 +32,7 @@ const TopLikeList = ({ likes }: any) => {
         
         <div className='flex md:space-x-20'>
             <div>
-            <h2 className='font-bold  mb-20'>Top threads</h2>
+            <h2 className='font-bold  mb-20'>Top threads : </h2>
             
             <ul>
                 {likes.map((thread: any) => (

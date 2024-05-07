@@ -18,9 +18,13 @@ const AuthorList = ({ authors }) => {
             datasets: [{
                 label: "Top thread posted per User",
                 data: authors.map((author: any) => author.count),
-                backgroundColor: ["#d9f99d"],
+                backgroundColor: ["#336699"],
                 borderColor: "BLACK",
-                borderWidth: 2
+                borderWidth: 2,
+                barPercentage: 0.5,
+                barThickness: 50,
+                maxBarThickness: 70,
+                minBarLength: 30,
 
             }]
         });

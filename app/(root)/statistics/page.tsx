@@ -85,10 +85,16 @@ const Statistics = () => {
             <nav className="flex justify-between mb-12 border-b border-gray-200 p-4 mt-5 mb-5">
                 <h2 className="font-bold text-2xl text-white">Nombre d'utilisateurs sur le site au total</h2>
                 </nav>
+                
+                <div className='flex md:space-x-20 '>
+                
               <main className=' text-white text-xl'>
                     Nombre d'utilisateurs 
                <p>{numberUsers}</p>
+        
               </main>
+        
+              </div>
               <nav className="flex justify-between mb-12 border-b border-gray-200 p-4 mt-5 mb-5">
                 <h2 className="font-bold text-2xl text-white">Nombre d'utilisateurs sur le site au total</h2>
                 </nav>
