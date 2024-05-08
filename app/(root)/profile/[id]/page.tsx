@@ -1,9 +1,8 @@
+// Importation des bibliothèques et des composants nécessaires
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { fetchUser } from "@/lib/actions/user.actions";
-import { string } from "zod";
 import ProfileHeader from "@/components/shared/ProfileHeader";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants";
 import Image from "next/image";
@@ -11,16 +10,21 @@ import ThreadsTab from "@/components/shared/ThreadsTab";
 import FriendRequest from "@/components/forms/FriendRequest";
 import ModifyCard from "@/components/cards/ModifyCard";
 
+// Définition de la fonction Page
 async function Page({ params }: { params: { id: string } }) {
+  // Récupération de l'utilisateur courant
   const user = await currentUser();
 
-  if (!user) return null;
+  // Si l'utilisateur n'existe pas, retourner null
+  if (!user) throw new Error("Utilisateur non trouvé");
 
+  // Récupération des informations de l'utilisateur
   const userInfo = await fetchUser(params.id);
 
+  // Si l'utilisateur n'est pas embarqué, rediriger vers '/onboarding'
   if (!userInfo?.onboarded) redirect("/onboarding");
 
-
+  // Retourne le JSX à rendre
   return (
     <section>
       <div className="flex">
@@ -33,23 +37,16 @@ async function Page({ params }: { params: { id: string } }) {
           bio={userInfo.bio}
         />
       
-      {user.id === userInfo.id && <ModifyCard/>}
-
-
+        {user.id === userInfo.id && <ModifyCard/>}
 
         <div className=" translate-y-6"> 
           {user.id !== userInfo.id && <FriendRequest currentUserId={JSON.parse(JSON.stringify(user.id))} userId={JSON.parse(JSON.stringify(userInfo.id))}/>}
         </div>
       </div>
 
-
-      
-
       <div className="mt-9">
-        
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="tab">
-           
             {profileTabs.map((tab) => (
               <TabsTrigger key={tab.label} value={tab.value} className="tab">
                 <Image
@@ -69,8 +66,6 @@ async function Page({ params }: { params: { id: string } }) {
             ))}
           </TabsList>
           {profileTabs.map((tab) => (
-            /*Info necessaire pour supprimer le thread*/
-
             <TabsContent
               key={"content-${tab.label}"}
               value={tab.value}
@@ -84,8 +79,10 @@ async function Page({ params }: { params: { id: string } }) {
             </TabsContent>
           ))}
         </Tabs>
-      </div>{" "}
+      </div>
     </section>
   );
 }
+
+// Exportation de la fonction Page par défaut
 export default Page;

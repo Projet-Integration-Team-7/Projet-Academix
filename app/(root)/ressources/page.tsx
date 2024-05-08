@@ -1,40 +1,42 @@
+// Importation des modules nécessaires
 import React from 'react';
 import { redirect } from "next/navigation";
-
 import { currentUser } from '@clerk/nextjs';
-import { fetchUser, getActivity } from '@/lib/actions/user.actions';
- 
-async function Page(){
-  const user=await currentUser();
+import { fetchUser } from '@/lib/actions/user.actions';
 
+// Définition de la fonction Page
+async function Page() {
+  // Récupération de l'utilisateur actuel
+  const user = await currentUser();
 
-  if(!user) return null;
+  // Si l'utilisateur n'existe pas, on retourne null
+  if (!user) return null;
 
+  // Récupération des informations de l'utilisateur
+  const userInfo = await fetchUser(user.id);
 
-  const userInfo=await fetchUser(user.id);
+  // Si l'utilisateur n'a pas encore été intégré, on le redirige vers la page d'intégration
+  if (!userInfo?.onboarded) redirect("/onboarding");
 
-
-  if(!userInfo?.onboarded)redirect("/onboarding");
- 
-    return (
-<section>
-<h1 className="head-text t mb-5"> Ressources </h1>
-<hr className="border-t border-white" />
- 
-            <section className="mt-20 flex flex-col gap-">
-                {sections.map((section, index) => (
-<div key={index}>
-<h2 className="head-text mb-5">{section.title}</h2>
-                        {section.links.map((link, i) => (
-<div key={i} className="mb-6">
-<a href={link.url} className="text-yellow-300 text-sm font-bold">{link.label}</a>
-</div>
-                        ))}
-</div>
-                ))}
-</section>
-</section>
-    );
+  // Affichage des ressources
+  return (
+    <section>
+      <h1 className="head-text t mb-5">Ressources</h1>
+      <hr className="border-t border-white" />
+      <section className="mt-20 flex flex-col gap-">
+        {sections.map((section, index) => (
+          <div key={index}>
+            <h2 className="head-text mb-5">{section.title}</h2>
+            {section.links.map((link, i) => (
+              <div key={i} className="mb-6">
+                <a href={link.url} className="text-yellow-300 text-sm font-bold">{link.label}</a>
+              </div>
+            ))}
+          </div>
+        ))}
+      </section>
+    </section>
+  );
 }
  
 const sections = [

@@ -1,33 +1,32 @@
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { UploadThingError } from "uploadthing/server";
- import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 const f = createUploadthing();
- 
-const getUser=async()=> await currentUser ();
-// FileRouter for your app, can contain multiple FileRoutes
+
+const getUser = async () => await currentUser();
+// FileRouter pour votre application, peut contenir plusieurs FileRoutes
 export const ourFileRouter = {
-  // Define as many FileRoutes as you like, each with a unique routeSlug
+  // Définissez autant de FileRoutes que vous le souhaitez, chacun avec un routeSlug unique
   media: f({ image: { maxFileSize: "16MB", maxFileCount: 1 } })
-    // Set permissions and file types for this FileRoute
+    // Définir les autorisations et les types de fichiers pour ce FileRoute
     .middleware(async ({ req }) => {
-      // This code runs on your server before upload
+      // Ce code s'exécute sur votre serveur avant le téléchargement
       const user = await getUser();
- 
-      // If you throw, the user will not be able to upload
+
+      // Si vous lancez, l'utilisateur ne pourra pas télécharger
       if (!user) throw new UploadThingError("Unauthorized");
- 
-      // Whatever is returned here is accessible in onUploadComplete as `metadata`
+
+      // Tout ce qui est renvoyé ici est accessible dans onUploadComplete en tant que « métadonnées »
       return { userId: user.id };
     })
     .onUploadComplete(async ({ metadata, file }) => {
-      // This code RUNS ON YOUR SERVER after upload
+      // Ce code S'EXÉCUTE SUR VOTRE SERVEUR après le téléchargement
       console.log("Upload complete for userId:", metadata.userId);
- 
+
       console.log("file url", file.url);
- 
-      // !!! Whatever is returned here is sent to the clientside `onClientUploadComplete` callback
+      // !!! Tout ce qui est renvoyé ici est envoyé au rappel `onClientUploadComplete` côté client
       return { uploadedBy: metadata.userId };
     }),
 } satisfies FileRouter;
- 
+
 export type OurFileRouter = typeof ourFileRouter;
