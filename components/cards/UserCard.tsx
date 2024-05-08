@@ -15,7 +15,7 @@ const UserCard =({id, name,username, imgUrl,personType,usage} : Props) => {
     const router=useRouter();
     return (
         <article className="user-card">
-            <div className="user-card_avatar">
+            <div className={`user-card_avatar ${usage === "amis" && "hover:cursor-pointer"}`} onClick={() => (usage === "amis") && router.push(`/profile/${id}`) }>
                 <Image
                 src={imgUrl}
                 alt="logo"
