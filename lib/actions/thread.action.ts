@@ -1,4 +1,4 @@
- "use server"
+"use server";
 import { connect } from "http2";
 import { connectToDB } from "../mongoose";
 import { revalidatePath } from "next/cache";
@@ -8,67 +8,84 @@ import Community from "../models/community.model";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
 
-
-
-
 interface Params {
   text: string;
   author: string;
-  communityId: string | null; // Fix the typo here
+  communityId: string | null;
   image: string | null;
   path: string;
- threadType: string; // Ajoutez cette ligne
-
+  threadType: string;
 }
-//on a bseoind e quoi pr thread
-//65e8b0a1d1c5a76fc26547e7
-//methode quon appele back end
-export async function createThread({text,author,communityId,path,image,threadType}:Params) {
-    try {
-        
+/**
+ * Crée un nouveau fil de discussion.
+ * @param text - Le texte du fil de discussion.
+ * @param author - L'auteur du fil de discussion.
+ * @param communityId - L'ID de la communauté à laquelle le fil de discussion appartient.
+ * @param path - Le chemin du fil de discussion.
+ * @param image - L'image du fil de discussion.
+ * @param threadType - Le type de fil de discussion.
+ */
+export async function createThread({
+  text,
+  author,
+  communityId,
+  path,
+  image,
+  threadType,
+}: Params) {
+  try {
     connectToDB();
-    console.log("id",communityId)
-    
-    const communityIdObject=await Community.findOne(
-     
-        { id : communityId }, 
-        {_id:1}
+    console.log("id", communityId);
+
+    const communityIdObject = await Community.findOne(
+      { id: communityId },
+      { _id: 1 }
     );
-    console.log("marche",1)
-    const createdThread=await Thread.create({
-        text,
-        author,
-        image,
-        community:communityIdObject,
-        threadType,
+    console.log("marche", 1);
+
+    const createdThread = await Thread.create({
+      text,
+      author,
+      image,
+      community: communityIdObject,
+      threadType,
     });
-    //mise a jour user model
-    await User.findByIdAndUpdate(author,{
-        $push:{threads:createdThread._id}
-    })
+
+    // Mettre à jour le modèle utilisateur
+    await User.findByIdAndUpdate(author, {
+      $push: { threads: createdThread._id },
+    });
+
     if (communityIdObject) {
-        // Update Community model
-        await Community.findByIdAndUpdate(communityIdObject, {
-          $push: { threads: createdThread._id },
-        });
-      }
-    //sassurer path est mise ajour
-    revalidatePath(path);
-    } catch (error:any) {
-        throw new Error(`Error creating thread:${error.message}`);
-        
+      // Mettre à jour le modèle de la communauté
+      await Community.findByIdAndUpdate(communityIdObject, {
+        $push: { threads: createdThread._id },
+      });
     }
-    
+
+    // S'assurer que le chemin est mis à jour
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(
+      `Erreur lors de la création du fil de discussion : ${error.message}`
+    );
+  }
 }
 
+/**
+ * Récupère les publications paginées.
+ * @param pageNumber - Le numéro de la page.
+ * @param pageSize - La taille de la page.
+ * @returns Les publications et un indicateur indiquant s'il y a une page suivante.
+ */
 export async function fetchPosts(pageNumber = 1, pageSize = 20) {
-    connectToDB();
+  connectToDB();
 
-    // Calculer le nombre de publications à passer
-    const skipAmount = (pageNumber - 1) * pageSize;
+  // Calculer le nombre de publications à sauter
+  const skipAmount = (pageNumber - 1) * pageSize;
 
-    // On veut chercher les publications qui n'ont pas de parents (= qui ne sont pas des commentaires)
-    const postsQuery = Thread.find({ parentId: { $in: [null, undefined]}})
+  // Rechercher les publications qui n'ont pas de parent (= qui ne sont pas des commentaires)
+  const postsQuery = Thread.find({ parentId: { $in: [null, undefined] } })
     .sort({ createdAt: "desc" })
     .skip(skipAmount)
     .limit(pageSize)
@@ -81,248 +98,291 @@ export async function fetchPosts(pageNumber = 1, pageSize = 20) {
       model: Community,
     })
     .populate({
-      path: "children", // Populate the children field
+      path: "children", // Peupler le champ children
       populate: {
-        path: "author", // Populate the author field within children
+        path: "author", // Peupler le champ author dans children
         model: User,
-        select: "_id name parentId image", // Select only _id and username fields of the author
+        select: "_id name parentId image", // Sélectionner uniquement les champs _id et username de l'auteur
       },
     });
-        
-       
 
-        const totalPostsCount = await Thread.countDocuments({ parentId: { $in: [null, undefined]} })
+  const totalPostsCount = await Thread.countDocuments({
+    parentId: { $in: [null, undefined] },
+  });
 
-        const posts = await postsQuery.exec();
+  const posts = await postsQuery.exec();
 
-        const isNext = totalPostsCount > skipAmount + posts.length;
+  const isNext = totalPostsCount > skipAmount + posts.length;
 
-        return { posts, isNext}
+  return { posts, isNext };
 }
 
+/**
+ * Récupère un fil de discussion par son ID.
+ * @param threadId - L'ID du fil de discussion.
+ * @returns Le fil de discussion.
+ */
 export async function fetchThreadById(threadId: string) {
-    connectToDB();
-  
-    try {
-      const thread = await Thread.findById(threadId)
-        .populate({
-          path: "author",
-          model: User,
-          select: "_id id name image",
-        }) // Populate the author field with _id and username
-        .populate({
-          path: "community",
-          model: Community,
-          select: "_id id name image",
-        }) // Populate the community field with _id and name
-        .populate({
-          path: "children", // Populate the children field
-          populate: [
-            {
-              path: "author", // Populate the author field within children
+  connectToDB();
+
+  try {
+    const thread = await Thread.findById(threadId)
+      .populate({
+        path: "author",
+        model: User,
+        select: "_id id name image",
+      }) // Peupler le champ author avec _id et username
+      .populate({
+        path: "community",
+        model: Community,
+        select: "_id id name image",
+      }) // Peupler le champ community avec _id et name
+      .populate({
+        path: "children", // Peupler le champ children
+        populate: [
+          {
+            path: "author", // Peupler le champ author dans children
+            model: User,
+            select: "_id id name parentId image", // Sélectionner uniquement les champs _id et username de l'auteur
+          },
+          {
+            path: "children", // Peupler le champ children dans children
+            model: Thread, // Le modèle des enfants imbriqués (supposant que c'est le même modèle "Thread")
+            populate: {
+              path: "author", // Peupler le champ author dans les enfants imbriqués
               model: User,
-              select: "_id id name parentId image", // Select only _id and username fields of the author
+              select: "_id id name parentId image", // Sélectionner uniquement les champs _id et username de l'auteur
             },
-            {
-              path: "children", // Populate the children field within children
-              model: Thread, // The model of the nested children (assuming it's the same "Thread" model)
-              populate: {
-                path: "author", // Populate the author field within nested children
-                model: User,
-                select: "_id id name parentId image", // Select only _id and username fields of the author
-              },
-            },
-          ],
-        })
-        .exec();
-  
-      return thread;
-    } catch (err) {
-      console.error("Error while fetching thread:", err);
-      throw new Error("Unable to fetch thread");
-    }
+          },
+        ],
+      })
+      .exec();
+
+    return thread;
+  } catch (err) {
+    console.error("Erreur lors de la récupération du fil de discussion :", err);
+    throw new Error("Impossible de récupérer le fil de discussion");
   }
+}
+
+/**
+ * Récupère tous les fils de discussion enfants d'un fil de discussion.
+ * @param threadId - L'ID du fil de discussion.
+ * @returns Une liste de tous les fils de discussion enfants.
+ */
 async function fetchAllChildThreads(threadId: string): Promise<any[]> {
-    const childThreads = await Thread.find({ parentId: threadId });
-  
-    const descendantThreads = [];
-    for (const childThread of childThreads) {
-      const descendants = await fetchAllChildThreads(childThread._id);
-      descendantThreads.push(childThread, ...descendants);
-    }
-  
-    return descendantThreads;
+  const childThreads = await Thread.find({ parentId: threadId });
+
+  const descendantThreads = [];
+  for (const childThread of childThreads) {
+    const descendants = await fetchAllChildThreads(childThread._id);
+    descendantThreads.push(childThread, ...descendants);
   }
 
-  export async function addCommentToThread(
-    threadId: string,
-    commentText: string,
-    userId: string,
-    path: string,
-    text:string
-  ) {
-    connectToDB();
-  
-    try {
-      // Find the original thread by its ID
-      const originalThread = await Thread.findById(threadId);
-  
-      if (!originalThread) {
-        throw new Error("Thread not found");
-      }
-  
-      // Create the new comment thread
-      const commentThread = new Thread({
-        text: commentText,
-        author: userId,
-        parentId: threadId, // Set the parentId to the original thread's ID
-        threadType: "someValue" // Provide a valid value for the threadType property
-      });
-  
-      // Save the comment thread to the database
-      const savedCommentThread = await commentThread.save();
-  
-      // Add the comment thread's ID to the original thread's children array
-      originalThread.children.push(savedCommentThread._id);
-  
-      // Save the updated original thread to the database
-      await originalThread.save();
-  
-      revalidatePath(path);
-    } catch (err) {
-      console.error("Error while adding comment:", err);
-      throw new Error("Unable to add comment");
-    }
-  }
+  return descendantThreads;
+}
 
+/**
+ * Ajoute un commentaire à un fil de discussion.
+ * @param threadId - L'ID du fil de discussion.
+ * @param commentText - Le texte du commentaire.
+ * @param userId - L'ID de l'utilisateur.
+ * @param path - Le chemin du fil de discussion.
+ * @param text - Le texte du fil de discussion.
+ */
+export async function addCommentToThread(
+  threadId: string,
+  commentText: string,
+  userId: string,
+  path: string,
+  text: string
+) {
+  connectToDB();
+
+  try {
+    // Trouver le fil de discussion d'origine par son ID
+    const originalThread = await Thread.findById(threadId);
+
+    if (!originalThread) {
+      throw new Error("Fil de discussion introuvable");
+    }
+
+    // Créer le nouveau fil de discussion de commentaire
+    const commentThread = new Thread({
+      text: commentText,
+      author: userId,
+      parentId: threadId, // Définir le parentId sur l'ID du fil de discussion d'origine
+      threadType: "someValue", // Fournir une valeur valide pour la propriété threadType
+    });
+
+    // Enregistrer le fil de discussion de commentaire dans la base de données
+    const savedCommentThread = await commentThread.save();
+
+    // Ajouter l'ID du fil de discussion de commentaire au tableau children du fil de discussion d'origine
+    originalThread.children.push(savedCommentThread._id);
+
+    // Enregistrer le fil de discussion d'origine mis à jour dans la base de données
+    await originalThread.save();
+
+    revalidatePath(path);
+  } catch (err) {
+    console.error("Erreur lors de l'ajout du commentaire :", err);
+    throw new Error("Impossible d'ajouter le commentaire");
+  }
+}
+
+/**
+ * Met à jour le statut "J'aime" d'un fil de discussion.
+ * @param threadId - L'ID du fil de discussion.
+ * @param userId - L'ID de l'utilisateur.
+ * @param isLiked - Indique si le fil de discussion est aimé ou non.
+ */
 export async function updateLikeToThread(
-    threadId: string,
-    userId: string,
-    isLiked: boolean,
-){
+  threadId: string,
+  userId: string,
+  isLiked: boolean
+) {
+  connectToDB();
+
+  try {
+    // Trouver le fil de discussion d'origine par son ID
+    const currentThread = await Thread.findById(threadId);
+
+    if (!currentThread) {
+      throw new Error("Fil de discussion introuvable");
+    }
+
+    if (isLiked) {
+      currentThread.likes.set(userId, new Date());
+    } else {
+      currentThread.likes.delete(userId);
+    }
+
+    console.log(currentThread);
+
+    await currentThread.save();
+  } catch (error: any) {
+    throw new Error(
+      `Erreur lors de la mise à jour du "J'aime" sur le fil de discussion : ${error.message}`
+    );
+  }
+}
+
+/**
+ * Récupère le nombre de "J'aime" d'un fil de discussion.
+ * @param threadId - L'ID du fil de discussion.
+ * @returns Le nombre de "J'aime".
+ */
+export async function getThreadLikesCount(threadId: string): Promise<number> {
+  try {
+    // Trouver le fil de discussion par son ID
+    const thread = await Thread.findById(threadId);
+    if (!thread) {
+      throw new Error("Fil de discussion introuvable");
+    }
+
+    // Obtenir le nombre de clés dans la Map des "J'aime"
+    const likesCount = thread.likes.size;
+
+    return likesCount;
+  } catch (error: any) {
+    throw new Error(
+      `Échec de la récupération du nombre de "J'aime" du fil de discussion : ${error.message}`
+    );
+  }
+}
+
+/**
+ * Supprime un fil de discussion.
+ * @param id - L'ID du fil de discussion.
+ * @param path - Le chemin du fil de discussion.
+ */
+export async function deleteThread(id: string, path: string): Promise<void> {
+  try {
     connectToDB();
 
-    try {
-        // Trouver la publication originale par son ID
-        const currentThread = await Thread.findById(threadId);
+    // Trouver le fil de discussion à supprimer (le fil de discussion principal)
+    const mainThread = await Thread.findById(id).populate("author community");
 
-        if  (!currentThread) {
-            throw new Error("Thread not found")
-        }
-
-        if (isLiked){
-            currentThread.likes.set(userId,new Date());
-        } else {
-            currentThread.likes.delete(userId);
-        }
-
-        console.log(currentThread)
-        
-        await currentThread.save();
-        
-    } catch (error: any) {
-        throw new Error(`Error updating the like on the thread: ${error.message}`)
+    if (!mainThread) {
+      throw new Error("Fil de discussion introuvable");
     }
-}
 
-export async function getThreadLikesCount( 
-    threadId: string
-    ): Promise<number> {
-    try {
-        // Find the thread by threadId
-        const thread = await Thread.findById(threadId);
-        if (!thread) {
-            throw new Error("Thread not found");
-        }
+    // Récupérer tous les fils de discussion enfants et leurs descendants de manière récursive
+    const descendantThreads = await fetchAllChildThreads(id);
 
-        // Get the number of keys in the likes Map
-        const likesCount = thread.likes.size;
-        
-        return likesCount;
-    } catch (error: any) {
-        throw new Error(`Failed to get thread likes count: ${error.message}`);
-    }
-}
+    // Obtenir tous les IDs des fils de discussion descendants, y compris l'ID du fil de discussion principal et les IDs des fils de discussion enfants
+    const descendantThreadIds = [
+      id,
+      ...descendantThreads.map((thread) => thread._id),
+    ];
 
-export async function deleteThread(id: string, path: string): Promise<void> {
-    try {
-      connectToDB();
-  
-      // Find the thread to be deleted (the main thread)
-      const mainThread = await Thread.findById(id).populate("author community");
-  
-      if (!mainThread) {
-        throw new Error("Thread not found");
-      }
-  
-      // Fetch all child threads and their descendants recursively
-      const descendantThreads = await fetchAllChildThreads(id);
-  
-      // Get all descendant thread IDs including the main thread ID and child thread IDs
-      const descendantThreadIds = [
-        id,
-        ...descendantThreads.map((thread) => thread._id),
-      ];
-  
-      // Extract the authorIds and communityIds to update User and Community models respectively
-      const uniqueAuthorIds = new Set(
-        [
-          ...descendantThreads.map((thread) => thread.author?._id?.toString()), // Use optional chaining to handle possible undefined values
-          mainThread.author?._id?.toString(),
-        ].filter((id) => id !== undefined)
-      );
-  
-      const uniqueCommunityIds = new Set(
-        [
-          ...descendantThreads.map((thread) => thread.community?._id?.toString()), // Use optional chaining to handle possible undefined values
-          mainThread.community?._id?.toString(),
-        ].filter((id) => id !== undefined)
-      );
-  
-      // Recursively delete child threads and their descendants
-      await Thread.deleteMany({ _id: { $in: descendantThreadIds } });
-  
-      // Update User model
-      await User.updateMany(
-        { _id: { $in: Array.from(uniqueAuthorIds) } },
-        { $pull: { threads: { $in: descendantThreadIds } } }
-      );
-  
-      // Update Community model
-      await Community.updateMany(
-        { _id: { $in: Array.from(uniqueCommunityIds) } },
-        { $pull: { threads: { $in: descendantThreadIds } } }
-      );
-  
-      revalidatePath(path);
-    } catch (error: any) {
-      throw new Error(`Failed to delete thread: ${error.message}`);
-    }
+    // Extraire les IDs des auteurs et des communautés pour mettre à jour les modèles User et Community respectivement
+    const uniqueAuthorIds = new Set(
+      [
+        ...descendantThreads.map((thread) => thread.author?._id?.toString()), // Utiliser le chaînage optionnel pour gérer les valeurs éventuellement indéfinies
+        mainThread.author?._id?.toString(),
+      ].filter((id) => id !== undefined)
+    );
+
+    const uniqueCommunityIds = new Set(
+      [
+        ...descendantThreads.map((thread) => thread.community?._id?.toString()), // Utiliser le chaînage optionnel pour gérer les valeurs éventuellement indéfinies
+        mainThread.community?._id?.toString(),
+      ].filter((id) => id !== undefined)
+    );
+
+    // Supprimer de manière récursive les fils de discussion enfants et leurs descendants
+    await Thread.deleteMany({ _id: { $in: descendantThreadIds } });
+
+    // Mettre à jour le modèle User
+    await User.updateMany(
+      { _id: { $in: Array.from(uniqueAuthorIds) } },
+      { $pull: { threads: { $in: descendantThreadIds } } }
+    );
+
+    // Mettre à jour le modèle Community
+    await Community.updateMany(
+      { _id: { $in: Array.from(uniqueCommunityIds) } },
+      { $pull: { threads: { $in: descendantThreadIds } } }
+    );
+
+    revalidatePath(path);
+  } catch (error: any) {
+    throw new Error(
+      `Échec de la suppression du fil de discussion : ${error.message}`
+    );
   }
+}
 
+/**
+ * Supprime tous les fils de discussion supprimés des utilisateurs.
+ */
 export async function removeAllDeletedThreadsFromUsers() {
-    try {
-      // Fetch all thread IDs from Thread collection
-      const allThreads = await Thread.find({});
-      const allThreadIds = allThreads.map(thread => thread._id.toString());
-    
-      // Fetch all users
-      const users = await User.find({});
-    
-      // For each user
-      for (let user of users) {
-        // Filter user's threads array to only include IDs present in allThreadIds
-        const validThreads = user.threads.filter((threadId: string) => allThreadIds.includes(threadId.toString()));
-    
-        // If there are any invalid threads, update the user's threads array
-        if (validThreads.length !== user.threads.length) {
-          user.threads = validThreads;
-          user.save();
-        }
+  try {
+    // Récupérer tous les IDs de fils de discussion depuis la collection Thread
+    const allThreads = await Thread.find({});
+    const allThreadIds = allThreads.map((thread) => thread._id.toString());
+
+    // Récupérer tous les utilisateurs
+    const users = await User.find({});
+
+    // Pour chaque utilisateur
+    for (let user of users) {
+      // Filtrer le tableau des fils de discussion de l'utilisateur pour inclure uniquement les IDs présents dans allThreadIds
+      const validThreads = user.threads.filter((threadId: string) =>
+        allThreadIds.includes(threadId.toString())
+      );
+
+      // S'il y a des fils de discussion invalides, mettre à jour le tableau des fils de discussion de l'utilisateur
+      if (validThreads.length !== user.threads.length) {
+        user.threads = validThreads;
+        user.save();
       }
-    }catch (error: any) {
-      throw new Error(`Failed to delete threads from deleted users: ${error.message}`);
+    }
+  } catch (error: any) {
+    throw new Error(
+      `Échec de la suppression des fils de discussion des utilisateurs supprimés : ${error.message}`
+    );
   }
 }
-
-

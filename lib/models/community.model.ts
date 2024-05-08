@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+// Définition du schéma d'une communauté
 const communitySchema = new mongoose.Schema({
   id: {
     type: String,

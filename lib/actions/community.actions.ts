@@ -1,29 +1,36 @@
 "use server";
-
 import { FilterQuery, SortOrder } from "mongoose";
-
 import Community from "../models/community.model";
 import Thread from "../models/thread.model";
 import User from "../models/user.model";
-
 import { connectToDB } from "../mongoose";
 
+/**
+ * Crée une nouvelle communauté.
+ * @param id - L'identifiant de la communauté.
+ * @param name - Le nom de la communauté.
+ * @param username - Le nom d'utilisateur de la communauté.
+ * @param image - L'image de la communauté.
+ * @param bio - La description de la communauté.
+ * @param createdById - L'identifiant de l'utilisateur qui a créé la communauté.
+ * @returns La communauté créée.
+ */
 export async function createCommunity(
   id: string,
   name: string,
   username: string,
   image: string,
   bio: string,
-  createdById: string // Change the parameter name to reflect it's an id
+  createdById: string
 ) {
   try {
     connectToDB();
 
-    // Find the user with the provided unique id
+    // Trouve l'utilisateur avec l'identifiant fourni
     const user = await User.findOne({ id: createdById });
 
     if (!user) {
-      throw new Error("User not found"); // Handle the case if the user with the id is not found
+      throw new Error("Utilisateur introuvable");
     }
 
     const newCommunity = new Community({
@@ -32,23 +39,27 @@ export async function createCommunity(
       username,
       image,
       bio,
-      createdBy: user._id, // Use the mongoose ID of the user
+      createdBy: user._id,
     });
 
     const createdCommunity = await newCommunity.save();
 
-    // Update User model
+    // Met à jour le modèle User
     user.communities.push(createdCommunity._id);
     await user.save();
 
     return createdCommunity;
   } catch (error) {
-    // Handle any errors
-    console.error("Error creating community:", error);
+    console.error("Erreur lors de la création de la communauté :", error);
     throw error;
   }
 }
 
+/**
+ * Récupère les détails d'une communauté.
+ * @param id - L'identifiant de la communauté.
+ * @returns Les détails de la communauté.
+ */
 export async function fetchCommunityDetails(id: string) {
   try {
     connectToDB();
@@ -64,12 +75,19 @@ export async function fetchCommunityDetails(id: string) {
 
     return communityDetails;
   } catch (error) {
-    // Handle any errors
-    console.error("Error fetching community details:", error);
+    console.error(
+      "Erreur lors de la récupération des détails de la communauté :",
+      error
+    );
     throw error;
   }
 }
 
+/**
+ * Récupère les publications d'une communauté.
+ * @param id - L'identifiant de la communauté.
+ * @returns Les publications de la communauté.
+ */
 export async function fetchCommunityPosts(id: string) {
   try {
     connectToDB();
@@ -81,7 +99,7 @@ export async function fetchCommunityPosts(id: string) {
         {
           path: "author",
           model: User,
-          select: "name image id", // Select the "name" and "_id" fields from the "User" model
+          select: "name image id",
         },
         {
           path: "children",
@@ -89,7 +107,7 @@ export async function fetchCommunityPosts(id: string) {
           populate: {
             path: "author",
             model: User,
-            select: "image _id", // Select the "name" and "_id" fields from the "User" model
+            select: "image _id",
           },
         },
       ],
@@ -97,12 +115,22 @@ export async function fetchCommunityPosts(id: string) {
 
     return communityPosts;
   } catch (error) {
-    // Handle any errors
-    console.error("Error fetching community posts:", error);
+    console.error(
+      "Erreur lors de la récupération des publications de la communauté :",
+      error
+    );
     throw error;
   }
 }
 
+/**
+ * Récupère les communautés en fonction des critères de recherche et de tri.
+ * @param searchString - La chaîne de recherche.
+ * @param pageNumber - Le numéro de la page.
+ * @param pageSize - La taille de la page.
+ * @param sortBy - L'ordre de tri.
+ * @returns Les communautés correspondantes et un indicateur indiquant s'il y a plus de communautés.
+ */
 export async function fetchCommunities({
   searchString = "",
   pageNumber = 1,
@@ -117,16 +145,16 @@ export async function fetchCommunities({
   try {
     connectToDB();
 
-    // Calculate the number of communities to skip based on the page number and page size.
+    // Calcule le nombre de communautés à ignorer en fonction du numéro de page et de la taille de la page.
     const skipAmount = (pageNumber - 1) * pageSize;
 
-    // Create a case-insensitive regular expression for the provided search string.
+    // Crée une expression régulière insensible à la casse pour la chaîne de recherche fournie.
     const regex = new RegExp(searchString, "i");
 
-    // Create an initial query object to filter communities.
+    // Crée un objet de requête initial pour filtrer les communautés.
     const query: FilterQuery<typeof Community> = {};
 
-    // If the search string is not empty, add the $or operator to match either username or name fields.
+    // Si la chaîne de recherche n'est pas vide, ajoute l'opérateur $or pour correspondre aux champs username ou name.
     if (searchString.trim() !== "") {
       query.$or = [
         { username: { $regex: regex } },
@@ -134,31 +162,37 @@ export async function fetchCommunities({
       ];
     }
 
-    // Define the sort options for the fetched communities based on createdAt field and provided sort order.
+    // Définit les options de tri pour les communautés récupérées en fonction du champ createdAt et de l'ordre de tri fourni.
     const sortOptions = { createdAt: sortBy };
 
-    // Create a query to fetch the communities based on the search and sort criteria.
+    // Crée une requête pour récupérer les communautés en fonction des critères de recherche et de tri.
     const communitiesQuery = Community.find(query)
       .sort(sortOptions)
       .skip(skipAmount)
       .limit(pageSize)
       .populate("members");
 
-    // Count the total number of communities that match the search criteria (without pagination).
+    // Compte le nombre total de communautés correspondant aux critères de recherche (sans pagination).
     const totalCommunitiesCount = await Community.countDocuments(query);
 
     const communities = await communitiesQuery.exec();
 
-    // Check if there are more communities beyond the current page.
+    // Vérifie s'il y a plus de communautés au-delà de la page actuelle.
     const isNext = totalCommunitiesCount > skipAmount + communities.length;
 
     return { communities, isNext };
   } catch (error) {
-    console.error("Error fetching communities:", error);
+    console.error("Erreur lors de la récupération des communautés :", error);
     throw error;
   }
 }
 
+/**
+ * Ajoute un membre à une communauté.
+ * @param communityId - L'identifiant de la communauté.
+ * @param memberId - L'identifiant du membre.
+ * @returns La communauté mise à jour.
+ */
 export async function addMemberToCommunity(
   communityId: string,
   memberId: string
@@ -166,41 +200,46 @@ export async function addMemberToCommunity(
   try {
     connectToDB();
 
-    // Find the community by its unique id
+    // Trouve la communauté par son identifiant unique
     const community = await Community.findOne({ id: communityId });
 
     if (!community) {
-      throw new Error("Community not found");
+      throw new Error("Communauté introuvable");
     }
 
-    // Find the user by their unique id
+    // Trouve l'utilisateur par son identifiant unique
     const user = await User.findOne({ id: memberId });
 
     if (!user) {
-      throw new Error("User not found");
+      throw new Error("Utilisateur introuvable");
     }
 
-    // Check if the user is already a member of the community
+    // Vérifie si l'utilisateur est déjà membre de la communauté
     if (community.members.includes(user._id)) {
-      throw new Error("User is already a member of the community");
+      throw new Error("L'utilisateur est déjà membre de la communauté");
     }
 
-    // Add the user's _id to the members array in the community
+    // Ajoute l'identifiant de l'utilisateur au tableau des membres de la communauté
     community.members.push(user._id);
     await community.save();
 
-    // Add the community's _id to the communities array in the user
+    // Ajoute l'identifiant de la communauté au tableau des communautés de l'utilisateur
     user.communities.push(community._id);
     await user.save();
 
     return community;
   } catch (error) {
-    // Handle any errors
-    console.error("Error adding member to community:", error);
+    console.error("Erreur lors de l'ajout du membre à la communauté :", error);
     throw error;
   }
 }
 
+/**
+ * Supprime un utilisateur d'une communauté.
+ * @param userId - L'identifiant de l'utilisateur.
+ * @param communityId - L'identifiant de la communauté.
+ * @returns Un objet indiquant le succès de l'opération.
+ */
 export async function removeUserFromCommunity(
   userId: string,
   communityId: string
@@ -215,20 +254,20 @@ export async function removeUserFromCommunity(
     );
 
     if (!userIdObject) {
-      throw new Error("User not found");
+      throw new Error("Utilisateur introuvable");
     }
 
     if (!communityIdObject) {
-      throw new Error("Community not found");
+      throw new Error("Communauté introuvable");
     }
 
-    // Remove the user's _id from the members array in the community
+    // Supprime l'identifiant de l'utilisateur du tableau des membres de la communauté
     await Community.updateOne(
       { _id: communityIdObject._id },
       { $pull: { members: userIdObject._id } }
     );
 
-    // Remove the community's _id from the communities array in the user
+    // Supprime l'identifiant de la communauté du tableau des communautés de l'utilisateur
     await User.updateOne(
       { _id: userIdObject._id },
       { $pull: { communities: communityIdObject._id } }
@@ -236,12 +275,22 @@ export async function removeUserFromCommunity(
 
     return { success: true };
   } catch (error) {
-    // Handle any errors
-    console.error("Error removing user from community:", error);
+    console.error(
+      "Erreur lors de la suppression de l'utilisateur de la communauté :",
+      error
+    );
     throw error;
   }
 }
 
+/**
+ * Met à jour les informations d'une communauté.
+ * @param communityId - L'identifiant de la communauté.
+ * @param name - Le nom de la communauté.
+ * @param username - Le nom d'utilisateur de la communauté.
+ * @param image - L'image de la communauté.
+ * @returns La communauté mise à jour.
+ */
 export async function updateCommunityInfo(
   communityId: string,
   name: string,
@@ -251,44 +300,51 @@ export async function updateCommunityInfo(
   try {
     connectToDB();
 
-    // Find the community by its _id and update the information
+    // Trouve la communauté par son identifiant et met à jour les informations
     const updatedCommunity = await Community.findOneAndUpdate(
       { id: communityId },
       { name, username, image }
     );
 
     if (!updatedCommunity) {
-      throw new Error("Community not found");
+      throw new Error("Communauté introuvable");
     }
 
     return updatedCommunity;
   } catch (error) {
-    // Handle any errors
-    console.error("Error updating community information:", error);
+    console.error(
+      "Erreur lors de la mise à jour des informations de la communauté :",
+      error
+    );
     throw error;
   }
 }
 
+/**
+ * Supprime une communauté.
+ * @param communityId - L'identifiant de la communauté.
+ * @returns La communauté supprimée.
+ */
 export async function deleteCommunity(communityId: string) {
   try {
     connectToDB();
 
-    // Find the community by its ID and delete it
+    // Trouve la communauté par son ID et la supprime
     const deletedCommunity = await Community.findOneAndDelete({
       id: communityId,
     });
 
     if (!deletedCommunity) {
-      throw new Error("Community not found");
+      throw new Error("Communauté introuvable");
     }
 
-    // Delete all threads associated with the community
+    // Supprime tous les fils de discussion associés à la communauté
     await Thread.deleteMany({ community: communityId });
 
-    // Find all users who are part of the community
+    // Trouve tous les utilisateurs faisant partie de la communauté
     const communityUsers = await User.find({ communities: communityId });
 
-    // Remove the community from the 'communities' array for each user
+    // Supprime la communauté du tableau 'communities' pour chaque utilisateur
     const updateUserPromises = communityUsers.map((user) => {
       user.communities.pull(communityId);
       return user.save();
@@ -298,7 +354,7 @@ export async function deleteCommunity(communityId: string) {
 
     return deletedCommunity;
   } catch (error) {
-    console.error("Error deleting community: ", error);
+    console.error("Erreur lors de la suppression de la communauté :", error);
     throw error;
   }
 }

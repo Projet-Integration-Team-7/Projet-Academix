@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
+// Définition du schéma d'un événement
 const eventSchema = new mongoose.Schema({
   title: {
     type: String,
@@ -19,11 +20,10 @@ const eventSchema = new mongoose.Schema({
   },
   color: {
     type: String,
-    default: '#3788d8',
+    default: "#3788d8",
   },
-  
 });
 
-const Event = mongoose.models.Event || mongoose.model('Event', eventSchema);
+const Event = mongoose.models.Event || mongoose.model("Event", eventSchema);
 
 export default Event;

@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-
+import mongoose from "mongoose";
+// Définition du schéma d'un message
 const messageSchema = new mongoose.Schema({
   sender: {
     type: String,
@@ -14,23 +14,27 @@ const messageSchema = new mongoose.Schema({
     default: Date.now,
   },
 });
-
+// Définition du schéma d'une conversation
 const conversationSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    default: 'New Conversation'
+    default: "New Conversation",
   },
-  participants: [{
-    type: String, 
-    ref: 'User',
-    required: true,
-  }],
-  messages: [{
-    type: String, 
-    ref: 'messages',
-    required: true,
-  }],
+  participants: [
+    {
+      type: String,
+      ref: "User",
+      required: true,
+    },
+  ],
+  messages: [
+    {
+      type: String,
+      ref: "messages",
+      required: true,
+    },
+  ],
   createdAt: {
     type: Date,
     default: Date.now,
@@ -41,6 +45,8 @@ const conversationSchema = new mongoose.Schema({
   },
 });
 
-const Conversation = mongoose.models.Conversation || mongoose.model('Conversation', conversationSchema);
+const Conversation =
+  mongoose.models.Conversation ||
+  mongoose.model("Conversation", conversationSchema);
 
 export default Conversation;
