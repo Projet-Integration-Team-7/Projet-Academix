@@ -1,8 +1,9 @@
+"use server"
 import { connectToDB } from "../mongoose";
 import Event from "../models/event.model";
 
 // Importation des modules et des modèles nécessaires
-"use server"
+
 
 
 // Types d'action
