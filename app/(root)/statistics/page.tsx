@@ -59,7 +59,7 @@ const Statistics = () => {
         <section><h1  className="head-text mb-10">Statisitcs </h1></section>
     
             <nav className="flex justify-between mb-12 border-b border-gray-200 p-4">
-                <h1 className="font-bold text-2xl text-white">users qui poste le plus</h1>
+                <h1 className="font-bold text-2xl text-white">Utilisateurs qui poste le plus</h1>
             </nav>
             <main className="p-4 text-white ">
                 {topAuthors.length > 0 ? (

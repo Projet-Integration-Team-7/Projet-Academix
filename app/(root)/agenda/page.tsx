@@ -104,7 +104,7 @@ const Home: React.FC = () => {
 
       {/* Navigation */}
       <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
-        <h1 className="font-bold text-2xl text-gray-200">Calendar</h1>
+        <h1 className="font-bold text-2xl text-gray-200">Calendrier</h1>
       </nav>
       
       {/* Main contenu */}
@@ -116,7 +116,7 @@ const Home: React.FC = () => {
               type="text"
               value={eventName}
               onChange={(e) => setEventName(e.target.value)}
-              placeholder="Enter event name"
+              placeholder="Entrer votre événement  "
             />
 
             {/* Input pour nom des couleur */}

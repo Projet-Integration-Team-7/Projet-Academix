@@ -94,7 +94,7 @@ function CreateConversationPage({ userActif }) {
     };
 
     const renderConversationMessages = () => {
-        if (!selectedConversation) return <p>Select a conversation to view messages.</p>;
+        if (!selectedConversation) return <p>Selectionner une conversation por voir le message.</p>;
         return (
             <div className="p-4 bg-white shadow rounded-lg overflow-auto">
                 <h3 className="text-lg font-bold mb-2">Messages for {selectedConversation.name}</h3>
@@ -133,7 +133,7 @@ function CreateConversationPage({ userActif }) {
                     className="basic-multi-select"
                     classNamePrefix="select"
                 />
-                <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-full">Create Conversation</button>
+                <button type="submit" className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 w-full">Créer Conversation</button>
             </form>
             <div className="flex gap-4">
                 <div className="w-1/3">

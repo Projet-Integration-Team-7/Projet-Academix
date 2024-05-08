@@ -26,12 +26,12 @@ const ModalSetting: React.FC<ModalSettingProps> = ({
             defaultValue: 25,
         },
         {
-            value: "Short Break",
+            value: "Petite pause",
             ref: shortBreakRef,
             defaultValue: 5,
         },
         {
-            value: "Long Break",
+            value: "Longue pause",
             ref: longBreakRef,
             defaultValue: 10,
         },
@@ -58,7 +58,7 @@ const ModalSetting: React.FC<ModalSettingProps> = ({
                         style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}
                         className="text-black-400 flex-justify items-center"
                     >
-                        <h1 className="font-bold ">Time Settings</h1>
+                        <h1 className="font-bold ">Paramétres de la minuterie</h1>
                         <FaWindowClose className="text-2xl cursor-pointer " onClick={() => setOpenSetting(false)} />
                     </div>
                     <div className="h-1 w-full bg-gray-400 mt-5 mb-20 ">
@@ -80,7 +80,7 @@ const ModalSetting: React.FC<ModalSettingProps> = ({
                     </div>
 
                     <Button className="uppercase w-full mt-5 rounded py-2" onClick={updateTimeDefaultValue}>
-                        Save
+                        Sauvegarder
                     </Button>
                 </div>
             </div>

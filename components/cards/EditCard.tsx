@@ -94,7 +94,7 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
     return(
     <div>
          <h3 className="head-text mb-5 text-base my-20">
-          NEW  Profile picture
+          NOUVELLE photo de profile
            </h3>
         <div className="flex items-center ">
             <div>
@@ -111,7 +111,7 @@ const EditCard =({id, name,username , imgUrl,personType} : Props) => {
               className="rounded-full"
                 />
 
-  <label className="block mb-2 text-sm font-medium text-white" for="file_input">Upload new profile picture</label>
+  <label className="block mb-2 text-sm font-medium text-white" for="file_input">Télécharger nouvelle photo de profile</label>
 <input className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-black text-white dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file"
 onChange={handleImage} ></input>
 
@@ -130,7 +130,7 @@ onChange={handleImage} ></input>
            </div>
            <div>
            <h3 className="head-text mb-5 text-base my-20">
-            Name
+            Nom
            </h3>
            
            <div className="w-72">
@@ -146,7 +146,7 @@ onChange={handleImage} ></input>
   <label
     className="flex w-full h-full select-none pointer-events-none absolute left-0 font-normal !overflow-visible truncate peer-placeholder-shown:text-white leading-tight peer-focus:leading-tight peer-disabled:text-transparent peer-disabled:peer-placeholder-shown:text-white transition-all -top-1.5 peer-placeholder-shown:text-sm text-[11px] peer-focus:text-[11px] before:content[' '] before:block before:box-border before:w-2.5 before:h-1.5 before:mt-[6.5px] before:mr-1 peer-placeholder-shown:before:border-transparent before:rounded-tl-md before:border-t peer-focus:before:border-t-2 before:border-l peer-focus:before:border-l-2 before:pointer-events-none before:transition-all peer-disabled:before:border-transparent after:content[' '] after:block after:flex-grow after:box-border after:w-2.5 after:h-1.5 after:mt-[6.5px] after:ml-1 peer-placeholder-shown:after:border-transparent after:rounded-tr-md after:border-t peer-focus:after:border-t-2 after:border-r peer-focus:after:border-r-2 after:pointer-events-none after:transition-all peer-disabled:after:border-transparent peer-placeholder-shown:leading-[3.75] text-gray-500 peer-focus:text-gray-900 before:border-blue-gray-200 peer-focus:before:!border-gray-900 after:border-blue-gray-200 peer-focus:after:!border-gray-900"
   >
-    Change name
+    Changer nom
   </label>
 </div>
 
@@ -157,7 +157,7 @@ onChange={handleImage} ></input>
 
            </div>
             <div>
-           <h4 className="head-text mb-5 text-base my-20">Biography 
+           <h4 className="head-text mb-5 text-base my-20">Biographie
              </h4>
              <div className="my-14">
              <div className="w-96">
@@ -169,7 +169,7 @@ onChange={handleImage} ></input>
       placeholder="rentrez votre bio"></textarea>
     <label
       className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-blue-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500">
-      Modify Bio 
+      Modifier Bio 
     </label>
   </div>
 
@@ -177,7 +177,7 @@ onChange={handleImage} ></input>
 
   <Button className=" user-card_btn my-14"
   onClick={handleSubmit} >
-              <h1>    Submit  </h1> 
+              <h1>    Soummetre  </h1> 
             </Button>
 
 

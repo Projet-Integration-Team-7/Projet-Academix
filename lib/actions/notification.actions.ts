@@ -57,7 +57,7 @@ export async function createFriendRequest(userId: string, senderId: string) {
     const newNotification = new Notification({
       userId,
       senderId,
-      message: `${user.name}, ${sender.name} sent you a friend request!`,
+      message: `${user.name}, ${sender.name} vous a envoyé une demande d'ami`,
       notifType: "friendRequest",
     });
 
@@ -101,7 +101,7 @@ export async function deleteNotification(notificationId: string) {
     user.save();
 
     await Notification.findByIdAndDelete(notificationId);
-    console.log("Notification deleted successfully");
+    console.log("Notification supprimé avec succés");
   } catch (error: any) {
     throw new Error(`Error deleting notification: ${error.message}`);
   }

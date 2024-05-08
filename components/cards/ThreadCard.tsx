@@ -99,7 +99,7 @@ const ThreadCard = ({
                         </div>
                         {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && (
                         <div className="image-hover-container">
-               <button className="hover-button">Hover Over Me</button>
+               <button className="hover-button">Attention spoil</button>
                    <div className="image-hover">
                    
                    <Image src={imgUrl} alt="Thread Image" width={600} height={600} />           
@@ -126,7 +126,7 @@ const ThreadCard = ({
                             {isComment && comments.length > 0 && (
                                 <Link href={`/thread/${id}`}>
                                     <p className="mt-1 text-subtle-medium text-gray-1">
-                                        {comments.length} replies
+                                        {comments.length} commentaires
                                     </p>
                                 </Link>
                             )}
