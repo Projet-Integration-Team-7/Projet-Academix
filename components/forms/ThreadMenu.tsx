@@ -73,7 +73,7 @@ const ThreadMenu = ({ threadId, currentUserId, authorId }: ThreadMenuProps) => {
               </div>
 
               <span className= " whitespace-nowrap align-middle text-black group-hover:text-red-500">
-                 Delete thread
+                 Supprimer Publication
               </span>
             </div>
           )}

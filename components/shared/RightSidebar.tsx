@@ -39,8 +39,8 @@ async function RightSidebar() {
         </div>
       </div>
       <div className="flex flex-1 flex-col justify-start">
-        <h3 className="text-heading4-medium text-light-1 underline underline-offset-4 cursor-pointer">
-          Friends
+        <h3 className="text-heading4-medium text-light-1 underline underline-offset-4">
+          Liste d'amis
         </h3>
         {userInfo !== null && (
           <ul className="custom-scrollbar flex flex-col overflow-y-auto ">

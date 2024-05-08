@@ -3,28 +3,28 @@
     {
       imgURL: "/assets/home.svg",
       route: "/",
-      label: "Home",
+      label: "Menu Principal",
     },
     {
       imgURL: "/assets/search.svg",
       route: "/search",
-      label: "Search",
+      label: "Recherche",
     },
     {
       imgURL: "/assets/heart.svg",
       route: "/activity",
-      label: "Activity",
+      label: "Activité",
     },
     {
       imgURL: "/assets/create.svg",
       route: "/create-thread",
-      label: "Create Thread",
+      label: "Créer Publication",
     },
   
     {
       imgURL: "/assets/community.svg",
       route: "/communities",
-      label: "Communities",
+      label: "Communautés",
     },
     {
       imgURL: "/assets/user.svg",
@@ -40,7 +40,7 @@
     {
       imgURL: "/assets/timer.svg",
       route: "/timer",
-      label: "Timer",
+      label: "Minuterie pomodoro",
     },
     {
       imgURL: "/assets/agenda.svg",
@@ -61,13 +61,13 @@
     label: "Conversation"},
     {imgURL: "/assets/statistics.svg",
     route:"/statistics",
-    label: "Statistics"}
+    label: "Statistiques"}
   ];
   
   export const profileTabs = [
-    { value: "threads", label: "Threads", icon: "/assets/reply.svg" },
-    { value: "replies", label: "Replies", icon: "/assets/members.svg" },
-    { value: "tagged", label: "Tagged", icon: "/assets/tag.svg" },
+    { value: "threads", label: "Publication", icon: "/assets/reply.svg" },
+    { value: "replies", label: "Commentaires", icon: "/assets/members.svg" },
+    { value: "tagged", label: "Mentions", icon: "/assets/tag.svg" },
   ];
   
   export const communityTabs = [

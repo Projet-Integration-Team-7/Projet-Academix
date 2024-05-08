@@ -27,7 +27,7 @@ const CourseNoteTab = async ({ currentUserId, accountId, accountType }: Props) =
   
     return (
       <section className="mt-9 flex flex-col gap-10">
-        CourseNoteTab
+        Notes de cours
         {exerciseThreads.map((thread: any) => (
           <ThreadCard
                 key={thread._id}
