@@ -28,7 +28,7 @@ export default function Timer({ stage,
 
       TimerProps) 
       {
-    const options =["Pomodoro","Short Break","Long Break"]
+    const options =["Pomodoro","Petite Pause","Longue Pause"]
     return (
 
         <div className='w-10/12 mx-auto pt-5 text-white flex flex-col justify-center items-center mt-10' >
@@ -73,13 +73,13 @@ export default function Timer({ stage,
             <Button className="user-card_btn w-48 h-12 mx-2"  
             onClick={startTimer}>
 
-    {ticking? "Stop" : "Start"}
+    {ticking? "Arrêter" : "Commencer"}
     </Button>
     </div>
 {ticking &&(
  <Button className="user-card_btn w-48 h-12 mx-2"
  onClick={reset}>
- reset
+ Réinitialiser
 </Button>
 ) }
    

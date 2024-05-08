@@ -143,7 +143,7 @@ const handleImage = (
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3 w-full">
                 <FormLabel className="atext-base-semibold text-light-2">
-                Content
+                Contenue
 
                 </FormLabel>
                 <FormControl className="no-focus input-focus-effect">
@@ -189,7 +189,7 @@ const handleImage = (
                 <FormControl className="flex-1 text-base-semibold text-gray-200">
                 <div className="file-input-container">
                  <label className="file-input-button">
-                 Upload une Photo
+                 Télécharger une photo
                   <Input 
                   type="file"
                   accept="image/*"
@@ -212,13 +212,13 @@ const handleImage = (
               render={({ field }) => (
               <FormItem className="flex flex-col gap-3 w-full">
             <FormLabel className="text-base-semibold text-light-2">
-        Thread Type
+        Type du Thread
            </FormLabel>
             <FormControl className="no-focus">
             <select {...field} className="select-custom">
          <option value="exercise">Exercices</option>
          <option value="course_note">Notes de cours</option>
-         <option value="evaluation">Evaluation</option>
+         <option value="evaluation">Évaluation</option>
          // Add more options as needed
        </select>
            </FormControl>

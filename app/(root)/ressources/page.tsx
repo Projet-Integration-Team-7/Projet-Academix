@@ -39,7 +39,7 @@ async function Page(){
  
 const sections = [
     {
-        title: 'Educative websites links',
+        title: 'Liens de site web à titre éducatif',
         links: [
             { label: 'Khan academy website', url: 'https://www.coursera.org/' },
             { label: 'edX Website', url: 'https://www.edx.org/' },
@@ -52,7 +52,7 @@ const sections = [
         ]
     },
     {
-        title: 'Exercises section',
+        title: " Section d'exercise " ,
         links: [
             { label: 'Physics Classroom', url: 'https://www.physicsclassroom.com/' },
             { label: 'Paul\'s Online Math Notes', url: 'http://tutorial.math.lamar.edu/' },
@@ -65,7 +65,7 @@ const sections = [
         ]
     },
     {
-        title: 'Educative Youtube channel',
+        title: "Chaine youtube à contenue scientifique et éducatif",
         links: [
             { label: 'Vsauce', url: 'https://www.youtube.com/user/Vsauce' },
             { label: 'CrashCourse', url: 'https://www.youtube.com/user/crashcourse' },
@@ -79,7 +79,7 @@ const sections = [
         ]
     },
     {
-        title: 'Tutoring websites links',
+        title: "Sites web avec Tutorat",
         links: [
             { label: 'Varsity Tutors', url: 'https://www.varsitytutors.com/' },
             { label: 'Tutor.com', url: 'https://www.tutor.com/' },

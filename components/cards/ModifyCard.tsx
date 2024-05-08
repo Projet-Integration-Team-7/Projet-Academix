@@ -13,7 +13,7 @@ const ModifyCard=({} :Props) =>{
     
 <Button className="user-card_btn w-48 h-12 mx-2" onClick={() => router.push(`/modifyProfile`)}>
     
-              <h1>      Modify Profile   </h1> 
+              <h1>      Modifier Profile   </h1> 
             </Button>
             </div>
     )

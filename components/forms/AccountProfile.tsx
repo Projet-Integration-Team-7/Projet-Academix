@@ -189,7 +189,7 @@ const pathname=usePathname();
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3 w-full">
                 <FormLabel className="atext-base-semibold text-light-2">
-                Bio 
+                Biographie 
 
                 </FormLabel>
                 <FormControl >
@@ -207,7 +207,7 @@ const pathname=usePathname();
 
 
           
-          <Button type="submit" className="bg-primary-500">Submit</Button>
+          <Button type="submit" className="bg-primary-500">Soummettre </Button>
         </form>
       </Form>
     )

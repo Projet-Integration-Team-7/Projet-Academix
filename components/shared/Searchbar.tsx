@@ -28,7 +28,7 @@ const Searchbar: React.FC<SearchbarProps> = ({ routeType }) => {
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm, routeType]);
 
-  const placeholderText = routeType !== "/search" ? "Search users" : "Search creators";
+  const placeholderText = routeType !== "/search" ? "Chercher utilisateur" : "Search creators";
 
   return (
     <div className='searchbar flex items-center border-b-2 py-2 '>
