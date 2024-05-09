@@ -60,12 +60,7 @@
     {imgURL: "/assets/bot.svg",
     route:"/conversation",
     label: "Conversation"},
-    {
-      imgURL: "/assets/statistics.svg",
-      route: "/statistics",
-      label: "Statistics",
-    }
-  ,
+ 
     {imgURL: "/assets/statistics.svg",
     route:"/statistics",
     label: "Statistiques"}
