@@ -275,7 +275,7 @@ button.clerk, .organizationSwitcherTrigger {
 */
 /* Fallout-inspired sidebar styles */
 .custom-scrollbar {
-  scrollbar-color: #d9f99d #d9f99d; /* Custom scrollbar colors */
+  scrollbar-color: ##d9f99d #d9f99d; /* Custom scrollbar colors */
 }
 
 .leftsidebar {
