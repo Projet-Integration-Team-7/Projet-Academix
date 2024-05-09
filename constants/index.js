@@ -42,6 +42,7 @@
       route: "/timer",
       label: "Minuterie pomodoro",
     },
+   
     {
       imgURL: "/assets/agenda.svg",
       route: "/agenda",
@@ -58,6 +59,12 @@
     ,
     {imgURL: "/assets/bot.svg",
     route:"/conversation",
+    label: "Conversation"},
+    {
+      imgURL: "/assets/statistics.svg",
+      route: "/statistics",
+      label: "Statistics",
+    }
     label: "Conversation"},
     {imgURL: "/assets/statistics.svg",
     route:"/statistics",
