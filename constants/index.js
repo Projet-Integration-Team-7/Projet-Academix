@@ -65,7 +65,7 @@
       route: "/statistics",
       label: "Statistics",
     }
-    label: "Conversation"},
+  ,
     {imgURL: "/assets/statistics.svg",
     route:"/statistics",
     label: "Statistiques"}
