@@ -43,7 +43,7 @@ async function Page( ){
     {activity.author.name}
 
 </span>{" "}
-a répondu à votre thread !
+a répondu à votre publication !
         </p>
     </article>
 </Link>
