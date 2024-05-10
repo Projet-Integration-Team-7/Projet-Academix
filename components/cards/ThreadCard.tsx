@@ -155,7 +155,7 @@ const ThreadCard = ({
                     
                     <p className='text-subtle-medium text-gray-1'>
                       
-                      {" "}{community && ` - ${community.name} Communite`}
+                      {" "}{community && ` - ${community.name} `}
                     </p>
                     
                     <Image
