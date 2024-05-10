@@ -71,8 +71,7 @@ const ThreadCard = ({
         // console.log(threadType)
         return (
         
-<article className={`card-hover-effect flex w-full flex-col rounded-xl  ${isComment ? 'px-0 xs:px-7 border-2 border-yellow-300' : 'bg-emerald-50  p-7 '}`}>
-            <div className="static flex items-start justify-between ">
+<article className={`card-hover-effect flex w-full flex-col rounded-xl bg-emerald-50 p-7 ${isComment ? 'px-0 xs:px-7 border-2 border-yellow-300' : ''}`}>            <div className="static flex items-start justify-between ">
                 <div className="flex w-full flex-1 flex-row gap-4 ">
                     <div className="flex flex-col items-center">
                         
@@ -107,8 +106,7 @@ const ThreadCard = ({
                   </div>
                   
  )}
-
-
+ 
                         <p className="mt-2 text-small-mono text-black">{content}</p>
 
                         
