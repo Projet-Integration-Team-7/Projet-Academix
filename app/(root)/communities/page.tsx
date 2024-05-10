@@ -43,7 +43,7 @@ const result=await fetchCommunities({
     name={community.name}
     username={community.username}
     imgUrl={community.image}
-    bio={community.bio}
+    bio={"Ouvert à tous!"}
     members={community.members}
     />
     ))}
