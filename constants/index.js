@@ -68,8 +68,6 @@
   
   export const profileTabs = [
     { value: "threads", label: "Publication", icon: "/assets/reply.svg" },
-    { value: "replies", label: "Commentaires", icon: "/assets/members.svg" },
-    { value: "tagged", label: "Mentions", icon: "/assets/tag.svg" },
   ];
   
   export const communityTabs = [
