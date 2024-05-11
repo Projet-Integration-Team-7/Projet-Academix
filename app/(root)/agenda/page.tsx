@@ -55,7 +55,7 @@ const Home: React.FC = () => {
     };
     const response = await createEvent(newEvent);
     setEvents(prevEvents => [...prevEvents, response]);
-    
+    window.location.reload();
     
   };
   
@@ -67,6 +67,7 @@ const Home: React.FC = () => {
     try {
       // Call the deleteEvent function with the event's ID
       await deleteEvent(clickInfo.event.title);
+      window.location.reload();
       // Update the UI by removing the event from the list of events
     } catch (error) {
       console.error('Error deleting event:', error);
@@ -88,6 +89,7 @@ const Home: React.FC = () => {
       color: event.backgroundColor,
     };
     await updateEvent(info.event.title, updatedEventData);
+    window.location.reload();
     try {
       console.log('L\'événement a été mis à jour avec succès.');
     } catch (error) {

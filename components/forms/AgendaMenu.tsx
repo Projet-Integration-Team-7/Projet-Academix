@@ -6,6 +6,8 @@ import timeGridPlugin from '@fullcalendar/timegrid';
 import { createEvent,deleteEvent,fetchEvents,updateEvent } from '@/lib/actions/events.action';
 import dynamic from 'next/dynamic';
 import { Draggable } from '@fullcalendar/interaction';
+import frLocale from '@fullcalendar/core/locales/fr';
+import listPlugin from '@fullcalendar/list';
 // Définition des props du composant
 
 interface CalendarProps {
@@ -69,12 +71,13 @@ const CalendarComponent: React.FC<CalendarProps> = ({
     <div className="fullcalendar-container">
     <FullCalendar
     
-      plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}// Plugins pour le calendrier
-      headerToolbar={{
-        left: ' today',
-        center: 'title',
-        right: 'dayGridMonth,timeGridWeek',
-      }}
+    plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,listPlugin]}
+    initialView="dayGridMonth"
+    headerToolbar={{
+      left: 'prev,next today',
+      center: 'title',
+      right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+    }}
       events={events}// Les événements à afficher
   nowIndicator={true}// Indicateur du temps actuel
   editable={true} // Active la possibilité de déplacer et redimensionner les événements
@@ -85,6 +88,7 @@ const CalendarComponent: React.FC<CalendarProps> = ({
   eventClick={handleEventClick}// Permet la sélection de plages de dates
   eventDrop={(data) => handleEventDrop(data)}// Permet la sélection de plages de dates
   eventResize={(data) => handleEventDrop(data)} // Utilise la même fonction pour le déplacement et la redimension
+  locale={frLocale} // Ajouté ici
 
   /></div>
   );
