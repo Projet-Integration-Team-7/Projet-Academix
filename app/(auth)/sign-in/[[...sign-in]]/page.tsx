@@ -1,5 +1,7 @@
 import { SignIn } from "@clerk/nextjs";
 import { shadesOfPurple } from "@clerk/themes";
+import { frFR } from "@clerk/localizations";
+
 /**
  * Composant CustomSignIn pour afficher une page de connexion personnalisée.
  * Utilise le thème `shadesOfPurple` de Clerk avec des modifications spécifiques.

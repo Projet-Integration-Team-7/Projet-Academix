@@ -1,6 +1,8 @@
 import { ClerkProvider } from "@clerk/nextjs"
 import { Inter } from "next/font/google"
 import '../globals.css'
+import { frFR } from "@clerk/localizations";
+
 // Métadonnées de l'application pour améliorer le SEO et la lisibilité sur les réseaux sociaux.
 
 export const metadata = {
@@ -25,8 +27,8 @@ export default function RootLayout({
 }) {
     return (
         // Enveloppe les enfants dans un contexte d'authentification Clerk.
-        <ClerkProvider>
-            <html lang="fr">
+<ClerkProvider localization={frFR}> 
+           <html lang="fr">
                 <body className={`${inter.className} bg-dark-1`}>
                     <div className="w-full flex justify-center items-center min-h-screen">
 

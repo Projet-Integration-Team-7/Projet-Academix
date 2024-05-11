@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/localizations": "^2.3.1",
     "@clerk/nextjs": "^4.30.0",
     "@clerk/themes": "^1.7.12",
     "@fullcalendar/core": "^6.1.11",
