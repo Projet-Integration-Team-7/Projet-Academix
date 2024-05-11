@@ -26,7 +26,7 @@ export default function RootLayout({
     return (
         // Enveloppe les enfants dans un contexte d'authentification Clerk.
         <ClerkProvider>
-            <html lang="en">
+            <html lang="fr">
                 <body className={`${inter.className} bg-dark-1`}>
                     <div className="w-full flex justify-center items-center min-h-screen">
 
