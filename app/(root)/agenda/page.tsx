@@ -55,7 +55,7 @@ const Home: React.FC = () => {
     };
     const response = await createEvent(newEvent);
     setEvents(prevEvents => [...prevEvents, response]);
-    
+    window.location.reload();
     
   };
   
@@ -67,6 +67,7 @@ const Home: React.FC = () => {
     try {
       // Call the deleteEvent function with the event's ID
       await deleteEvent(clickInfo.event.title);
+      window.location.reload();
       // Update the UI by removing the event from the list of events
     } catch (error) {
       console.error('Error deleting event:', error);
@@ -88,6 +89,7 @@ const Home: React.FC = () => {
       color: event.backgroundColor,
     };
     await updateEvent(info.event.title, updatedEventData);
+    window.location.reload();
     try {
       console.log('L\'événement a été mis à jour avec succès.');
     } catch (error) {
@@ -104,7 +106,7 @@ const Home: React.FC = () => {
 
       {/* Navigation */}
       <nav className="flex justify-between mb-12 border-b border-violet-100 p-4">
-        <h1 className="font-bold text-2xl text-gray-200">Calendar</h1>
+        <h1 className="font-bold text-2xl text-gray-200">Calendrier</h1>
       </nav>
       
       {/* Main contenu */}
@@ -116,7 +118,7 @@ const Home: React.FC = () => {
               type="text"
               value={eventName}
               onChange={(e) => setEventName(e.target.value)}
-              placeholder="Enter event name"
+              placeholder="Entrer votre événement  "
             />
 
             {/* Input pour nom des couleur */}

@@ -27,7 +27,7 @@ const EvaluationTab = async ({ currentUserId, accountId, accountType }: Props) =
   
     return (
       <section className="mt-9 flex flex-col gap-10">
-      EvaluationTab
+      Tableau d'évaluation
         {exerciseThreads.map((thread: any) => (
           <ThreadCard
                 key={thread._id}

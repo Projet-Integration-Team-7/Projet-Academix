@@ -1,31 +1,40 @@
 import { SignUp} from "@clerk/nextjs";
 import { shadesOfPurple } from "@clerk/themes";
-
+/**
+ * CustomSignUp fournit un formulaire d'inscription stylisé utilisant les composants Clerk.
+ * Il positionne une boîte d'inscription fixée au centre du viewport avec un arrière-plan plein écran.
+ */
 export default function CustomSignIn() {
-    return (
-        <div
-            style={{
-                position: "fixed", // Position the container fixed to the viewport
-                top: 0, // Position at the top
-                left: 0, // Position at the left
-                width: "100%", // Cover the entire viewport width
-                height: "100%", // Cover the entire viewport height
-                backgroundImage: "url('/assets/Vault1.jpg')", // Set the background image
-                backgroundSize: "cover", // Cover the entire area
-                backgroundPosition: "center", // Center the background image
+    
+        
+            const backgroundStyle ={
+                position: "fixed", // Fixe le conteneur à l'affichage
+                top: 0, // En haut de la vue
+                left: 0, // À gauche de la vue
+                width: "100%", // Largeur couvrant tout le viewport
+                height: "100%", // Hauteur couvrant tout le viewport
+                backgroundImage: "url('/assets/fond5.png')", // Définit l'image de fond
+                backgroundSize: "cover", // Assure que l'image de fond couvre tout l'espace disponible
+                backgroundPosition: "center", // Centre l'image de fond
                 display: "flex",
                 justifyContent: "center",
-                alignItems: "center",
-            }}
-        >
-            <div style={{ maxWidth: 400, width: "100%" }}> {/* Adjust the max-width of the sign-in box */}
+                alignItems: "center",// Centre le contenu (horizontalement et verticalement)
+            };
+            const formContainerStyle = {
+                maxWidth: 400, // Définit la largeur maximale de la boîte de formulaire à 400px
+                width: "100%" // Assure que la largeur est responsive
+            };
+
+                return (
+                    <div style={backgroundStyle}>
+                   <div style={formContainerStyle}>
                 <SignUp
                     appearance={{
-                        baseTheme: shadesOfPurple,
+                        baseTheme: shadesOfPurple,//Utilise le theme de couleur shadesOfPurple
                         elements: {
                             formButtonPrimary: {
-                                backgroundColor: "blue", // Set the background color to blue
-                                color: "yellow", // Set the text color to yellow
+                                backgroundColor: "blue", // Couleur de fonds bleue pour le bouton principal
+                                color: "yellow", // Couleur de texte jaune pour le bouton principal
                             },
                         },
                     }}

@@ -1,25 +1,28 @@
+//importation des modules et composants nécessaires
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 import { fetchUser } from "@/lib/actions/user.actions";
-import { string } from "zod";
 import ProfileHeader from "@/components/shared/ProfileHeader";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profileTabs } from "@/constants";
 import Image from "next/image";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import FriendRequest from "@/components/forms/FriendRequest";
-import ModifyCard from "@/components/cards/ModifyCard";
-
+// Définition de la fonction asynchrone Page
 async function Page({ params }: { params: { id: string } }) {
+    // Récupération de l'utilisateur actuel
+
   const user = await currentUser();
+  // Si l'utilisateur n'existe pas, arrêter l'exécution
 
   if (!user) return null;
+  // Récupération des informations de l'utilisateur
 
   const userInfo = await fetchUser(params.id);
+  // Si l'utilisateur n'est pas embarqué, rediriger vers la page '/onboarding'
 
   if (!userInfo?.onboarded) redirect("/onboarding");
-
+  // Retourne une section JSX qui contient un titre et une div
 
   return (
     <section>
@@ -32,19 +35,15 @@ async function Page({ params }: { params: { id: string } }) {
           imgUrl={userInfo.image}
           bio={userInfo.bio}
         />
-      
-      {user.id === userInfo.id && <ModifyCard/>}
-
-
-
-        <div className=" translate-y-6"> 
-          {user.id !== userInfo.id && <FriendRequest currentUserId={JSON.parse(JSON.stringify(user.id))} userId={JSON.parse(JSON.stringify(userInfo.id))}/>}
+        <div className="translate-y-6">
+          {user.id !== userInfo.id && (
+            <FriendRequest
+              currentUserId={JSON.parse(JSON.stringify(user.id))}
+              userId={JSON.parse(JSON.stringify(userInfo.id))}
+            />
+          )}
         </div>
       </div>
-
-
-      
-
       <div className="mt-9">
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="tab">
@@ -65,25 +64,27 @@ async function Page({ params }: { params: { id: string } }) {
                 )}
               </TabsTrigger>
             ))}
-          </TabsList>
-          {profileTabs.map((tab) => (
-            /*Info necessaire pour supprimer le thread*/
-
-            <TabsContent
-              key={"content-${tab.label}"}
-              value={tab.value}
-              className="w-full text-light-1"
-            >
-              <ThreadsTab
-                currentUserId={user.id}
-                accountId={userInfo.id}
-                accountType="User"
-              />
-            </TabsContent>
-          ))}
+          </TabsList>{profileTabs.map((tab) => (
+  <TabsContent
+    key={`content-${tab.label}`}
+    value={tab.value}
+    className="w-full text-light-1"
+  >
+    {tab.value === 'threads' && (
+      <ThreadsTab
+        currentUserId={user.id}
+        accountId={userInfo.id}
+        accountType="User"
+      />
+    )}
+    {/* Ajoutez ici d'autres conditions pour les autres onglets */}
+  </TabsContent>
+))}
         </Tabs>
-      </div>{" "}
+      </div>
     </section>
   );
 }
+// Exportation de la fonction Page par défaut
+
 export default Page;

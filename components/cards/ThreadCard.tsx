@@ -71,8 +71,7 @@ const ThreadCard = ({
         // console.log(threadType)
         return (
         
-<article className={`card-hover-effect flex w-full flex-col rounded-xl  ${isComment ? 'px-0 xs:px-7 border-2 border-yellow-300' : 'bg-emerald-50  p-7 '}`}>
-            <div className="static flex items-start justify-between ">
+<article className={`card-hover-effect flex w-full flex-col rounded-xl bg-emerald-50 p-7 ${isComment ? 'px-0 xs:px-7 border-2 border-yellow-300' : ''}`}>            <div className="static flex items-start justify-between ">
                 <div className="flex w-full flex-1 flex-row gap-4 ">
                     <div className="flex flex-col items-center">
                         
@@ -99,7 +98,7 @@ const ThreadCard = ({
                         </div>
                         {imgUrl && imgUrl !== "" && imgUrl !== imgPlacebot && (
                         <div className="image-hover-container">
-               <button className="hover-button">Hover Over Me</button>
+               <button className="hover-button">Attention spoil</button>
                    <div className="image-hover">
                    
                    <Image src={imgUrl} alt="Thread Image" width={600} height={600} />           
@@ -107,8 +106,7 @@ const ThreadCard = ({
                   </div>
                   
  )}
-
-
+ 
                         <p className="mt-2 text-small-mono text-black">{content}</p>
 
                         
@@ -125,8 +123,9 @@ const ThreadCard = ({
 
                             {isComment && comments.length > 0 && (
                                 <Link href={`/thread/${id}`}>
+
                                     <p className="mt-1 text-subtle-medium text-gray-1">
-                                        {comments.length} replies
+                                        {comments.length} commentaires
                                     </p>
                                 </Link>
                             )}
@@ -155,7 +154,7 @@ const ThreadCard = ({
                     
                     <p className='text-subtle-medium text-gray-1'>
                       
-                      {" "}{community && ` - ${community.name} Communite`}
+                      {" "}{community && ` - ${community.name} `}
                     </p>
                     
                     <Image

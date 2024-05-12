@@ -269,7 +269,9 @@ button.clerk, .organizationSwitcherTrigger {
   animation: bubble 15s linear infinite; /* Adjust timing as needed for speed */
 }
 
-
+.white-background {
+  background-color: #ffffff;
+}
 
 /*left side bare
 */
