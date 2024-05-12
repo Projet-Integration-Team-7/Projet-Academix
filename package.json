@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"npm run start:next\" \"npm run start:flask\"",
+    "dev": "concurrently \"npm run start:next\"",
     "start:next": "next dev",
     "start:flask": "python -m components.chatbot.main",
     "lint": "next lint"
@@ -50,6 +50,7 @@
     "react-select": "^5.8.0",
     "react-share": "^5.1.0",
     "shadcn-ui": "^0.2.3",
+    "socket.io-client": "^4.7.5",
     "svix": "^1.20.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",

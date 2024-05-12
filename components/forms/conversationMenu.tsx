@@ -1,25 +1,33 @@
 "use client"
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
 import { fetchUsers } from "@/lib/actions/user.actions";
-import { createConversation, fetchAllConversations, sendConversationMessage } from "@/lib/actions/conversation.action";
+import axios from 'axios';
+
+
+
+
+type Conversation = {
+    _id: string;
+    name: string;
+  };
 
 function CreateConversationPage({ userActif }) {
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [conversationName, setConversationName] = useState('');
-    const [conversations, setConversations] = useState([]);
+    const [conversations, setConversations] = useState<Conversation[]>([]);
     const [selectedConversation, setSelectedConversation] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [newMessage, setNewMessage] = useState('');
+    const [messages, setMessages] = useState([]);
+    const apiURL = 'https://academixbackend-b7d3e8ece074.herokuapp.com/';
 
     useEffect(() => {
         async function fetchInitialData() {
             setLoading(true);
             try {
-                const fetchedConversations = await fetchAllConversations();
-                setConversations(fetchedConversations);
                 const response = await fetchUsers({
                     userId: "user-id-here",
                     searchString: "",
@@ -38,6 +46,60 @@ function CreateConversationPage({ userActif }) {
 
         fetchInitialData();
     }, []);
+    useEffect(() => {
+        const intervalId = setInterval(async () => {
+            try {
+                const fetchedConversations = await fetchAllUserConversations(apiURL, userActif.id);
+                setConversations(fetchedConversations);
+            } catch (error) {
+                setError(`Error fetching conversations: ${error.message || 'Unknown error'}`);
+            }
+        }, 1000); // Fetch every 1 second
+
+        return () => clearInterval(intervalId); // Clean up interval on component unmount
+    }, [apiURL, userActif.id]);
+
+    useEffect(() => {
+        const fetchConversationMessages = async () => {
+            try {
+                if (selectedConversation) {
+                    const messages = await fetchMessages(apiURL, selectedConversation._id);
+                    setMessages(messages);
+                    setError(null);
+                }
+            } catch (error) {
+                setError(`Error fetching messages: ${error.message || 'Unknown error'}`);
+            }
+        };
+
+        fetchConversationMessages();
+
+        const intervalId = setInterval(fetchConversationMessages, 1000); // Fetch every 1 second
+
+        return () => clearInterval(intervalId); // Clean up interval on component unmount
+    }, [apiURL, selectedConversation]);
+
+    const fetchMessages = async (apiURL, conversationId) => {
+        try {
+            const response = await axios.get(`${apiURL}getMessages/${conversationId}`);
+            return response.data.messages;
+        } catch (error) {
+            throw new Error(`Failed to fetch messages: ${error.message}`);
+        }
+    };
+
+    const fetchAllUserConversations = async (apiURL, userId) => {
+        try {
+            const response = await axios.get(`${apiURL}getConversations/${userId}`);
+            if (response.data && response.data.conversations) {
+                return response.data.conversations.map(conv => ({ _id: conv.id, name: conv.name }));
+            } else {
+                throw new Error('Unexpected data format for conversations');
+            }
+        } catch (error) {
+            throw new Error(`Failed to fetch conversations: ${error.message}`);
+        }
+    };
 
     const handleUserChange = (selectedOptions) => {
         setSelectedUsers(selectedOptions);
@@ -62,10 +124,15 @@ function CreateConversationPage({ userActif }) {
         }
 
         setLoading(true);
-        const participantIds = selectedUsers.map(user => user.value);
+        const participantIds = [...selectedUsers.map(user => user.value.toString()), userActif.id.toString()];
         try {
-            await createConversation(conversationName, participantIds);
+            //create conversation
+            const response = await axios.post(`${apiURL}createConversation`, {
+                name: conversationName,
+                participants: participantIds
+            });
             setError(null);
+            console.log(response.data);
         } catch (error) {
             setError(`Failed to create conversation: ${error.message}`);
         }
@@ -80,9 +147,15 @@ function CreateConversationPage({ userActif }) {
 
         setLoading(true);
         try {
-            await sendConversationMessage(selectedConversation._id, userActif.name, newMessage);
+            // Send the message to the server
+            await axios.post(`${apiURL}sendMessages/${selectedConversation._id}/${userActif.id}`, {
+                message_text: newMessage
+            });
+
+            // Clear the new message input and error state
             setNewMessage('');
             setError(null);
+
         } catch (error) {
             setError(`Failed to send message: ${error.message}`);
         }
@@ -95,11 +168,18 @@ function CreateConversationPage({ userActif }) {
 
     const renderConversationMessages = () => {
         if (!selectedConversation) return <p>Select a conversation to view messages.</p>;
+
         return (
             <div className="p-4 bg-white shadow rounded-lg overflow-auto">
                 <h3 className="text-lg font-bold mb-2">Messages for {selectedConversation.name}</h3>
-                {selectedConversation.messages.map((message, index) => (
-                    <p key={index} className="p-2 border-b last:border-b-0">{message}</p>
+                {messages.map((msg) => (
+                    <div key={msg.id} className="flex justify-between p-2 border-b last:border-b-0">
+                        <div>
+                            <p className="font-bold">{msg.user_id}</p>
+                            <p>{msg.text}</p>
+                        </div>
+                        <p>{new Date(msg.createdAt).toLocaleString()}</p>
+                    </div>
                 ))}
                 <input
                     type="text"
