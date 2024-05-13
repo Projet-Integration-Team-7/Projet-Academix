@@ -195,7 +195,7 @@ function CreateConversationPage({ userActif }) {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-xl font-bold mb-4">Create New Conversation</h1>
+            <h1 className="text-xl font-bold mb-4 texte-white">Créer une conversation </h1>
             <form onSubmit={handleSubmit} className="mb-6">
                 <input
                     type="text"
