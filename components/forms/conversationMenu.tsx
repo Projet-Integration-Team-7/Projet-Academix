@@ -125,7 +125,7 @@ function CreateConversationPage({ userActif }) {
         }
 
         setLoading(true);
-        const participantIds = [...selectedUsers.map(user => user.value.toString()), userActif.id.toString()];
+        const participantIds = [...selectedUsers.map(user => user.value.toString()), userActif.name.toString()];
         try {
             //create conversation
             const response = await axios.post(`${apiURL}createConversation`, {
@@ -149,7 +149,7 @@ function CreateConversationPage({ userActif }) {
         setLoading(true);
         try {
             // Send the message to the server
-            await axios.post(`${apiURL}sendMessages/${selectedConversation._id}/${userActif.id}`, {
+            await axios.post(`${apiURL}sendMessages/${selectedConversation._id}/${userActif.name}`, {
                 message_text: newMessage
             });
 
@@ -212,7 +212,7 @@ function CreateConversationPage({ userActif }) {
 
     return (
         <div className="container mx-auto p-4">
-            <h1 className="text-xl font-bold mb-4">Create New Conversation</h1>
+            <h1 className="text-xl font-bold mb-4 texte-white">Créer une conversation </h1>
             <form onSubmit={handleSubmit} className="mb-6">
                 <input
                     type="text"

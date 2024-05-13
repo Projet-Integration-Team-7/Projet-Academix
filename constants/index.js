@@ -44,20 +44,16 @@
     },
    
     {
-      imgURL: "/assets/agenda.svg",
+      imgURL: "/assets/agenda (2).png",
       route: "/agenda",
       label: "Agenda",
     },
-    {
-      imgURL: "/assets/messages.svg",
-      route: "/chat",
-      label :"Chat",
-    },
-    {imgURL: "/assets/bot.svg",
+    
+    {imgURL: "/assets/bot.png",
     route:"/chatbot",
     label: "Chatbot"}
     ,
-    {imgURL: "/assets/bot.svg",
+    {imgURL: "/assets/chat.png",
     route:"/conversation",
     label: "Conversation"},
  
