@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
-import { fetchUsers } from "@/lib/actions/user.actions";
+import { fetchUsers, fetchUser } from "@/lib/actions/user.actions";
 import axios from 'axios';
 
 
@@ -23,6 +23,7 @@ function CreateConversationPage({ userActif }) {
     const [newMessage, setNewMessage] = useState('');
     const [messages, setMessages] = useState([]);
     const apiURL = 'https://academixbackend-b7d3e8ece074.herokuapp.com/';
+    
 
     useEffect(() => {
         async function fetchInitialData() {
@@ -167,20 +168,35 @@ function CreateConversationPage({ userActif }) {
     };
 
     const renderConversationMessages = () => {
+        const [usersInfo, setUsersInfo] = useState([]);
+    
+        useEffect(() => {
+            const fetchUsersInfo = async () => {
+                const usersData = await Promise.all(messages.map((msg) => fetchUser(msg.user_id)));
+                setUsersInfo(usersData);
+            };
+    
+            fetchUsersInfo();
+        }, [messages]);
+    
         if (!selectedConversation) return <p>Selectionner une conversation por voir le message.</p>;
-
+    
         return (
             <div className="p-4 bg-white shadow rounded-lg overflow-auto">
                 <h3 className="text-lg font-bold mb-2">Messages for {selectedConversation.name}</h3>
-                {messages.map((msg) => (
-                    <div key={msg.id} className="flex justify-between p-2 border-b last:border-b-0">
-                        <div>
-                            <p className="font-bold">{msg.user_id}</p>
-                            <p>{msg.text}</p>
+                {messages.map((msg, index) => {
+                    const username = usersInfo[index]?.username;
+    
+                    return (
+                        <div key={msg.id} className="flex justify-between p-2 border-b last:border-b-0">
+                            <div>
+                                <p className="font-bold">{username}</p>
+                                <p>{msg.text}</p>
+                            </div>
+                            <p>{new Date(msg.createdAt).toLocaleString()}</p>
                         </div>
-                        <p>{new Date(msg.createdAt).toLocaleString()}</p>
-                    </div>
-                ))}
+                    );
+                })}
                 <input
                     type="text"
                     value={newMessage}
@@ -192,6 +208,7 @@ function CreateConversationPage({ userActif }) {
             </div>
         );
     };
+    
 
     return (
         <div className="container mx-auto p-4">
