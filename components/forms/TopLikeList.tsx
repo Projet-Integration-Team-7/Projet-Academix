@@ -15,7 +15,7 @@ const TopLikeList = ({ likes }: any) => {
         setUserData({
             labels: likes.map((thread: any) => thread.authorInfo ?"Thread de "+ thread.authorInfo.name : 'pas defini'),
             datasets: [{
-                label: "likes of the thread posted",
+                label: "Mentions j'aime par publications",
                 data: likes.map((thread: any) => thread.likesCount),
                 backgroundColor: ["#d9f99d"],
                 borderColor: "BLACK",
@@ -32,7 +32,7 @@ const TopLikeList = ({ likes }: any) => {
         
         <div className='flex md:space-x-20'>
             <div>
-            <h2 className='font-bold  mb-20'>Top threads : </h2>
+            <h2 className='font-bold  mb-20'>Les mentions j'aime des publications les plus populaires et leurs auteurs  : </h2>
             
             <ul>
                 {likes.map((thread: any) => (
@@ -46,7 +46,7 @@ const TopLikeList = ({ likes }: any) => {
             </ul>
             </div>
            <div>
-         <h1 className='center-mid mb-5 mt-10 text-center'>Likes of the thread posted</h1>
+         <h1 className='center-mid mb-5 mt-10 text-center'>Mentions j'aime par publications</h1>
             <div style={{width : 500}} className='text-center'>
             <BarChart 
             chartData={userData}/>

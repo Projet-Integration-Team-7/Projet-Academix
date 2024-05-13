@@ -32,7 +32,7 @@ const AuthorList = ({ authors }) => {
     return (
         <div className='flex md:space-x-20'>
             <div >
-            <h2 className='font-bold mb-20 '>Most Active Authors : </h2>
+            <h2 className='font-bold mb-20 '>Utilisateurs les plus actifs : </h2>
             <ul>
                 {authors.map((author : any) => (
                     <li key={author.authorId}>
@@ -45,7 +45,7 @@ const AuthorList = ({ authors }) => {
             </div>
 
             <div>
-            <h1 className='center-mid mb-5 text-center'>Top thread posted per User</h1>
+            <h1 className='center-mid mb-5 text-center'>Les utilsateurs avec le plus de publications</h1>
 
             <div style={{width : 500}} className='text-center'>
             <BarChart 
