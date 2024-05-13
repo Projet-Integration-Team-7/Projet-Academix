@@ -124,7 +124,7 @@ function CreateConversationPage({ userActif }) {
         }
 
         setLoading(true);
-        const participantIds = [...selectedUsers.map(user => user.value.toString()), userActif.id.toString()];
+        const participantIds = [...selectedUsers.map(user => user.value.toString()), userActif.name.toString()];
         try {
             //create conversation
             const response = await axios.post(`${apiURL}createConversation`, {
@@ -148,7 +148,7 @@ function CreateConversationPage({ userActif }) {
         setLoading(true);
         try {
             // Send the message to the server
-            await axios.post(`${apiURL}sendMessages/${selectedConversation._id}/${userActif.id}`, {
+            await axios.post(`${apiURL}sendMessages/${selectedConversation._id}/${userActif.name}`, {
                 message_text: newMessage
             });
 
