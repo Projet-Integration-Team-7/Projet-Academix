@@ -143,7 +143,7 @@ const handleImage = (
             render={({ field }) => (
               <FormItem className="flex flex-col gap-3 w-full">
                 <FormLabel className="atext-base-semibold text-light-2">
-                Contenue
+                Contenu
 
                 </FormLabel>
                 <FormControl className="no-focus input-focus-effect">
