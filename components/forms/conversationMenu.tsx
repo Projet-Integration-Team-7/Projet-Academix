@@ -124,7 +124,7 @@ function CreateConversationPage({ userActif }) {
         }
 
         setLoading(true);
-        const participantIds = [...selectedUsers.map(user => user.value.toString()), userActif.name.toString()];
+        const participantIds = [...selectedUsers.map(user => user.value.toString()), userActif.id.toString()];
         try {
             //create conversation
             const response = await axios.post(`${apiURL}createConversation`, {
@@ -167,20 +167,22 @@ function CreateConversationPage({ userActif }) {
     };
 
     const renderConversationMessages = () => {
-        if (!selectedConversation) return <p>Selectionner une conversation por voir le message.</p>;
-
+        if (!selectedConversation) return <p>Selectionner une conversation pour voir le message.</p>;
+    
         return (
-            <div className="p-4 bg-white shadow rounded-lg overflow-auto">
-                <h3 className="text-lg font-bold mb-2">Messages for {selectedConversation.name}</h3>
-                {messages.map((msg) => (
-                    <div key={msg.id} className="flex justify-between p-2 border-b last:border-b-0">
-                        <div>
-                            <p className="font-bold">{msg.user_id}</p>
-                            <p>{msg.text}</p>
+            <div className="p-4 shadow rounded-lg">
+                <h3 className="text-lg font-bold mb-2 text-emerald-50">Messages de: {selectedConversation.name}</h3>
+                <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
+                    {messages.map((msg) => (
+                        <div key={msg.id} className={`flex ${msg.user_id === userActif.name ? 'justify-end' : 'justify-start'}`}>
+                            <div className="p-2 border rounded-lg">
+                                <p className="font-bold text-white">{msg.user_id}</p>
+                                <p className="text-white">{msg.text}</p >
+                                <p className="text-white">{new Date(msg.createdAt).toLocaleString()}</p>
+                            </div>
                         </div>
-                        <p>{new Date(msg.createdAt).toLocaleString()}</p>
-                    </div>
-                ))}
+                    ))}
+                </div>
                 <input
                     type="text"
                     value={newMessage}
@@ -192,6 +194,8 @@ function CreateConversationPage({ userActif }) {
             </div>
         );
     };
+    
+    
 
     return (
         <div className="container mx-auto p-4">
