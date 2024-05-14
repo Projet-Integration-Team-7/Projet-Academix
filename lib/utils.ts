@@ -18,14 +18,14 @@ export function isBase64Image(imageData: string) {
 export function formatDateString(dateString: string) {
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
-    month: "short",
+    month: "long", // Changed from "short" to "long" for full month name
     day: "numeric",
   };
 
   const date = new Date(dateString);
-  const formattedDate = date.toLocaleDateString(undefined, options);
+  const formattedDate = date.toLocaleDateString('fr-FR', options); // Added 'fr-FR'
 
-  const time = date.toLocaleTimeString([], {
+  const time = date.toLocaleTimeString('fr-FR', { // Added 'fr-FR'
     hour: "numeric",
     minute: "2-digit",
   });
