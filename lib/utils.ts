@@ -69,7 +69,7 @@ export async function calculateTimePassed(date: Date) {
 
   // Return the simplified time string
   if (months > 1) {
-      const formattedDate = date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' });
+      const formattedDate = date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: '2-digit' });
       return formattedDate;
   } else if (days > 0) {
       return `${days}d`;
