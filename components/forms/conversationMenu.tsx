@@ -213,7 +213,7 @@ function CreateConversationPage({ userActif }) {
                 <input
                     type="text"
                     id="conversationName"
-                    placeholder="Conversation Name"
+                    placeholder="nom de Conversation "
                     value={conversationName}
                     onChange={handleNameChange}
                     className="p-2 border rounded w-full mb-4"
