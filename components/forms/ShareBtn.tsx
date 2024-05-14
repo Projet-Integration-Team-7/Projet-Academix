@@ -56,7 +56,7 @@ const ShareBtn = ({ threadId }: ShareBtnProps) => {
         await navigator.share({
           url: window.location.href,
           title: "Academix",
-          text: `Jette un coup d'oeil à ce thead intéressant sur Academix !\n${threadURL}`,
+          text: `Jette un coup d'oeil à ce thread intéressant sur Academix !\n${threadURL}`,
         });
       } else {
         throw new Error("Web Share API is not supported in this browser");
