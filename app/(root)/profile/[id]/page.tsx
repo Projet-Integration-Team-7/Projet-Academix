@@ -8,6 +8,7 @@ import { profileTabs } from "@/constants";
 import Image from "next/image";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import FriendRequest from "@/components/forms/FriendRequest";
+import ProfilePicture from "@/components/forms/ProfilePicture";
 // Définition de la fonction asynchrone Page
 async function Page({ params }: { params: { id: string } }) {
     // Récupération de l'utilisateur actuel
@@ -35,6 +36,8 @@ async function Page({ params }: { params: { id: string } }) {
           imgUrl={userInfo.image}
           bio={userInfo.bio}
         />
+       
+    
         <div className="translate-y-6">
           {user.id !== userInfo.id && (
             <FriendRequest
@@ -47,7 +50,8 @@ async function Page({ params }: { params: { id: string } }) {
       <div className="mt-9">
         <Tabs defaultValue="threads" className="w-full">
           <TabsList className="tab">
-            {profileTabs.map((tab) => (
+            {
+            profileTabs.map((tab) => (
               <TabsTrigger key={tab.label} value={tab.value} className="tab">
                 <Image
                   src={tab.icon}
@@ -81,6 +85,7 @@ async function Page({ params }: { params: { id: string } }) {
   </TabsContent>
 ))}
         </Tabs>
+      
       </div>
     </section>
   );
