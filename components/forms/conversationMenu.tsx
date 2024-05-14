@@ -180,22 +180,17 @@ function CreateConversationPage({ userActif }) {
             <div className="p-4 shadow rounded-lg">
                 <h3 className="text-lg font-bold mb-2 text-emerald-50">Messages de: {selectedConversation.name}</h3>
                 <div style={{ maxHeight: '400px', overflowY: 'auto' }}>
-                    {messages.map((msg) => (
-                        <div key={msg.id} className={`flex ${msg.user_id === userActif.name ? 'justify-end' : 'justify-start'}`}>
-                            <div className="p-2 border rounded-lg">
-                                <div className='flex-items'>
-
-                                <p className="font-bold text-white">{msg.user_id}</p>
-                                <ProfilePicture
-                                 imgUrl={userActif.image}
-       
-       />
-                                </div>
-                                <p className="text-white">{msg.text}</p >
-                                <p className="text-white">{new Date(msg.createdAt).toLocaleString()}</p>
-                            </div>
-                        </div>
-                    ))}
+                {messages.map((msg) => (
+    <div key={msg.id} className={`flex ${msg.user_id === userActif.name ? 'justify-end' : 'justify-start'}`}>
+        <div className="p-2 border rounded-lg">
+            <div className="flex items-center">
+                <p className="font-bold text-white">{msg.user_id}</p>
+            </div>
+            <p className="text-white">{msg.text}</p>
+            <p className="text-white text-sm">{new Date(msg.createdAt).toLocaleString()}</p>
+        </div>
+    </div>
+))}
                 </div>
                 <input
                     type="text"
