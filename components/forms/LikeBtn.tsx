@@ -8,10 +8,11 @@ interface LikeBtnProps {
     threadId: string;
     currentUserId: string;
     mapLikes: Map<string,Date>;
-    likesCount: number
+    likesCount: number;
+    isConnected: boolean;
 }
 
-const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps) => {
+const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount, isConnected}: LikeBtnProps) => {
     const alreadyLiked = mapLikes.has(currentUserId);
  
     const [isLiked, setIsLiked] = useState(alreadyLiked);
@@ -37,7 +38,13 @@ const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount}: LikeBtnProps)
                 width={24}
                 height={24}
                 className="cursor-pointer object-contain transition ease-in-out hover:scale-110 hover:-translate-y-1"
-                onClick={handleClick}
+                onClick={() => {
+                    if (isConnected) {
+                        handleClick();
+                    } else {
+                        window.alert("Connectez-vous pour aimer cette publication !");
+                    }
+                }}
             />
             <span className="text-dark-200 m-0">{nbLikes}</span>
         </div>
