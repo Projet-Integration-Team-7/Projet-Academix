@@ -55,7 +55,8 @@ const ShareBtn = ({ threadId }: ShareBtnProps) => {
       if (navigator.share) {
         await navigator.share({
           url: window.location.href,
-          text: "Check out this thread on Academix !",
+          title: "Academix",
+          text: "Jette un coup d'oeil à ce thead intéressant sur Academix !",
         });
         console.log("Shared successfully");
       } else {
