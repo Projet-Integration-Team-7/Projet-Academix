@@ -1,8 +1,10 @@
 "use client"
+import Image from "next/image";
 import React, { useState, useEffect, useRef } from 'react';
 import Select from 'react-select';
 import { fetchUsers } from "@/lib/actions/user.actions";
 import axios from 'axios';
+import ProfilePicture from "./ProfilePicture";
 
 
 
@@ -10,9 +12,13 @@ import axios from 'axios';
 type Conversation = {
     _id: string;
     name: string;
+   
   };
 
 function CreateConversationPage({ userActif }) {
+
+ 
+
     const [users, setUsers] = useState([]);
     const [selectedUsers, setSelectedUsers] = useState([]);
     const [conversationName, setConversationName] = useState('');
@@ -176,7 +182,14 @@ function CreateConversationPage({ userActif }) {
                     {messages.map((msg) => (
                         <div key={msg.id} className={`flex ${msg.user_id === userActif.name ? 'justify-end' : 'justify-start'}`}>
                             <div className="p-2 border rounded-lg">
+                                <div className='flex-items'>
+
                                 <p className="font-bold text-white">{msg.user_id}</p>
+                                <ProfilePicture
+                                 imgUrl={userActif.image}
+       
+       />
+                                </div>
                                 <p className="text-white">{msg.text}</p >
                                 <p className="text-white">{new Date(msg.createdAt).toLocaleString()}</p>
                             </div>
