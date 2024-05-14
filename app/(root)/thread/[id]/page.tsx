@@ -31,6 +31,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                    imgUrl={thread.image || ""}
                    createdAt={thread.createdAt.toString()}
                    comments={thread.children}
+                   isConnected={user !== null}
                    likes={thread.likes.toObject()}
                    threadType={thread.threadType} currentUser={null}                />
             </div>
@@ -58,6 +59,7 @@ const Page = async ({ params}: {params: { id: string}}) => {
                         comments={childItem.children}
                         likes={childItem.likes.toObject()}
                         isComment
+                        isConnected={user !== null}
                         threadType={thread.threadType} currentUser={null}                    />
                 ))}
             </div>
