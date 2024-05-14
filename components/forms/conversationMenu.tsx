@@ -111,7 +111,7 @@ function CreateConversationPage({ userActif }) {
     const handleUserChange = (selectedOptions) => {
         setSelectedUsers(selectedOptions);
         const names = selectedOptions.map(option => option.label).join(', ');
-        setConversationName(names);
+        setConversationName(names+","+userActif.name);
     };
 
     const handleNameChange = event => {
