@@ -48,7 +48,7 @@ const ModalSetting: React.FC<ModalSettingProps> = ({
                 onClick={() => setOpenSetting(false)}
             >
                 <div
-                    className={`max-w-xl bg-white absolute sn:w-96 w-11/12 left-1/2 top-1/2 p-5 rounded-md ${
+                    className={`max-w-xl bg-green-300 font-mono absolute sn:w-96 w-11/12 left-1/2 top-1/2 p-5 rounded-md ${
                         openSetting ? "" : "hidden"
                     }`}
                     style={{ transform: "translate(-50%,-50%)" }}
@@ -70,7 +70,7 @@ const ModalSetting: React.FC<ModalSettingProps> = ({
                                         <input
                                             defaultValue={input.defaultValue}
                                             type="number"
-                                            className="w-full bg-gray-400 opacity-62 py-2 rounded outline-none text-center "
+                                            className="w-full bg-white-400 opacity-62 py-2 rounded outline-none text-center "
                                             ref={input.ref}
                                         />
                                     </div>
