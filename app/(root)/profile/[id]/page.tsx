@@ -9,6 +9,7 @@ import Image from "next/image";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import FriendRequest from "@/components/forms/FriendRequest";
 import ProfilePicture from "@/components/forms/ProfilePicture";
+import ModifyCard from "@/components/cards/ModifyCard";
 // Définition de la fonction asynchrone Page
 async function Page({ params }: { params: { id: string } }) {
     // Récupération de l'utilisateur actuel
@@ -36,7 +37,7 @@ async function Page({ params }: { params: { id: string } }) {
           imgUrl={userInfo.image}
           bio={userInfo.bio}
         />
-       
+       {user.id === userInfo.id && <ModifyCard/>}
     
         <div className="translate-y-6">
           {user.id !== userInfo.id && (
