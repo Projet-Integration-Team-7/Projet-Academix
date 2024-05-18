@@ -1,26 +1,30 @@
+/* Conteneur du composant de téléchargement de fichier */
 .file-upload-container {
-    display: flex;
-    align-items: center;
-  }
-  
-  .file-upload-label {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    color: #2196F3;
-    border: 1px solid #2196F3;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .file-upload-input {
-    display: none; 
-  }
-  
-  .file-upload-label::before {
-    content: '\1F4CE'; 
-    font-size: 1.5em;
-  }
+  display: flex; /* Utilise un modèle d'affichage flex pour aligner les éléments horizontalement */
+  align-items: center; /* Centre les éléments verticalement */
+}
+
+/* Style du label du champ de téléchargement de fichier */
+.file-upload-label {
+  width: 40px; /* Largeur fixe de 40 pixels */
+  height: 40px; /* Hauteur fixe de 40 pixels */
+  display: flex; /* Utilise un modèle d'affichage flex pour aligner les éléments */
+  align-items: center; /* Centre les éléments verticalement */
+  justify-content: center; /* Centre les éléments horizontalement */
+  background-color: transparent; /* Fond transparent */
+  color: #2196F3; /* Couleur du texte */
+  border: 1px solid #2196F3; /* Bordure solide de 1 pixel */
+  border-radius: 5px; /* Bordure arrondie avec un rayon de 5 pixels */
+  cursor: pointer; /* Curseur de la souris indiquant l'interaction utilisateur */
+}
+
+/* Style du champ de téléchargement de fichier (caché) */
+.file-upload-input {
+  display: none; /* Masque le champ de téléchargement de fichier */
+}
+
+/* Style pour l'icône de téléchargement avant le label */
+.file-upload-label::before {
+  content: '\1F4CE'; /* Caractère Unicode représentant une icône de fichier */
+  font-size: 1.5em; /* Taille de la police de 1.5 fois la taille de la police de base */
+}

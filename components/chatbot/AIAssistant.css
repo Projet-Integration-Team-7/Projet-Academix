@@ -1,3 +1,4 @@
+/* Conteneur principal de l'assistant AI */
 .ai-assistant-container {
   display: flex;
   flex-direction: column;
@@ -5,6 +6,7 @@
   position: relative;
 }
 
+/* Titre de l'assistant AI */
 .ai-assistant-title {
   color: #fff;
   padding: 5px;
@@ -16,6 +18,7 @@
   border-bottom: 2px solid #fff;
 }
 
+/* Zone des messages de l'assistant AI */
 .ai-assistant-messages {
   flex-grow: 1;
   display: flex;
@@ -26,6 +29,7 @@
   padding: 10px;
 }
 
+/* Style des messages */
 .message {
   padding: 8px 12px;
   margin-bottom: 8px;
@@ -34,6 +38,7 @@
   border-radius: 8px;
 }
 
+/* Style des messages de l'utilisateur */
 .user {
   background-color: #2196F3;
   color: #fff;
@@ -45,6 +50,7 @@
   margin-left: auto;
 }
 
+/* Style des messages de l'assistant AI */
 .ai {
   padding: 8px 12px;
   margin-bottom: 8px;
@@ -56,6 +62,7 @@
   color: #2196F3;
 }
 
+/* Zone de saisie de l'utilisateur */
 .ai-assistant-input {
   display: flex;
   align-items: center;
@@ -71,11 +78,13 @@
   border-top: 1px solid #ccc;
 }
 
+/* Conteneur de la zone de saisie */
 .input-container {
   flex: 1;
   display: flex;
 }
 
+/* Style de la zone de saisie de l'utilisateur */
 .ai-assistant-input input[type="text"] {
   flex: 1;
   padding: 8px;
@@ -88,6 +97,7 @@
   padding-right: 40px;
 }
 
+/* Bouton d'envoi du message */
 .ai-assistant-input button {
   width: 40px;
   height: 40px;
@@ -99,7 +109,8 @@
   cursor: pointer;
 }
 
+/* Icône du bouton d'envoi */
 .ai-assistant-input button::before {
-  content: '\25B2';
+  content: '\25B2'; /* Utilisation de l'icone de flèche vers le haut */
   font-size: 2em;
 }
