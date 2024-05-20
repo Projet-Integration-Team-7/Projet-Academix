@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@clerk/localizations": "^2.3.1",
+    "@clerk/localizations": "^2.4.2",
     "@clerk/nextjs": "^4.30.0",
     "@clerk/themes": "^1.7.12",
     "@fullcalendar/core": "^6.1.11",
@@ -53,6 +53,7 @@
     "react-router-dom": "^6.23.0",
     "react-select": "^5.8.0",
     "react-share": "^5.1.0",
+    "react-simple-file-upload": "^1.1.0",
     "shadcn-ui": "^0.2.3",
     "socket.io-client": "^4.7.5",
     "svix": "^1.20.0",

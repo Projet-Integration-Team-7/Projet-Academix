@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+"use client"
+import React, { useState, useEffect} from 'react';
 import axios from 'axios';
 import { FaThumbtack } from 'react-icons/fa'; // Importation de l'icône de pouce
 import './FileUpload.css'; // Importation des styles CSS du composant
@@ -6,6 +7,20 @@ import './FileUpload.css'; // Importation des styles CSS du composant
 const FileUpload = () => {
   // État local pour stocker les fichiers sélectionnés par l'utilisateur
   const [files, setFiles] = useState([]);
+
+  useEffect(() => {
+    // Call the initialization route when the component mounts
+    const initializeBucket = async () => {
+      try {
+        await axios.get('https://academixbackend-b7d3e8ece074.herokuapp.com/initialisation'); // Replace YOUR_SERVER_URL with the actual URL of your server
+        console.log('Bucket initialized successfully.');
+      } catch (error) {
+        console.error('Failed to initialize bucket:', error);
+      }
+    };
+    
+    initializeBucket(); // Invoke the function to initialize the bucket
+  }, []); // Empty dependency array ensures that this effect runs only once after the initial render
 
   // Fonction appelée lorsqu'un utilisateur sélectionne un fichier
   const handleFileChange = (event) => {
@@ -55,4 +70,3 @@ const FileUpload = () => {
 };
 
 export default FileUpload;
-
