@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image"; // Importez Image de Next.js pour l'optimisation des images
 import React, { useState, useEffect, useRef } from 'react'; // Importez React et ses hooks
 import Select from 'react-select'; // Importez Select de react-select pour les sélecteurs
