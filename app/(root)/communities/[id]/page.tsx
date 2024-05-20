@@ -1,25 +1,28 @@
+// Importation des bibliothèques et des composants nécessaires
 import Image from "next/image";
 import { currentUser } from "@clerk/nextjs";
-
 import { communityTabs } from "@/constants";
-
 import UserCard from "@/components/cards/UserCard";
 import ThreadsTab from "@/components/shared/ThreadsTab";
 import ExerciseTab from "@/components/shared/ExerciseTab";
 import EvaluationTab from "@/components/shared/EvaluationTab";
 import CourseNoteTab from "@/components/shared/CourseNoteTab";
-
 import ProfileHeader from "@/components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
 import { fetchCommunityDetails } from "@/lib/actions/community.actions";
 
+// Définition de la fonction Page
 async function Page({ params }: { params: { id: string } }) {
+  // Récupération de l'utilisateur courant
   const user = await currentUser();
-  if (!user) return null;
+  // Si l'utilisateur n'existe pas, retourner null
+  if (!user) throw new Error("Utilisateur non trouvé");
 
+  // Récupération des détails de la communauté
   const communityDetails = await fetchCommunityDetails(params.id);
+  if (!communityDetails) throw new Error("Détails de la communauté non trouvés");
 
+  // Retourne le JSX à rendre
   return (
     <section>
       <ProfileHeader
@@ -56,7 +59,6 @@ async function Page({ params }: { params: { id: string } }) {
           </TabsList>
 
           <TabsContent value='threads' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <ThreadsTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
@@ -73,14 +75,12 @@ async function Page({ params }: { params: { id: string } }) {
                   name={member.name}
                   username={member.username}
                   imgUrl={member.image}
-                  personType="User"
-                />
+                  personType="User" usage={""}                />
               ))}
             </section>
           </TabsContent>
 
           <TabsContent value='requests' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <ThreadsTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
@@ -88,37 +88,34 @@ async function Page({ params }: { params: { id: string } }) {
             />
           </TabsContent>
 
-
           <TabsContent value='exercise' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <ExerciseTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
+
           <TabsContent value='course_note' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <CourseNoteTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
+
           <TabsContent value='evaluation' className='w-full text-light-1'>
-            {/* @ts-ignore */}
             <EvaluationTab
               currentUserId={user.id}
               accountId={communityDetails?._id}
               accountType="Community"
             />
           </TabsContent>
-
-
         </Tabs>
       </div>
     </section>
   );
 }
 
+// Exportation de la fonction Page par défaut
 export default Page;

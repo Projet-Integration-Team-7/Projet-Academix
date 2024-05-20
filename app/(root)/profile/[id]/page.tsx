@@ -20,9 +20,11 @@ async function Page({ params }: { params: { id: string } }) {
   if (!user) return null;
   // Récupération des informations de l'utilisateur
 
+  // Récupération des informations de l'utilisateur
   const userInfo = await fetchUser(params.id);
   // Si l'utilisateur n'est pas embarqué, rediriger vers la page '/onboarding'
 
+  // Si l'utilisateur n'est pas embarqué, rediriger vers '/onboarding'
   if (!userInfo?.onboarded) redirect("/onboarding");
   // Retourne une section JSX qui contient un titre et une div
 

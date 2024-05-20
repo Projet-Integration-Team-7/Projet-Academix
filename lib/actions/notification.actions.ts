@@ -7,9 +7,15 @@ import { connectToDB } from "../mongoose";
 interface Params {
   userId: string;
   message: string;
-  notifType: string | null; // Fix the typo here
+  notifType: string | null; // Corrige la faute de frappe ici
 }
 
+/**
+ * Crée une notification.
+ * @param userId - L'ID de l'utilisateur.
+ * @param message - Le message de la notification.
+ * @param notifType - Le type de notification.
+ */
 export async function createNotification({
   userId,
   message,
@@ -18,11 +24,11 @@ export async function createNotification({
   try {
     connectToDB();
 
-    // Find the user with the provided unique id
+    // Trouve l'utilisateur avec l'ID fourni
     const user = await User.findOne({ id: userId });
 
     if (!user) {
-      throw new Error("User not found"); // Handle the case if the user with the id is not found
+      throw new Error("Utilisateur introuvable"); // Gère le cas où l'utilisateur avec l'ID n'est pas trouvé
     }
 
     const newNotification = new Notification({
@@ -34,24 +40,29 @@ export async function createNotification({
     const createdNotification = await newNotification.save();
     user.notifications.push(createdNotification._id);
   } catch (error: any) {
-    throw new Error(`Error creating notification: ${error.message}`);
+    throw new Error(`Erreur lors de la création de la notification : ${error.message}`);
   }
 }
 
+/**
+ * Crée une demande d'ami.
+ * @param userId - L'ID de l'utilisateur.
+ * @param senderId - L'ID de l'expéditeur.
+ */
 export async function createFriendRequest(userId: string, senderId: string) {
   try {
     connectToDB();
 
-    // Find the user with the provided unique id
+    // Trouve l'utilisateur avec l'ID fourni
     const user = await User.findOne({ id: userId });
 
     if (!user) {
-      throw new Error("User not found"); // Handle the case if the user with the id is not found
+      throw new Error("Utilisateur introuvable"); // Gère le cas où l'utilisateur avec l'ID n'est pas trouvé
     }
 
     const sender = await User.findOne({ id: senderId });
     if (!sender) {
-      throw new Error("Sender not found"); // Handle the case if the sender with the id is not found
+      throw new Error("Expéditeur introuvable"); // Gère le cas où l'expéditeur avec l'ID n'est pas trouvé
     }
 
     const newNotification = new Notification({
@@ -62,15 +73,19 @@ export async function createFriendRequest(userId: string, senderId: string) {
     });
 
     const createdNotification = await newNotification.save();
-    // user.notifications.push(createdNotification._id);
-      await User.findByIdAndUpdate(user,{
-        $push:{notifications:createdNotification._id}
+    await User.findByIdAndUpdate(user,{
+      $push:{notifications:createdNotification._id}
     })
   } catch (error: any) {
-    throw new Error(`Error creating notification: ${error.message}`);
+    throw new Error(`Erreur lors de la création de la notification : ${error.message}`);
   }
 }
 
+/**
+ * Récupère les notifications d'un utilisateur.
+ * @param userId - L'ID de l'utilisateur.
+ * @returns Les notifications de l'utilisateur.
+ */
 export async function fetchUserNotifications(userId: string) {
   try {
     connectToDB();
@@ -79,34 +94,42 @@ export async function fetchUserNotifications(userId: string) {
     console.log(notifications);
     return notifications
   } catch (error: any) {
-    throw new Error(`Error fetching notifications: ${error.message}`);
+    throw new Error(`Erreur lors de la récupération des notifications : ${error.message}`);
   }
 }
 
+/**
+ * Supprime une notification.
+ * @param notificationId - L'ID de la notification.
+ */
 export async function deleteNotification(notificationId: string) {
   try {
     connectToDB();
     const notification = await Notification.findById(notificationId);
     if (!notification) {
-      throw new Error("Notification not found");
+      throw new Error("Notification introuvable");
     }
 
     const user = await User.findOne({ id: notification.userId });
     if (!user) {
-      throw new Error("User not found");
+      throw new Error("Utilisateur introuvable");
     }
 
-    // user.notifications = user.notifications.filter( notif => notif.toString() !== notificationId);
     user.notifications.pull(notification);
     user.save();
 
     await Notification.findByIdAndDelete(notificationId);
-    console.log("Notification supprimé avec succés");
+    console.log("Notification supprimée avec succès");
   } catch (error: any) {
-    throw new Error(`Error deleting notification: ${error.message}`);
+    throw new Error(`Erreur lors de la suppression de la notification : ${error.message}`);
   }
 }
 
+/**
+ * Supprime une notification de demande d'ami.
+ * @param userId - L'ID de l'utilisateur.
+ * @param senderId - L'ID de l'expéditeur.
+ */
 export async function deleteFriendRequestNotification(
   userId: string,
   senderId: string
@@ -114,7 +137,7 @@ export async function deleteFriendRequestNotification(
   try {
     connectToDB();
     
-    // Check if userId sent a friend request to senderId
+    // Vérifie si userId a envoyé une demande d'ami à senderId
     const userSentRequest = await Notification.findOne({
       userId,
       notifType: "friendRequest",
@@ -122,7 +145,7 @@ export async function deleteFriendRequestNotification(
     });
 
     if (userSentRequest) {
-      // Delete the friend request notification from userId to senderId
+      // Supprime la notification de demande d'ami de userId à senderId
       await Notification.deleteOne({
         userId,
         notifType: "friendRequest",
@@ -131,7 +154,7 @@ export async function deleteFriendRequestNotification(
       
     }
 
-    // Check if senderId sent a friend request to userId
+    // Vérifie si senderId a envoyé une demande d'ami à userId
     const senderSentRequest = await Notification.findOne({
       userId: senderId,
       notifType: "friendRequest",
@@ -139,7 +162,7 @@ export async function deleteFriendRequestNotification(
     });
 
     if (senderSentRequest) {
-      // Delete the friend request notification from senderId to userId
+      // Supprime la notification de demande d'ami de senderId à userId
       await Notification.deleteOne({
         userId: senderId,
         notifType: "friendRequest",
@@ -147,60 +170,79 @@ export async function deleteFriendRequestNotification(
       });
     }
 
-    console.log("Friend request notification deleted successfully");
+    console.log("Notification de demande d'ami supprimée avec succès");
   } catch (error: any) {
     throw new Error(
-      `Error deleting friend request notification: ${error.message}`
+      `Erreur lors de la suppression de la notification de demande d'ami : ${error.message}`
     );
   }
 }
 
+/**
+ * Marque une notification comme lue.
+ * @param notificationId - L'ID de la notification.
+ */
 export async function markNotificationAsRead(notificationId: string) {
   try {
     connectToDB();
     await Notification.findByIdAndUpdate(notificationId, { read: true });
   } catch (error: any) {
-    throw new Error(`Error marking notification as read: ${error.message}`);
+    throw new Error(`Erreur lors du marquage de la notification comme lue : ${error.message}`);
   }
 }
 
+/**
+ * Marque toutes les notifications comme lues pour un utilisateur donné.
+ * @param currentUserId - L'ID de l'utilisateur actuel.
+ */
 export async function markAllNotificationsAsRead(currentUserId: string) {
   try {
     connectToDB();
     await Notification.updateMany({ currentUserId }, { read: true });
   } catch (error: any) {
     throw new Error(
-      `Error marking all notifications as read: ${error.message}`
+      `Erreur lors du marquage de toutes les notifications comme lues : ${error.message}`
     );
   }
 }
 
+/**
+ * Récupère les messages de notification d'un utilisateur.
+ * @param userId - L'ID de l'utilisateur.
+ * @returns Les messages de notification de l'utilisateur.
+ */
 export const getUserNotificationMessages = async (
   userId: string
 ): Promise<string[]> => {
   try {
-    // Find notifications for the specified user
+    // Trouve les notifications pour l'utilisateur spécifié
     const notifications = await Notification.find({ userId });
 
-    // Extract messages from notifications
+    // Extrait les messages des notifications
     const messages = notifications.map((notification) => notification.message);
 
     return messages;
   } catch (error: any) {
-    console.error("Error fetching user notifications messages:", error);
-    throw new Error("Failed to fetch user notifications messages as an array");
+    console.error("Erreur lors de la récupération des messages de notification de l'utilisateur :", error);
+    throw new Error("Échec de la récupération des messages de notification de l'utilisateur sous forme de tableau");
   }
 };
 
+/**
+ * Vérifie si une demande d'ami existe.
+ * @param currentUserId - L'ID de l'utilisateur actuel.
+ * @param userId - L'ID de l'utilisateur.
+ * @returns Vrai si une demande d'ami existe, sinon faux.
+ */
 export async function checkIfFriendRequestExists(
   currentUserId: string,
   userId: string
 ): Promise<boolean> {
   try {
     connectToDB();
-    const user = await User.findOne({ id: userId }); // Await the User.findOne() method call
+    const user = await User.findOne({ id: userId }); // Attend l'appel de la méthode User.findOne()
     if (!user) {
-      throw new Error("Current User not found");
+      throw new Error("Utilisateur actuel introuvable");
     }
 
     const friendRequestList = await Notification.find({
@@ -208,22 +250,27 @@ export async function checkIfFriendRequestExists(
       notifType: "friendRequest",
     });
 
-    console.log("friend request list:", friendRequestList);
+    console.log("Liste de demande d'ami :", friendRequestList);
 
     const friendRequest = friendRequestList.some(
       (notif) => notif.senderId === currentUserId
     );
 
-    console.log("friend request; exists or no", friendRequest);
+    console.log("Demande d'ami ; existe ou non", friendRequest);
 
     return friendRequest;
   } catch (error: any) {
     throw new Error(
-      `Error checking if a friend request exists: ${error.message}`
+      `Erreur lors de la vérification de l'existence d'une demande d'ami : ${error.message}`
     );
   }
 }
 
+/**
+ * Vérifie si des notifications non lues existent.
+ * @param currentUserId - L'ID de l'utilisateur actuel.
+ * @returns Vrai si des notifications non lues existent, sinon faux.
+ */
 export async function checkIfUnreadNotifs(
   currentUserId: string,
 ): Promise<boolean> {
@@ -231,7 +278,7 @@ export async function checkIfUnreadNotifs(
     connectToDB();
     const currentUser = await User.findOne({ id: currentUserId });
     if (!currentUser) {
-      throw new Error("Current User not found");
+      throw new Error("Utilisateur actuel introuvable");
     }
 
     const unreadNotifications = await Notification.find({
@@ -242,7 +289,7 @@ export async function checkIfUnreadNotifs(
     return unreadNotifications.length > 0;
   } catch (error: any) {
     throw new Error(
-      `Error checking if unread notifications exist: ${error.message}`
+      `Erreur lors de la vérification de l'existence de notifications non lues : ${error.message}`
     );
   }
 }

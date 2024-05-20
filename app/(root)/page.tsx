@@ -1,19 +1,15 @@
+
 import ThreadCard from "@/components/cards/ThreadCard";
 import { fetchPosts, removeAllDeletedThreadsFromUsers } from "@/lib/actions/thread.action";
-import { removeDeletedUsers } from "@/lib/actions/user.actions";
 import { fetchCommunityDetails} from "@/lib/actions/community.actions";
 import { currentUser } from "@clerk/nextjs";
-import { useUser, useOrganization } from '@clerk/nextjs';
-import { Organization } from "@clerk/nextjs/server";
 export default async function Home() {
   const result = await fetchPosts(1, 30);
   const user = await currentUser();
   const communityDetails = await fetchCommunityDetails(user?.id || "");
   
-  //console.log(result);
-  // removeDeletedUsers();
-  // removeAllDeletedThreadsFromUsers();  
-
+  
+  //Afichage du menu principal avec tout les threads
   return (
     <> 
       <h1 className="head-text text-left">Menu Principal</h1>
@@ -22,7 +18,7 @@ export default async function Home() {
         {result.posts.length === 0 ? (
           <p className="no-result">Aucun Thread trouvé</p>
         ) : (
-          <>
+          <> 
             {result.posts.map((post) => (
               <ThreadCard 
                 key={post._id}

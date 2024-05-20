@@ -1,25 +1,31 @@
+// Importation des bibliothèques et des composants nécessaires
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
-import {fetchUser} from '@/lib/actions/user.actions'
+import { fetchUser } from '@/lib/actions/user.actions';
 import PostThread from '@/components/forms/PostThread';
 
-async function Page(){
-    const user=await currentUser();
+// Définition de la fonction Page
+async function Page() {
+  // Récupération de l'utilisateur courant
+  const user = await currentUser();
 
+  // Si l'utilisateur n'existe pas, retourner null
+  if (!user) throw new Error("Utilisateur non trouvé");
 
-    if(!user) return null;
+  // Récupération des informations de l'utilisateur
+  const userInfo = await fetchUser(user.id);
 
+  // Si l'utilisateur n'est pas embarqué, rediriger vers '/onboarding'
+  if (!userInfo?.onboarded) redirect("/onboarding");
 
-    const userInfo=await fetchUser(user.id);
-
-
-    if(!userInfo?.onboarded)redirect("/onboarding");
-
-    return (
-        <>
-    <h1 className="head-text">Créer Thread </h1>
-    <PostThread userId={userInfo._id}/>
+  // Retourne le JSX à rendre
+  return (
+    <>
+      <h1 className="head-text">Créer Thread</h1>
+      <PostThread userId={userInfo._id} />
     </>
-    )
+  );
 }
+
+// Exportation de la fonction Page par défaut
 export default Page;

@@ -21,16 +21,18 @@ async function Page() {
   }
   // Compilation des données utilisateur, en utilisant des valeurs de substitution pour les informations manquantes.
 
+  // Préparer les données de l'utilisateur pour le profil
   const userData = {
-    id: user?.id,
+    id: user.id,
     objectId: userInfo?._id,
-    username: userInfo ? userInfo?.username : user?.username,
-    name: userInfo ? userInfo?.name : user?.firstName || "",
-    bio: userInfo ? userInfo?.bio : "",
-    image: userInfo ? userInfo?.image : user?.imageUrl,
+    username: userInfo?.username || user.username,
+    name: userInfo?.name || user.firstName || "",
+    bio: userInfo?.bio || "",
+    image: userInfo?.image || user.imageUrl,
   };
   // Affichage de la page d'intégration avec le composant de formulaire AccountProfile.
 
+  // Retourner le composant principal de la page
   return (
     <main className='mx-auto flex max-w-3xl flex-col justify-start px-10 py-20'>
       <h1 className='head-text'>Configuration</h1>

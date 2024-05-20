@@ -1,3 +1,4 @@
+// Importation des dépendances nécessaires
 import { useEffect } from 'react';
 import ThreadCard from "@/components/cards/ThreadCard";
 import Comment from "@/components/forms/Comment";
@@ -6,18 +7,26 @@ import { fetchUser } from "@/lib/actions/user.actions";
 import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
-const Page = async ({ params}: {params: { id: string}}) => {
-    if(!params.id) return null;
+// Définition du composant Page
+const Page = async ({ params }: { params: { id: string } }) => {
+    // Si l'ID n'est pas fourni, on arrête l'exécution
+    if (!params.id) return null;
 
+    // Récupération de l'utilisateur courant
     const user = await currentUser();
-    if(!user) return null;
+    // Si l'utilisateur n'est pas connecté, on arrête l'exécution
+    if (!user) return null;
 
+    // Récupération des informations de l'utilisateur
     const userInfo = await fetchUser(user.id);
-    if(!userInfo?.onboarded) redirect('/onboarding')
+    // Si l'utilisateur n'a pas terminé son inscription, on le redirige vers la page d'onboarding
+    if (!userInfo?.onboarded) redirect('/onboarding')
 
+    // Récupération du fil de discussion par son ID
     const thread = await fetchThreadById(params.id)
 
-   return (
+    // Rendu du composant
+    return (
         <section className="relative">
             <div>
             <ThreadCard 
@@ -39,14 +48,14 @@ const Page = async ({ params}: {params: { id: string}}) => {
             <div className="mt-7">
                 <Comment
                     threadId={thread.id}
-                    currentUserImg ={userInfo.image}
+                    currentUserImg={userInfo.image}
                     currentUserId={JSON.stringify(userInfo._id)}
                 />
             </div>
 
             <div className="mt-10">
                 {thread.children.map((childItem: any) => (
-                    <ThreadCard 
+                    <ThreadCard
                         key={childItem._id}
                         id={JSON.stringify(childItem._id)}
                         currentUserId={user?.id || " "}

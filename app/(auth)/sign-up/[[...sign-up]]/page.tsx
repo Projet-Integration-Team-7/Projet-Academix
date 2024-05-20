@@ -1,4 +1,4 @@
-import { SignUp} from "@clerk/nextjs";
+import { SignUp } from "@clerk/nextjs";
 import { shadesOfPurple } from "@clerk/themes";
 /**
  * CustomSignUp fournit un formulaire d'inscription stylisé utilisant les composants Clerk.

@@ -1,29 +1,30 @@
+// Importation des bibliothèques et des composants nécessaires
 import { currentUser } from '@clerk/nextjs';
 import { redirect } from "next/navigation";
-import {fetchUser, fetchUserPosts, fetchUsers} from '@/lib/actions/user.actions'
-import { string } from 'zod';
-import ProfileHeader from '@/components/shared/ProfileHeader';
-
-
-import Image from 'next/image';
-import ThreadsTab from '@/components/shared/ThreadsTab';
-import UserCard from '@/components/cards/UserCard';
+import { fetchUser, fetchUserPosts, fetchUsers } from '@/lib/actions/user.actions'
 import { fetchCommunities } from '@/lib/actions/community.actions';
 import CommunityCard from '@/components/cards/CommunityCard';
-async function Page( ){
-    const user=await currentUser();
 
 
-    if(!user) return null;
 
+// Définition de la fonction Page
+async function Page() {
+  // Récupération de l'utilisateur courant
+  const user = await currentUser();
 
-    const userInfo=await fetchUser(user.id);
+  // Si l'utilisateur n'existe pas, retourner null
+  if (!user) throw new Error("Utilisateur non trouvé");
 
-    if(!userInfo?.onboarded)redirect('/onboarding');
-    // fetch communities
-const result=await fetchCommunities({
-    searchString : '',
-    pageNumber : 1,
+  // Récupération des informations de l'utilisateur
+  const userInfo = await fetchUser(user.id);
+
+  // Si l'utilisateur n'est pas embarqué, rediriger vers '/onboarding'
+  if (!userInfo?.onboarded) redirect('/onboarding');
+
+  // Récupération des communautés
+  const result = await fetchCommunities({
+    searchString: '',
+    pageNumber: 1,
     pageSize: 25
 })
     return (
@@ -51,8 +52,5 @@ const result=await fetchCommunities({
 )
 }
 
-            </div>
-            </section>
-    )
-}
-export default Page
+// Exportation de la fonction Page par défaut
+export default Page;
