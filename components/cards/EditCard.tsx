@@ -26,9 +26,7 @@ interface Props {
  * @param {string} props.personType - Le type de personne de la carte.
  * @returns {JSX.Element} Le composant de modification de la carte.
  */
-const EditCard = ({ id, name, username, imgUrl, personType }: Props) => {
-  // ...
-}
+
 const EditCard =({id, name,username , imgUrl,personType} : Props) => {
   
     const router=useRouter();
