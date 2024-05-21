@@ -5,12 +5,12 @@ import { useUser } from '@clerk/clerk-react'; // Importation du hook useUser dep
 import './AIAssistant.css'; // Importation du fichier de style CSS pour le composant AIAssistant
 import FileUpload from './FileUpload'; // Importation du composant FileUpload (assurez-vous d'avoir correctement importé ce composant)
 
-const apiUrl = 'https://academixbackend-b7d3e8ece074.herokuapp.com/message'; // URL de l'API
+const apiUrlMessage = `${process.env.APIURL}/message`; // URL de la route message
 
 // Fonction pour envoyer une requête à l'API OpenAI
 async function sendRequest(prompt, userId) {
   try {
-    const response = await axios.post(apiUrl, { id_utilisateur: userId, saisie_utilisateur: prompt }); // Envoi de la requête POST à l'API avec l'ID utilisateur et la saisie utilisateur
+    const response = await axios.post(apiUrlMessage, { id_utilisateur: userId, saisie_utilisateur: prompt }); // Envoi de la requête POST à l'API avec l'ID utilisateur et la saisie utilisateur
     return response.data.message; // Renvoie du message de réponse de l'API
   } catch (error) {
     console.error('Erreur lors de l\'envoi de la requête :', error); // Gestion des erreurs en cas d'échec de la requête
