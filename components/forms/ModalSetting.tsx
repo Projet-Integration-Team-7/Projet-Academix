@@ -11,6 +11,17 @@ interface ModalSettingProps {
     updateTimeDefaultValue: any;
 }
 
+/**
+ * Composant ModalSetting
+ * 
+ * @param openSetting - Indique si le modal des paramètres est ouvert ou fermé
+ * @param setOpenSetting - Fonction pour ouvrir ou fermer le modal des paramètres
+ * @param pomodoroRef - Référence de l'input pour le temps du Pomodoro
+ * @param shortBreakRef - Référence de l'input pour le temps de la petite pause
+ * @param longBreakRef - Référence de l'input pour le temps de la longue pause
+ * @param updateTimeDefaultValue - Fonction pour mettre à jour les valeurs par défaut des temps
+ * @returns Le composant ModalSetting
+ */
 const ModalSetting: React.FC<ModalSettingProps> = ({
     openSetting,
     setOpenSetting,
@@ -37,6 +48,11 @@ const ModalSetting: React.FC<ModalSettingProps> = ({
         },
     ];
 
+    /**
+     * Gère le clic sur le modal pour empêcher la propagation de l'événement
+     * 
+     * @param e - L'événement de clic
+     */
     const handleModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
     };

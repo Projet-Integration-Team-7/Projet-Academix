@@ -19,6 +19,19 @@ interface TimerProps {
 }
 
 // Définition du composant Timer
+/**
+ * Composant Timer
+ * 
+ * @param stage - L'index du stade actif du timer
+ * @param switchStage - Fonction pour changer le stade du timer
+ * @param getTickingTime - Fonction pour obtenir le temps écoulé du timer
+ * @param seconds - Le nombre de secondes restantes
+ * @param ticking - Indique si le timer est en cours
+ * @param startTimer - Fonction pour démarrer/arrêter le timer
+ * @param isTimeUp - Indique si le temps est écoulé
+ * @param muteAlarm - Fonction pour désactiver l'alarme sonore
+ * @param reset - Fonction pour réinitialiser le timer
+ */
 export default function Timer({ 
     stage, 
     switchStage, 
@@ -59,13 +72,12 @@ export default function Timer({
 
             {/* Conteneur pour afficher le temps restant */}
             <div className='mt-10 mb-10'>
-    <h1 className='text-[9rem] font-exotic font-bold text-green-300 select-none m-0'>
-        {/* Affichage du temps écoulé et des secondes, formatées avec des zéros */}
-        {getTickingTime()}:{seconds.toString().padStart(2, "0")}
-    </h1>
-</div>
+                <h1 className='text-[9rem] font-exotic font-bold text-green-300 select-none m-0'>
+                    {/* Affichage du temps écoulé et des secondes, formatées avec des zéros */}
+                    {getTickingTime()}:{seconds.toString().padStart(2, "0")}
+                </h1>
+            </div>
 
-            
             <div></div>
 
             {/* Conteneur pour afficher l'icône de volume lorsque le temps est écoulé */}

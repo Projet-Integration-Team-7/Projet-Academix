@@ -48,6 +48,12 @@ interface Props{
 }
 //cest les liasons les ancorages ici quon prend des ifchier ts
 
+/**
+ * Composant de formulaire pour poster un thread.
+ * 
+ * @param userId - L'ID de l'utilisateur qui poste le thread.
+ * @returns Le composant de formulaire pour poster un thread.
+ */
 function PostThread({userId}:{userId:string}){
     const[files,setFiles]=useState<File []>([])
     const{ startUpload}=useUploadThing("media");

@@ -11,6 +11,14 @@ interface Props{
     accountType : string ;
 }
 
+/**
+ * Composant représentant l'onglet des fils de discussion.
+ * 
+ * @param currentUserId - L'ID de l'utilisateur actuel.
+ * @param accountId - L'ID du compte.
+ * @param accountType - Le type de compte ('Community' ou 'User').
+ * @returns Le composant de l'onglet des fils de discussion.
+ */
 const ThreadsTab = async ({ currentUserId, accountId, accountType }: Props) => {
   let result: any;
 

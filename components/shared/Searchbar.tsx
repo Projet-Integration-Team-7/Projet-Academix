@@ -10,11 +10,19 @@ interface SearchbarProps {
   routeType: string;
 }
 
+/**
+ * Composant de la barre de recherche.
+ * 
+ * @component
+ * @param {Object} props - Les propriétés du composant.
+ * @param {string} props.routeType - Le type de route.
+ * @returns {JSX.Element} Le composant de la barre de recherche.
+ */
 const Searchbar: React.FC<SearchbarProps> = ({ routeType }) => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Perform a query after 0.3s of no input
+  // Effectue une requête après 0,3s sans saisie
   useEffect(() => {
     const delayDebounceFn = setTimeout(() => {
       if (searchTerm) {
@@ -24,21 +32,21 @@ const Searchbar: React.FC<SearchbarProps> = ({ routeType }) => {
       }
     }, 300);
 
-    // Cleanup function to clear the timeout
+    // Fonction de nettoyage pour annuler le délai d'attente
     return () => clearTimeout(delayDebounceFn);
   }, [searchTerm, routeType]);
 
-  const placeholderText = routeType !== "/search" ? "Chercher utilisateur" : "Search creators";
+  const placeholderText = routeType !== "/search" ? "Chercher utilisateur" : "Rechercher des créateurs";
 
   return (
     <div className='searchbar flex items-center border-b-2 py-2 '>
-    <Image
-      src='/assets/search-gray.svg'
-      alt='Search Icon'
-      width={24}
-      height={24}
-      className='absolute left-3'
-    />
+      <Image
+        src='/assets/search-gray.svg'
+        alt='Icône de recherche'
+        width={24}
+        height={24}
+        className='absolute left-3'
+      />
       <Input
         id='text'
         type="text"

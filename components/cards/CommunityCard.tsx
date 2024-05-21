@@ -15,6 +15,19 @@ interface Props {
   }[];
 }
 
+/**
+ * Composant de carte de communauté.
+ *
+ * @component
+ * @param {Props} props - Les propriétés du composant.
+ * @param {string} props.id - L'identifiant de la communauté.
+ * @param {string} props.name - Le nom de la communauté.
+ * @param {string} props.username - Le nom d'utilisateur de la communauté.
+ * @param {string} props.imgUrl - L'URL de l'image de la communauté.
+ * @param {string} props.bio - La biographie de la communauté.
+ * @param {Array<{ image: string }>} props.members - Les membres de la communauté.
+ * @returns {JSX.Element} Le composant de carte de communauté.
+ */
 function CommunityCard({ id, name, username, imgUrl, bio, members }: Props) {
   return (
     <article className='community-card'>

@@ -8,6 +8,15 @@ import { cn } from "@/lib/utils"
 
 const Tabs = TabsPrimitive.Root
 
+/**
+ * Composant de liste des onglets.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <TabsList />
+ * ```
+ */
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
@@ -23,6 +32,24 @@ const TabsList = React.forwardRef<
 ))
 TabsList.displayName = TabsPrimitive.List.displayName
 
+/**
+ * Composant TabsTrigger
+ * 
+ * Ce composant est utilisé pour créer un déclencheur de l'onglet dans un système d'onglets.
+ * Il est utilisé en tant que composant enfant de TabsPrimitive.Trigger.
+ * 
+ * @component
+ * @example
+ * ```tsx
+ * <TabsTrigger className="my-tabs-trigger" onClick={handleClick} />
+ * ```
+ * 
+ * @param {React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>} props - Les propriétés du composant TabsTrigger.
+ * @param {string} props.className - La classe CSS pour le composant TabsTrigger.
+ * @param {React.Ref<React.ElementRef<typeof TabsPrimitive.Trigger>>} ref - La référence pour le composant TabsTrigger.
+ * 
+ * @returns {React.ReactElement} Le composant TabsTrigger.
+ */
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>

@@ -2,6 +2,13 @@ import React, { useState, useEffect } from 'react';
 import BarChart from '../charts/BarChart';
 
 
+/**
+ * Composant représentant une liste d'auteurs avec un graphique à barres.
+ * 
+ * @component
+ * @param {Object[]} authors - Les auteurs à afficher dans la liste et le graphique.
+ * @returns {JSX.Element} - Le composant de la liste d'auteurs avec le graphique à barres.
+ */
 const AuthorList = ({ authors }) => {
     const [userData, setUserData] = useState({
         labels: [],

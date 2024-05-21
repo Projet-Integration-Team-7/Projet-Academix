@@ -10,6 +10,13 @@ interface PaginationProps {
   route: string;
 }
 
+/**
+ * Composant de pagination.
+ *
+ * @param currentPage - Le numéro de la page actuelle.
+ * @param hasNextPage - Indique si la page suivante existe.
+ * @param route - La route de la page.
+ */
 function Pagination({ currentPage, hasNextPage, route }: PaginationProps) {
   const router = useRouter();
 

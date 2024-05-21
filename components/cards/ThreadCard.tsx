@@ -45,6 +45,28 @@ interface Props {
   threadType: string;
 }
 
+/**
+ * Composant ThreadCard
+ * 
+ * @component
+ * @param {Object} Props - Les propriétés du composant
+ * @param {string} Props.id - L'identifiant du thread
+ * @param {string} Props.currentUserId - L'identifiant de l'utilisateur actuel
+ * @param {Object} Props.currentUser - Les informations de l'utilisateur actuel
+ * @param {string} Props.parentId - L'identifiant du parent du thread
+ * @param {string} Props.content - Le contenu du thread
+ * @param {Object} Props.author - Les informations de l'auteur du thread
+ * @param {Object} Props.community - Les informations de la communauté du thread
+ * @param {string} Props.imgUrl - L'URL de l'image du thread
+ * @param {string} Props.createdAt - La date de création du thread
+ * @param {Array} Props.comments - Les commentaires du thread
+ * @param {Array} Props.likes - Les likes du thread
+ * @param {boolean} Props.isComment - Indique si le thread est un commentaire
+ * @param {boolean} Props.isConnected - Indique si l'utilisateur est connecté
+ * @param {string} Props.threadType - Le type de thread
+ * @returns {JSX.Element} Le composant ThreadCard
+ */
+
 const ThreadCard = ({
   id,
   currentUserId,

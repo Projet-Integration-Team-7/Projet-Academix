@@ -6,6 +6,15 @@ import { cn } from "@/lib/utils"
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
 
+/**
+ * Composant d'entrée de texte réutilisable.
+ *
+ * @param {object} props - Les propriétés du composant.
+ * @param {string} props.className - La classe CSS personnalisée pour le composant.
+ * @param {string} props.type - Le type d'entrée de texte.
+ * @param {React.Ref<HTMLInputElement>} ref - La référence pour l'élément d'entrée.
+ * @returns {JSX.Element} Le composant d'entrée de texte.
+ */
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ className, type, ...props }, ref) => {
     return (

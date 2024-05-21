@@ -11,6 +11,14 @@ interface Props{
     accountType : string ;
 }
 
+/**
+ * Composant ExerciseTab.
+ * 
+ * @param currentUserId - L'ID de l'utilisateur actuel.
+ * @param accountId - L'ID du compte.
+ * @param accountType - Le type de compte ('Community' ou 'User').
+ * @returns Le composant ExerciseTab.
+ */
 const ExerciseTab = async ({ currentUserId, accountId, accountType }: Props) => {
     let result: any;
   
@@ -49,5 +57,5 @@ const ExerciseTab = async ({ currentUserId, accountId, accountType }: Props) => 
         )}
       </section>
     )
-  }
+}
   export default ExerciseTab;

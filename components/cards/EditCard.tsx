@@ -14,6 +14,21 @@ interface Props {
 
  
 
+/**
+ * Composant de modification de la carte.
+ * 
+ * @component
+ * @param {Props} props - Les propriétés du composant.
+ * @param {string} props.id - L'identifiant de la carte.
+ * @param {string} props.name - Le nom de la carte.
+ * @param {string} props.username - Le nom d'utilisateur de la carte.
+ * @param {string} props.imgUrl - L'URL de l'image de la carte.
+ * @param {string} props.personType - Le type de personne de la carte.
+ * @returns {JSX.Element} Le composant de modification de la carte.
+ */
+const EditCard = ({ id, name, username, imgUrl, personType }: Props) => {
+  // ...
+}
 const EditCard =({id, name,username , imgUrl,personType} : Props) => {
   
     const router=useRouter();

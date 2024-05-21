@@ -20,62 +20,65 @@ interface Props {
     currentUserId: string;
 }
 
+// Le composant Comment prend trois propriétés : threadId, currentUserImg et currentUserId
 const Comment = ({ threadId, currentUserImg, currentUserId}: Props) => {
     const router=useRouter();
     const pathname=usePathname();
     
-        const form=useForm({
-            resolver:zodResolver(CommentValidation),
-             defaultValues:{
-                thread:'',
-             }
-        })
+    // Utilisation de react-hook-form pour gérer le formulaire
+    const form=useForm({
+        resolver:zodResolver(CommentValidation),
+        defaultValues:{
+            thread:'',
+        }
+    })
 
-        //pour envoyer  le formulaire on utilise la fonction handleSubmit
+    // Fonction appelée lors de la soumission du formulaire
     const onSubmit= async (values:z.infer<typeof CommentValidation>)=>{
+        // Appel de la fonction addCommentToThread pour ajouter un commentaire au thread
         await addCommentToThread(threadId, values.thread, JSON.parse(currentUserId), pathname)
         
+        // Réinitialisation du formulaire après la soumission
         form.reset();
     }
 
     return (
+        // Utilisation du composant Form pour encapsuler le formulaire
         <Form {...form}>
-        <form 
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="comment-form">
+            <form 
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="comment-form">
 
-            <FormField  
-                control={form.control}
-                name="thread"
-                render={({ field }) => (
-                <FormItem className="flex gap-3 items-center w-full">
-                    <FormLabel>
-                        <Image
-                            src={currentUserImg}
-                            alt="Profile image"
-                            width={48}
-                            height={48}
-                            className="rounded-full object-cover"
-                        />
-
-                    </FormLabel>
-                    <FormControl className="border-none bg-transparent">
-                    <Input 
-                        type="text" 
-                        placeholder="Comment..."
-                        className="no-focus text-light-1 outline-none"
-                        {...field}
-                    />
-                    </FormControl>
-                    
-                </FormItem>
-                )}
-            />
-            <Button type="submit"className="comment-form_btn">
-                Répondre
-            </Button>
-         </form>
-       </Form>
+                <FormField  
+                    control={form.control}
+                    name="thread"
+                    render={({ field }) => (
+                        <FormItem className="flex gap-3 items-center w-full">
+                            <FormLabel>
+                                <Image
+                                    src={currentUserImg}
+                                    alt="Profile image"
+                                    width={48}
+                                    height={48}
+                                    className="rounded-full object-cover"
+                                />
+                            </FormLabel>
+                            <FormControl className="border-none bg-transparent">
+                                <Input 
+                                    type="text" 
+                                    placeholder="Comment..."
+                                    className="no-focus text-light-1 outline-none"
+                                    {...field}
+                                />
+                            </FormControl>
+                        </FormItem>
+                    )}
+                />
+                <Button type="submit"className="comment-form_btn">
+                    Répondre
+                </Button>
+            </form>
+        </Form>
     )
 }
 

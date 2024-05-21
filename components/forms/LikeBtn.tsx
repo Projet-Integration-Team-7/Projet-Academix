@@ -12,12 +12,26 @@ interface LikeBtnProps {
     isConnected: boolean;
 }
 
+/**
+ * Composant bouton "J'aime" qui permet aux utilisateurs de liker une publication.
+ * 
+ * @param threadId - L'identifiant de la publication.
+ * @param currentUserId - L'identifiant de l'utilisateur actuel.
+ * @param mapLikes - Map contenant les likes associés à chaque utilisateur.
+ * @param likesCount - Le nombre total de likes de la publication.
+ * @param isConnected - Indique si l'utilisateur est connecté ou non.
+ * @returns Le composant bouton "J'aime".
+ */
 const LikeBtn = ({ threadId, currentUserId, mapLikes, likesCount, isConnected}: LikeBtnProps) => {
     const alreadyLiked = mapLikes.has(currentUserId);
  
     const [isLiked, setIsLiked] = useState(alreadyLiked);
     const [nbLikes, setNbLikes] = useState(likesCount);
 
+    /**
+     * Gère le clic sur le bouton "J'aime".
+     * Met à jour l'état du like, envoie les mises à jour au serveur et met à jour le nombre de likes.
+     */
     const handleClick = async () => {
         const liked = !isLiked; 
 

@@ -13,21 +13,39 @@ interface ThreadMenuProps {
   authorId: string;
 }
 
+/**
+ * Composant ThreadMenu
+ * 
+ * Affiche un menu déroulant pour les threads avec différentes options, telles que la suppression d'un thread.
+ * 
+ * @component
+ * @param {Object} props - Les propriétés du composant
+ * @param {string} props.threadId - L'ID du thread
+ * @param {string} props.currentUserId - L'ID de l'utilisateur actuel
+ * @param {string} props.authorId - L'ID de l'auteur du thread
+ * @returns {JSX.Element} Le composant ThreadMenu
+ */
 const ThreadMenu = ({ threadId, currentUserId, authorId }: ThreadMenuProps) => {
   const pathname = usePathname();
 
+  /**
+   * Gère la suppression d'un thread.
+   * 
+   * @async
+   * @function handleDelete
+   * @returns {Promise<void>}
+   * @throws {Error} Une erreur si la suppression échoue
+   */
   const handleDelete = async () => {
     try {
-      // Assuming you have imported the necessary Mongoose models and established a connection to MongoDB
-
-      // Delete the document using its id
+      // Supprime le document en utilisant son ID
       deleteThread(threadId, pathname);
       removeThreadFromUser(currentUserId, threadId);
 
-      // Handle any additional logic or UI updates after successful deletion
+      // Gère toute autre logique ou mise à jour de l'interface utilisateur après la suppression réussie
     } catch (error: any) {
-      // Handle any errors that occur during the deletion process
-      throw new Error("Error deleting document:", error);
+      // Gère les erreurs qui se produisent pendant le processus de suppression
+      throw new Error("Erreur lors de la suppression du document:", error);
     }
   };
 
@@ -37,7 +55,7 @@ const ThreadMenu = ({ threadId, currentUserId, authorId }: ThreadMenuProps) => {
         <div className='rounded-full ring-2 ring-dark'>
           <Image
             src="/assets/three_dots.svg"
-            alt="thread menu icon"
+            alt="Icône du menu du thread"
             height={24}
             width={24}
             className="flex cursor-pointer object-cover rounded-full p-0.5 transition ease-in-out bg-gray-300 border-[1px] border-gray-300 hover:border-gray-500"

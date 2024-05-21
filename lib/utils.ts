@@ -2,7 +2,7 @@ import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import crypto from "crypto";
 
-// généré par shadcn
+
 /**
  * Fusionne les classes CSS en utilisant la bibliothèque clsx et tailwind-merge.
  * @param inputs Les classes CSS à fusionner.

@@ -7,6 +7,11 @@ import Link from "next/link";
 import { usePathname, useRouter} from "next/navigation";
 
 
+/**
+ * Composant représentant la barre latérale gauche de l'application.
+ * Cette barre latérale affiche les liens de navigation et les options de déconnexion.
+ */
+
 function LeftSidebar() {
     const router = useRouter();
     const pathname = usePathname();

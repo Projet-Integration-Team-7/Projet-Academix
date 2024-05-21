@@ -10,6 +10,11 @@ interface NotifProps {
   currentUserId: string;
 }
 
+/**
+ * Composant de notification.
+ * 
+ * @param currentUserId - L'ID de l'utilisateur actuel.
+ */
 function Notification({ currentUserId }: NotifProps) {
   // prettier-ignore
   const [notifications, setNotifications] = useState<any[]>([]);

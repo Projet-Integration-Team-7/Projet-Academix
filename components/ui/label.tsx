@@ -11,6 +11,15 @@ const labelVariants = cva(
   "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
 )
 
+/**
+ * Composant Label utilisé pour afficher une étiquette dans l'interface utilisateur.
+ *
+ * @component
+ * @example
+ * ```tsx
+ * <Label htmlFor="inputField">Nom:</Label>
+ * ```
+ */
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root> &

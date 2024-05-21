@@ -12,8 +12,10 @@ import {
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
 
+// Définition du composant Form en tant que fournisseur de contexte pour le formulaire
 const Form = FormProvider
 
+// Définition du type de contexte pour un champ de formulaire
 type FormFieldContextValue<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -21,10 +23,12 @@ type FormFieldContextValue<
   name: TName
 }
 
+// Création du contexte pour un champ de formulaire
 const FormFieldContext = React.createContext<FormFieldContextValue>(
   {} as FormFieldContextValue
 )
 
+// Composant FormField qui enveloppe le composant Controller et fournit le contexte du champ de formulaire
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
@@ -38,6 +42,7 @@ const FormField = <
   )
 }
 
+// Hook personnalisé pour utiliser le contexte du champ de formulaire
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext)
   const itemContext = React.useContext(FormItemContext)
@@ -61,14 +66,17 @@ const useFormField = () => {
   }
 }
 
+// Définition du type de contexte pour un élément de formulaire
 type FormItemContextValue = {
   id: string
 }
 
+// Création du contexte pour un élément de formulaire
 const FormItemContext = React.createContext<FormItemContextValue>(
   {} as FormItemContextValue
 )
 
+// Composant FormItem qui enveloppe un élément de formulaire et fournit le contexte de l'élément
 const FormItem = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -83,6 +91,7 @@ const FormItem = React.forwardRef<
 })
 FormItem.displayName = "FormItem"
 
+// Composant FormLabel qui enveloppe un label de formulaire et utilise le contexte du champ de formulaire
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
@@ -100,6 +109,7 @@ const FormLabel = React.forwardRef<
 })
 FormLabel.displayName = "FormLabel"
 
+// Composant FormControl qui enveloppe un contrôle de formulaire et utilise le contexte du champ de formulaire
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
@@ -122,6 +132,7 @@ const FormControl = React.forwardRef<
 })
 FormControl.displayName = "FormControl"
 
+// Composant FormDescription qui enveloppe une description de formulaire et utilise le contexte du champ de formulaire
 const FormDescription = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -139,6 +150,7 @@ const FormDescription = React.forwardRef<
 })
 FormDescription.displayName = "FormDescription"
 
+// Composant FormMessage qui enveloppe un message d'erreur de formulaire et utilise le contexte du champ de formulaire
 const FormMessage = React.forwardRef<
   HTMLParagraphElement,
   React.HTMLAttributes<HTMLParagraphElement>
@@ -163,6 +175,7 @@ const FormMessage = React.forwardRef<
 })
 FormMessage.displayName = "FormMessage"
 
+// Exportation des composants et du hook personnalisé
 export {
   useFormField,
   Form,

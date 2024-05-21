@@ -40,6 +40,14 @@ interface Props{
 
 }
 //cest les liasons les ancorages ici quon prend des ifchier ts
+/**
+ * Composant de profil de compte.
+ * 
+ * @component
+ * @param {Object} user - L'objet utilisateur contenant les informations du compte.
+ * @param {string} btnTitle - Le titre du bouton de soumission du formulaire.
+ * @returns {JSX.Element} Composant de profil de compte.
+ */
 const AccountProfile=({user,btnTitle}:Props)=>{
 const[files,setFiles]=useState<File []>([])
 const{ startUpload}=useUploadThing("media");

@@ -40,16 +40,28 @@ interface ShareBtnProps {
   threadId: string;
 }
 
+/**
+ * Composant bouton de partage.
+ * 
+ * @param threadId - L'identifiant du thread.
+ * @returns Le composant bouton de partage.
+ */
 const ShareBtn = ({ threadId }: ShareBtnProps) => {
   let threadURL = '';
   if (typeof window !== 'undefined') {
     threadURL = `${window.location.href}/thread/${threadId}`;
   }
   
+  /**
+   * Copie l'URL du thread dans le presse-papiers.
+   */
   const handleCopy = () => {
     navigator.clipboard.writeText(threadURL);
   };
 
+  /**
+   * Partage l'URL du thread via le navigateur ou les applications de partage.
+   */
   const handleShare = async () => {
     try {
       if (navigator.share) {

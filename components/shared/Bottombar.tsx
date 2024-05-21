@@ -5,9 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+/**
+ * Composant représentant la barre de navigation inférieure.
+ */
 function Bottombar() {
     const pathname = usePathname();
-
 
     return (
         <section className="bottombar">

@@ -5,6 +5,14 @@ import Image from "next/image";
 import User from "@/lib/models/user.model";
 import UserCard from "../cards/UserCard";
 
+/**
+ * Composant RightSidebar.
+ * 
+ * Cette composant représente la barre latérale droite de l'application.
+ * Il affiche une liste d'amis de l'utilisateur connecté.
+ * 
+ * @returns Le composant RightSidebar.
+ */
 async function RightSidebar() {
   const cUser = await currentUser();
 

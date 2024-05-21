@@ -8,11 +8,21 @@ interface FriendRequestProps {
     userId: string;
 }
 
-const FriendRequest = ({currentUserId,userId}: FriendRequestProps) => {
+/**
+ * Composant FriendRequest
+ * 
+ * @param currentUserId - L'ID de l'utilisateur actuel
+ * @param userId - L'ID de l'utilisateur cible
+ * @returns Le composant FriendRequest
+ */
+const FriendRequest = ({currentUserId, userId}: FriendRequestProps) => {
    
     const [isFriend, setIsFriend] = useState(false);
     const [isRequested, setIsRequested] = useState(false);
 
+    /**
+     * Vérifie le statut de l'amitié et de la demande d'ami
+     */
     useEffect(() => {
         const checkFriendshipStatus = async () => {
             const friendStatus = await verifyFriendship( JSON.parse(JSON.stringify(currentUserId)), JSON.parse(JSON.stringify(userId)) );
@@ -26,6 +36,9 @@ const FriendRequest = ({currentUserId,userId}: FriendRequestProps) => {
         checkFriendshipStatus();
     }, [currentUserId, userId]);
 
+    /**
+     * Gère le clic sur le bouton
+     */
     const handleClick = async () => {
         if (isFriend) {
             await removeFriend(JSON.parse(JSON.stringify(currentUserId)), JSON.parse(JSON.stringify(userId)));

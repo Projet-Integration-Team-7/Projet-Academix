@@ -4,6 +4,14 @@ interface Props {
     imgUrl: string;
 }
 
+/**
+ * Composant pour afficher une image de profil.
+ * 
+ * @component
+ * @param {Object} props - Les propriétés du composant.
+ * @param {string} props.imgUrl - L'URL de l'image de profil.
+ * @returns {JSX.Element} Le composant de l'image de profil.
+ */
 const ProfilePicture = ({
     imgUrl
 }: Props) => {
