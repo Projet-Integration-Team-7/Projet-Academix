@@ -1,9 +1,10 @@
 "use client"
+import Image from "next/image"; // Importez Image de Next.js pour l'optimisation des images
 import React, { useState, useEffect, useRef } from 'react'; // Importez React et ses hooks
 import Select from 'react-select'; // Importez Select de react-select pour les sélecteurs
-import { fetchUsers} from "@/lib/actions/user.actions"; // Importez les fonctions pour récupérer les utilisateurs
+import { fetchUsers, fetchUser } from "@/lib/actions/user.actions"; // Importez les fonctions pour récupérer les utilisateurs
 import axios from 'axios'; // Importez Axios pour les requêtes HTTP
-
+import ProfilePicture from "./ProfilePicture"; // Importez le composant ProfilePicture
 
 // Définissez le type Conversation
 type Conversation = {
@@ -22,7 +23,7 @@ function CreateConversationPage({ userActif }) {
     const [error, setError] = useState(null); // Erreur
     const [newMessage, setNewMessage] = useState(''); // Nouveau message
     const [messages, setMessages] = useState([]); // Liste des messages
-    const apiURL = process.env.APIURL; // URL de l'API
+    const apiURL = 'https://academixbackend-b7d3e8ece074.herokuapp.com/'; // URL de l'API
 
     // Utilisez useEffect pour charger les données initiales
     useEffect(() => {
