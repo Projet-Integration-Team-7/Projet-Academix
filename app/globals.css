@@ -21,7 +21,7 @@
       position: absolute;
       top: -50%;
       left: -50%;
-      width: 200%; /* Large size to cover the entire container */
+      width: 200%; /* Grande taille pour couvrir tout le conteneur */
       height: 200%;
       background: repeating-linear-gradient(
           -45deg,
@@ -29,26 +29,26 @@
           rgba(255, 255, 255, 0.1) 1px,
           transparent 1px,
           transparent 50px
-      ); /* Creates a grid of lines */
-      animation: move 25s linear infinite; /* Adjust time as needed */
-      filter: blur(10px); /* Apply a blur to the entire pseudo-element */
+      ); /* Crée une grille de lignes */
+      animation: move 25s linear infinite; /* Ajuster l'heure si nécessaire */
+      filter: blur(10px); /* Applique un flou à l'ensemble du pseudo-élément */
     }
-    /* Head Text */
+    /* Texte d'en-tête */
     .head-text {
       @apply text-heading2-bold text-light-1;
     }
   
-    /* Activity */
+    /* Activite */
     .activity-card {
       @apply flex items-center gap-2 rounded-md bg-dark-2 px-7 py-4;
     }
   
-    /* No Result */
+    /* Pas resultats */
     .no-result {
       @apply text-center !text-base-regular text-light-3;
     }
   
-    /* Community Card */
+    /* Community Card(cboite communaute) */
     .community-card {
       @apply w-full rounded-lg bg-emerald-50 px-4 py-5 sm:w-96;
     }
@@ -57,12 +57,12 @@
       @apply rounded-lg bg-primary-500 px-5 py-1.5 text-small-regular !important;
     }
   
-    /* thread card  */
+    /* thread card(publications)  */
     .thread-card_bar {
       @apply relative mt-2 w-0.5 grow rounded-full bg-lime-200;
     }
   
-    /* User card */
+    /* User card (utilisateurs)*/
     .user-card {
       @apply flex flex-col justify-between gap-4 max-xs:rounded-xl max-xs:bg-dark-3 max-xs:p-4 xs:flex-row xs:items-center;
     }
@@ -77,14 +77,14 @@
   
     .searchbar_input {
       transition: all 0.3s ease-in-out;
-      width: 100%; /* Default width */
-      background-color: #f0f0f0; /* Light grey background */
+      width: 100%; /* Dlargeur par default */
+      background-color: #f0f0f0; /* gris claire fonds */
     }
     
     .searchbar_input:focus {
-      width: 100%; /* Expand to full width on focus */
-      background-color: #ffffff; /* Change to white on focus */
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+      width: 100%; /* Agrandissement en pleine largeur lors du focus */
+      background-color: #ffffff; /* Passer au blanc lors de la mise au point */
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Ombre douce pour la profondeur */
     }
   
     .topbar {
@@ -145,8 +145,7 @@
     }
   }
   
-  /* Clerk Responsive fix */
-  .cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
+/* Correctif réactif du clerk */  .cl-organizationSwitcherTrigger .cl-userPreview .cl-userPreviewTextContainer {
     @apply max-sm:hidden;
   }
   
@@ -156,7 +155,6 @@
     @apply max-sm:hidden;
   }
   
-  /* Shadcn Component Styles */
   
   /* Tab */
   .tab {
@@ -167,7 +165,7 @@
     @apply focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0 !important;
   }
   
-  /* Account Profile  */
+  /* Profil du compte  */
   .account-form_image-label {
     @apply flex h-24 w-24 items-center justify-center rounded-full bg-dark-4 !important;
   }
@@ -180,7 +178,7 @@
     @apply border border-dark-4 bg-dark-3 text-light-1 !important;
   }
   
-  /* Comment Form */
+  /* CForme du commentaire */
   .comment-form {
     @apply mt-10 flex items-center gap-4 border-y border-y-dark-4 py-5 max-xs:flex-col !important;
   }
@@ -189,12 +187,12 @@
     @apply rounded-3xl bg-primary-500 px-8 py-2 !text-small-regular text-light-1 max-xs:w-full !important;
   }
   .fullcalendar-container {
-    width: 100%; /* Use 100% of the available width */
-    height: 80vh; /* Use 80% of the viewport height */
-    min-width: 500px; /* Minimum width of the calendar */
-    min-height: 500px; /* Minimum height of the calendar */
+    width: 100%; /* Utiliser 100% de la largeur disponible */
+    height: 80vh; /* Utiliser 80% de la hauteur de la fenêtre */
+    min-width: 500px; /* Largeur minimale du calendrier */
+    min-height: 500px; /* Hauteur minimale du calendrier */
     padding: 20px;
-    overflow: hidden; /* Hide overflow */
+    overflow: hidden; /* Masquer le débordement */
   }
   
   @media (max-width: 768px) {
@@ -217,43 +215,43 @@
 
 @keyframes bubble {
   0% {
-      transform: translateY(100vh) translateX(0); /* Start just below the screen */
-      opacity: 0.1; /* Start slightly visible for a smooth entry */
+      transform: translateY(100vh) translateX(0); /* Commence juste en dessous de l'écran */
+      opacity: 0.1; /* Début légèrement visible pour une entrée en douceur */
   }
   50% {
-      opacity: 0.6; /* More visible in the middle of the screen */
+      opacity: 0.6; /* Plus visible au milieu de l'écran */
   }
   100% {
-      transform: translateY(-100vh) translateX(0); /* Move to just above the top of the screen */
-      opacity: 0.1; /* Fade out before exiting */
+      transform: translateY(-100vh) translateX(0); /* Déplacement juste au-dessus du haut de l'écran */
+      opacity: 0.1; /* Fondu avant de quitter */
   }
 }
-/* Fallout-inspired styles */
+/*  styles inspire de fallout */
 .topbar {
-    background-color: #0f0f20; /* Dark blue reminiscent of Fallout's color scheme */
-    color: #ffffff; /* White text for readability */
+    background-color: #0f0f20; /* bleu fonce */
+    color: #ffffff; /* texte blanc pour mettre en enphase*/
     font-family: 'VT323', monospace;
-    border-bottom: 4px solid #d9f99d; /* Rusty orange accent for the bottom border */
+    border-bottom: 4px solid #d9f99d; /* orange dure sur les bords*/
 }
 
 .topbar a, .topbar a:hover {
-    color: #d9f99d; /* Rusty orange link color */
+    color: #d9f99d; /* ornage dur pour liaison */
 }
 
 /* Style modifications for retro feel */
 button, .organizationSwitcherTrigger {
-    background-color: #336699; /* Muted blue for buttons */
-    border: none; /* Remove border for a flat design */
-    font-family: 'Courier New', Courier, monospace; /* Consistent monospace font */
+    background-color: #336699; 
+    border: none; 
+    font-family: 'Courier New', Courier, monospace; 
     text-transform: uppercase;
-    letter-spacing: 1px; /* Increase letter spacing for a typewriter effect */
-    box-shadow: 2px 2px 0px #d9f99d; /* Add shadow for a 3D effect */
+    letter-spacing: 1px; 
+    box-shadow: 2px 2px 0px #d9f99d; 
 }
 
-/* Remove the default clerk themes to better suit the Fallout style */
+/* on applique un Fallout style */
 button.clerk, .organizationSwitcherTrigger {
-    background-color: transparent; /* Remove background */
-    color: #ffffff; /* Set text color to white */
+    background-color: transparent; /* pas de fond*/
+    color: #ffffff; /* texte en blanc */
     padding: 10px 20px;
 }
 
@@ -261,32 +259,32 @@ button.clerk, .organizationSwitcherTrigger {
 .bubble {
   position: absolute;
   bottom: 0;
-  width: 4px;  /* Smaller size for more bubbles */
+  width: 4px;  /* taille plus petite pr + bules */
   height: 4px;
-  background-color: white; /* Color of the bubbles */
+  background-color: white; /* Couleur des bules */
   border-radius: 50%;
   opacity: 0;
-  animation: bubble 15s linear infinite; /* Adjust timing as needed for speed */
+  animation: bubble 15s linear infinite; /* ajuste temps de vitesse */
 }
 
 .white-background {
   background-color: #ffffff;
 }
 
-/*left side bare
+/*bare cote gauche
 */
-/* Fallout-inspired sidebar styles */
+
 .custom-scrollbar {
-  scrollbar-color: ##d9f99d #d9f99d; /* Custom scrollbar colors */
+  scrollbar-color: ##d9f99d #d9f99d; /* scrollabre couleurs */
 }
 
 .leftsidebar {
-  background-color: #0f0f20; /* Dark background color */
-  color: #ffffff; /* White text for readability */
+  background-color: #0f0f20; /* fond noir */
+  color: #ffffff; /* txt blanc */
 }
 
 .leftsidebar a, .leftsidebar a:after {
-  color: #d9f99d; /* Light green text color */
+  color: #d9f99d; /* txt vert claire */
 }
 
 .leftsidebar_link {
@@ -295,88 +293,89 @@ button.clerk, .organizationSwitcherTrigger {
   gap: 16px;
   padding: 10px;
   border-radius: 4px;
-  font-family: 'VT323', monospace; /* Retro monospace font */
-  transition: background-color 0.3s; /* Smooth transition for hover states */
-  position: relative; /* Enable absolute positioning for pseudo-elements */
+  font-family: 'VT323', monospace; 
+  transition: background-color 0.3s; 
+  position: relative; 
 }
 
 .leftsidebar_link:hover, .leftsidebar_link.bg-primary-500 {
-  background-color: #3352da; /* Blue color for active or hovered links */
+  background-color: #3352da; /* liens en bleu */
 }
 
-/* This will add a yellow line after each .leftsidebar_link */
+/* ligne jaune pr espacer barre */
 .leftsidebar_link::after {
   content: '';
   position: absolute;
   top: 0;
   right: 0;
-  width: 4px; /* Width of the yellow line */
-  height: 100%; /* Full height of the parent element */
-  background-color: #d9f99d; /* Yellow color for the line */
+  width: 4px; 
+  height: 100%; 
+  background-color: #d9f99d; 
 }
-
+/*ajuster la barre jaune
+*/
 .leftsidebar_link:not(:last-child)::after {
-  height: calc(100% + 16px); /* Extend line height beyond each item for continuous lines */
+  height: calc(100% + 16px); 
 }
 
 .leftsidebar_link:last-child::after {
-  height: 100%; /* Last item should not extend line beyond itself */
+  height: 100%; 
 }
 
 .leftsidebar_link p {
-  color: inherit; /* Ensures text color matches the parent */
+  color: inherit; 
 }
 
-/* Add custom styles for logout button */
+/* deconnecter style pour ce bouton */
 .sign-out-button div {
-  transition: background-color 0.3s; /* Smooth transition for hover states */
+  transition: background-color 0.3s; /* transisiton */
 }
 
 .sign-out-button div:hover {
-  background-color: #336699; /* A muted blue for the hover state */
-  box-shadow: 0 0 10px #e69900; /* Glow effect on hover */
+  background-color: #336699; 
+  box-shadow: 0 0 10px #e69900; 
 }
 
 
 .input-focus-effect:focus, .textarea-focus-effect:focus {
   outline: none;
-  border-color: #f5f5dc; /* Light beige border */
-  background-color: #e2e2e2; /* Lighter grey background */
+  border-color: #f5f5dc; 
+  background-color: #e2e2e2; 
   transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out;
 }
 
-/* Hover animation for buttons */
+/* boutton animation*/
 .button-hover-effect:hover {
-  background-color: #d9f99d; /* Light green background */
-  transform: scale(1.05); /* Slightly larger */
+  background-color: #d9f99d; 
+  transform: scale(1.05); 
   transition: background-color 300ms ease-in-out, transform 300ms ease-in-out;
 }
 
 
-/* Custom styling for <select> dropdowns */
+/* chosiir style */
 .select-custom {
-  appearance: none;  /* Remove default styling */
-  background-color: #336699; /* Dark background */
-  color: #d9f99d; /* Light text */
-  border: 2px solid #d9f99d; /* Slightly lighter border than the background */
-  padding: 8px 16px; /* Padding for text */
-  border-radius: 8px; /* Rounded corners */
-  outline: none; /* Remove default focus outline */
-  position: relative; /* For positioning the custom arrow */
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow */
+  appearance: none;  
+  background-color: #336699; 
+  color: #d9f99d; 
+  border: 2px solid #d9f99d; 
+  padding: 8px 16px; 
+  border-radius: 8px; 
+  outline: none; 
+  position: relative; 
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); 
   background-repeat: no-repeat;
-  background-position: right 10px center; /* Position for the arrow */
-  background-size: 12px; /* Size of the arrow */
-  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out; /* Smooth transition for background and border */
+  background-position: right 10px center; 
+  background-size: 12px; 
+  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out; 
 }
 
 .select-custom:focus {
-  background-color: #222; /* Darker background on focus */
-  border-color: #d9f99d; /* Lighter border on focus */
+  background-color: #222; 
+  border-color: #d9f99d; 
 }
 
 
-/* Custom styling for file input */
+
 .file-input-container {
   position: relative;
   overflow: hidden;
@@ -384,9 +383,9 @@ button.clerk, .organizationSwitcherTrigger {
 }
 
 .file-input-button {
-  border: 2px solid #d9f99d; /* Darker border for better contrast */
-  color: #d9f99d; /* White text */
-  background-color: #336699; /* Dark background */
+  border: 2px solid #d9f99d; 
+  color: #d9f99d; 
+  background-color: #336699; 
   padding: 8px 20px;
   border-radius: 8px;
   font-size: 16px;
@@ -396,18 +395,18 @@ button.clerk, .organizationSwitcherTrigger {
 }
 
 .file-input-field {
-  font-size: 100px; /* Large size so the file input spans wider than the button */
+  font-size: 100px; 
   position: absolute;
   left: 0;
   top: 0;
-  opacity: 0; /* Hide the actual file input control */
+  opacity: 0; 
 }
 
 .file-input-button:hover,
 .file-input-button:focus {
-  background-color: #222; /* Slightly darker background on hover/focus */
-  border-color: #888; /* Lighter border on hover/focus */
-  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out; /* Smooth transition */
+  background-color: #222; 
+  border-color: #888; 
+  transition: background-color 300ms ease-in-out, border-color 300ms ease-in-out; 
 }
 
 
@@ -417,7 +416,7 @@ button.clerk, .organizationSwitcherTrigger {
   position: relative;
   overflow: hidden;
   border-radius: 50%;
-  border: 5px solid #ffd700; /* Gold border */
+  border: 5px solid #ffd700; 
   animation: float 5s ease-in-out infinite;
 }
 
@@ -709,8 +708,8 @@ button.clerk, .organizationSwitcherTrigger {
 
 .image-hover-container {
   position: relative;
-  width: 100%; /* Adjusts to full width of the parent container */
-  height: 700px; /* Height to match the image */
+  width: 100%; 
+  height: 700px; 
 }
 
 .hover-button {
@@ -720,13 +719,13 @@ button.clerk, .organizationSwitcherTrigger {
   padding: 8px 16px;
   background-color: #f0f0f0;
   cursor: pointer;
-  opacity: 1; /* Fully visible initially */
-  transition: opacity 0.5s ease; /* Smooth transition for opacity change */
-  z-index: 2; /* Ensures button is above the image */
+  opacity: 1; 
+  transition: opacity 0.5s ease; 
+  z-index: 2; 
 }
 
 .hover-button:hover {
-  opacity: 0; /* Button becomes transparent on hover */
+  opacity: 0; 
 }
 
 .image-hover {
@@ -736,7 +735,7 @@ button.clerk, .organizationSwitcherTrigger {
   left: 0;
   width: 700px;
   height: 700px;
-  z-index: 1; /* Lower than button to keep it clickable */
+  z-index: 1; 
   overflow: hidden;
 }
 .hover-button:hover + .image-hover {
