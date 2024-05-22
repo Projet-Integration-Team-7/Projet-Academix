@@ -1,9 +1,8 @@
-/* eslint-disable camelcase */
-// Resource: https://clerk.com/docs/users/sync-data-to-your-backend
-// Above article shows why we need webhooks i.e., to sync data to our backend
 
-// Resource: https://docs.svix.com/receiving/verifying-payloads/why
-// It's a good practice to verify webhooks. Above article shows why we should do it
+// Resource: https://clerk.com/docs/users/sync-data-to-your-backend
+// Utilite de weebhook lien en haut qui epxlique prk c utile
+
+
 import { Webhook, WebhookRequiredHeaders } from "svix";
 import { headers } from "next/headers";
 
@@ -19,7 +18,7 @@ import {
 } from "@/lib/actions/community.actions";
 
 // Resource: https://clerk.com/docs/integration/webhooks#supported-events
-// Above document lists the supported events
+// elements supportes par clerk 
 type EventType =
   | "organization.created"
   | "organizationInvitation.created"
@@ -44,8 +43,8 @@ export const POST = async (request: Request) => {
     "svix-signature": header.get("svix-signature"),
   };
 
-  // Activitate Webhook in the Clerk Dashboard.
-  // After adding the endpoint, you'll see the secret on the right side.
+  //Activez le Webhook dans le tableau de bord du commis.
+   // Après avoir ajouté le point de terminaison, vous verrez le secret sur le côté droit.
   const wh = new Webhook(process.env.NEXT_CLERK_WEBHOOK_SECRET || "");
 
   let evnt: Event | null = null;
@@ -61,10 +60,10 @@ export const POST = async (request: Request) => {
 
   const eventType: EventType = evnt?.type!;
 
-  // Listen organization creation event
+  // ecotue creation orgnaisaiton
   if (eventType === "organization.created") {
-    // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/CreateOrganization
-    // Show what evnt?.data sends from above resource
+    
+    // montre quel event est envoye
     const { id, name, slug, logo_url, image_url, created_by } =
       evnt?.data ?? {};
 
@@ -90,9 +89,8 @@ export const POST = async (request: Request) => {
     }
   }
 
-  // Listen organization invitation creation event.
-  // Just to show. You can avoid this or tell people that we can create a new mongoose action and
-  // add pending invites in the database.
+  // ecoute inviation des organisations
+  /
   if (eventType === "organizationInvitation.created") {
     try {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organization-Invitations#operation/CreateOrganizationInvitation
@@ -112,11 +110,11 @@ export const POST = async (request: Request) => {
     }
   }
 
-  // Listen organization membership (member invite & accepted) creation
+// Écouter la création de l'adhésion à l'organisation (invitation de membre et acceptation)
   if (eventType === "organizationMembership.created") {
     try {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organization-Memberships#operation/CreateOrganizationMembership
-      // Show what evnt?.data sends from above resource
+      
       const { organization, public_user_data } = evnt?.data;
       console.log("created", evnt?.data);
 
@@ -137,11 +135,11 @@ export const POST = async (request: Request) => {
     }
   }
 
-  // Listen member deletion event
+  // Écoute de l'événement de suppression de membre
   if (eventType === "organizationMembership.deleted") {
     try {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organization-Memberships#operation/DeleteOrganizationMembership
-      // Show what evnt?.data sends from above resource
+      // Afficher quel événement ? .data envoie à partir de la ressource ci-dessus
       const { organization, public_user_data } = evnt?.data;
       console.log("removed", evnt?.data);
 
@@ -159,11 +157,11 @@ export const POST = async (request: Request) => {
     }
   }
 
-  // Listen organization updation event
+  // Écoute de l'événement de mise à jour de l'organisation
   if (eventType === "organization.updated") {
     try {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/UpdateOrganization
-      // Show what evnt?.data sends from above resource
+      // Afficher quel événement ? .data envoie à partir de la ressource ci-dessus
       const { id, logo_url, name, slug } = evnt?.data;
       console.log("updated", evnt?.data);
 
@@ -181,11 +179,11 @@ export const POST = async (request: Request) => {
     }
   }
 
-  // Listen organization deletion event
+  // Écoute de l'événement de suppression d'organisation
   if (eventType === "organization.deleted") {
     try {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organizations#operation/DeleteOrganization
-      // Show what evnt?.data sends from above resource
+      // Afficher quel événement ? .data envoie à partir de la ressource ci-dessus
       const { id } = evnt?.data;
       console.log("deleted", evnt?.data);
 

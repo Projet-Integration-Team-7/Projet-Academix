@@ -15,7 +15,8 @@ export const metadata={
   title:'Academix',
   description:'A Next.js 13 Meta Academix app'
 }
-
+//on defini notre app et sa langue
+//aussi on y met le compoenent clerk pour pouvoir utiliser
 export default function RootLayout({
   children,
 }: {
