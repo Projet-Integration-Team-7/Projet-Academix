@@ -32,19 +32,19 @@ https://github.com/AIKauSs/flask-backend.git
 - Kais Mansour
 
 ## Références
-• JavaScript Mastery - https://www.youtube.com/watch?v=O5cmLDVTgAs
-• Daily Web Coding - https://www.youtube.com/watch?v=fZaxD9nHrtE
-• Pedro Tech - https://www.youtube.com/watch?v=RF57yDglDfE
-• Darwin Tech - https://www.youtube.com/watch?v=VrC5XhjW6W0
+- JavaScript Mastery - https://www.youtube.com/watch?v=O5cmLDVTgAs
+- Daily Web Coding - https://www.youtube.com/watch?v=fZaxD9nHrtE
+- Pedro Tech - https://www.youtube.com/watch?v=RF57yDglDfE
+- Darwin Tech - https://www.youtube.com/watch?v=VrC5XhjW6W0
 
 ## Sources et Documentation 
-• SVG Repo - https://www.svgrepo.com
-• NextUI - https://nextui.org/docs/components/circular-progress
-• React-icons - https://react-icons.github.io/react-icons/
-• HubSpot, Jamie Juviler - https://blog.hubspot.com/website/css-animation-examples
-• Tailwind CSS - https://tailwindcss.com/
-• Clerk -  https://clerk.com/docs/quickstarts/nextjs
-• OpenAI - https://platform.openai.com/docs/api-reference/assistants
+- SVG Repo - https://www.svgrepo.com
+- NextUI - https://nextui.org/docs/components/circular-progress
+- React-icons - https://react-icons.github.io/react-icons/
+- HubSpot, Jamie Juviler - https://blog.hubspot.com/website/css-animation-examples
+- Tailwind CSS - https://tailwindcss.com/
+- Clerk -  https://clerk.com/docs/quickstarts/nextjs
+- OpenAI - https://platform.openai.com/docs/api-reference/assistants
   
 
 
