@@ -21,7 +21,7 @@ async function Page() {
   // Retourne le JSX à rendre
   return (
     <>
-      <h1 className="head-text">Créer Thread</h1>
+      <h1 className="head-text">Créer Publication</h1>
       <PostThread userId={userInfo._id} />
     </>
   );

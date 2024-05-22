@@ -195,7 +195,7 @@ const handleImage = (
                 <FormControl className="flex-1 text-base-semibold text-gray-200">
                 <div className="file-input-container">
                  <label className="file-input-button">
-                 Télécharger une photo
+                 Télécharger une photo(1mo max)
                   <Input 
                   type="file"
                   accept="image/*"
