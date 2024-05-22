@@ -90,7 +90,7 @@ export const POST = async (request: Request) => {
   }
 
   // ecoute inviation des organisations
-  /
+  
   if (eventType === "organizationInvitation.created") {
     try {
       // Resource: https://clerk.com/docs/reference/backend-api/tag/Organization-Invitations#operation/CreateOrganizationInvitation
