@@ -5,7 +5,7 @@ import { useUser } from '@clerk/clerk-react'; // Importation du hook useUser dep
 import './AIAssistant.css'; // Importation du fichier de style CSS pour le composant AIAssistant
 import FileUpload from './FileUpload'; // Importation du composant FileUpload (assurez-vous d'avoir correctement importé ce composant)
 
-const apiUrlMessage = `${process.env.APIURL}/message`; // URL de la route message
+const apiUrlMessage = `https://academixbackend-b7d3e8ece074.herokuapp.com/message`; // URL de la route message
 
 // Fonction pour envoyer une requête à l'API OpenAI
 async function sendRequest(prompt, userId) {

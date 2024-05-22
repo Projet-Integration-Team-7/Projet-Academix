@@ -12,7 +12,7 @@ const FileUpload = () => {
     // Call the initialization route when the component mounts
     const initializeBucket = async () => {
       try {
-        await axios.get(`${url}/initialisation`); // Replace YOUR_SERVER_URL with the actual URL of your server
+        await axios.get(`https://academixbackend-b7d3e8ece074.herokuapp.com/initialisation`);
         console.log('Bucket initialized successfully.');
       } catch (error) {
         console.error('Failed to initialize bucket:', error);
@@ -39,7 +39,7 @@ const FileUpload = () => {
 
     try {
       // Envoi de la requête POST au serveur avec les fichiers en tant que données multipart/form-data
-      const response = await axios.post(`${url}/upload`, formData, {
+      const response = await axios.post(`https://academixbackend-b7d3e8ece074.herokuapp.com/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data' // Définit le type de contenu de la requête comme multipart/form-data
         }
